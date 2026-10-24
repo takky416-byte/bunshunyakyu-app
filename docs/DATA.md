@@ -105,6 +105,6 @@ python scripts/update_player_career_data.py --refresh
 
 ## 男性アナウンスの静的音声
 
-`src/maleVoice2026.json` は読み上げ文と `public/audio/voice-male-v2/` のMP3を対応付ける。日本語男性モデル `ja-JP-KeitaNeural` を用い、名前は16%低速・本文は通常速度。音声前後の無音を除去済み。587本・約8.5MBで、プレー中は必要な発表の音声だけを取得する。同一サイトから配信し、プレーヤーの情報や選択を外部TTSへ送らない。
+`src/maleVoice2026.json` は読み上げ文と `public/audio/voice-male-v3/` のMP3を対応付ける。日本語男性モデル `ja-JP-KeitaNeural` を用い、全体を3半音低くし、名前は通常の50%の速さ・本文は通常速度。音声前後の無音を除去済み。587本・約10.9MBで、プレー中は必要な発表の音声だけを取得する。同一サイトから配信し、プレーヤーの情報や選択を外部TTSへ送らない。
 
-更新は `scripts/build_male_voice.py`。任意の生成作業でのみ `edge-tts==7.3.1` とFFmpegが必要（ゲームの起動・ビルド・デプロイには不要）。例えば `python -m pip install --target /tmp/genneki-tts edge-tts==7.3.1` の後、`PYTHONPATH=/tmp/genneki-tts python scripts/build_male_voice.py`。既存の検証済みCAストアとプロキシを使い、TLS検証を無効化しない。生成済みファイルは再利用し、対象の読み上げ文が増えたときだけ追加生成する。音声の生成・加工が完了してからアプリをビルドする。
+更新は `scripts/build_male_voice.py`。任意の生成作業でのみ `edge-tts==7.3.1` とFFmpegが必要（ゲームの起動・ビルド・デプロイには不要）。例えば `python -m pip install --target /tmp/genneki-tts edge-tts==7.3.1` の後、`PYTHONPATH=/tmp/genneki-tts python scripts/build_male_voice.py`。既存の検証済みCAストアとプロキシを使い、TLS検証を無効化しない。生成済みファイルは再利用し、対象の読み上げ文が増えたときだけ追加生成する。元の `public/audio/voice-male-v2/` と `scripts/voice-source-v2.json` を変換前の入力として保持し、再実行で声の高さ・速度を累積して変えない。新しい文だけを追加生成し、FFmpegのrubberbandでピッチと速度を別々に調整する。v2音声は更新前から開いているページの互換性のため配信も維持する。音声の生成・加工が完了してからアプリをビルドする。

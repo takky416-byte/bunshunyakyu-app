@@ -29,11 +29,13 @@ describe('announcement speech', () => {
     }
     const script = draftSpeech({ kind: 'pick', game }, officialDataset.players)
     expect(script.map((c) => c.text)).toEqual([
-      'だいいちじゅん、ちゅうにちドラゴンズ、選択希望選手。',
+      'だいいちじゅん選択希望選手、ちゅうにち。',
       'わたなべ しょうた。',
       'とうしゅ、とうほくらくてんゴールデンイーグルス。',
     ])
-    expect(script[1].rate).toBeLessThan(script[0].rate)
+    expect(script[1].rate).toBe(0.5)
+    expect(script[0].pauseAfterMs).toBe(1100)
+    expect(script[0].pauseAfterMs).toBeGreaterThan(script[1].pauseAfterMs)
     expect(script[0].rate).toBe(script[2].rate)
   })
   it('covers every currently selectable official player without guessing kana', () => {
@@ -74,13 +76,15 @@ describe('announcement speech', () => {
       players,
     )
     expect(onlySecond).toHaveLength(3)
-    expect(onlySecond[0].text).toMatch(/^だいにじゅん、/)
+    expect(onlySecond[0].text).toMatch(/^だいにじゅん選択希望選手、/)
     expect(onlySecond[1].text).toBe(`${playerReading(players[1])}。`)
   })
 })
 
 it('provides a male recording for every official phrase and player name', () => {
   expect(maleVoice.gender).toBe('Male')
+  expect(maleVoice.pitchSemitones).toBe(-3)
+  expect(maleVoice.nameRate).toBe('-50%')
   const clips = maleVoice.clips as Record<string, string>
   for (const clause of voiceCatalog()) {
     const path = clips[speechKey(clause)]

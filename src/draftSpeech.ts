@@ -34,15 +34,31 @@ export const speechClause = (
 ): SpeechClause => ({
   text,
   kind,
-  rate: kind === 'name' ? 0.84 : 1,
-  pauseAfterMs: kind === 'name' ? 200 : 120,
+  rate: kind === 'name' ? 0.5 : 1,
+  pauseAfterMs: kind === 'name' ? 260 : 120,
 })
 export const speechKey = (clause: SpeechClause) =>
   `${clause.kind}|${clause.text}`
-const introduction = (round: 1 | 2, team: TeamId) =>
-  speechClause(
-    `${round === 1 ? 'だいいちじゅん' : 'だいにじゅん'}、${clubReadings[team]}、選択希望選手。`,
-  )
+const clubShortReadings: Record<TeamId, string> = {
+  d: 'ちゅうにち',
+  t: 'はんしん',
+  c: 'ひろしま',
+  s: 'ヤクルト',
+  db: 'ディーエヌエー',
+  g: 'きょじん',
+  h: 'ソフトバンク',
+  l: 'せいぶ',
+  f: 'にっぽんハム',
+  b: 'オリックス',
+  m: 'ロッテ',
+  e: 'らくてん',
+}
+const introduction = (round: 1 | 2, team: TeamId): SpeechClause => ({
+  ...speechClause(
+    `${round === 1 ? 'だいいちじゅん' : 'だいにじゅん'}選択希望選手、${clubShortReadings[team]}。`,
+  ),
+  pauseAfterMs: 1100,
+})
 const affiliation = (position: Position, team: TeamId) =>
   speechClause(`${positionReadings[position]}、${clubReadings[team]}。`)
 const nominations = () =>

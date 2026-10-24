@@ -42,7 +42,13 @@ export function SoundControls({
 export function SoundSettings({ sound }: { sound: DraftSound }) {
   const { options, ready, voiceStatus, audioSupported, voiceError } =
     useSyncExternalStore(sound.subscribe, sound.getSnapshot)
-  useEffect(() => () => sound.stopSpeech(), [sound])
+  useEffect(
+    () => () => {
+      sound.stopSpeech()
+      sound.stopEffects()
+    },
+    [sound],
+  )
   return (
     <div className="sound-settings">
       <p>BGM・効果音・指名の読み上げを切り替えられます。</p>
@@ -61,11 +67,11 @@ export function SoundSettings({ sound }: { sound: DraftSound }) {
         {(
           [
             ['bgm', 'BGM', '落ち着いたピアノと弦楽器の響き'],
-            ['effects', '効果音', '発表前の合図と、指名決定の音'],
+            ['effects', '効果音', '大太鼓の合図と、指名決定の音'],
             [
               'narration',
               '指名の読み上げ',
-              '球団 → 選手名 → ポジション → 所属球団',
+              '獲得球団は略称、所属球団は正式名で案内',
             ],
           ] as const
         ).map(([key, title, description]) => (
@@ -121,7 +127,7 @@ export function SoundSettings({ sound }: { sound: DraftSound }) {
         disabled={
           !options.enabled || !options.effects || !ready || !options.volume
         }
-        onClick={() => sound.cue('reveal')}
+        onClick={sound.previewEffects}
       >
         効果音を試す
       </button>
@@ -144,7 +150,7 @@ export function SoundSettings({ sound }: { sound: DraftSound }) {
           </p>
         )}
         <p>
-          読み上げは日本語の男性アナウンスです。選手名だけをゆっくり読み、ポジションと所属球団は続けて読みます。
+          読み上げは低い男性アナウンスです。獲得球団の後に長めの間を置き、選手名をゆっくり読みます。続けてポジションと所属球団を案内します。
         </p>
         {voiceError && (
           <p>

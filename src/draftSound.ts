@@ -70,6 +70,7 @@ export class DraftSound {
   private speechCache = new Map<string, AudioBuffer>()
   private musicTimer: number | undefined
   private voiceTimer: number | undefined
+  private effectPreviewTimer: number | undefined
   private nextBeat = 0
   private beat = 0
   private cancelCurrentSpeech: (() => void) | null = null
@@ -190,7 +191,7 @@ export class DraftSound {
       void this.context?.suspend().catch(() => {})
     } else {
       if (!options.narration || options.volume === 0) this.stopSpeech()
-      if (!options.effects) this.stopNodes(this.effectNodes)
+      if (!options.effects || options.volume === 0) this.stopEffects()
       this.activate()
     }
   }
@@ -252,6 +253,7 @@ export class DraftSound {
         const wet = this.context.createGain()
         wet.gain.value = 0.2
         this.music.connect(reverb)
+        this.effects.connect(reverb)
         reverb.connect(wet)
         wet.connect(this.master)
         const compressor = this.context.createDynamicsCompressor()
@@ -393,13 +395,54 @@ export class DraftSound {
       return
     const now = this.context.currentTime + 0.01
     if (kind === 'waiting') {
-      for (let i = 0; i < 15; i++)
-        this.noise(now + i * 0.085, 0.11, 0.2 + i * 0.012, 700)
+      for (const offset of [0, 0.58, 1.16]) this.taiko(now + offset, 0.62)
     } else {
-      this.noise(now, 1.2, 0.65, 3500)
-      this.tone(36, now, 0.9, 0.8, 'effect', 'sine')
+      this.taiko(now, 1.05)
+      this.noise(now + 0.04, 1.2, 0.18, 3500)
       for (const note of [50, 57, 62])
-        this.tone(note, now, 1.25, 0.16, 'effect', 'sawtooth', 0.035, 1600)
+        this.tone(note, now, 1.25, 0.09, 'effect', 'sawtooth', 0.035, 1600)
+    }
+  }
+  previewEffects = () => {
+    this.stopEffects()
+    this.cue('waiting')
+    this.effectPreviewTimer = window.setTimeout(() => {
+      this.effectPreviewTimer = undefined
+      this.cue('reveal')
+    }, 1800)
+  }
+  private taiko(at: number, duration: number) {
+    if (!this.context || !this.effects) return
+    // Rounded skin attack and low resonant modes, with enough mid-bass to
+    // carry on phone speakers. No rapid noise ticks in the waiting cue.
+    for (const [start, end, level] of [
+      [100, 45, 0.75],
+      [185, 105, 0.28],
+      [255, 155, 0.12],
+    ]) {
+      const node = this.context.createOscillator()
+      const gain = this.context.createGain()
+      const filter = this.context.createBiquadFilter()
+      node.type = 'sine'
+      node.frequency.setValueAtTime(start, at)
+      node.frequency.exponentialRampToValueAtTime(end, at + 0.12)
+      filter.type = 'lowpass'
+      filter.frequency.value = 480
+      gain.gain.setValueAtTime(0.0001, at)
+      gain.gain.exponentialRampToValueAtTime(level, at + 0.025)
+      gain.gain.exponentialRampToValueAtTime(0.0001, at + duration)
+      node.connect(filter)
+      filter.connect(gain)
+      gain.connect(this.effects)
+      this.effectNodes.add(node)
+      node.onended = () => {
+        this.effectNodes.delete(node)
+        node.disconnect()
+        filter.disconnect()
+        gain.disconnect()
+      }
+      node.start(at)
+      node.stop(at + duration + 0.02)
     }
   }
   private noise(at: number, duration: number, level: number, highpass: number) {
@@ -547,7 +590,7 @@ export class DraftSound {
         utterance.lang = 'ja-JP'
         utterance.voice = this.voice
         utterance.rate = clause.rate
-        utterance.pitch = 1
+        utterance.pitch = 0.84
         utterance.volume = Math.min(1, this.state.options.volume * 1.7)
         utterance.onend = advance
         utterance.onerror = complete
@@ -603,6 +646,8 @@ export class DraftSound {
     this.cancelCurrentSpeech?.()
   }
   stopEffects = () => {
+    window.clearTimeout(this.effectPreviewTimer)
+    this.effectPreviewTimer = undefined
     this.stopNodes(this.effectNodes)
   }
   private stopNodes(pool: Set<AudioScheduledSourceNode>) {

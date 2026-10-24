@@ -88,6 +88,28 @@ test('sound starts silent, produces real Web Audio after opt-in, saves separate 
       }),
     )
     .toBeGreaterThan(0.025)
+  await expect
+    .poll(() =>
+      page.evaluate(() => {
+        const { context, meter } = (
+          window as unknown as {
+            __audioProbe: { context: AudioContext; meter: AnalyserNode }[]
+          }
+        ).__audioProbe[0]
+        const bins = new Float32Array(meter.frequencyBinCount)
+        meter.getFloatFrequencyData(bins)
+        let bass = 0,
+          high = 0
+        for (let i = 0; i < bins.length; i++) {
+          const frequency = (i * context.sampleRate) / meter.fftSize
+          const power = 10 ** (bins[i] / 10)
+          if (frequency < 500) bass += power
+          if (frequency > 1500) high += power
+        }
+        return bass / Math.max(high, 1e-12)
+      }),
+    )
+    .toBeGreaterThan(20)
   await settings.getByRole('button', { name: '読み上げを試す' }).click()
   await expect
     .poll(() =>
@@ -200,9 +222,9 @@ test('recorded male phrases slow only the name and block autoplay until the whol
       const originalFetch = window.fetch.bind(window)
       window.fetch = (input, init) => {
         const path = String(input)
-        if (path.startsWith('/audio/voice-male-v2/')) probe.paths.push(path)
+        if (path.startsWith('/audio/voice-male-')) probe.paths.push(path)
         return originalFetch(input, init).then((response) => {
-          if (path.startsWith('/audio/voice-male-v2/')) {
+          if (path.startsWith('/audio/voice-male-')) {
             const read = response.arrayBuffer.bind(response)
             response.arrayBuffer = async () => {
               const buffer = await read()
@@ -245,7 +267,8 @@ test('recorded male phrases slow only the name and block autoplay until the whol
     },
     { game, dataset, chosenTeam: 't' },
   )
-  await page.clock.install()
+  await page.clock.install({ time: new Date('2026-10-24T09:00:00Z') })
+  await page.clock.pauseAt(new Date('2026-10-24T09:01:00Z'))
   await page.setViewportSize({ width: 320, height: 568 })
   await page.goto('/')
   const dialog = page.locator('.draft-announcement')
@@ -280,7 +303,11 @@ test('recorded male phrases slow only the name and block autoplay until the whol
         window as unknown as { __voiceProbe: { finish: () => void } }
       ).__voiceProbe.finish(),
     )
-    await page.clock.runFor(250)
+    if (i === 0) {
+      await page.clock.runFor(700)
+      expect(await active()).toBe(false)
+      await page.clock.runFor(420)
+    } else await page.clock.runFor(script[i].pauseAfterMs + 20)
     if (i + 1 < script.length) await expect.poll(active).toBe(true)
   }
   await expect(dialog).not.toContainText('読み上げ中')
