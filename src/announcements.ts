@@ -2,7 +2,7 @@ import { npcPick, type Game } from './engine'
 import type { Player } from './data'
 
 export interface Announcement {
-  kind: 'order' | 'pick' | 'round2'
+  kind: 'nominations' | 'order' | 'pick' | 'round2'
   game: Game
 }
 

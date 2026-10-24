@@ -4,7 +4,7 @@ import { clubThemes } from './presentation'
 
 export const APP_URL = 'https://geneki-draft-room.takky416.workers.dev'
 export const SHARE_NOTICE =
-  '※非公式のシミュレーション結果です（2026年推定年俸で仮判定）。'
+  '※非公式のシミュレーション結果です。2026年推定年俸を使用しています。'
 export interface SharedPick {
   round: number
   by: string

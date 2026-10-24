@@ -13,6 +13,36 @@ import {
 } from './engine'
 
 describe('official 2026 snapshot', () => {
+  it('corrects domestic treatment by player ID and still excludes released and development players', () => {
+    for (const name of ['ワォーターズ', '陽 柏翔', '林 冠臣']) {
+      const player = officialDataset.players.find((p) => p.name === name)!
+      expect(player.draftFacts?.foreignPlayerTreatment).toBe('domestic')
+      expect(player.draftFacts?.treatmentSource).toMatch(
+        /^https:\/\/draft.npb.jp\//,
+      )
+      expect(eligibilityOf(player).allowed).toBe(true)
+    }
+    for (const name of [
+      'ケムナ 誠',
+      '山口 アタル',
+      '翔聖',
+      'シンクレア',
+      '松本 竜也',
+      '長谷部 銀次',
+    ]) {
+      expect(
+        eligibilityOf(officialDataset.players.find((p) => p.name === name)!)
+          .allowed,
+        name,
+      ).toBe(false)
+    }
+    const reported = officialDataset.players.filter((p) =>
+      p.draftFacts!.exclusions.some((e) => e.reason.includes('戦力外')),
+    )
+    expect(reported.length).toBeGreaterThanOrEqual(106)
+    for (const player of reported)
+      expect(eligibilityOf(player).allowed).toBe(false)
+  })
   it('records all 36 sources, unique IDs, registration and factual statistics', () => {
     const data = officialDataset
     expect(data.season).toBe(2026)

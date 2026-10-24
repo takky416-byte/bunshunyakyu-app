@@ -32,9 +32,64 @@ async function vote(page: import('@playwright/test').Page) {
   await page.getByRole('checkbox').nth(0).check()
   await page.getByRole('checkbox').nth(1).check()
   await page.getByRole('button', { name: '候補を提出する' }).click()
+  await page
+    .getByRole('button', { name: '演出をスキップ', exact: true })
+    .click()
   await page.getByRole('radio').first().check()
   await page.getByRole('button', { name: '投票してドラフトへ' }).click()
 }
+
+test('submitted nominations wait for the other clubs before revealing their lists', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 667 })
+  await page.clock.install()
+  await page.goto('/')
+  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+  await page.getByRole('checkbox').nth(0).check()
+  await page.getByRole('checkbox').nth(1).check()
+  await page.getByRole('button', { name: '候補を提出する' }).click()
+  const dialog = page.getByRole('dialog')
+  await expect(dialog).toContainText(
+    '他の11球団の候補リストを取りまとめています',
+  )
+  await expect(dialog.locator('.announcement-name')).toHaveCount(0)
+  await expect(page.getByRole('radio')).toHaveCount(0)
+  const stage = () =>
+    page.evaluate(
+      () =>
+        JSON.parse(localStorage.getItem('geneki-draft-room:v2')!).game.stage,
+    )
+  expect(await stage()).toBe('nominate')
+  await page.clock.runFor(1000)
+  expect(await stage()).toBe('nominate')
+  await page.clock.runFor(900)
+  await expect(dialog.locator('.announcement-name')).toHaveText(
+    '12球団の候補が揃いました',
+  )
+  expect(await stage()).toBe('vote')
+  expect(
+    await page.evaluate(
+      () =>
+        Object.keys(
+          JSON.parse(localStorage.getItem('geneki-draft-room:v2')!).game.offers,
+        ).length,
+    ),
+  ).toBe(12)
+  await page.clock.runFor(700)
+  await page.screenshot({ path: '.cache/nominations-mobile.png' })
+  await dialog
+    .getByRole('button', { name: '獲得希望を選ぶ', exact: true })
+    .click()
+  await page.clock.runFor(50)
+  await expect(page.locator('.flow-target')).toBeFocused()
+  expect(
+    await page.locator('.roster-list').evaluate((el) => el.scrollTop),
+  ).toBe(0)
+  await page.reload()
+  await expect(dialog).toHaveCount(0)
+  expect(await stage()).toBe('vote')
+})
 
 test('opening waits before revealing the first club and preserves a single legal checkpoint', async ({
   page,

@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """Build an auditable 2026 salary-proxy snapshot. Never invent missing salaries."""
 import concurrent.futures
+import argparse
 import datetime
 import hashlib
 import json
 from pathlib import Path
 import re
+import unicodedata
 import urllib.request
 from html.parser import HTMLParser
 from update_npb_data import rows, normal_name
@@ -22,20 +24,64 @@ def salary_man_yen(text):
     return float(match[1] or 0) * 10000 + float(match[2] or 0)
 
 
-def build():
+def status_name(name):
+    return normal_name(unicodedata.normalize('NFKC', name)).translate(str.maketrans({'髙': '高', '﨑': '崎', '邉': '辺', '邊': '辺'}))
+
+
+def parse_departures(html):
+    teams = {'阪神': 't', '巨人': 'g', 'DeNA': 'db', '広島': 'c', 'ヤクルト': 's', '中日': 'd', 'ソフトバンク': 'h', '日本ハム': 'f', 'ロッテ': 'm', '楽天': 'e', 'オリックス': 'b', '西武': 'l'}
+    class Paragraphs(HTMLParser):
+        def __init__(self):
+            super().__init__(); self.tag = None; self.text = ''; self.team = None; self.items = []; self.seen = set()
+        def handle_starttag(self, tag, attrs):
+            if tag in ('h2', 'p'): self.tag = tag; self.text = ''
+        def handle_data(self, data):
+            if self.tag: self.text += data
+        def handle_endtag(self, tag):
+            if tag != self.tag: return
+            if tag == 'h2':
+                self.team = teams.get(self.text.strip())
+                if self.team: self.seen.add(self.team)
+            elif self.team: self.items.append((self.team, self.text.strip()))
+            self.tag = None
+    parser = Paragraphs(); parser.feed(html)
+    departing = set(); fa_history = set()
+    for team, text in parser.items:
+        match = re.match(r'^※?(.+?)(?:投手|捕手|内野手|外野手|選手)[（(]([^）)]*)[）)](.*)$', text)
+        if not match: continue
+        key = (team, status_name(match[1]))
+        if re.search(r'戦力外|現役引退|自由契約|退団', match[3]): departing.add(key)
+        if re.search(r'FAで|FA移籍', match[2]): fa_history.add(key)
+    if len(parser.seen) != 12 or len(departing) < 20:
+        raise ValueError('Departure article layout changed; refusing update')
+    return departing, fa_history
+
+
+def fetch_source(cache, name, url, day, refresh=False):
+    path = cache / name
+    if refresh or not path.exists():
+        with urllib.request.urlopen(url, timeout=30) as response:
+            raw = response.read()
+        temporary = path.with_suffix('.tmp')
+        temporary.write_bytes(raw)
+        temporary.replace(path)
+    raw = path.read_bytes()
+    return name, {'url': url, 'retrievedAt': day, 'sha256': hashlib.sha256(raw).hexdigest()}, raw.decode('utf8')
+
+
+def build(refresh=False):
     day = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9))).date().isoformat()
     cache = ROOT / '.cache' / 'eligibility' / day
     cache.mkdir(parents=True, exist_ok=True)
     def fetch(item):
         name, url = item
-        path = cache / name
-        if not path.exists():
-            path.write_bytes(urllib.request.urlopen(url, timeout=30).read())
-        raw = path.read_bytes()
-        return name, {'url': url, 'retrievedAt': day, 'sha256': hashlib.sha256(raw).hexdigest()}, raw.decode('utf8')
+        return fetch_source(cache, name, url, day, refresh)
     urls = [(f'salary-{i}.html', f'https://www.gurazeni.com/team/{i}') for i in MAPPING]
     urls += [('fa-2026.html', 'https://npb.jp/announcement/2026/fa_qualified.html'), ('draft-2025.html', 'https://c.npb.jp/geneki_draft/2025/')]
     urls += [('departures.html', 'https://www.nikkansports.com/baseball/news/202609280000276.html')]
+    corrections = json.loads((ROOT / 'scripts/eligibility_overrides2026.json').read_text())['domesticDraftPlayers']
+    urls += [(f'domestic-draft-{p["year"]}-{p["team"]}.html', f'https://draft.npb.jp/draft/{p["year"]}/draftlist_{p["team"]}.html') for p in corrections]
+    urls = list(dict.fromkeys(urls))
     with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
         pages = {name: (meta, html) for name, meta, html in pool.map(fetch, urls)}
     fa_meta, fa_html = pages['fa-2026.html']
@@ -45,27 +91,14 @@ def build():
     dr_ids = set(re.findall(r'/bis/players/(\d+)\.html', dr_html))
     if not 50 <= len(fa_ids) <= 200 or len(dr_ids) != 12:
         raise ValueError('Unexpected official FA/draft layout; refusing update')
-    class Paragraphs(HTMLParser):
-        def __init__(self):
-            super().__init__(); self.current = None; self.paragraphs = []
-        def handle_starttag(self, tag, attrs):
-            if tag == 'p': self.current = ''
-        def handle_data(self, data):
-            if self.current is not None: self.current += data
-        def handle_endtag(self, tag):
-            if tag == 'p' and self.current is not None:
-                self.paragraphs.append(self.current); self.current = None
     dep_meta, dep_html = pages['departures.html']
-    dep = Paragraphs(); dep.feed(dep_html)
-    departing = set(); fa_history = set()
-    for text in dep.paragraphs:
-        match = re.match(r'^※?(.+?)(?:投手|捕手|内野手|外野手|選手)[（(].*?[）)](.*)$', text.strip())
-        if not match: continue
-        name = normal_name(match[1])
-        if re.search(r'戦力外|現役引退|自由契約|退団', match[2]): departing.add(name)
-        if re.search(r'FAで|FA移籍', text[:text.find('）')]): fa_history.add(name)
-    if len(departing) < 20:
-        raise ValueError('Departure article layout changed; refusing update')
+    departing, fa_history = parse_departures(dep_html)
+    domestic = {}
+    for player in corrections:
+        meta, html = pages[f'domestic-draft-{player["year"]}-{player["team"]}.html']
+        if not any(status_name(player['draftName']) in status_name(' '.join(row['cells'])) for row in rows(html)):
+            raise ValueError(f'{player["name"]}: official draft name missing; refusing update')
+        domestic[player['id']] = meta['url']
     salaries = {}
     for i, team in MAPPING.items():
         meta, html = pages[f'salary-{i}.html']
@@ -97,17 +130,20 @@ def build():
             exclusions.append({'reason': '2026年FA資格保有者', 'source': fa_meta['url']})
         if p['id'][4:] in dr_ids:
             exclusions.append({'reason': '2025年現役ドラフトで獲得', 'source': dr_meta['url']})
-        if normal_name(p['name']) in departing:
-            exclusions.append({'reason': '戦力外・退団・引退の報道あり（仮想候補から除外）', 'source': dep_meta['url']})
-        if normal_name(p['name']) in fa_history:
+        if (p['team'], status_name(p['name'])) in departing:
+            exclusions.append({'reason': '戦力外・退団・引退の報道あり', 'source': dep_meta['url']})
+        if (p['team'], status_name(p['name'])) in fa_history:
             exclusions.append({'reason': 'FA行使による移籍歴の報道あり', 'source': dep_meta['url']})
         if not salary:
             holds.append('2026年推定年俸の照合待ち')
-        elif not any(salary['birthplace'].startswith(pref) for pref in PREFECTURES):
+        elif p['id'] not in domestic and not any(salary['birthplace'].startswith(pref) for pref in PREFECTURES):
             # Birthplace does NOT prove foreign-player status. Withhold unknown
             # cases instead of classifying foreign-born Japanese as foreigners.
             holds.append('外国出身：外国人区分の照合待ち')
         facts[p['id']] = {'salaryYear': 2026, 'salaryManYen': salary['salary'] if salary else None, 'salarySource': salary['source'] if salary else None, 'checkedAt': day, 'exclusions': exclusions, 'holds': holds, 'unresolved': ['複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち']}
+        if p['id'] in domestic:
+            facts[p['id']]['foreignPlayerTreatment'] = 'domestic'
+            facts[p['id']]['treatmentSource'] = domestic[p['id']]
     if sum(p['salaryManYen'] is not None for p in facts.values()) < 900:
         raise ValueError('Salary matching coverage unexpectedly low; refusing update')
     output = {'version': 1, 'salaryPolicy': '2026年推定年俸を使用する仮判定', 'asOf': day, 'sources': [meta for meta, _ in pages.values()], 'players': facts}
@@ -115,7 +151,10 @@ def build():
     path.with_suffix('.tmp').write_text(json.dumps(output, ensure_ascii=False, indent=2) + '\n')
     path.with_suffix('.tmp').replace(path)
     print(f'Salary matched {sum(p["salaryManYen"] is not None for p in facts.values())}/{len(facts)}; FA IDs {len(fa_ids)}; previous-draft IDs {len(dr_ids)}')
+    print(f'Departure reports: {len(departing)}; verified domestic treatment: {len(domestic)}')
 
 
 if __name__ == '__main__':
-    build()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--refresh', action='store_true', help='Refresh cached source pages, including same-day report updates')
+    build(parser.parse_args().refresh)

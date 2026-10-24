@@ -23,7 +23,6 @@ import {
   Info,
   Play,
   RotateCcw,
-  Search,
   ShieldCheck,
   Sparkles,
   Trophy,
@@ -62,6 +61,7 @@ import {
 import { eligibilityOf, nominationErrors } from './eligibility'
 import type { Participation, BidCondition } from './roundTwo'
 import { officialDataset } from './officialData'
+import { recordedOfficialDataset } from './recordedDataset'
 import {
   trackPageView,
   trackPlayStarted,
@@ -114,7 +114,9 @@ function load(): Saved & { warning?: string } {
     const value = JSON.parse(saved)
     const dataset =
       value.dataset?.kind === 'official-roster'
-        ? officialDataset
+        ? value.game && value.game.stage !== 'nominate'
+          ? recordedOfficialDataset(value.dataset)
+          : officialDataset
         : value.dataset?.kind === 'reference'
           ? value.game
             ? referenceDataset
@@ -236,7 +238,6 @@ export default function App() {
     useState<BidCondition>('unconditional')
   const [votedId, setVotedId] = useState('')
   const [selectedId, setSelectedId] = useState('')
-  const [search, setSearch] = useState('')
   const [position, setPosition] = useState<Position | 'すべて'>('すべて')
   const [league, setLeague] = useState('すべて')
   const [modal, setModal] = useState<Modal>(null)
@@ -362,7 +363,6 @@ export default function App() {
       setError('')
       action()
       setSelectedId('')
-      setSearch('')
       setPosition('すべて')
     } catch (e) {
       setError(e instanceof Error ? e.message : '処理に失敗しました。')
@@ -397,6 +397,7 @@ export default function App() {
     })
   }
   function reset() {
+    if (dataset.kind === 'official-roster') setDataset(officialDataset)
     setDetailPlayerId('')
     setAnnouncements(null)
     setGame(null)
@@ -404,7 +405,6 @@ export default function App() {
     setNominees([])
     setVotedId('')
     setSelectedId('')
-    setSearch('')
     setPosition('すべて')
     setError('')
     setModal(null)
@@ -450,9 +450,7 @@ export default function App() {
       ? roundTwoChoices(game, players).filter((p) => p.team !== team.id)
       : []
   const filteredRoster = roster.filter(
-    (p) =>
-      (position === 'すべて' || p.position === position) &&
-      p.name.replace(/\s/g, '').includes(search.replace(/\s/g, '')),
+    (p) => position === 'すべて' || p.position === position,
   )
   const progressStep =
     !game || game.stage === 'nominate'
@@ -581,16 +579,16 @@ export default function App() {
         <main id="main-content">
           <CompactDetails
             compact={compact}
-            title="選手データ・対象条件（仮判定）"
+            title="選手データとルール"
             className="data-disclosure"
           >
             <div className="data-notice">
               <Info size={15} />
               <span>
                 {isReference
-                  ? '現在は操作体験版です。選手は過去所属の参考データで、2026年の在籍・対象資格は未確認です。'
+                  ? '過去所属の参考データを使用しています。'
                   : isOfficial
-                    ? `2026年推定年俸で仮判定。FA・前年現役ドラフト等を照合済み／契約条件未確認あり。名簿・成績：${dataset.asOf}取得。`
+                    ? `2026年推定年俸と公表情報を使用。名簿・成績：${dataset.asOf}取得。`
                     : `2026年データ：${dataset.label}（${dataset.asOf}時点・利用者による取り込み／自動照合なし）`}
               </span>
               <button onClick={() => setModal('data')}>
@@ -610,6 +608,15 @@ export default function App() {
                   制度変更の出典
                 </a>
               </p>
+            )}
+            {game?.stage === 'nominate' && (
+              <button
+                className="excluded-toggle"
+                aria-pressed={showExcluded}
+                onClick={() => setShowExcluded(!showExcluded)}
+              >
+                {showExcluded ? '対象選手だけを表示' : '対象外も表示'}
+              </button>
             )}
           </CompactDetails>
           {error && (
@@ -861,9 +868,9 @@ export default function App() {
                           </h2>
                           <p>
                             {game.stage === 'nominate'
-                              ? '他球団へ送り出す候補を2名以上選んでください。'
+                              ? '移籍候補を2名以上選んでください。'
                               : game.stage === 'vote'
-                                ? '他球団の候補から欲しい選手を1人選び、投票を確定してください。'
+                                ? '獲得したい選手を1名選んでください。'
                                 : roster.length === 1
                                   ? '指名できる選手は1人です。選んで「この選手を指名」を押してください。'
                                   : '獲得する選手を1人選び、「この選手を指名」を押してください。'}
@@ -877,28 +884,10 @@ export default function App() {
                         )}
                       </div>
 
-                      {game.stage === 'nominate' && (
-                        <button
-                          className="excluded-toggle"
-                          aria-pressed={showExcluded}
-                          onClick={() => setShowExcluded(!showExcluded)}
-                        >
-                          {showExcluded
-                            ? '仮対象だけを表示'
-                            : '対象外・確認保留も表示'}
-                        </button>
-                      )}
                       <div className="roster-toolbar">
-                        <label className="search-box">
-                          <Search size={16} />
-                          <input
-                            aria-label="選手名で検索"
-                            placeholder="選手名で検索"
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                          />
-                        </label>
+                        <label htmlFor="position-filter">守備位置</label>
                         <select
+                          id="position-filter"
                           aria-label="守備位置で絞り込み"
                           value={position}
                           onChange={(e) =>
@@ -914,12 +903,10 @@ export default function App() {
                       <div className="roster-list">
                         {filteredRoster.length === 0 ? (
                           <div className="empty-state">
-                            <Search size={25} />
                             <p>条件に合う選手がいません。</p>
                             <button
                               className="text-button"
                               onClick={() => {
-                                setSearch('')
                                 setPosition('すべて')
                               }}
                             >
@@ -978,43 +965,18 @@ export default function App() {
                                     </span>
                                     {p.number ? ` · #${p.number}` : ''}
                                   </small>
-                                  {isOfficial && <StatSummary player={p} />}
                                   <small className="salary-info">
-                                    {p.draftFacts?.salaryManYen == null ? (
-                                      '2026年俸未確認'
-                                    ) : (
-                                      <>
-                                        <span className="salary-year">
-                                          2026
-                                        </span>
-                                        推定{' '}
-                                        {p.draftFacts.salaryManYen.toLocaleString()}
-                                        万円
-                                      </>
-                                    )}{' '}
-                                    · {eligibilityOf(p).label}
+                                    {p.draftFacts?.salaryManYen == null
+                                      ? '年俸データなし'
+                                      : `${p.draftFacts.salaryManYen.toLocaleString()}万円`}
+                                    {eligibilityOf(p).band === 'exception'
+                                      ? ' / 高年俸枠'
+                                      : ''}
                                   </small>
-                                  {eligibilityOf(p).allowed &&
-                                  p.draftFacts?.unresolved.length ? (
-                                    <small className="player-contract-note">
-                                      契約等未確認・仮判定
-                                    </small>
-                                  ) : null}
                                   {!eligibilityOf(p).allowed && (
                                     <small>
                                       {eligibilityOf(p).reasons.join(' / ')}
                                     </small>
-                                  )}
-                                  {p.draftFacts?.salarySource && (
-                                    <a
-                                      className="salary-source"
-                                      href={p.draftFacts.salarySource}
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      onClick={(e) => e.stopPropagation()}
-                                    >
-                                      年俸出典
-                                    </a>
                                   )}
                                 </span>
                                 <button
@@ -1034,15 +996,6 @@ export default function App() {
                                 <span className="player-position">
                                   {p.position}
                                 </span>
-                                {game.stage !== 'nominate' && (
-                                  <span className="fit-score">
-                                    <small>ゲーム内適合度</small>
-                                    <strong>
-                                      {fit(p, team.id, game.seed)}
-                                      <span>/100</span>
-                                    </strong>
-                                  </span>
-                                )}
                                 <span className="player-check">
                                   {checked ? <Check size={15} /> : <span />}
                                 </span>
@@ -1089,9 +1042,16 @@ export default function App() {
                           onClick={() =>
                             act(() => {
                               if (game.stage === 'nominate')
-                                setGame(
-                                  submitNominations(game, nominees, players),
-                                )
+                                announce([
+                                  {
+                                    kind: 'nominations',
+                                    game: submitNominations(
+                                      game,
+                                      nominees,
+                                      players,
+                                    ),
+                                  },
+                                ])
                               else if (game.stage === 'vote')
                                 announce([
                                   {
@@ -1134,10 +1094,6 @@ export default function App() {
                       <p>
                         次はCPU球団の番です。指名を1球団ずつ確認するか、自分の番まで進めてください。
                       </p>
-                      <span className="need-chip">
-                        補強ポイント：{teamById[game.current!].need}{' '}
-                        <span>ゲーム内設定</span>
-                      </span>
                       <div className="npc-actions">
                         <button
                           className="button primary"
@@ -1434,11 +1390,6 @@ export default function App() {
                                   {teamById[p.from].short} → {team.short} ·{' '}
                                   {player(p.playerId).position}
                                 </span>
-                                <small>
-                                  {player(p.playerId).position === team.need
-                                    ? '設定した補強ポイントと一致'
-                                    : '選手層を広げる新たな選択肢'}
-                                </small>
                               </div>
                             ))}
                           {game.picks
@@ -1576,7 +1527,7 @@ export default function App() {
                 </div>
                 <CompactDetails
                   compact={compact}
-                  title="球団情報・得票・編成のヒント"
+                  title="球団情報・得票"
                   className="aside-disclosure"
                 >
                   <aside className="game-aside">
@@ -1585,11 +1536,6 @@ export default function App() {
                       <TeamMark team={team} />
                       <h3>{team.name}</h3>
                       <span className="gm-tag">編成責任者：あなた</span>
-                      <div className="team-objective">
-                        <span>ゲーム内の補強ポイント</span>
-                        <strong>{team.need}</strong>
-                        <p>{team.philosophy}</p>
-                      </div>
                       {game.stage !== 'nominate' && (
                         <div className="submitted-list">
                           <span>提出した候補選手</span>
@@ -1637,11 +1583,11 @@ export default function App() {
                     ) : (
                       <section className="panel tip-card">
                         <BookOpen size={20} />
-                        <h3>編成のヒント</h3>
+                        <h3>指名のヒント</h3>
                         <p>
                           {game.stage === 'nominate'
                             ? '他球団に求められる選手を提出すると、最初の指名権を得られる可能性が高まります。残す戦力と、獲得のチャンスを考えてみましょう。'
-                            : 'CPUは設定された補強ポイントを重視します。人気の集まる候補と、自球団に必要な選手が一致するとは限りません。'}
+                            : '欲しい選手が他球団に指名されることもあります。別の獲得候補も考えておきましょう。'}
                         </p>
                         <button
                           className="text-button"
@@ -1700,7 +1646,7 @@ export default function App() {
           <h3>2026年推定年俸</h3>
           <p>
             {detailPlayer.draftFacts?.salaryManYen == null
-              ? '未確認'
+              ? '年俸データなし'
               : `${detailPlayer.draftFacts.salaryManYen.toLocaleString()}万円`}
           </p>
           <h3>候補資格：{eligibilityOf(detailPlayer).label}</h3>
@@ -1712,15 +1658,21 @@ export default function App() {
             </ul>
           )}
           <p>
-            2026年推定年俸を使用した仮判定です。実際の候補リストを示すものではありません。
+            2026年推定年俸を使用しています。実際の候補リストを示すものではありません。
           </p>
-          <h3>未確認の条件</h3>
-          <ul>
-            {eligibilityOf(detailPlayer).unresolved.map((reason) => (
-              <li key={reason}>{reason}</li>
-            ))}
-          </ul>
           <div className="player-detail-sources">
+            {detailPlayer.draftFacts?.exclusions.map((exclusion, index) => (
+              <a
+                className="source-link"
+                href={exclusion.source}
+                target="_blank"
+                rel="noreferrer"
+                key={`${exclusion.source}-${index}`}
+              >
+                {exclusion.reason}の出典
+                <ExternalLink size={14} />
+              </a>
+            ))}
             {detailPlayer.draftFacts?.salarySource && (
               <a
                 className="source-link"
@@ -1775,9 +1727,9 @@ export default function App() {
           <div className="inline-notice">
             <Info size={19} />
             <span>
-              <strong>2026年推定年俸を用いた仮判定</strong>
+              <strong>2026年推定年俸を使用</strong>
               <br />
-              新聞報道から2026年の対象範囲改定と2025年の第2巡変更を参照し、同票時の順位・予備指名の拘束・条件付き入札を実装しています。年俸は利用者の方針により2026年推定額で仮判定します。選手別の契約情報と入札の内部調整は完全再現を保証しません。
+              新聞報道から2026年の対象範囲改定と2025年の第2巡変更を参照し、同票時の順位・予備指名の拘束・条件付き入札を実装しています。年俸は2026年推定額を使用します。選手別の契約情報と入札の内部調整は完全再現を保証しません。
             </span>
           </div>
           <p>
@@ -1823,7 +1775,7 @@ export default function App() {
             <li>
               <strong>候補提出</strong>
               <p>
-                自球団から2名以上を選びます。CPU11球団は主力級を保護し、出場機会・年齢・補強ポイントに応じて候補を選びます。新しいプレーでは候補の組み合わせが変わります。
+                自球団から2名以上を選びます。CPU11球団は主力級を保護し、出場機会・年齢などに応じて候補を選びます。新しいプレーでは候補の組み合わせが変わります。
               </p>
             </li>
             <li>
@@ -1847,11 +1799,11 @@ export default function App() {
           </ol>
           <h3>制度の調査と選手別の資格確認</h3>
           <p>
-            年俸例外・FA資格・前年現役ドラフト・育成登録等を反映しています。年俸は2026年の推定額で仮判定し、5,000万円以上1億円未満を1名含める場合は、5,000万円未満が2名以上必要です。未確認の契約等は残ります。取り込みでは、利用者が資格を確認した選手だけを
+            年俸例外・FA資格・前年現役ドラフト・育成登録等を反映しています。年俸は2026年の推定額を使用し、5,000万円以上1億円未満を1名含める場合は、5,000万円未満が2名以上必要です。取り込みでは、利用者が資格を確認した選手だけを
             eligible: true にしてください。
           </p>
           <p>
-            実際の候補リストや球団の判断を予測するものではありません。補強ポイント・CPUの選考・ゲーム内適合度は独自設定で、実際の編成方針・成績・選手評価ではありません。
+            実際の候補リストや球団の判断を予測するものではありません。CPUの選考は独自設定で、実際の編成方針・成績・選手評価ではありません。
           </p>
           <a
             className="source-link"
@@ -1892,11 +1844,11 @@ export default function App() {
             {isReference
               ? '操作確認のため、2024年前後の所属を参考に実在選手72名を手入力しています。2026年の所属・契約・引退・参加資格を反映したものではなく、球団ごとの全登録選手も収録していません。候補選手として表示されても、実際の提出可能性を示すものではありません。'
               : isOfficial
-                ? `NPB公式サイトの2026年度名簿から${players.length}名を収録し、2026年度一軍成績を対応付けています。名簿・打撃・投手の計36ページを取得しました。育成登録選手は選択できません。2026年推定年俸、公式FA資格者、前年現役ドラフト加入者、育成登録、戦力外等の報道を候補判定に反映しました。外国出身で外国人区分未確認の選手も保留します。複数年契約・過去のFA行使・開催時の保留名簿は全選手の確認が完了していません。仮対象でも実際に提出できるとは限りません。`
+                ? `NPB公式サイトの2026年度名簿から${players.length}名を収録し、2026年度一軍成績を対応付けています。名簿・打撃・投手の計36ページを取得しました。育成登録選手は選択できません。2026年推定年俸、公式FA資格者、前年現役ドラフト加入者、育成登録、戦力外等の報道を候補判定に反映しました。出生地だけで外国人枠を判定せず、NPBの記録などを照合しています。実際の提出候補とは異なります。`
                 : '取り込まれたデータを使用しています。ファイルの形式は検証しますが、在籍・参加資格・出典の正確性は自動照合しません。'}
           </p>
           <p>
-            年俸はgurazeni.comの2026年推定額を使用し、金額不明は補完せず候補を保留します。実際の翌季年俸による対象判定とは異なります。成績は公式ページの掲載値です。「ゲーム内適合度」は成績・守備位置・ゲーム内乱数から算出した独自スコア、CPUの補強方針は仮想設定です。
+            年俸はgurazeni.comの2026年推定額を使用し、金額不明は補完せず候補を保留します。実際の翌季年俸による対象判定とは異なります。成績は公式ページの掲載値です。CPUの判断はゲーム用の設定です。
           </p>
           <h3>2026年データの取り込み</h3>
           <p>

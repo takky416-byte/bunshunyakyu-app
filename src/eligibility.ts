@@ -8,6 +8,8 @@ export interface EligibilityFacts {
   exclusions: { reason: string; source: string }[]
   holds: string[]
   unresolved: string[]
+  foreignPlayerTreatment?: 'domestic'
+  treatmentSource?: string
 }
 export function eligibilityOf(player: Player) {
   const f = player.draftFacts
@@ -30,10 +32,10 @@ export function eligibilityOf(player: Player) {
     label: reasons.length
       ? '対象外'
       : holds.length
-        ? '要確認・保留'
+        ? '対象外'
         : salary != null && salary >= 5000
-          ? '高年俸例外・仮判定'
-          : '仮対象',
+          ? '高年俸枠'
+          : '対象',
     unresolved: f?.unresolved ?? ['年俸・契約条件未確認'],
   }
 }

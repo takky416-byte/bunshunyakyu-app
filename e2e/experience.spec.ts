@@ -159,6 +159,9 @@ test('compact selection follows league order, previews club colors, and guides t
   await page.getByRole('checkbox').nth(0).check()
   await page.getByRole('checkbox').nth(1).check()
   await page.getByRole('button', { name: '候補を提出する' }).click()
+  await page
+    .getByRole('button', { name: '演出をスキップ', exact: true })
+    .click()
   await expect(
     page
       .getByRole('navigation', { name: 'プレーの流れ' })

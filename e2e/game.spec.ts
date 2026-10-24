@@ -87,7 +87,7 @@ test('select a club, nominate, vote, draft, restore, and share results', async (
   expect(errors).toEqual([])
 })
 
-test('mobile selection, search, rules dialog, and guarded restart', async ({
+test('mobile selection, position filter, rules dialog, and guarded restart', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 })
@@ -102,11 +102,17 @@ test('mobile selection, search, rules dialog, and guarded restart', async ({
   await page.keyboard.press('Escape')
   await expect(page.getByRole('dialog')).toHaveCount(0)
   await page.getByRole('button', { name: 'この球団ではじめる' }).click()
-  await page
-    .getByRole('textbox', { name: '選手名で検索' })
-    .fill('存在しない選手')
-  await expect(page.getByText('条件に合う選手がいません。')).toBeVisible()
-  await page.getByRole('button', { name: '絞り込みを解除' }).click()
+  await expect(page.getByRole('textbox', { name: '選手名で検索' })).toHaveCount(
+    0,
+  )
+  const filter = page.getByRole('combobox', { name: '守備位置で絞り込み' })
+  await filter.selectOption('内野手')
+  const positions = await page
+    .locator('.player-row .position-badge')
+    .allTextContents()
+  expect(positions.length).toBeGreaterThan(0)
+  expect(positions.every((p) => p === '内')).toBe(true)
+  await filter.selectOption('すべて')
   expect(await page.getByRole('checkbox').count()).toBeGreaterThanOrEqual(2)
   await page
     .getByRole('button', { name: '新しいドラフト', exact: true })

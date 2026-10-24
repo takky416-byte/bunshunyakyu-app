@@ -47,7 +47,7 @@ describe('2026 salary-proxy eligibility', () => {
     player.draftFacts!.holds = ['外国人区分の照合待ち']
     expect(eligibilityOf(player)).toMatchObject({
       allowed: false,
-      label: '要確認・保留',
+      label: '対象外',
     })
     player.draftFacts!.holds = []
     player.draftFacts!.exclusions = [

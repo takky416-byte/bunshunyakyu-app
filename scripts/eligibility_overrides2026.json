@@ -1,0 +1,54 @@
+{
+  "season": 2026,
+  "domesticDraftPlayers": [
+    {
+      "id": "npb-13515159",
+      "name": "ワォーターズ",
+      "draftName": "ワォーターズ 璃海 ジュミル",
+      "year": 2023,
+      "team": "e"
+    },
+    {
+      "id": "npb-71775136",
+      "name": "ケムナ 誠",
+      "draftName": "ケムナ ブラッド 誠",
+      "year": 2017,
+      "team": "c"
+    },
+    {
+      "id": "npb-03305157",
+      "name": "山口 アタル",
+      "draftName": "山口 アタル",
+      "year": 2022,
+      "team": "f"
+    },
+    {
+      "id": "npb-53355150",
+      "name": "陽 柏翔",
+      "draftName": "陽 柏翔",
+      "year": 2024,
+      "team": "e"
+    },
+    {
+      "id": "npb-43345150",
+      "name": "林 冠臣",
+      "draftName": "林 冠臣",
+      "year": 2024,
+      "team": "l"
+    },
+    {
+      "id": "npb-53255159",
+      "name": "翔聖",
+      "draftName": "髙橋 翔聖",
+      "year": 2023,
+      "team": "s"
+    },
+    {
+      "id": "npb-01905159",
+      "name": "シンクレア",
+      "draftName": "シンクレア ジョセフ 孝ノ助",
+      "year": 2023,
+      "team": "l"
+    }
+  ]
+}

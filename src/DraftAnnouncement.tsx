@@ -25,7 +25,14 @@ export default function DraftAnnouncement({
   const { game } = item
   const pick = game.picks.at(-1)
   const selected = players.find((p) => p.id === pick?.playerId)
-  const club = teamById[item.kind === 'pick' ? pick!.by : game.order[0]]
+  const club =
+    teamById[
+      item.kind === 'pick'
+        ? pick!.by
+        : item.kind === 'nominations'
+          ? game.userTeam
+          : game.order[0]
+    ]
   const roundTwoPicks = game.picks.filter((p) => p.round === 2)
   const ownRelease = item.kind === 'pick' && pick?.from === game.userTeam
 
@@ -65,13 +72,15 @@ export default function DraftAnnouncement({
   const last = index === sequence.length - 1
   const nextLabel = !last
     ? '次の指名発表へ'
-    : game.stage === 'results'
-      ? 'ドラフト結果を見る'
-      : game.stage === 'round2'
-        ? '第2巡へ進む'
-        : game.current === game.userTeam
-          ? '自分の指名へ'
-          : 'ドラフトへ戻る'
+    : item.kind === 'nominations'
+      ? '獲得希望を選ぶ'
+      : game.stage === 'results'
+        ? 'ドラフト結果を見る'
+        : game.stage === 'round2'
+          ? '第2巡へ進む'
+          : game.current === game.userTeam
+            ? '自分の指名へ'
+            : 'ドラフトへ戻る'
 
   return (
     <dialog
@@ -87,27 +96,33 @@ export default function DraftAnnouncement({
         <div className="announcement-topline">
           <span>GENEKI DRAFT / 2026</span>
           <span>
-            {item.kind === 'order'
-              ? 'OPENING'
-              : item.kind === 'round2'
-                ? 'ROUND 02'
-                : `ROUND 01 / ${String(game.picks.length).padStart(2, '0')}`}
+            {item.kind === 'nominations'
+              ? 'CANDIDATE LISTS'
+              : item.kind === 'order'
+                ? 'OPENING'
+                : item.kind === 'round2'
+                  ? 'ROUND 02'
+                  : `ROUND 01 / ${String(game.picks.length).padStart(2, '0')}`}
           </span>
         </div>
         <div className="announcement-stage" data-revealed={revealed}>
           <span className="announcement-kicker">
-            {item.kind === 'order'
-              ? '12球団の予備指名、集計完了。'
-              : item.kind === 'round2'
-                ? '第2巡、入札条件の照合。'
-                : `${club.name}、選択希望選手。`}
+            {item.kind === 'nominations'
+              ? `${club.name}の候補を受け付けました。`
+              : item.kind === 'order'
+                ? '12球団の予備指名、集計完了。'
+                : item.kind === 'round2'
+                  ? '第2巡、入札条件の照合。'
+                  : `${club.name}、選択希望選手。`}
           </span>
           <h2 id="announcement-title" tabIndex={-1}>
-            {item.kind === 'order'
-              ? '最初の指名権は、'
-              : item.kind === 'round2'
-                ? 'もうひとつの移籍が、'
-                : 'その名前が、未来を変える。'}
+            {item.kind === 'nominations'
+              ? '12球団の候補が、集まる。'
+              : item.kind === 'order'
+                ? '最初の指名権は、'
+                : item.kind === 'round2'
+                  ? 'もうひとつの移籍が、'
+                  : 'その名前が、未来を変える。'}
           </h2>
           <div className="announcement-envelope" aria-hidden="true">
             <span>{item.kind === 'pick' ? club.mark : '2026'}</span>
@@ -127,16 +142,31 @@ export default function DraftAnnouncement({
                   <i />
                 </span>
                 <p>
-                  {item.kind === 'order'
-                    ? '指名順位を確認しています'
-                    : item.kind === 'round2'
-                      ? '入札の成立を確認しています'
-                      : 'まもなく、指名を発表します'}
+                  {item.kind === 'nominations'
+                    ? '他の11球団の候補リストを取りまとめています'
+                    : item.kind === 'order'
+                      ? '指名順位を確認しています'
+                      : item.kind === 'round2'
+                        ? '入札の成立を確認しています'
+                        : 'まもなく、指名を発表します'}
                 </p>
               </div>
             ) : (
               <div className="announcement-revealed">
-                {item.kind === 'order' ? (
+                {item.kind === 'nominations' ? (
+                  <>
+                    <span className="announcement-result-label">
+                      LISTS READY
+                    </span>
+                    <strong className="announcement-name">
+                      12球団の候補が揃いました
+                    </strong>
+                    <p>
+                      提出候補は計{Object.values(game.offers).flat().length}名。
+                    </p>
+                    <small>次は、獲得したい選手を1名選んで投票します。</small>
+                  </>
+                ) : item.kind === 'order' ? (
                   <>
                     <span className="announcement-result-label">
                       FIRST PICK

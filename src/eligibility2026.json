@@ -26,12 +26,12 @@
     {
       "url": "https://www.gurazeni.com/team/5",
       "retrievedAt": "2026-10-24",
-      "sha256": "fbd0cf57719eb39587328062e12d32011565230068312573b7d0240cbcf75e2e"
+      "sha256": "e9c37770c1979eb47dc696e26cacce8756c34593f10779a9a7754605d1744139"
     },
     {
       "url": "https://www.gurazeni.com/team/6",
       "retrievedAt": "2026-10-24",
-      "sha256": "4b8ec6ae2a561a08aef318fe8888f55b644bfb653e8d931695190534a1a7e91f"
+      "sha256": "97550fff21cb8c2d82650475335c2c72512551a79ca90a1f899c12ea96138440"
     },
     {
       "url": "https://www.gurazeni.com/team/7",
@@ -76,7 +76,42 @@
     {
       "url": "https://www.nikkansports.com/baseball/news/202609280000276.html",
       "retrievedAt": "2026-10-24",
-      "sha256": "1ed6640107fca8409157c8fdfd7b7f355a9cb153bdd83a0fad3312cd9f674e72"
+      "sha256": "48e4bb6339e719be08ef77a01858375f7becdf17c46f77f1ecde33cbc6eff41e"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2023/draftlist_e.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "b72c90a9d9804f57e469c73a3c81e36ffbb9ffa0cf35a61ebcd15bc97232512d"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2017/draftlist_c.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "2472a375d8226bc0f41aa1909c0395f84b932788933111f0227b8003dd28bbc7"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2022/draftlist_f.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "b30abe2d542cff9379e1aa2ad66bbaba0c4d02a37a51c9112f69697eb16dc161"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2024/draftlist_e.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "2742fa4138816f80af9f266b6728dce0d30e61eec2bc19cf900d7db8c680c8cd"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2024/draftlist_l.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "c62517e8dc917e8b5d56bea3a69e88c621ea174e42b7bb902ccf54d1fbc2d083"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2023/draftlist_s.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "9aa2bceff0f1a3df0f23fa30e0520ebb4cd70b1079913649a0afb08b94ce5a08"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2023/draftlist_l.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "343e6f1548b9a015ded972d4d54d439cfee3184bf2f79aa77321965e70530f6c"
     }
   ],
   "players": {
@@ -107,7 +142,7 @@
           "source": "https://npb.jp/announcement/2026/fa_qualified.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -123,7 +158,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         },
         {
@@ -570,7 +605,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -884,7 +919,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -922,7 +957,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -984,7 +1019,7 @@
           "source": "https://npb.jp/bis/teams/rst_t.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -1004,7 +1039,7 @@
           "source": "https://npb.jp/bis/teams/rst_t.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -1042,7 +1077,7 @@
           "source": "https://npb.jp/bis/teams/rst_t.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -1402,7 +1437,7 @@
           "source": "https://c.npb.jp/geneki_draft/2025/"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -1473,7 +1508,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -1611,7 +1646,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -1862,7 +1897,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -1891,7 +1926,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -2128,7 +2163,7 @@
           "source": "https://npb.jp/bis/teams/rst_g.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -2164,7 +2199,7 @@
           "source": "https://npb.jp/bis/teams/rst_g.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -2184,7 +2219,7 @@
           "source": "https://npb.jp/bis/teams/rst_g.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -2236,7 +2271,7 @@
           "source": "https://npb.jp/bis/teams/rst_g.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -2308,7 +2343,7 @@
           "source": "https://npb.jp/bis/teams/rst_g.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -2344,7 +2379,7 @@
           "source": "https://npb.jp/bis/teams/rst_g.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -2430,7 +2465,7 @@
           "source": "https://npb.jp/bis/teams/rst_g.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -2514,7 +2549,7 @@
           "source": "https://npb.jp/bis/teams/rst_g.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -2550,7 +2585,7 @@
           "source": "https://npb.jp/bis/teams/rst_g.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -2671,7 +2706,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -2687,7 +2722,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -2752,7 +2787,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -2790,7 +2825,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -2839,7 +2874,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -2945,7 +2980,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -3029,7 +3064,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -3109,7 +3144,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -3125,7 +3160,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -3419,7 +3454,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -3578,7 +3613,7 @@
           "source": "https://npb.jp/bis/teams/rst_db.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -3614,7 +3649,7 @@
           "source": "https://npb.jp/bis/teams/rst_db.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -3634,7 +3669,7 @@
           "source": "https://npb.jp/bis/teams/rst_db.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -3654,7 +3689,7 @@
           "source": "https://npb.jp/bis/teams/rst_db.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -3863,13 +3898,18 @@
       "salaryManYen": 1600.0,
       "salarySource": "https://www.gurazeni.com/team/4",
       "checkedAt": "2026-10-24",
-      "exclusions": [],
-      "holds": [
-        "外国出身：外国人区分の照合待ち"
+      "exclusions": [
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
+        }
       ],
+      "holds": [],
       "unresolved": [
         "複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち"
-      ]
+      ],
+      "foreignPlayerTreatment": "domestic",
+      "treatmentSource": "https://draft.npb.jp/draft/2017/draftlist_c.html"
     },
     "npb-31235159": {
       "salaryYear": 2026,
@@ -3931,7 +3971,12 @@
       "salaryManYen": 800.0,
       "salarySource": "https://www.gurazeni.com/team/4",
       "checkedAt": "2026-10-24",
-      "exclusions": [],
+      "exclusions": [
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
+        }
+      ],
       "holds": [],
       "unresolved": [
         "複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち"
@@ -3977,7 +4022,12 @@
       "salaryManYen": 1100.0,
       "salarySource": "https://www.gurazeni.com/team/4",
       "checkedAt": "2026-10-24",
-      "exclusions": [],
+      "exclusions": [
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
+        }
+      ],
       "holds": [],
       "unresolved": [
         "複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち"
@@ -4091,7 +4141,12 @@
       "salaryManYen": 450.0,
       "salarySource": "https://www.gurazeni.com/team/4",
       "checkedAt": "2026-10-24",
-      "exclusions": [],
+      "exclusions": [
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
+        }
+      ],
       "holds": [],
       "unresolved": [
         "複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち"
@@ -4102,7 +4157,12 @@
       "salaryManYen": 800.0,
       "salarySource": "https://www.gurazeni.com/team/4",
       "checkedAt": "2026-10-24",
-      "exclusions": [],
+      "exclusions": [
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
+        }
+      ],
       "holds": [],
       "unresolved": [
         "複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち"
@@ -4202,7 +4262,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -4218,7 +4278,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -4348,7 +4408,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -4475,7 +4535,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -4526,7 +4586,12 @@
       "salaryManYen": 700.0,
       "salarySource": "https://www.gurazeni.com/team/4",
       "checkedAt": "2026-10-24",
-      "exclusions": [],
+      "exclusions": [
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
+        }
+      ],
       "holds": [],
       "unresolved": [
         "複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち"
@@ -4784,7 +4849,7 @@
           "source": "https://npb.jp/announcement/2026/fa_qualified.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -4902,7 +4967,7 @@
           "source": "https://npb.jp/announcement/2026/fa_qualified.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -5027,7 +5092,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -5137,7 +5202,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -5153,7 +5218,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -5351,7 +5416,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -5597,12 +5662,12 @@
           "source": "https://npb.jp/bis/teams/rst_s.html"
         }
       ],
-      "holds": [
-        "外国出身：外国人区分の照合待ち"
-      ],
+      "holds": [],
       "unresolved": [
         "複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち"
-      ]
+      ],
+      "foreignPlayerTreatment": "domestic",
+      "treatmentSource": "https://draft.npb.jp/draft/2023/draftlist_s.html"
     },
     "npb-61965155": {
       "salaryYear": 2026,
@@ -5681,7 +5746,7 @@
           "source": "https://npb.jp/bis/teams/rst_s.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -5895,7 +5960,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -6076,7 +6141,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -6211,7 +6276,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -6393,7 +6458,7 @@
           "source": "https://c.npb.jp/geneki_draft/2025/"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -6433,7 +6498,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -6500,7 +6565,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -6607,7 +6672,7 @@
           "source": "https://npb.jp/bis/teams/rst_d.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -6709,7 +6774,7 @@
           "source": "https://npb.jp/bis/teams/rst_d.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -6745,7 +6810,7 @@
           "source": "https://npb.jp/bis/teams/rst_d.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -6946,7 +7011,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -7380,7 +7445,7 @@
           "source": "https://npb.jp/announcement/2026/fa_qualified.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -7629,7 +7694,7 @@
           "source": "https://npb.jp/bis/teams/rst_h.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -7793,7 +7858,7 @@
           "source": "https://npb.jp/bis/teams/rst_h.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -8103,7 +8168,7 @@
           "source": "https://npb.jp/bis/teams/rst_h.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -8682,7 +8747,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         },
         {
@@ -8822,7 +8887,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -8956,7 +9021,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -9011,7 +9076,7 @@
           "source": "https://npb.jp/announcement/2026/fa_qualified.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -9126,7 +9191,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -9425,7 +9490,7 @@
           "source": "https://npb.jp/bis/teams/rst_f.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -9445,16 +9510,16 @@
           "source": "https://npb.jp/bis/teams/rst_f.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
-      "holds": [
-        "外国出身：外国人区分の照合待ち"
-      ],
+      "holds": [],
       "unresolved": [
         "複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち"
-      ]
+      ],
+      "foreignPlayerTreatment": "domestic",
+      "treatmentSource": "https://draft.npb.jp/draft/2022/draftlist_f.html"
     },
     "npb-41845159": {
       "salaryYear": 2026,
@@ -9556,7 +9621,7 @@
           "source": "https://npb.jp/announcement/2026/fa_qualified.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -9583,7 +9648,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -9599,7 +9664,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -9719,7 +9784,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -10063,7 +10128,7 @@
           "source": "https://npb.jp/announcement/2026/fa_qualified.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -10101,7 +10166,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -10216,7 +10281,7 @@
           "source": "https://npb.jp/announcement/2026/fa_qualified.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -10347,7 +10412,7 @@
           "source": "https://npb.jp/bis/teams/rst_m.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -10399,7 +10464,7 @@
           "source": "https://npb.jp/bis/teams/rst_m.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -10533,7 +10598,7 @@
           "source": "https://npb.jp/bis/teams/rst_m.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -10599,6 +10664,10 @@
         {
           "reason": "育成登録",
           "source": "https://npb.jp/bis/teams/rst_m.html"
+        },
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
       "holds": [],
@@ -10788,7 +10857,7 @@
           "source": "https://npb.jp/announcement/2026/fa_qualified.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -10969,7 +11038,7 @@
           "source": "https://npb.jp/announcement/2026/fa_qualified.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -11018,7 +11087,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -11034,7 +11103,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -11110,7 +11179,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         },
         {
@@ -11322,12 +11391,12 @@
       "salarySource": "https://www.gurazeni.com/team/10",
       "checkedAt": "2026-10-24",
       "exclusions": [],
-      "holds": [
-        "外国出身：外国人区分の照合待ち"
-      ],
+      "holds": [],
       "unresolved": [
         "複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち"
-      ]
+      ],
+      "foreignPlayerTreatment": "domestic",
+      "treatmentSource": "https://draft.npb.jp/draft/2023/draftlist_e.html"
     },
     "npb-41345153": {
       "salaryYear": 2026,
@@ -11368,12 +11437,12 @@
       "salarySource": "https://www.gurazeni.com/team/10",
       "checkedAt": "2026-10-24",
       "exclusions": [],
-      "holds": [
-        "外国出身：外国人区分の照合待ち"
-      ],
+      "holds": [],
       "unresolved": [
         "複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち"
-      ]
+      ],
+      "foreignPlayerTreatment": "domestic",
+      "treatmentSource": "https://draft.npb.jp/draft/2024/draftlist_e.html"
     },
     "npb-11715152": {
       "salaryYear": 2026,
@@ -11412,7 +11481,7 @@
           "source": "https://npb.jp/announcement/2026/fa_qualified.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -11543,7 +11612,7 @@
           "source": "https://npb.jp/bis/teams/rst_e.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -11681,7 +11750,7 @@
           "source": "https://npb.jp/bis/teams/rst_e.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -11786,7 +11855,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -11840,7 +11909,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -12079,7 +12148,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -12095,7 +12164,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -12283,7 +12352,7 @@
       "checkedAt": "2026-10-24",
       "exclusions": [
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -12347,7 +12416,7 @@
           "source": "https://npb.jp/announcement/2026/fa_qualified.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -12632,7 +12701,7 @@
           "source": "https://npb.jp/bis/teams/rst_b.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -12652,7 +12721,7 @@
           "source": "https://npb.jp/bis/teams/rst_b.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -12768,7 +12837,7 @@
           "source": "https://npb.jp/bis/teams/rst_b.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -12886,7 +12955,7 @@
           "source": "https://npb.jp/bis/teams/rst_b.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -13587,7 +13656,7 @@
           "source": "https://npb.jp/announcement/2026/fa_qualified.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
@@ -13686,12 +13755,12 @@
       "salarySource": "https://www.gurazeni.com/team/8",
       "checkedAt": "2026-10-24",
       "exclusions": [],
-      "holds": [
-        "外国出身：外国人区分の照合待ち"
-      ],
+      "holds": [],
       "unresolved": [
         "複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち"
-      ]
+      ],
+      "foreignPlayerTreatment": "domestic",
+      "treatmentSource": "https://draft.npb.jp/draft/2024/draftlist_l.html"
     },
     "npb-53555153": {
       "salaryYear": 2026,
@@ -13881,16 +13950,16 @@
           "source": "https://npb.jp/bis/teams/rst_l.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
-      "holds": [
-        "外国出身：外国人区分の照合待ち"
-      ],
+      "holds": [],
       "unresolved": [
         "複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち"
-      ]
+      ],
+      "foreignPlayerTreatment": "domestic",
+      "treatmentSource": "https://draft.npb.jp/draft/2023/draftlist_l.html"
     },
     "npb-91695152": {
       "salaryYear": 2026,
@@ -14017,10 +14086,6 @@
         {
           "reason": "育成登録",
           "source": "https://npb.jp/bis/teams/rst_l.html"
-        },
-        {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
-          "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],
       "holds": [
@@ -14241,7 +14306,7 @@
           "source": "https://npb.jp/bis/teams/rst_l.html"
         },
         {
-          "reason": "戦力外・退団・引退の報道あり（仮想候補から除外）",
+          "reason": "戦力外・退団・引退の報道あり",
           "source": "https://www.nikkansports.com/baseball/news/202609280000276.html"
         }
       ],

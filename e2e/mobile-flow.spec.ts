@@ -18,6 +18,73 @@ async function nominate(page: Page) {
   await page.getByRole('checkbox').nth(1).check()
 }
 
+test('domestic-treated players are selectable and reported departures stay excluded', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/')
+  await page
+    .getByRole('button', { name: '東北楽天ゴールデンイーグルス', exact: true })
+    .click()
+  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+  await expect(page.locator('.app-shell')).not.toContainText(
+    /仮対象|仮判定|未確認|補強ポイント/,
+  )
+  await expect(page.getByRole('textbox', { name: '選手名で検索' })).toHaveCount(
+    0,
+  )
+  const rowFor = (name: string) =>
+    page
+      .locator('.player-row')
+      .filter({ has: page.getByText(name, { exact: true }) })
+  const waters = rowFor('ワォーターズ')
+  await expect(waters.getByRole('checkbox')).toBeEnabled()
+  await waters.getByRole('checkbox').check()
+  await expect(waters.getByRole('checkbox')).toBeChecked()
+  await expect(rowFor('陽 柏翔').getByRole('checkbox')).toBeEnabled()
+  for (const width of [320, 390]) {
+    await page.setViewportSize({ width, height: 844 })
+    expect((await waters.boundingBox())!.height).toBeLessThan(90)
+    expect(
+      (await page.locator('.roster-list').boundingBox())!.height,
+    ).toBeLessThanOrEqual(363)
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true)
+  }
+  await page
+    .getByRole('button', { name: '新しいドラフト', exact: true })
+    .click()
+  await page
+    .getByRole('button', { name: '球団選択に戻る', exact: true })
+    .click()
+  await page
+    .getByRole('button', { name: '広島東洋カープ', exact: true })
+    .click()
+  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+  await expect(rowFor('ケムナ 誠')).toHaveCount(0)
+  await expect(rowFor('松本 竜也')).toHaveCount(0)
+  await page.locator('.data-disclosure > summary').click()
+  await page.getByRole('button', { name: '対象外も表示' }).click()
+  await expect(rowFor('ケムナ 誠').getByRole('checkbox')).toBeDisabled()
+  await rowFor('ケムナ 誠')
+    .getByRole('button', { name: /の詳細$/ })
+    .click()
+  await expect(page.getByRole('dialog')).toContainText(
+    '戦力外・退団・引退の報道あり',
+  )
+  await expect(
+    page
+      .getByRole('dialog')
+      .getByRole('link', { name: '戦力外・退団・引退の報道ありの出典' }),
+  ).toHaveAttribute(
+    'href',
+    'https://www.nikkansports.com/baseball/news/202609280000276.html',
+  )
+})
+
 test('mobile layout keeps large type, folds supporting panels, and opens details without selecting the player', async ({
   page,
 }) => {
@@ -35,7 +102,7 @@ test('mobile layout keeps large type, folds supporting panels, and opens details
     await page.evaluate(() => document.documentElement.scrollHeight),
   ).toBeLessThan(1500)
   const row = page.locator('.player-row').first()
-  expect((await row.boundingBox())!.height).toBeLessThan(140)
+  expect((await row.boundingBox())!.height).toBeLessThan(90)
   expect(
     await row
       .locator('.player-name strong')
@@ -51,7 +118,8 @@ test('mobile layout keeps large type, folds supporting panels, and opens details
   const detail = row.getByRole('button', { name: /の詳細$/ })
   await detail.click()
   const dialog = page.getByRole('dialog')
-  await expect(dialog).toContainText('未確認の条件')
+  await expect(dialog).toContainText('2026年推定年俸')
+  await expect(dialog).not.toContainText(/仮対象|仮判定|未確認|補強ポイント/)
   await expect(dialog.getByRole('link', { name: '年俸出典' })).toBeVisible()
   await expect(page.locator('.roster-list input:checked')).toHaveCount(0)
   await page.keyboard.press('Escape')
@@ -148,6 +216,11 @@ test('announcement waits retain dialog focus and closing it moves to the next ac
   await page.getByRole('checkbox').nth(0).check()
   await page.getByRole('checkbox').nth(1).check()
   await page.getByRole('button', { name: '候補を提出する' }).click()
+  await page.clock.runFor(2000)
+  await page
+    .getByRole('dialog')
+    .getByRole('button', { name: '獲得希望を選ぶ', exact: true })
+    .click()
   await page.clock.runFor(50)
   await page.getByRole('radio').first().check()
   await page.getByRole('button', { name: '投票してドラフトへ' }).click()

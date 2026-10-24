@@ -562,3 +562,52 @@
     animation: none;
   }
 }
+
+/* The selection list keeps only the information needed for the next choice. */
+.app-shell .roster-toolbar {
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 8px;
+}
+.roster-toolbar > label {
+  font-size: 0.875rem;
+  color: var(--club-link);
+}
+.app-shell .roster-toolbar select {
+  min-height: 40px;
+  max-width: 230px;
+}
+.app-shell .roster-panel .player-row {
+  min-height: 0;
+  padding-block: 9px;
+}
+.app-shell .roster-panel .player-name {
+  gap: 2px;
+}
+.app-shell .roster-panel .player-name strong {
+  line-height: 1.5;
+}
+.app-shell .roster-panel .player-name small {
+  line-height: 1.45;
+}
+.app-shell .roster-panel .player-name .salary-info {
+  color: var(--club-link) !important;
+}
+@media (max-width: 760px) {
+  .app-shell .roster-list {
+    max-height: clamp(190px, 43dvh, 360px);
+  }
+  .app-shell .roster-panel .player-row {
+    padding-block: 7px;
+  }
+  .app-shell .roster-panel .player-details-button {
+    margin-top: 20px;
+    min-height: 32px;
+  }
+  .app-shell .roster-panel .player-name strong {
+    font-size: 1.125rem;
+  }
+  .app-shell .roster-toolbar {
+    flex-wrap: nowrap;
+  }
+}

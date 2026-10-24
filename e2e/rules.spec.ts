@@ -50,11 +50,11 @@ test('high-salary exception needs two ordinary players and excluded candidates c
   await expect(
     page.getByRole('button', { name: '候補を提出する' }),
   ).toBeEnabled()
-  await page.getByRole('button', { name: '対象外・確認保留も表示' }).click()
+  await page.getByRole('button', { name: '対象外も表示' }).click()
   expect(
     await page.locator('.player-row input:disabled').count(),
   ).toBeGreaterThan(0)
-  await expect(page.locator('.salary-info').first()).toContainText('2026')
+  await expect(page.locator('.salary-info').first()).toContainText('万円')
 })
 
 test('legacy saves are retained rather than interpreted under new rules', async ({
