@@ -27,25 +27,11 @@ export default function ResultShare({
   async function copy() {
     setMessage('')
     setManual(false)
-    if (navigator.clipboard && typeof ClipboardItem !== 'undefined') {
-      try {
-        await navigator.clipboard.write([
-          new ClipboardItem({
-            'text/html': new Blob([result.html], { type: 'text/html' }),
-            'text/plain': new Blob([result.text], { type: 'text/plain' }),
-          }),
-        ])
-        setMessage(
-          '表付きでコピーしました。ブログの編集欄に貼り付けてください。',
-        )
-        return
-      } catch {
-        /* Try the browser's text-only clipboard. */
-      }
-    }
     try {
       await navigator.clipboard.writeText(result.text)
-      setMessage('文章としてコピーしました。ブログなどに貼り付けてください。')
+      setMessage(
+        'テキストをコピーしました。ブログなどに貼り付けて活用できます。',
+      )
     } catch {
       setManual(true)
       setMessage(
@@ -67,7 +53,7 @@ export default function ResultShare({
       setMessage('結果をPNG画像にしました。ブログの画像として使えます。')
     } catch {
       setMessage(
-        '画像を作成できませんでした。「ブログにコピー」をお試しください。',
+        '画像を作成できませんでした。テキストのコピーをお試しください。',
       )
     } finally {
       setBusy(false)
@@ -75,22 +61,32 @@ export default function ResultShare({
   }
   return (
     <div className="result-share">
-      <p>獲得・放出と12球団の結果を、ブログやSNSに貼り付けて使えます。</p>
       <div className="share-preview">
         <strong>{result.club}</strong>
         <p>獲得：{result.acquired.map((p) => p.player).join('、')}</p>
         <p>放出：{result.released.map((p) => p.player).join('、')}</p>
       </div>
       <div className="share-actions">
-        <button className="button primary" onClick={copy}>
+        <button
+          className="button primary"
+          onClick={copy}
+          aria-label="獲得・放出と12球団の結果のテキストをコピー"
+        >
           <Copy size={17} />
-          ブログにコピー
+          <span className="copy-result-label">
+            <span>獲得・放出と</span>
+            <span>12球団の結果の</span>
+            <span>テキストをコピー</span>
+          </span>
         </button>
         <button className="button ghost" onClick={image} disabled={busy}>
           <ImageDown size={17} />
           {busy ? '画像を作成中…' : 'PNG画像を保存'}
         </button>
       </div>
+      <p className="share-help">
+        獲得・放出と12球団の結果を文章としてコピーします。ブログやSNSなどに貼り付けて活用できます。
+      </p>
       {message && (
         <p className="share-message" role="status">
           {message}
@@ -105,9 +101,6 @@ export default function ResultShare({
           rows={10}
         />
       )}
-      <p className="share-help">
-        「ブログにコピー」は表付きの形式に対応しています。貼り付け先によっては文章として表示されます。
-      </p>
     </div>
   )
 }

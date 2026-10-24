@@ -1330,6 +1330,8 @@ export default function App() {
                         <p className="small-print">
                           参加確定後、CPUの入札と合わせて成立条件を判定します。指名が成立しない場合や、獲得のみ・放出のみになる場合もあります。
                         </p>
+                      </div>
+                      <div className="panel-footer">
                         <button
                           className="button primary"
                           disabled={
@@ -1775,7 +1777,7 @@ export default function App() {
             <li>
               <strong>候補提出</strong>
               <p>
-                自球団から2名以上を選びます。CPU11球団は主力級を保護し、出場機会・年齢などに応じて候補を選びます。新しいプレーでは候補の組み合わせが変わります。
+                自球団から2名以上を選びます。CPU11球団は一軍の戦力・若手・ルーキー・入団間もない上位指名選手を保護し、出場機会などに応じて候補を選びます。新しいプレーでは候補の組み合わせが変わります。
               </p>
             </li>
             <li>

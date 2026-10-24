@@ -4,6 +4,7 @@ import App from './App'
 import './styles.css'
 import './mobile-layout.css'
 import './experience.css'
+import './play-layout.css'
 const AnalyticsAdmin = lazy(() => import('./AnalyticsAdmin'))
 
 createRoot(document.getElementById('root')!).render(

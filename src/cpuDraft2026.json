@@ -1,0 +1,2695 @@
+{
+  "version": 1,
+  "season": 2026,
+  "asOf": "2026-10-24",
+  "sources": [
+    {
+      "url": "https://draft.npb.jp/draft/2023/draftlist_t.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "922a7602d8683b845309106f19aee04e477b61b006816b49c9a29a26b2fe5287"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2023/draftlist_g.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "42adfdbb4a82ce79336cda1af89301d51739b4cd4e8e262c6a45dbf3b7731c43"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2023/draftlist_db.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "e32ac86917970e86d72b4142408832679e52ea951eaf5282dc3b770547429237"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2023/draftlist_c.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "d1a85019feeaf0b300e95b7496c130247ab4de8e72cd2bdb70d8fab33b385021"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2023/draftlist_s.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "9aa2bceff0f1a3df0f23fa30e0520ebb4cd70b1079913649a0afb08b94ce5a08"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2023/draftlist_d.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "7fcb66915da659b1147dfab1c281d1d5dcfd3d1db75b6b17090d0d187d492bf1"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2023/draftlist_h.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "dc1f04c697bf55393af3c12c916198e105236cb9c568ac5678266e214baebc5d"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2023/draftlist_f.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "27d4e78de90b20af774b06bda51480eb7e364dc80e9b18d77dd9f38ed53bfd78"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2023/draftlist_m.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "cc620f9cd16dac1d7cd87cef490a3573fe74793b4fb20205cf456186c5564d7a"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2023/draftlist_e.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "b72c90a9d9804f57e469c73a3c81e36ffbb9ffa0cf35a61ebcd15bc97232512d"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2023/draftlist_b.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "848548d4cce5ac8b48be7c2419a36e0b1ab91bcb5da3e456c481c2f643c2fe26"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2023/draftlist_l.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "343e6f1548b9a015ded972d4d54d439cfee3184bf2f79aa77321965e70530f6c"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2024/draftlist_t.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "690fd85e7c5df651380e1fb7c82772003265f7b2c7e0e730cef175021386bf3a"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2024/draftlist_g.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "d19b5a1112606dc1873f5af6197b5ae17cadb78ea0f94a7cad6473f965605fbd"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2024/draftlist_db.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "222589a4c7678c23a0bdf39bd5088b9532decaa3a65827147149a555d18d2602"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2024/draftlist_c.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "f8a7f56484d09760684a9f6dc291a6b2fef7dbf1c531f16002413d67558db0dc"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2024/draftlist_s.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "df41de3e2de72273f5fbc0a01c51ff8979e3ef760bbeb86479bfcb6b9fc44c7a"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2024/draftlist_d.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "7e0eced3c00d66aac66d7f7817f54478109f772f55e8d530fc9aad0708c680a7"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2024/draftlist_h.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "583f6853d2c2b602b762f8d2027f0c09720008d458f92fc0734fbe1e5493e786"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2024/draftlist_f.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "c1145a58634a0ae078d135fdd906df1ce43f1d334e246d89c3bcd9235b3c03f8"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2024/draftlist_m.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "2c9fbb4bce61a0b54184dc62119582a3ca646cebd0cdf5dd3c7c088fed8ffd5b"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2024/draftlist_e.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "2742fa4138816f80af9f266b6728dce0d30e61eec2bc19cf900d7db8c680c8cd"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2024/draftlist_b.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "869a260350b345a1ad8069164a48035bc03e2ddee9f4b71c1415bbf643ab2e7d"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2024/draftlist_l.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "c62517e8dc917e8b5d56bea3a69e88c621ea174e42b7bb902ccf54d1fbc2d083"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2025/draftlist_t.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "4f87b9e3d5746eef3252589fcb5d0fab6bea1fcde85564361bc0e4da849f6b77"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2025/draftlist_g.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "f2b69c5b92f5c4512702c36465641f6258151f708f0d3beda5e838f8661d4822"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2025/draftlist_db.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "3b6787fbbbb8ab19b0037f166c4ff856a91d71fe8efb974338dce24e65a6e7a6"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2025/draftlist_c.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "ad63a9c63762c07074ff0d5736d2d65cddd342486423201c4f6a75c4ea98afca"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2025/draftlist_s.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "dd2c34025adfc247378c10ac4aac29971a2eda08f3404d6e00bc87c96e3c204a"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2025/draftlist_d.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "0a6d1ee3546649b1cc8ff58fa5f401da4a5a8b9e7025d13725f7467536b2ea00"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2025/draftlist_h.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "c6e5a7b77dd3c96b6fa2dde55e90dd868b73f5680c092f64c1b4977991f5bc7e"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2025/draftlist_f.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "8b13cc46ee66bd64c4827deeb159e3898551a24fde8dee4f270308d9765158e2"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2025/draftlist_m.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "4abb13e141a753447e8e552777e5a96cf7a97d9b9aecbd96ebb75789c4bb0ee3"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2025/draftlist_e.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "db3ff8bb2eff39743139c8f1c9ba30eda9deece9188aae4f131dd3df61adced7"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2025/draftlist_b.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "319c1ef46646ba587727417e6398eb61cb554c1ec8fa1c05494ebe91434ce43a"
+    },
+    {
+      "url": "https://draft.npb.jp/draft/2025/draftlist_l.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "f59f62d0a921c0f4715446a4d14b6dbf8e18289771d930fa24838cadd360f1fb"
+    },
+    {
+      "url": "https://npb.jp/bis/players/53255159.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "fce8bd9d846a0660eaaa4b82beeacb11e3dba90a52ac84c38a9e713834816500"
+    },
+    {
+      "url": "https://npb.jp/bis/players/31935159.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "886256209b1626da9ad2eaa7fc55e8fb58262e2240bd05da1150e251512146d8"
+    },
+    {
+      "url": "https://npb.jp/bis/players/13515159.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "01439bf399af8ba98e0111fe779e0ea454401cb9f774c7a686f2661139139d24"
+    },
+    {
+      "url": "https://npb.jp/bis/players/01905159.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "0d46b5400b8bc32352df0b092062c14dcfa870ebb9f4dce9a1439ae0a0046d79"
+    },
+    {
+      "url": "https://npb.jp/bis/players/91195150.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "b8c36a2fdaea6e325298ba39b025aee31032ea7c9e883f877d153c2ff21a197d"
+    },
+    {
+      "url": "https://npb.jp/bis/players/53355150.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "747a76acb26a1a6e82c93719ba5af4da3cf2154c180cd3b7e3ff44bc7860ad76"
+    },
+    {
+      "url": "https://npb.jp/bis/players/43345150.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "2289aaab5da567806caa9e509366831d8f34d8c39294ab638a4b55231fed7952"
+    },
+    {
+      "url": "https://npb.jp/bis/players/23325150.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "12b3135232860934ea449b126bc99e78a8a8c9c4dfdd742b6fcb320351d030ed"
+    },
+    {
+      "url": "https://npb.jp/bis/players/31535150.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "959ef851d11062cdcba4da1ed812a7dd3cade04f73ea80077063208fe49ec556"
+    },
+    {
+      "url": "https://npb.jp/bis/players/23125152.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "4c18e76cc4492e558a1d7b8dbf5bc59145b94bbfb830e37791356c241ca69f1f"
+    },
+    {
+      "url": "https://npb.jp/bis/players/21325152.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "dd9c31b5a3eeab86659a0a5a7e73bc245bee4c99eaa5dce408da3e2bb9cb553d"
+    },
+    {
+      "url": "https://npb.jp/bis/players/11815152.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "a1874bc4e79f83bf21e499a2fab939c6b7cb8abfdbc3aaab882d12afec401079"
+    },
+    {
+      "url": "https://npb.jp/bis/players/01305152.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "89f4f564c6098fd2afe8dbab40a2b6cc9b299ba1b6211504916659b9a5f75c13"
+    },
+    {
+      "url": "https://npb.jp/bis/players/63165152.html",
+      "retrievedAt": "2026-10-24",
+      "sha256": "5ba2d0d6a9808af68a68d6f754d67a9a97b7311cdde8e95f98239e43a7799c23"
+    }
+  ],
+  "players": {
+    "npb-61965159": {
+      "name": "下村 海翔",
+      "year": 2023,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_t.html"
+    },
+    "npb-21925159": {
+      "name": "椎葉 剛",
+      "year": 2023,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_t.html"
+    },
+    "npb-63365159": {
+      "name": "山田 脩也",
+      "year": 2023,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_t.html"
+    },
+    "npb-23325159": {
+      "name": "百﨑 蒼生",
+      "year": 2023,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_t.html"
+    },
+    "npb-01105159": {
+      "name": "石黒 佑弥",
+      "year": 2023,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_t.html"
+    },
+    "npb-11415159": {
+      "name": "津田 淳哉",
+      "year": 2023,
+      "round": 6,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_t.html"
+    },
+    "npb-93195159": {
+      "name": "松原 快",
+      "year": 2023,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_t.html"
+    },
+    "npb-11815159": {
+      "name": "福島 圭音",
+      "year": 2023,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_t.html"
+    },
+    "npb-31635159": {
+      "name": "西舘 勇陽",
+      "year": 2023,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_g.html"
+    },
+    "npb-43345159": {
+      "name": "森田 駿哉",
+      "year": 2023,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_g.html"
+    },
+    "npb-51955159": {
+      "name": "佐々木 俊輔",
+      "year": 2023,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_g.html"
+    },
+    "npb-61165159": {
+      "name": "泉口 友汰",
+      "year": 2023,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_g.html"
+    },
+    "npb-33135159": {
+      "name": "又木 鉄平",
+      "year": 2023,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_g.html"
+    },
+    "npb-03305159": {
+      "name": "村山 源",
+      "year": 2023,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_g.html"
+    },
+    "npb-01305159": {
+      "name": "宇都宮 葵星",
+      "year": 2023,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_g.html"
+    },
+    "npb-21225159": {
+      "name": "田上 優弥",
+      "year": 2023,
+      "round": 4,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_g.html"
+    },
+    "npb-21025159": {
+      "name": "園田 純規",
+      "year": 2023,
+      "round": 5,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_g.html"
+    },
+    "npb-41245159": {
+      "name": "千葉 隆広",
+      "year": 2023,
+      "round": 6,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_g.html"
+    },
+    "npb-41645159": {
+      "name": "平山 功太",
+      "year": 2023,
+      "round": 7,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_g.html"
+    },
+    "npb-33535159": {
+      "name": "度会 隆輝",
+      "year": 2023,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_db.html"
+    },
+    "npb-23125159": {
+      "name": "松本 凌人",
+      "year": 2023,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_db.html"
+    },
+    "npb-91295159": {
+      "name": "武田 陸玖",
+      "year": 2023,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_db.html"
+    },
+    "npb-91195159": {
+      "name": "石上 泰輝",
+      "year": 2023,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_db.html"
+    },
+    "npb-21125159": {
+      "name": "石田 裕太郎",
+      "year": 2023,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_db.html"
+    },
+    "npb-31335159": {
+      "name": "井上 絢登",
+      "year": 2023,
+      "round": 6,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_db.html"
+    },
+    "npb-11215159": {
+      "name": "高見澤 郁魅",
+      "year": 2023,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_db.html"
+    },
+    "npb-41945159": {
+      "name": "清水 麻成",
+      "year": 2023,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_db.html"
+    },
+    "npb-31535159": {
+      "name": "小笠原 蒼",
+      "year": 2023,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_db.html"
+    },
+    "npb-81985159": {
+      "name": "庄司 陽斗",
+      "year": 2023,
+      "round": 4,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_db.html"
+    },
+    "npb-81785159": {
+      "name": "近藤 大雅",
+      "year": 2023,
+      "round": 5,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_db.html"
+    },
+    "npb-31435159": {
+      "name": "常廣 羽也斗",
+      "year": 2023,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_c.html"
+    },
+    "npb-41045159": {
+      "name": "髙 太一",
+      "year": 2023,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_c.html"
+    },
+    "npb-31235159": {
+      "name": "滝田 一希",
+      "year": 2023,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_c.html"
+    },
+    "npb-41445159": {
+      "name": "仲田 侑仁",
+      "year": 2023,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_c.html"
+    },
+    "npb-51055159": {
+      "name": "杉田 健",
+      "year": 2023,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_c.html"
+    },
+    "npb-71975159": {
+      "name": "佐藤 啓介",
+      "year": 2023,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_c.html"
+    },
+    "npb-71075159": {
+      "name": "杉原 望来",
+      "year": 2023,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_c.html"
+    },
+    "npb-11615159": {
+      "name": "西舘 昂汰",
+      "year": 2023,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_s.html"
+    },
+    "npb-03105159": {
+      "name": "松本 健吾",
+      "year": 2023,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_s.html"
+    },
+    "npb-41145159": {
+      "name": "石原 勇輝",
+      "year": 2023,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_s.html"
+    },
+    "npb-01005159": {
+      "name": "鈴木 叶",
+      "year": 2023,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_s.html"
+    },
+    "npb-81185159": {
+      "name": "伊藤 琉偉",
+      "year": 2023,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_s.html"
+    },
+    "npb-53255159": {
+      "name": "翔聖",
+      "year": 2023,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_s.html"
+    },
+    "npb-81085159": {
+      "name": "髙野 颯太",
+      "year": 2023,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_s.html"
+    },
+    "npb-91795159": {
+      "name": "草加 勝",
+      "year": 2023,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_d.html"
+    },
+    "npb-81285159": {
+      "name": "津田 啓史",
+      "year": 2023,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_d.html"
+    },
+    "npb-61265159": {
+      "name": "辻本 倫太郎",
+      "year": 2023,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_d.html"
+    },
+    "npb-31835159": {
+      "name": "福田 幸之介",
+      "year": 2023,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_d.html"
+    },
+    "npb-51655159": {
+      "name": "土生 翔太",
+      "year": 2023,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_d.html"
+    },
+    "npb-81685159": {
+      "name": "日渡 騰輝",
+      "year": 2023,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_d.html"
+    },
+    "npb-71575159": {
+      "name": "尾田 剛樹",
+      "year": 2023,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_d.html"
+    },
+    "npb-41545159": {
+      "name": "川上 理偉",
+      "year": 2023,
+      "round": 4,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_d.html"
+    },
+    "npb-13115159": {
+      "name": "前田 悠伍",
+      "year": 2023,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_h.html"
+    },
+    "npb-51355159": {
+      "name": "岩井 俊介",
+      "year": 2023,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_h.html"
+    },
+    "npb-61665159": {
+      "name": "廣瀨 隆太",
+      "year": 2023,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_h.html"
+    },
+    "npb-73375159": {
+      "name": "村田 賢一",
+      "year": 2023,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_h.html"
+    },
+    "npb-91995159": {
+      "name": "澤柳 亮太郎",
+      "year": 2023,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_h.html"
+    },
+    "npb-11515159": {
+      "name": "大山 凌",
+      "year": 2023,
+      "round": 6,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_h.html"
+    },
+    "npb-91895159": {
+      "name": "藤田 悠太郎",
+      "year": 2023,
+      "round": 7,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_h.html"
+    },
+    "npb-21325159": {
+      "name": "大泉 周也",
+      "year": 2023,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_h.html"
+    },
+    "npb-13315159": {
+      "name": "宮里 優吾",
+      "year": 2023,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_h.html"
+    },
+    "npb-31935159": {
+      "name": "佐倉 侠史朗",
+      "year": 2023,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_h.html"
+    },
+    "npb-01405159": {
+      "name": "中澤 恒貴",
+      "year": 2023,
+      "round": 4,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_h.html"
+    },
+    "npb-01805159": {
+      "name": "藤原 大翔",
+      "year": 2023,
+      "round": 6,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_h.html"
+    },
+    "npb-61465159": {
+      "name": "長水 啓眞",
+      "year": 2023,
+      "round": 8,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_h.html"
+    },
+    "npb-61865159": {
+      "name": "細野 晴希",
+      "year": 2023,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_f.html"
+    },
+    "npb-11015159": {
+      "name": "進藤 勇也",
+      "year": 2023,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_f.html"
+    },
+    "npb-83185159": {
+      "name": "宮崎 一樹",
+      "year": 2023,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_f.html"
+    },
+    "npb-53355159": {
+      "name": "明瀬 諒介",
+      "year": 2023,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_f.html"
+    },
+    "npb-41845159": {
+      "name": "星野 ひので",
+      "year": 2023,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_f.html"
+    },
+    "npb-71675159": {
+      "name": "濵田 泰希",
+      "year": 2023,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_f.html"
+    },
+    "npb-91595159": {
+      "name": "加藤 大和",
+      "year": 2023,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_f.html"
+    },
+    "npb-71375159": {
+      "name": "上田 希由翔",
+      "year": 2023,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_m.html"
+    },
+    "npb-81385159": {
+      "name": "大谷 輝龍",
+      "year": 2023,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_m.html"
+    },
+    "npb-71775159": {
+      "name": "木村 優人",
+      "year": 2023,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_m.html"
+    },
+    "npb-91695159": {
+      "name": "早坂 響",
+      "year": 2023,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_m.html"
+    },
+    "npb-51455159": {
+      "name": "寺地 隆成",
+      "year": 2023,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_m.html"
+    },
+    "npb-71275159": {
+      "name": "武内 涼太",
+      "year": 2023,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_m.html"
+    },
+    "npb-53155159": {
+      "name": "松石 信八",
+      "year": 2023,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_m.html"
+    },
+    "npb-01705159": {
+      "name": "髙野 光海",
+      "year": 2023,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_m.html"
+    },
+    "npb-51855159": {
+      "name": "藤田 和樹",
+      "year": 2023,
+      "round": 4,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_m.html"
+    },
+    "npb-91495159": {
+      "name": "富山 紘之進",
+      "year": 2023,
+      "round": 5,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_m.html"
+    },
+    "npb-21725159": {
+      "name": "古謝 樹",
+      "year": 2023,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_e.html"
+    },
+    "npb-11915159": {
+      "name": "坂井 陽翔",
+      "year": 2023,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_e.html"
+    },
+    "npb-01605159": {
+      "name": "日當 直喜",
+      "year": 2023,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_e.html"
+    },
+    "npb-13515159": {
+      "name": "ワォーターズ",
+      "year": 2023,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_e.html"
+    },
+    "npb-73175159": {
+      "name": "松田 啄磨",
+      "year": 2023,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_e.html"
+    },
+    "npb-21425159": {
+      "name": "中島 大輔",
+      "year": 2023,
+      "round": 6,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_e.html"
+    },
+    "npb-41345159": {
+      "name": "大内 誠弥",
+      "year": 2023,
+      "round": 7,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_e.html"
+    },
+    "npb-31135159": {
+      "name": "青野 拓海",
+      "year": 2023,
+      "round": 8,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_e.html"
+    },
+    "npb-83385159": {
+      "name": "横山 聖哉",
+      "year": 2023,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_b.html"
+    },
+    "npb-81585159": {
+      "name": "河内 康介",
+      "year": 2023,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_b.html"
+    },
+    "npb-71475159": {
+      "name": "東松 快征",
+      "year": 2023,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_b.html"
+    },
+    "npb-81885159": {
+      "name": "堀 柊那",
+      "year": 2023,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_b.html"
+    },
+    "npb-61065159": {
+      "name": "髙島 泰都",
+      "year": 2023,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_b.html"
+    },
+    "npb-41745159": {
+      "name": "古田島 成龍",
+      "year": 2023,
+      "round": 6,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_b.html"
+    },
+    "npb-61765159": {
+      "name": "権田 琉成",
+      "year": 2023,
+      "round": 7,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_b.html"
+    },
+    "npb-31035159": {
+      "name": "寿賀 弘都",
+      "year": 2023,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_b.html"
+    },
+    "npb-63165159": {
+      "name": "宮國 凌空",
+      "year": 2023,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_b.html"
+    },
+    "npb-71175159": {
+      "name": "芦田 丈飛",
+      "year": 2023,
+      "round": 4,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_b.html"
+    },
+    "npb-11715159": {
+      "name": "河野 聡太",
+      "year": 2023,
+      "round": 5,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_b.html"
+    },
+    "npb-51255159": {
+      "name": "武内 夏暉",
+      "year": 2023,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_l.html"
+    },
+    "npb-91395159": {
+      "name": "上田 大河",
+      "year": 2023,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_l.html"
+    },
+    "npb-91095159": {
+      "name": "杉山 遙希",
+      "year": 2023,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_l.html"
+    },
+    "npb-81485159": {
+      "name": "成田 晴風",
+      "year": 2023,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_l.html"
+    },
+    "npb-33335159": {
+      "name": "宮澤 太成",
+      "year": 2023,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_l.html"
+    },
+    "npb-93395159": {
+      "name": "村田 怜音",
+      "year": 2023,
+      "round": 6,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_l.html"
+    },
+    "npb-11315159": {
+      "name": "糸川 亮太",
+      "year": 2023,
+      "round": 7,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_l.html"
+    },
+    "npb-01905159": {
+      "name": "シンクレア",
+      "year": 2023,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_l.html"
+    },
+    "npb-01205159": {
+      "name": "谷口 朝陽",
+      "year": 2023,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_l.html"
+    },
+    "npb-61565159": {
+      "name": "川下 将勲",
+      "year": 2023,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_l.html"
+    },
+    "npb-21525159": {
+      "name": "金子 功児",
+      "year": 2023,
+      "round": 4,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_l.html"
+    },
+    "npb-51755159": {
+      "name": "木瀬 翔太",
+      "year": 2023,
+      "round": 5,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_l.html"
+    },
+    "npb-51555159": {
+      "name": "奥村 光一",
+      "year": 2023,
+      "round": 6,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2023/draftlist_l.html"
+    },
+    "npb-71375150": {
+      "name": "伊原 陵人",
+      "year": 2024,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_t.html"
+    },
+    "npb-31935150": {
+      "name": "今朝丸 裕喜",
+      "year": 2024,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_t.html"
+    },
+    "npb-41745150": {
+      "name": "木下 里都",
+      "year": 2024,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_t.html"
+    },
+    "npb-41845150": {
+      "name": "町田 隼乙",
+      "year": 2024,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_t.html"
+    },
+    "npb-91095150": {
+      "name": "佐野 大陽",
+      "year": 2024,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_t.html"
+    },
+    "npb-81785150": {
+      "name": "工藤 泰成",
+      "year": 2024,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_t.html"
+    },
+    "npb-31235150": {
+      "name": "嶋村 麟士朗",
+      "year": 2024,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_t.html"
+    },
+    "npb-57955159": {
+      "name": "早川 太貴",
+      "year": 2024,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_t.html"
+    },
+    "npb-51755150": {
+      "name": "川﨑 俊哲",
+      "year": 2024,
+      "round": 4,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_t.html"
+    },
+    "npb-61165150": {
+      "name": "石塚 裕惺",
+      "year": 2024,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_g.html"
+    },
+    "npb-81385150": {
+      "name": "浦田 俊輔",
+      "year": 2024,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_g.html"
+    },
+    "npb-71175150": {
+      "name": "荒巻 悠",
+      "year": 2024,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_g.html"
+    },
+    "npb-41145150": {
+      "name": "石田 充冴",
+      "year": 2024,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_g.html"
+    },
+    "npb-13115150": {
+      "name": "宮原 駿介",
+      "year": 2024,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_g.html"
+    },
+    "npb-81985150": {
+      "name": "坂本 達也",
+      "year": 2024,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_g.html"
+    },
+    "npb-21825150": {
+      "name": "堀江 正太郎",
+      "year": 2024,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_g.html"
+    },
+    "npb-21225150": {
+      "name": "鈴木 圭晋",
+      "year": 2024,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_g.html"
+    },
+    "npb-51855150": {
+      "name": "吹田 志道",
+      "year": 2024,
+      "round": 4,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_g.html"
+    },
+    "npb-01605150": {
+      "name": "西川 歩",
+      "year": 2024,
+      "round": 5,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_g.html"
+    },
+    "npb-81285150": {
+      "name": "竹下 徠空",
+      "year": 2024,
+      "round": 6,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_g.html"
+    },
+    "npb-11415150": {
+      "name": "竹田 祐",
+      "year": 2024,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_db.html"
+    },
+    "npb-41045150": {
+      "name": "篠木 健太郎",
+      "year": 2024,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_db.html"
+    },
+    "npb-21525150": {
+      "name": "加藤 響",
+      "year": 2024,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_db.html"
+    },
+    "npb-63365150": {
+      "name": "若松 尚輝",
+      "year": 2024,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_db.html"
+    },
+    "npb-91495150": {
+      "name": "田内 真翔",
+      "year": 2024,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_db.html"
+    },
+    "npb-61965150": {
+      "name": "坂口 翔颯",
+      "year": 2024,
+      "round": 6,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_db.html"
+    },
+    "npb-71975150": {
+      "name": "小針 大輝",
+      "year": 2024,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_db.html"
+    },
+    "npb-73375150": {
+      "name": "吉岡 暖",
+      "year": 2024,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_db.html"
+    },
+    "npb-41545150": {
+      "name": "金渕 光希",
+      "year": 2024,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_db.html"
+    },
+    "npb-11015150": {
+      "name": "佐々木 泰",
+      "year": 2024,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_c.html"
+    },
+    "npb-71075150": {
+      "name": "佐藤 柳之介",
+      "year": 2024,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_c.html"
+    },
+    "npb-91595150": {
+      "name": "岡本 駿",
+      "year": 2024,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_c.html"
+    },
+    "npb-13515150": {
+      "name": "渡邉 悠斗",
+      "year": 2024,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_c.html"
+    },
+    "npb-91795150": {
+      "name": "菊地 ハルン",
+      "year": 2024,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_c.html"
+    },
+    "npb-91995150": {
+      "name": "小船 翼",
+      "year": 2024,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_c.html"
+    },
+    "npb-61265150": {
+      "name": "竹下 海斗",
+      "year": 2024,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_c.html"
+    },
+    "npb-23125150": {
+      "name": "安竹 俊喜",
+      "year": 2024,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_c.html"
+    },
+    "npb-91695150": {
+      "name": "中村 優斗",
+      "year": 2024,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_s.html"
+    },
+    "npb-93195150": {
+      "name": "モイセエフ ニキータ",
+      "year": 2024,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_s.html"
+    },
+    "npb-91295150": {
+      "name": "荘司 宏太",
+      "year": 2024,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_s.html"
+    },
+    "npb-01405150": {
+      "name": "田中 陽翔",
+      "year": 2024,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_s.html"
+    },
+    "npb-43145150": {
+      "name": "矢野 泰二郎",
+      "year": 2024,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_s.html"
+    },
+    "npb-41645150": {
+      "name": "根岸 辰昇",
+      "year": 2024,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_s.html"
+    },
+    "npb-11815150": {
+      "name": "廣澤 優",
+      "year": 2024,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_s.html"
+    },
+    "npb-77575159": {
+      "name": "下川 隼佑",
+      "year": 2024,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_s.html"
+    },
+    "npb-61865150": {
+      "name": "松本 龍之介",
+      "year": 2024,
+      "round": 4,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_s.html"
+    },
+    "npb-61565150": {
+      "name": "金丸 夢斗",
+      "year": 2024,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_d.html"
+    },
+    "npb-93395150": {
+      "name": "吉田 聖弥",
+      "year": 2024,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_d.html"
+    },
+    "npb-03105150": {
+      "name": "森 駿太",
+      "year": 2024,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_d.html"
+    },
+    "npb-21125150": {
+      "name": "石伊 雄太",
+      "year": 2024,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_d.html"
+    },
+    "npb-41245150": {
+      "name": "高橋 幸佑",
+      "year": 2024,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_d.html"
+    },
+    "npb-91195150": {
+      "name": "有馬 惠叶",
+      "year": 2024,
+      "round": 6,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_d.html"
+    },
+    "npb-71675150": {
+      "name": "中村 奈一輝",
+      "year": 2024,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_d.html"
+    },
+    "npb-51355150": {
+      "name": "井上 剣也",
+      "year": 2024,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_d.html"
+    },
+    "npb-73175150": {
+      "name": "村上 泰斗",
+      "year": 2024,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_h.html"
+    },
+    "npb-01205150": {
+      "name": "庄子 雄大",
+      "year": 2024,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_h.html"
+    },
+    "npb-01105150": {
+      "name": "安德 駿",
+      "year": 2024,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_h.html"
+    },
+    "npb-61365150": {
+      "name": "宇野 真仁朗",
+      "year": 2024,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_h.html"
+    },
+    "npb-81185150": {
+      "name": "石見 颯真",
+      "year": 2024,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_h.html"
+    },
+    "npb-21325150": {
+      "name": "岩崎 峻典",
+      "year": 2024,
+      "round": 6,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_h.html"
+    },
+    "npb-51555150": {
+      "name": "大友 宗",
+      "year": 2024,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_h.html"
+    },
+    "npb-31835150": {
+      "name": "広瀬 結煌",
+      "year": 2024,
+      "round": 4,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_h.html"
+    },
+    "npb-71775150": {
+      "name": "河野 伸一朗",
+      "year": 2024,
+      "round": 5,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_h.html"
+    },
+    "npb-31735150": {
+      "name": "川口 冬弥",
+      "year": 2024,
+      "round": 6,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_h.html"
+    },
+    "npb-41445150": {
+      "name": "津嘉山 憲志郎",
+      "year": 2024,
+      "round": 7,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_h.html"
+    },
+    "npb-31135150": {
+      "name": "相原 雄太",
+      "year": 2024,
+      "round": 8,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_h.html"
+    },
+    "npb-71575150": {
+      "name": "岡田 皓一朗",
+      "year": 2024,
+      "round": 9,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_h.html"
+    },
+    "npb-61765150": {
+      "name": "漁府 輝羽",
+      "year": 2024,
+      "round": 10,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_h.html"
+    },
+    "npb-21725150": {
+      "name": "木下 勇人",
+      "year": 2024,
+      "round": 11,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_h.html"
+    },
+    "npb-11915150": {
+      "name": "熊谷 太雅",
+      "year": 2024,
+      "round": 12,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_h.html"
+    },
+    "npb-21025150": {
+      "name": "塩士 暖",
+      "year": 2024,
+      "round": 13,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_h.html"
+    },
+    "npb-81085150": {
+      "name": "柴田 獅子",
+      "year": 2024,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_f.html"
+    },
+    "npb-01805150": {
+      "name": "藤田 琉生",
+      "year": 2024,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_f.html"
+    },
+    "npb-51155150": {
+      "name": "浅利 太門",
+      "year": 2024,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_f.html"
+    },
+    "npb-51255150": {
+      "name": "清水 大暉",
+      "year": 2024,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_f.html"
+    },
+    "npb-63165150": {
+      "name": "山縣 秀",
+      "year": 2024,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_f.html"
+    },
+    "npb-13315150": {
+      "name": "山城 航太郎",
+      "year": 2024,
+      "round": 6,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_f.html"
+    },
+    "npb-11715150": {
+      "name": "川勝 空人",
+      "year": 2024,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_f.html"
+    },
+    "npb-11215150": {
+      "name": "澁谷 純希",
+      "year": 2024,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_f.html"
+    },
+    "npb-21625150": {
+      "name": "西川 史礁",
+      "year": 2024,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_m.html"
+    },
+    "npb-81885150": {
+      "name": "宮崎 竜成",
+      "year": 2024,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_m.html"
+    },
+    "npb-11315150": {
+      "name": "一條 力真",
+      "year": 2024,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_m.html"
+    },
+    "npb-41945150": {
+      "name": "坂井 遼",
+      "year": 2024,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_m.html"
+    },
+    "npb-81685150": {
+      "name": "廣池 康志郎",
+      "year": 2024,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_m.html"
+    },
+    "npb-71475150": {
+      "name": "立松 由宇",
+      "year": 2024,
+      "round": 6,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_m.html"
+    },
+    "npb-21425150": {
+      "name": "谷村 剛",
+      "year": 2024,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_m.html"
+    },
+    "npb-91395150": {
+      "name": "茨木 佑太",
+      "year": 2024,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_m.html"
+    },
+    "npb-51655150": {
+      "name": "長島 幸佑",
+      "year": 2024,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_m.html"
+    },
+    "npb-53155150": {
+      "name": "宗山 塁",
+      "year": 2024,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_e.html"
+    },
+    "npb-11615150": {
+      "name": "德山 一翔",
+      "year": 2024,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_e.html"
+    },
+    "npb-31635150": {
+      "name": "中込 陽翔",
+      "year": 2024,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_e.html"
+    },
+    "npb-11515150": {
+      "name": "江原 雅裕",
+      "year": 2024,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_e.html"
+    },
+    "npb-03305150": {
+      "name": "吉納 翼",
+      "year": 2024,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_e.html"
+    },
+    "npb-53355150": {
+      "name": "陽 柏翔",
+      "year": 2024,
+      "round": 6,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_e.html"
+    },
+    "npb-01705150": {
+      "name": "岸本 佑也",
+      "year": 2024,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_e.html"
+    },
+    "npb-33135150": {
+      "name": "麦谷 祐介",
+      "year": 2024,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_b.html"
+    },
+    "npb-61465150": {
+      "name": "寺西 成騎",
+      "year": 2024,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_b.html"
+    },
+    "npb-83185150": {
+      "name": "山口 廉王",
+      "year": 2024,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_b.html"
+    },
+    "npb-33335150": {
+      "name": "山中 稜真",
+      "year": 2024,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_b.html"
+    },
+    "npb-61665150": {
+      "name": "東山 玲士",
+      "year": 2024,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_b.html"
+    },
+    "npb-01505150": {
+      "name": "片山 楽生",
+      "year": 2024,
+      "round": 6,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_b.html"
+    },
+    "npb-01305150": {
+      "name": "今坂 幸暉",
+      "year": 2024,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_b.html"
+    },
+    "npb-71275150": {
+      "name": "清水 武蔵",
+      "year": 2024,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_b.html"
+    },
+    "npb-41345150": {
+      "name": "上原 堆我",
+      "year": 2024,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_b.html"
+    },
+    "npb-81485150": {
+      "name": "寺本 聖一",
+      "year": 2024,
+      "round": 4,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_b.html"
+    },
+    "npb-31435150": {
+      "name": "田島 光祐",
+      "year": 2024,
+      "round": 5,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_b.html"
+    },
+    "npb-31335150": {
+      "name": "乾 健斗",
+      "year": 2024,
+      "round": 6,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_b.html"
+    },
+    "npb-21925150": {
+      "name": "齋藤 大翔",
+      "year": 2024,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_l.html"
+    },
+    "npb-83385150": {
+      "name": "渡部 聖弥",
+      "year": 2024,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_l.html"
+    },
+    "npb-81585150": {
+      "name": "狩生 聖真",
+      "year": 2024,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_l.html"
+    },
+    "npb-43345150": {
+      "name": "林 冠臣",
+      "year": 2024,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_l.html"
+    },
+    "npb-61065150": {
+      "name": "篠原 響",
+      "year": 2024,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_l.html"
+    },
+    "npb-51455150": {
+      "name": "龍山 暖",
+      "year": 2024,
+      "round": 6,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_l.html"
+    },
+    "npb-51955150": {
+      "name": "古賀 輝希",
+      "year": 2024,
+      "round": 7,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_l.html"
+    },
+    "npb-91895150": {
+      "name": "冨士 大和",
+      "year": 2024,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_l.html"
+    },
+    "npb-51055150": {
+      "name": "佐藤 太陽",
+      "year": 2024,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_l.html"
+    },
+    "npb-23325150": {
+      "name": "ラマル",
+      "year": 2024,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_l.html"
+    },
+    "npb-31035150": {
+      "name": "佐藤 爽",
+      "year": 2024,
+      "round": 4,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_l.html"
+    },
+    "npb-01005150": {
+      "name": "澤田 遥斗",
+      "year": 2024,
+      "round": 5,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_l.html"
+    },
+    "npb-71875150": {
+      "name": "福尾 遥真",
+      "year": 2024,
+      "round": 6,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_l.html"
+    },
+    "npb-31535150": {
+      "name": "オケム",
+      "year": 2024,
+      "round": 7,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2024/draftlist_l.html"
+    },
+    "npb-91295152": {
+      "name": "立石 正広",
+      "year": 2025,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_t.html"
+    },
+    "npb-01205152": {
+      "name": "谷端 将伍",
+      "year": 2025,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_t.html"
+    },
+    "npb-91595152": {
+      "name": "岡城 快生",
+      "year": 2025,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_t.html"
+    },
+    "npb-31635152": {
+      "name": "早瀬 朔",
+      "year": 2025,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_t.html"
+    },
+    "npb-17915159": {
+      "name": "能登 嵩都",
+      "year": 2025,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_t.html"
+    },
+    "npb-71075152": {
+      "name": "神宮 僚介",
+      "year": 2025,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_t.html"
+    },
+    "npb-03105152": {
+      "name": "山﨑 照英",
+      "year": 2025,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_t.html"
+    },
+    "npb-71275152": {
+      "name": "竹丸 和幸",
+      "year": 2025,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_g.html"
+    },
+    "npb-21225152": {
+      "name": "田和 廉",
+      "year": 2025,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_g.html"
+    },
+    "npb-43145152": {
+      "name": "山城 京平",
+      "year": 2025,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_g.html"
+    },
+    "npb-33135152": {
+      "name": "皆川 岳飛",
+      "year": 2025,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_g.html"
+    },
+    "npb-61765152": {
+      "name": "小濱 佑斗",
+      "year": 2025,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_g.html"
+    },
+    "npb-21625152": {
+      "name": "藤井 健翔",
+      "year": 2025,
+      "round": 6,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_g.html"
+    },
+    "npb-61265152": {
+      "name": "冨重 英二郎",
+      "year": 2025,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_g.html"
+    },
+    "npb-11615152": {
+      "name": "林 燦",
+      "year": 2025,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_g.html"
+    },
+    "npb-21825152": {
+      "name": "松井 蓮太朗",
+      "year": 2025,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_g.html"
+    },
+    "npb-21725152": {
+      "name": "河野 優作",
+      "year": 2025,
+      "round": 4,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_g.html"
+    },
+    "npb-77775159": {
+      "name": "知念 大成",
+      "year": 2025,
+      "round": 5,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_g.html"
+    },
+    "npb-41545152": {
+      "name": "小田 康一郎",
+      "year": 2025,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_db.html"
+    },
+    "npb-11015152": {
+      "name": "島田 舜也",
+      "year": 2025,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_db.html"
+    },
+    "npb-53155152": {
+      "name": "宮下 朝陽",
+      "year": 2025,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_db.html"
+    },
+    "npb-61565152": {
+      "name": "片山 皓心",
+      "year": 2025,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_db.html"
+    },
+    "npb-91495152": {
+      "name": "成瀬 脩人",
+      "year": 2025,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_db.html"
+    },
+    "npb-51055152": {
+      "name": "清水 詩太",
+      "year": 2025,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_db.html"
+    },
+    "npb-71675152": {
+      "name": "平川 蓮",
+      "year": 2025,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_c.html"
+    },
+    "npb-51955152": {
+      "name": "齊藤 汰直",
+      "year": 2025,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_c.html"
+    },
+    "npb-81585152": {
+      "name": "勝田 成",
+      "year": 2025,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_c.html"
+    },
+    "npb-91795152": {
+      "name": "工藤 泰己",
+      "year": 2025,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_c.html"
+    },
+    "npb-31135152": {
+      "name": "赤木 晴哉",
+      "year": 2025,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_c.html"
+    },
+    "npb-01405152": {
+      "name": "西川 篤夢",
+      "year": 2025,
+      "round": 6,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_c.html"
+    },
+    "npb-81085152": {
+      "name": "髙木 快大",
+      "year": 2025,
+      "round": 7,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_c.html"
+    },
+    "npb-81785152": {
+      "name": "小林 結太",
+      "year": 2025,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_c.html"
+    },
+    "npb-51755152": {
+      "name": "岸本 大希",
+      "year": 2025,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_c.html"
+    },
+    "npb-61865152": {
+      "name": "松下 歩叶",
+      "year": 2025,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_s.html"
+    },
+    "npb-41845152": {
+      "name": "松川 玲央",
+      "year": 2025,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_s.html"
+    },
+    "npb-23125152": {
+      "name": "山崎 太陽",
+      "year": 2025,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_s.html"
+    },
+    "npb-01805152": {
+      "name": "増居 翔太",
+      "year": 2025,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_s.html"
+    },
+    "npb-61065152": {
+      "name": "鈴木 蓮吾",
+      "year": 2025,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_s.html"
+    },
+    "npb-41145152": {
+      "name": "石井 巧",
+      "year": 2025,
+      "round": 6,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_s.html"
+    },
+    "npb-01105152": {
+      "name": "飯田 琉斗",
+      "year": 2025,
+      "round": 7,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_s.html"
+    },
+    "npb-11915152": {
+      "name": "小宮 悠瞳",
+      "year": 2025,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_s.html"
+    },
+    "npb-51455152": {
+      "name": "中西 聖輝",
+      "year": 2025,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_d.html"
+    },
+    "npb-21925152": {
+      "name": "櫻井 頼之介",
+      "year": 2025,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_d.html"
+    },
+    "npb-81985152": {
+      "name": "篠﨑 国忠",
+      "year": 2025,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_d.html"
+    },
+    "npb-41445152": {
+      "name": "能戸 輝夢",
+      "year": 2025,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_d.html"
+    },
+    "npb-91095152": {
+      "name": "新保 茉良",
+      "year": 2025,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_d.html"
+    },
+    "npb-61465152": {
+      "name": "花田 旭",
+      "year": 2025,
+      "round": 6,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_d.html"
+    },
+    "npb-37035159": {
+      "name": "牧野 憲伸",
+      "year": 2025,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_d.html"
+    },
+    "npb-81185152": {
+      "name": "石川 大峨",
+      "year": 2025,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_d.html"
+    },
+    "npb-13115152": {
+      "name": "三上 愛介",
+      "year": 2025,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_d.html"
+    },
+    "npb-51355152": {
+      "name": "稲川 竜汰",
+      "year": 2025,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_h.html"
+    },
+    "npb-21025152": {
+      "name": "鈴木 豪太",
+      "year": 2025,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_h.html"
+    },
+    "npb-91995152": {
+      "name": "相良 雅斗",
+      "year": 2025,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_h.html"
+    },
+    "npb-31235152": {
+      "name": "髙橋 隆慶",
+      "year": 2025,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_h.html"
+    },
+    "npb-21125152": {
+      "name": "池田 栞太",
+      "year": 2025,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_h.html"
+    },
+    "npb-41345152": {
+      "name": "江崎 歩",
+      "year": 2025,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_h.html"
+    },
+    "npb-71575152": {
+      "name": "大矢 琉晟",
+      "year": 2025,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_h.html"
+    },
+    "npb-51555152": {
+      "name": "大橋 令和",
+      "year": 2025,
+      "round": 4,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_h.html"
+    },
+    "npb-41045152": {
+      "name": "鈴木 貴大",
+      "year": 2025,
+      "round": 5,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_h.html"
+    },
+    "npb-81285152": {
+      "name": "長﨑 蓮汰",
+      "year": 2025,
+      "round": 6,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_h.html"
+    },
+    "npb-21325152": {
+      "name": "エミール",
+      "year": 2025,
+      "round": 7,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_h.html"
+    },
+    "npb-11815152": {
+      "name": "北斗",
+      "year": 2025,
+      "round": 8,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_h.html"
+    },
+    "npb-61365152": {
+      "name": "大川 慈英",
+      "year": 2025,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_f.html"
+    },
+    "npb-01305152": {
+      "name": "エドポロ ケイン",
+      "year": 2025,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_f.html"
+    },
+    "npb-11515152": {
+      "name": "大塚 瑠晏",
+      "year": 2025,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_f.html"
+    },
+    "npb-51655152": {
+      "name": "半田 南十",
+      "year": 2025,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_f.html"
+    },
+    "npb-61665152": {
+      "name": "藤森 海斗",
+      "year": 2025,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_f.html"
+    },
+    "npb-41245152": {
+      "name": "常谷 拓輝",
+      "year": 2025,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_f.html"
+    },
+    "npb-13315152": {
+      "name": "横山 永遠",
+      "year": 2025,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_f.html"
+    },
+    "npb-61165152": {
+      "name": "石垣 元気",
+      "year": 2025,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_m.html"
+    },
+    "npb-73175152": {
+      "name": "毛利 海大",
+      "year": 2025,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_m.html"
+    },
+    "npb-21525152": {
+      "name": "奥村 頼人",
+      "year": 2025,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_m.html"
+    },
+    "npb-01905152": {
+      "name": "櫻井 ユウヤ",
+      "year": 2025,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_m.html"
+    },
+    "npb-01605152": {
+      "name": "冨士 隼斗",
+      "year": 2025,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_m.html"
+    },
+    "npb-01505152": {
+      "name": "岡村 了樹",
+      "year": 2025,
+      "round": 6,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_m.html"
+    },
+    "npb-63165152": {
+      "name": "大聖",
+      "year": 2025,
+      "round": 7,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_m.html"
+    },
+    "npb-71475152": {
+      "name": "中山 優人",
+      "year": 2025,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_m.html"
+    },
+    "npb-11215152": {
+      "name": "髙橋 快秀",
+      "year": 2025,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_m.html"
+    },
+    "npb-01005152": {
+      "name": "杉山 諒",
+      "year": 2025,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_m.html"
+    },
+    "npb-81685152": {
+      "name": "藤原 聡大",
+      "year": 2025,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_e.html"
+    },
+    "npb-31335152": {
+      "name": "伊藤 樹",
+      "year": 2025,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_e.html"
+    },
+    "npb-61965152": {
+      "name": "繁永 晟",
+      "year": 2025,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_e.html"
+    },
+    "npb-81385152": {
+      "name": "大栄 利哉",
+      "year": 2025,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_e.html"
+    },
+    "npb-11315152": {
+      "name": "伊藤 大晟",
+      "year": 2025,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_e.html"
+    },
+    "npb-71775152": {
+      "name": "九谷 瑠",
+      "year": 2025,
+      "round": 6,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_e.html"
+    },
+    "npb-71975152": {
+      "name": "阪上 翔也",
+      "year": 2025,
+      "round": 7,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_e.html"
+    },
+    "npb-51855152": {
+      "name": "幌村 黛汰",
+      "year": 2025,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_e.html"
+    },
+    "npb-31535152": {
+      "name": "大坪 梓恩",
+      "year": 2025,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_e.html"
+    },
+    "npb-11415152": {
+      "name": "中沢 匠磨",
+      "year": 2025,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_e.html"
+    },
+    "npb-11715152": {
+      "name": "金子 京介",
+      "year": 2025,
+      "round": 4,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_e.html"
+    },
+    "npb-31035152": {
+      "name": "島原 大河",
+      "year": 2025,
+      "round": 5,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_e.html"
+    },
+    "npb-41645152": {
+      "name": "藤川 敦也",
+      "year": 2025,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_b.html"
+    },
+    "npb-93195152": {
+      "name": "森 陽樹",
+      "year": 2025,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_b.html"
+    },
+    "npb-41945152": {
+      "name": "佐藤 龍月",
+      "year": 2025,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_b.html"
+    },
+    "npb-01705152": {
+      "name": "窪田 洋祐",
+      "year": 2025,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_b.html"
+    },
+    "npb-51255152": {
+      "name": "髙谷 舟",
+      "year": 2025,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_b.html"
+    },
+    "npb-21425152": {
+      "name": "野上 士耀",
+      "year": 2025,
+      "round": 7,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_b.html"
+    },
+    "npb-81885152": {
+      "name": "三方 陽登",
+      "year": 2025,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_b.html"
+    },
+    "npb-31435152": {
+      "name": "中西 創大",
+      "year": 2025,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_b.html"
+    },
+    "npb-33335152": {
+      "name": "渡邉 一生",
+      "year": 2025,
+      "round": 4,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_b.html"
+    },
+    "npb-41745152": {
+      "name": "小島 大河",
+      "year": 2025,
+      "round": 1,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_l.html"
+    },
+    "npb-91395152": {
+      "name": "岩城 颯空",
+      "year": 2025,
+      "round": 2,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_l.html"
+    },
+    "npb-51155152": {
+      "name": "秋山 俊",
+      "year": 2025,
+      "round": 3,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_l.html"
+    },
+    "npb-31835152": {
+      "name": "堀越 啓太",
+      "year": 2025,
+      "round": 4,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_l.html"
+    },
+    "npb-83185152": {
+      "name": "横田 蒼和",
+      "year": 2025,
+      "round": 5,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_l.html"
+    },
+    "npb-31735152": {
+      "name": "川田 悠慎",
+      "year": 2025,
+      "round": 6,
+      "development": false,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_l.html"
+    },
+    "npb-71175152": {
+      "name": "新井 唯斗",
+      "year": 2025,
+      "round": 1,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_l.html"
+    },
+    "npb-71375152": {
+      "name": "今岡 拓夢",
+      "year": 2025,
+      "round": 2,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_l.html"
+    },
+    "npb-31935152": {
+      "name": "斎藤 佳紳",
+      "year": 2025,
+      "round": 3,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_l.html"
+    },
+    "npb-81485152": {
+      "name": "濱岡 蒼太",
+      "year": 2025,
+      "round": 4,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_l.html"
+    },
+    "npb-91695152": {
+      "name": "平口 寛人",
+      "year": 2025,
+      "round": 5,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_l.html"
+    },
+    "npb-91895152": {
+      "name": "正木 悠馬",
+      "year": 2025,
+      "round": 6,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_l.html"
+    },
+    "npb-91195152": {
+      "name": "安藤 銀杜",
+      "year": 2025,
+      "round": 7,
+      "development": true,
+      "source": "https://draft.npb.jp/draft/2025/draftlist_l.html"
+    }
+  }
+}

@@ -78,6 +78,33 @@ test('submitted nominations wait for the other clubs before revealing their list
   ).toBe(12)
   await page.clock.runFor(700)
   await page.screenshot({ path: '.cache/nominations-mobile.png' })
+  for (const viewport of [
+    { width: 320, height: 568 },
+    { width: 390, height: 667 },
+    { width: 768, height: 480 },
+    { width: 1280, height: 640 },
+  ]) {
+    await page.setViewportSize(viewport)
+    const button = dialog.getByRole('button', {
+      name: '獲得希望を選ぶ',
+      exact: true,
+    })
+    const b = (await button.boundingBox())!
+    expect(
+      b.y,
+      `announcement action at ${viewport.width}`,
+    ).toBeGreaterThanOrEqual(0)
+    expect(b.y + b.height).toBeLessThanOrEqual(viewport.height)
+    expect(
+      await dialog.evaluate((el) => el.scrollHeight <= el.clientHeight + 1),
+    ).toBe(true)
+    expect(
+      await dialog.evaluate((el) => el.scrollWidth <= el.clientWidth + 1),
+    ).toBe(true)
+    await expect(
+      dialog.locator('.announcement-name .text-unit').last(),
+    ).toHaveText('揃いました')
+  }
   await dialog
     .getByRole('button', { name: '獲得希望を選ぶ', exact: true })
     .click()

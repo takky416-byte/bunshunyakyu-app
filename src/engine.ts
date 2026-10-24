@@ -2,7 +2,7 @@ import { teamById, teamIds, type Player, type TeamId } from './data'
 
 import { eligibilityOf, nominationErrors } from './eligibility'
 import { waiverOrder2026 } from './rules2026'
-import { variedCandidates } from './cpuCandidates'
+import { realisticCandidates, variedCandidates } from './cpuCandidates'
 import {
   resolveBids,
   type Participation,
@@ -21,7 +21,7 @@ export interface Pick {
 }
 export interface Game {
   version: 2
-  cpuNominationModel?: 'varied-v1'
+  cpuNominationModel?: 'varied-v1' | 'realistic-v2'
   roundTwo?: RoundTwoState
   seed: number
   userTeam: TeamId
@@ -72,7 +72,7 @@ export function newGame(userTeam: TeamId, seed: number): Game {
     throw new Error('ゲーム設定が不正です。')
   return {
     version: ENGINE_VERSION,
-    cpuNominationModel: 'varied-v1',
+    cpuNominationModel: 'realistic-v2',
     seed,
     userTeam,
     stage: 'nominate',
@@ -110,6 +110,10 @@ export function submitNominations(
   if (errors.length) throw new Error(errors.join(' '))
   const offers: Game['offers'] = { [game.userTeam]: [...nominated] }
   for (const team of teamIds.filter((t) => t !== game.userTeam)) {
+    if (game.cpuNominationModel === 'realistic-v2') {
+      offers[team] = realisticCandidates(team, players, game.seed)
+      continue
+    }
     if (game.cpuNominationModel === 'varied-v1') {
       offers[team] = variedCandidates(team, players, game.seed)
       continue
@@ -360,7 +364,8 @@ export function restoreGame(raw: unknown, players: Player[]): Game {
   if (
     g.version !== 2 ||
     (g.cpuNominationModel !== undefined &&
-      g.cpuNominationModel !== 'varied-v1') ||
+      g.cpuNominationModel !== 'varied-v1' &&
+      g.cpuNominationModel !== 'realistic-v2') ||
     !teamIds.includes(g.userTeam) ||
     !Array.isArray(g.picks) ||
     g.picks.length > 24 ||
@@ -370,6 +375,7 @@ export function restoreGame(raw: unknown, players: Player[]): Game {
     throw new Error('保存データの形式に対応していません。')
   let restored = newGame(g.userTeam, g.seed)
   if (g.cpuNominationModel === undefined) delete restored.cpuNominationModel
+  else restored.cpuNominationModel = g.cpuNominationModel
   if (g.stage === 'nominate') return restored
   restored = submitNominations(restored, g.offers[g.userTeam] ?? [], players)
   if (g.stage === 'vote') return restored

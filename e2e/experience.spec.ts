@@ -170,7 +170,7 @@ test('compact selection follows league order, previews club colors, and guides t
   await page.screenshot({ path: '.cache/vote-mobile-blue.png' })
 })
 
-test('blog copy writes a formatted table and plain-text fallback to the real clipboard', async ({
+test('result copy writes the acquisitions, releases and all clubs as plain text to the real clipboard', async ({
   page,
   context,
 }) => {
@@ -179,16 +179,23 @@ test('blog copy writes a formatted table and plain-text fallback to the real cli
   await expect(
     page.getByRole('button', { name: '結果を保存', exact: true }),
   ).toHaveCount(0)
-  await page.getByRole('button', { name: 'ブログにコピー' }).click()
-  await expect(page.getByRole('status')).toContainText('表付きでコピーしました')
+  await page
+    .getByRole('button', { name: '獲得・放出と12球団の結果のテキストをコピー' })
+    .click()
+  await expect(page.getByRole('status')).toContainText(
+    'テキストをコピーしました',
+  )
   const copied = await page.evaluate(async () => {
     const item = (await navigator.clipboard.read())[0]
     return {
-      html: await (await item.getType('text/html')).text(),
+      types: item.types,
       text: await (await item.getType('text/plain')).text(),
     }
   })
-  expect(copied.html).toContain('<table')
+  expect(copied.types).toEqual(['text/plain'])
+  await expect(page.getByRole('dialog')).toContainText(
+    'ブログやSNSなどに貼り付けて活用できます。',
+  )
   expect(copied.text).toContain('【12球団の移籍結果】')
   expect(copied.text).toContain('非公式のシミュレーション結果')
   expect(copied.text).not.toContain('playerId')
@@ -211,7 +218,9 @@ test('blocked clipboard offers selectable text instead of claiming success', asy
     }),
   )
   await loadResult(page)
-  await page.getByRole('button', { name: 'ブログにコピー' }).click()
+  await page
+    .getByRole('button', { name: '獲得・放出と12球団の結果のテキストをコピー' })
+    .click()
   await expect(page.getByRole('status')).toContainText(
     '下の文章を選択してコピー',
   )

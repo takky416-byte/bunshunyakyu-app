@@ -8,6 +8,17 @@ async function expectFlowFocus(page: Page) {
   expect(bounds!.y).toBeGreaterThanOrEqual(0)
   expect(bounds!.y).toBeLessThan(page.viewportSize()!.height / 2)
   expect(bounds!.y + bounds!.height).toBeLessThan(page.viewportSize()!.height)
+  const actions = page.locator(
+    '.roster-panel .panel-footer .button, .round-two .npc-actions .button, .round-two-confirm .panel-footer .button',
+  )
+  for (const action of await actions.all()) {
+    const box = (await action.boundingBox())!
+    expect(box.y, (await action.textContent()) ?? '').toBeGreaterThanOrEqual(0)
+    expect(
+      box.y + box.height,
+      (await action.textContent()) ?? '',
+    ).toBeLessThanOrEqual(page.viewportSize()!.height)
+  }
 }
 
 async function nominate(page: Page) {

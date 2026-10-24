@@ -1,0 +1,358 @@
+/* Keep the next action on screen; only the choices need a scrolling region. */
+.app-shell .roster-toolbar {
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.app-shell .roster-panel {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100dvh - 88px);
+}
+.app-shell .roster-panel > :not(.roster-list) {
+  flex-shrink: 0;
+}
+.app-shell .roster-panel .panel-heading {
+  padding: 12px 16px;
+}
+.app-shell .roster-panel .panel-heading h2 {
+  flex-wrap: wrap;
+  line-height: 1.5;
+}
+.app-shell .roster-panel .panel-heading p {
+  margin-top: 4px;
+}
+.app-shell .roster-list {
+  flex: 1 1 auto;
+  min-height: 72px;
+  max-height: min(50dvh, 480px);
+  overscroll-behavior-y: contain;
+  scrollbar-gutter: stable;
+}
+.app-shell .roster-panel .panel-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 16px;
+  padding: 10px 16px max(10px, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--club-line);
+  background: var(--club-page);
+}
+.app-shell .panel-footer .button {
+  width: auto;
+  white-space: nowrap;
+  min-height: 44px;
+  padding: 10px 14px;
+  justify-content: center;
+}
+.app-shell .panel-footer > span {
+  min-width: 0;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+.app-shell .panel-heading .count,
+.app-shell .player-position,
+.app-shell .player-details-button,
+.app-shell .player-check {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.app-shell .player-name strong,
+.app-shell .player-affiliation,
+.app-shell .game-title h1,
+.app-shell .round-two h2 {
+  text-wrap: balance;
+  overflow-wrap: normal;
+  line-break: strict;
+}
+.app-shell .player-row {
+  align-items: center;
+}
+.app-shell .player-name {
+  flex-basis: 0;
+}
+.app-shell .player-team-full,
+.app-shell .player-team-short {
+  white-space: nowrap;
+}
+.app-shell .player-details-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-height: 36px;
+  padding: 4px;
+  font-size: 0.875rem;
+}
+.app-shell .vote-row {
+  display: grid;
+  grid-template-columns: 6em minmax(20px, 1fr) 2ch;
+  gap: 8px;
+  align-items: center;
+  padding: 7px 16px;
+  font-size: 0.875rem;
+}
+.app-shell .vote-row > span:first-child {
+  width: auto;
+  white-space: nowrap;
+}
+.app-shell .vote-bar {
+  min-width: 0;
+  width: 100%;
+}
+.app-shell .vote-row > strong {
+  min-width: 0;
+}
+.app-shell .nav-item {
+  gap: 8px;
+  padding-inline: 8px;
+  white-space: nowrap;
+  font-size: 1rem;
+  letter-spacing: normal;
+}
+.app-shell[data-playing='true'] .game-title {
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 10px 0;
+}
+.app-shell[data-playing='true'] .game-title .eyebrow,
+.app-shell[data-playing='true'] .game-title > div:first-child > p {
+  display: none;
+}
+.app-shell[data-playing='true'] .presentation-controls {
+  margin: 0;
+}
+.app-shell[data-playing='true'] .game-title h1 {
+  margin: 0;
+}
+.app-shell .npc-stage,
+.app-shell .round-two {
+  min-height: 0;
+  padding: 20px;
+}
+.app-shell .round-two .round-icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 8px;
+}
+.app-shell .round-two h2 {
+  margin: 8px 0;
+}
+.app-shell .round-two > p {
+  line-height: 1.7;
+}
+.app-shell .round-two .inline-notice {
+  margin-top: 12px;
+  padding: 10px;
+}
+.app-shell .round-two .npc-actions {
+  margin-top: 16px;
+}
+.app-shell .round-two-confirm {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100dvh - 88px);
+}
+.app-shell .round-two-confirm > .panel-heading,
+.app-shell .round-two-confirm > .panel-footer {
+  flex-shrink: 0;
+}
+.app-shell .round-two-body {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  padding: 12px 16px;
+}
+.app-shell .round-two-confirm .panel-footer {
+  position: sticky;
+  bottom: 0;
+  padding: 10px 16px max(10px, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--club-line);
+  justify-content: flex-end;
+}
+.app-shell .round-two-confirm .panel-footer .button {
+  white-space: normal;
+  text-wrap: balance;
+}
+.text-unit {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* The announcement's action area stays outside its scrollable content. */
+.app-shell .draft-announcement {
+  width: min(700px, calc(100vw - 24px));
+  max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 24px);
+  overflow: hidden;
+}
+.app-shell .announcement-inner {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 14px;
+  max-height: calc(100dvh - 26px);
+  padding: 20px 24px 14px;
+}
+.app-shell .announcement-topline {
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  letter-spacing: 0.06em;
+}
+.app-shell .announcement-topline > span {
+  white-space: nowrap;
+}
+.app-shell .announcement-stage {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  padding: 8px 0;
+}
+.app-shell .announcement-stage h2 {
+  font-size: clamp(20px, 2.8vw, 26px);
+  line-height: 1.5;
+  letter-spacing: 0.03em;
+  margin: 8px 0 14px;
+  text-wrap: balance;
+}
+.app-shell .announcement-envelope {
+  width: 64px;
+  height: 48px;
+  font-size: 26px;
+}
+.app-shell .announcement-content {
+  min-height: 145px;
+  margin-top: 18px;
+}
+.app-shell .announcement-name {
+  font-size: clamp(22px, 3vw, 32px);
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  margin: 8px 0;
+  overflow-wrap: normal;
+  text-wrap: balance;
+  line-break: strict;
+}
+.app-shell .announcement-revealed small {
+  margin-top: 8px;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+.app-shell .announcement-kicker,
+.app-shell .announcement-waiting p {
+  letter-spacing: normal;
+  text-wrap: balance;
+}
+.app-shell .announcement-kicker {
+  display: block;
+}
+.app-shell .announcement-footer {
+  padding-top: 12px;
+  gap: 8px 16px;
+}
+.app-shell .announcement-footer .button {
+  min-height: 44px;
+  white-space: nowrap;
+  justify-content: center;
+}
+.app-shell .announcement-skip {
+  margin-top: 8px;
+  min-height: 36px;
+  padding: 4px;
+  text-wrap: balance;
+}
+.app-shell .share-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+.app-shell .share-actions .button {
+  justify-content: center;
+  min-width: 0;
+  padding: 12px 14px;
+}
+.copy-result-label {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.copy-result-label > span {
+  white-space: nowrap;
+}
+@media (min-width: 761px) and (max-width: 1199px) {
+  .app-shell .sidebar {
+    width: 220px;
+    padding-inline: 18px;
+  }
+  .app-shell .workspace {
+    margin-left: 220px;
+  }
+  .app-shell .game-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .app-shell .game-aside {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .app-shell .roster-panel .panel-heading {
+    padding: 10px 12px;
+  }
+  .app-shell .roster-list {
+    max-height: min(40dvh, 360px);
+  }
+  .app-shell .roster-panel .panel-footer {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+    padding-inline: 12px;
+  }
+  .app-shell .roster-panel .panel-footer .button {
+    width: 100%;
+  }
+  .app-shell .roster-panel .player-details-button {
+    margin-top: 20px;
+    min-height: 32px;
+    padding: 2px 0;
+  }
+  .app-shell .player-row {
+    align-items: initial;
+  }
+  .app-shell .roster-panel .player-name {
+    flex-basis: auto;
+  }
+  .app-shell .announcement-inner {
+    padding: 16px;
+    gap: 10px;
+  }
+  .app-shell .announcement-footer {
+    flex-direction: column;
+  }
+  .app-shell .announcement-footer > span {
+    display: none;
+  }
+  .app-shell .announcement-footer .button {
+    width: 100%;
+  }
+  .app-shell .round-two .inline-notice {
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+  .app-shell .round-two .npc-actions {
+    gap: 8px;
+  }
+}
+@media (max-height: 620px) {
+  .app-shell .announcement-envelope {
+    display: none;
+  }
+  .app-shell .announcement-content {
+    margin-top: 8px;
+    min-height: 120px;
+  }
+  .app-shell .announcement-stage h2 {
+    margin-bottom: 8px;
+  }
+  .app-shell .round-two .round-icon,
+  .app-shell .sidebar .side-steps,
+  .app-shell .sidebar .sidebar-line + .nav-caption {
+    display: none;
+  }
+}

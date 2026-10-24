@@ -108,7 +108,7 @@ export default function DraftAnnouncement({
         <div className="announcement-stage" data-revealed={revealed}>
           <span className="announcement-kicker">
             {item.kind === 'nominations'
-              ? `${club.name}の候補を受け付けました。`
+              ? `${club.short}の候補を受け付けました。`
               : item.kind === 'order'
                 ? '12球団の予備指名、集計完了。'
                 : item.kind === 'round2'
@@ -116,13 +116,20 @@ export default function DraftAnnouncement({
                   : `${club.name}、選択希望選手。`}
           </span>
           <h2 id="announcement-title" tabIndex={-1}>
-            {item.kind === 'nominations'
-              ? '12球団の候補が、集まる。'
-              : item.kind === 'order'
-                ? '最初の指名権は、'
-                : item.kind === 'round2'
-                  ? 'もうひとつの移籍が、'
-                  : 'その名前が、未来を変える。'}
+            {item.kind === 'nominations' && revealed ? (
+              '候補提出、完了。'
+            ) : item.kind === 'nominations' ? (
+              <>
+                <span className="text-unit">12球団の候補が、</span>
+                <span className="text-unit">集まる。</span>
+              </>
+            ) : item.kind === 'order' ? (
+              '最初の指名権は、'
+            ) : item.kind === 'round2' ? (
+              'もうひとつの移籍が、'
+            ) : (
+              'その名前が、未来を変える。'
+            )}
           </h2>
           <div className="announcement-envelope" aria-hidden="true">
             <span>{item.kind === 'pick' ? club.mark : '2026'}</span>
@@ -159,12 +166,16 @@ export default function DraftAnnouncement({
                       LISTS READY
                     </span>
                     <strong className="announcement-name">
-                      12球団の候補が揃いました
+                      <span className="text-unit">12球団の候補が</span>
+                      <span className="text-unit">揃いました</span>
                     </strong>
                     <p>
                       提出候補は計{Object.values(game.offers).flat().length}名。
                     </p>
-                    <small>次は、獲得したい選手を1名選んで投票します。</small>
+                    <small>
+                      <span className="text-unit">次は、獲得したい選手を</span>
+                      <span className="text-unit">1名選んで投票します。</span>
+                    </small>
                   </>
                 ) : item.kind === 'order' ? (
                   <>
@@ -227,35 +238,37 @@ export default function DraftAnnouncement({
             )}
           </div>
         </div>
-        <div className="announcement-footer">
-          <span>
-            {revealed ? (
-              <>
-                <Check size={14} />
-                発表済み
-              </>
-            ) : (
-              '発表をお待ちください'
-            )}
-          </span>
-          <button
-            className="button primary"
-            onClick={next}
-            disabled={!revealed}
-          >
-            {revealed ? nextLabel : '発表を待っています'}
-            <ArrowRight size={16} />
+        <div className="announcement-actions">
+          <div className="announcement-footer">
+            <span>
+              {revealed ? (
+                <>
+                  <Check size={14} />
+                  発表済み
+                </>
+              ) : (
+                '発表をお待ちください'
+              )}
+            </span>
+            <button
+              className="button primary"
+              onClick={next}
+              disabled={!revealed}
+            >
+              {revealed ? nextLabel : '発表を待っています'}
+              <ArrowRight size={16} />
+            </button>
+          </div>
+          <button className="announcement-skip" onClick={() => finish(true)}>
+            <SkipForward size={14} />
+            演出をスキップ
+            {sequence.length > 1
+              ? sequence.at(-1)!.game.stage === 'round2'
+                ? 'して第2巡へ進む'
+                : 'して自分の番へ進む'
+              : ''}
           </button>
         </div>
-        <button className="announcement-skip" onClick={() => finish(true)}>
-          <SkipForward size={14} />
-          演出をスキップ
-          {sequence.length > 1
-            ? sequence.at(-1)!.game.stage === 'round2'
-              ? 'して第2巡へ進む'
-              : 'して自分の番へ進む'
-            : ''}
-        </button>
       </div>
     </dialog>
   )
