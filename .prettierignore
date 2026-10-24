@@ -1,0 +1,12 @@
+node_modules/
+.cache/
+dist/
+test-results/
+playwright-report/
+package-lock.json
+src/npb2026.json
+.local-data/
+.wrangler/
+.dev.vars*
+
+src/eligibility2026.json

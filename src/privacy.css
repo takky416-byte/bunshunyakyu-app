@@ -1,0 +1,29 @@
+.privacy-toggle {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 19px;
+  border: 1px solid #dce5ce;
+  background: #f1f5e8;
+  border-radius: 5px;
+  margin: 22px 0;
+}
+.privacy-toggle input {
+  accent-color: #486e3b;
+  width: 17px;
+  height: 17px;
+  margin: 2px 0;
+}
+.privacy-toggle strong {
+  font-size: 12px;
+  font-weight: 500;
+  color: #5a7948;
+  display: block;
+}
+.privacy-toggle small {
+  font-size: 10px;
+  line-height: 1.9;
+  color: #8c9c79;
+  display: block;
+  margin-top: 8px;
+}

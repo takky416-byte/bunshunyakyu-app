@@ -1,0 +1,47 @@
+{
+  "name": "geneki-draft-room",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "test:data": "python -m unittest discover -s scripts -p 'test_*.py'",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "start": "node --env-file-if-exists=.env.local server/index.ts",
+    "cloudflare:dev": "node --env-file-if-exists=.env.local scripts/cloudflare.mjs dev",
+    "cloudflare:configure": "node --env-file-if-exists=.env.local scripts/cloudflare.mjs configure",
+    "cloudflare:key:local": "node --env-file-if-exists=.env.local scripts/cloudflare.mjs local-key",
+    "cloudflare:migrate:local": "node --env-file-if-exists=.env.local scripts/cloudflare.mjs migrate-local",
+    "cloudflare:check": "node --env-file-if-exists=.env.local scripts/cloudflare.mjs check",
+    "cloudflare:deploy": "node --env-file-if-exists=.env.local scripts/cloudflare.mjs deploy",
+    "cloudflare:migrate": "node --env-file-if-exists=.env.local scripts/cloudflare.mjs migrate",
+    "cloudflare:admin-key": "node --env-file-if-exists=.env.local scripts/cloudflare.mjs admin-key",
+    "cloudflare:create-db": "node --env-file-if-exists=.env.local scripts/cloudflare.mjs create-db"
+  },
+  "dependencies": {
+    "lucide-react": "^0.577.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.1.0",
+    "jsonc-parser": "^3.3.1",
+    "prettier": "^3.9.10",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.1",
+    "vitest": "^4.0.18",
+    "wrangler": "^4.152.0"
+  },
+  "engines": {
+    "node": ">=24 <25"
+  }
+}
