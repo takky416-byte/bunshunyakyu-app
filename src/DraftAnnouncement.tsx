@@ -33,6 +33,11 @@ export default function DraftAnnouncement({
     dialog.current?.showModal()
   }, [])
   useEffect(() => {
+    dialog.current?.scrollTo({ top: 0, behavior: 'auto' })
+    if (index > 0)
+      dialog.current?.querySelector('h2')?.focus({ preventScroll: true })
+  }, [index])
+  useEffect(() => {
     if (revealed) return
     const timer = window.setTimeout(() => setRevealed(true), 1800)
     return () => window.clearTimeout(timer)
@@ -97,7 +102,7 @@ export default function DraftAnnouncement({
                 ? '第2巡、入札条件の照合。'
                 : `${club.name}、選択希望選手。`}
           </span>
-          <h2 id="announcement-title">
+          <h2 id="announcement-title" tabIndex={-1}>
             {item.kind === 'order'
               ? '最初の指名権は、'
               : item.kind === 'round2'

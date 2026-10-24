@@ -1,0 +1,347 @@
+.compact-details {
+  min-width: 0;
+}
+.compact-details > summary {
+  display: none;
+}
+.compact-details-body {
+  min-width: 0;
+}
+.aside-disclosure {
+  width: 100%;
+}
+.player-team-short,
+.player-details-button {
+  display: none;
+}
+.flow-target {
+  scroll-margin-top: 16px;
+}
+.flow-target:focus-visible {
+  outline: 2px solid #a48e57;
+  outline-offset: 5px;
+}
+.player-detail-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 22px;
+}
+
+@media (max-width: 760px) {
+  .sidebar {
+    min-height: 52px;
+    height: auto;
+    padding-block: 9px;
+  }
+  .topbar {
+    min-height: 42px;
+    padding-block: 7px;
+  }
+  .breadcrumb {
+    display: none;
+  }
+  .topbar-right {
+    width: 100%;
+  }
+  .save-state {
+    margin-right: auto;
+  }
+  main {
+    padding-top: 10px;
+  }
+  .compact-details > summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 10px 13px;
+    cursor: pointer;
+    list-style: none;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: #425d48;
+    border: 1px solid #dce3d4;
+    border-radius: 7px;
+    background: #fafbf6;
+  }
+  .compact-details > summary::-webkit-details-marker {
+    display: none;
+  }
+  .compact-details[open] > summary {
+    margin-bottom: 10px;
+  }
+  .compact-details[open] > summary > svg {
+    transform: rotate(90deg);
+  }
+  .compact-details.panel > summary {
+    border: 0;
+  }
+  .compact-details[open].panel > summary {
+    border-bottom: 1px solid #e1e5da;
+    border-radius: 0;
+    margin-bottom: 0;
+  }
+  .data-disclosure {
+    margin-bottom: 12px;
+  }
+  .data-disclosure .data-notice {
+    margin: 12px 0;
+  }
+  .data-disclosure .transfer-rule-note {
+    margin: 10px 0;
+  }
+  .game-title {
+    margin: 12px 0;
+  }
+  .game-title .eyebrow,
+  .game-title > div:first-child > p {
+    display: none;
+  }
+  .game-title h1 {
+    font-size: 1.5rem;
+    margin: 8px 0;
+    line-height: 1.5;
+  }
+  .presentation-controls {
+    margin-top: 10px;
+    gap: 8px;
+  }
+  .presentation-controls .button {
+    padding: 9px 12px;
+  }
+  .game-main,
+  .game-layout {
+    gap: 12px;
+  }
+  .panel-heading {
+    padding: 13px 14px;
+  }
+  .panel-heading h2 {
+    font-size: 1.125rem;
+  }
+  .panel-heading p {
+    margin-top: 6px;
+    line-height: 1.6;
+  }
+  .excluded-toggle {
+    margin: 8px 14px;
+  }
+  .roster-toolbar {
+    padding: 10px 12px;
+  }
+  .roster-list {
+    max-height: clamp(220px, 48dvh, 440px);
+  }
+  .roster-panel .player-row {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr) 44px;
+    column-gap: 9px;
+    padding: 11px 12px;
+    min-height: 0;
+  }
+  .roster-panel .position-badge {
+    grid-column: 1;
+    grid-row: 1;
+    width: 28px;
+    height: 28px;
+  }
+  .roster-panel .player-name {
+    grid-column: 2;
+    grid-row: 1;
+    gap: 3px;
+  }
+  .roster-panel .player-name strong {
+    font-size: 1.125rem;
+    line-height: 1.5;
+  }
+  .roster-panel .player-name small,
+  .roster-panel .player-stats {
+    line-height: 1.55;
+    white-space: normal;
+  }
+  .roster-panel .player-check {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+    align-self: start;
+    margin-top: 4px;
+  }
+  .roster-panel .player-details-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1px;
+    grid-column: 3;
+    grid-row: 1;
+    align-self: end;
+    justify-self: end;
+    min-height: 36px;
+    margin-top: 32px;
+    padding: 2px 0;
+    font-size: 0.875rem;
+    color: #426448;
+  }
+  .roster-panel .player-team-full,
+  .roster-panel .salary-year,
+  .roster-panel .player-contract-note,
+  .roster-panel .salary-source,
+  .roster-panel .player-stats > b,
+  .roster-panel[data-stage='nominate'] .player-affiliation {
+    display: none;
+  }
+  .roster-panel .player-team-short {
+    display: inline;
+  }
+  .roster-panel .fit-score {
+    grid-column: 2 / 4;
+    flex-direction: row;
+    align-items: baseline;
+    text-align: left;
+    gap: 8px;
+    margin: 2px 0 0;
+    min-width: 0;
+  }
+  .roster-panel .fit-score > small {
+    max-width: none;
+  }
+  .panel-footer {
+    padding: 10px 12px;
+    gap: 6px;
+  }
+  .roster-panel[data-stage='nominate'] .panel-footer {
+    flex-wrap: nowrap;
+  }
+  .roster-panel[data-stage='nominate'] .panel-footer > span {
+    min-width: 0;
+    line-height: 1.5;
+  }
+  .roster-panel[data-stage='nominate'] .panel-footer > .button {
+    width: auto;
+    flex-shrink: 0;
+    padding: 10px 12px;
+  }
+  .aside-disclosure .game-aside {
+    gap: 10px;
+  }
+  .timeline-panel .panel-heading {
+    display: none;
+  }
+  .timeline-panel .timeline {
+    max-height: min(50dvh, 400px);
+    overflow: auto;
+  }
+  .participation-disclosure {
+    margin: 12px 0;
+  }
+  .bid-preferences {
+    max-height: 32dvh;
+    overflow: auto;
+  }
+  .result-hero {
+    padding: 20px 16px;
+  }
+  .movement-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+  .movement {
+    padding: 13px 10px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .movement > small {
+    display: none;
+  }
+  .table-scroll {
+    max-height: min(60dvh, 520px);
+    overflow: auto;
+  }
+  .result-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #f7f8f1;
+  }
+  .hero {
+    min-height: 0;
+    padding: 22px;
+  }
+  .hero .eyebrow,
+  .hero-field,
+  .hero-tags {
+    display: none;
+  }
+  .hero h1 {
+    font-size: 1.8125rem;
+    margin: 0 0 12px;
+  }
+  .hero p {
+    line-height: 1.7;
+  }
+  .section-heading {
+    margin: 20px 0 12px;
+  }
+  .section-heading .step-label,
+  .section-heading p {
+    display: none;
+  }
+  .league-tabs {
+    margin-top: 8px;
+  }
+  .team-card {
+    padding: 10px 12px 0;
+  }
+  .team-card .team-mark,
+  .team-card .team-city {
+    display: none;
+  }
+  .team-card-top {
+    margin-bottom: 4px;
+  }
+  .team-card > strong {
+    font-size: 1rem;
+    margin: 4px 0 8px;
+    min-height: 3em;
+  }
+  .team-card-bottom {
+    padding: 8px;
+  }
+  .home-details {
+    gap: 12px;
+    padding-top: 18px;
+  }
+  .home-details > div {
+    display: none;
+  }
+  .footer {
+    margin-top: 14px;
+    padding-top: 14px;
+  }
+  .announcement-inner {
+    padding: 16px 18px 12px;
+  }
+  .announcement-stage {
+    padding: 18px 0 14px;
+  }
+  .announcement-stage h2 {
+    margin: 8px 0 14px;
+  }
+  .announcement-envelope {
+    width: 72px;
+    height: 54px;
+    font-size: 26px;
+  }
+  .announcement-content {
+    min-height: 160px;
+    margin-top: 18px;
+  }
+  .announcement-footer {
+    padding-top: 14px;
+    gap: 10px;
+  }
+  .announcement-skip {
+    margin-top: 10px;
+  }
+}

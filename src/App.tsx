@@ -74,10 +74,11 @@ import {
 } from './analytics'
 import PrivacySettings from './PrivacySettings'
 import DraftAnnouncement from './DraftAnnouncement'
+import CompactDetails from './CompactDetails'
 import { npcAnnouncements, type Announcement } from './announcements'
 
 const STORAGE_KEY = 'geneki-draft-room:v2'
-type Modal = 'rules' | 'data' | 'reset' | 'privacy' | null
+type Modal = 'rules' | 'data' | 'reset' | 'privacy' | 'player' | null
 interface Saved {
   dataset: Dataset
   game: Game | null
@@ -237,8 +238,15 @@ function ModalShell({
   close: () => void
 }) {
   const dialog = useRef<HTMLDialogElement>(null)
+  const returnFocus = useRef<HTMLElement | null>(null)
   useEffect(() => {
+    if (!returnFocus.current && document.activeElement instanceof HTMLElement)
+      returnFocus.current = document.activeElement
     dialog.current?.showModal()
+    return () => {
+      if (returnFocus.current?.isConnected)
+        returnFocus.current.focus({ preventScroll: true })
+    }
   }, [])
   return (
     <dialog
@@ -290,6 +298,11 @@ export default function App() {
   const [error, setError] = useState(initial.warning ?? '')
   const [storageError, setStorageError] = useState(false)
   const [importMessage, setImportMessage] = useState('')
+  const [detailPlayerId, setDetailPlayerId] = useState('')
+  const [compact, setCompact] = useState(
+    () => window.matchMedia('(max-width: 760px)').matches,
+  )
+  const flowTarget = useRef<HTMLHeadingElement>(null)
   const [announcements, setAnnouncements] = useState<Announcement[] | null>(
     null,
   )
@@ -318,8 +331,37 @@ export default function App() {
           ? 4
           : 3
   const selectedPlayer = players.find((p) => p.id === selectedId)
+  const detailPlayer = players.find((p) => p.id === detailPlayerId)
   const userTurn = game?.stage === 'draft' && game.current === game.userTeam
   const player = (id: string) => players.find((p) => p.id === id)!
+  const flowKey = game
+    ? `${game.seed}:${game.stage}:${game.current ?? ''}:${game.picks.length}`
+    : 'home'
+  const previousFlow = useRef(flowKey)
+  const pendingFlowFocus = useRef(false)
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 760px)')
+    const change = () => setCompact(media.matches)
+    media.addEventListener('change', change)
+    return () => media.removeEventListener('change', change)
+  }, [])
+  useEffect(() => {
+    if (previousFlow.current !== flowKey) pendingFlowFocus.current = true
+    previousFlow.current = flowKey
+    if (modal || announcements || !pendingFlowFocus.current) return
+    const frame = requestAnimationFrame(() => {
+      pendingFlowFocus.current = false
+      const target = flowTarget.current
+      if (!target) return
+      document
+        .querySelector('.roster-list')
+        ?.scrollTo({ top: 0, behavior: 'auto' })
+      target.focus({ preventScroll: true })
+      target.scrollIntoView({ block: 'start', behavior: 'auto' })
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [flowKey, modal, announcements])
 
   useEffect(() => {
     try {
@@ -393,6 +435,7 @@ export default function App() {
     })
   }
   function reset() {
+    setDetailPlayerId('')
     setAnnouncements(null)
     setGame(null)
     setTrackedPlay(null)
@@ -588,20 +631,39 @@ export default function App() {
           </div>
         </header>
         <main id="main-content">
-          <div className="data-notice">
-            <Info size={15} />
-            <span>
-              {isReference
-                ? '現在は操作体験版です。選手は過去所属の参考データで、2026年の在籍・対象資格は未確認です。'
-                : isOfficial
-                  ? `2026年推定年俸で仮判定。FA・前年現役ドラフト等を照合済み／契約条件未確認あり。名簿・成績：${dataset.asOf}取得。`
-                  : `2026年データ：${dataset.label}（${dataset.asOf}時点・利用者による取り込み／自動照合なし）`}
-            </span>
-            <button onClick={() => setModal('data')}>
-              データ詳細
-              <ChevronRight size={13} />
-            </button>
-          </div>
+          <CompactDetails
+            compact={compact}
+            title="選手データ・対象条件（仮判定）"
+            className="data-disclosure"
+          >
+            <div className="data-notice">
+              <Info size={15} />
+              <span>
+                {isReference
+                  ? '現在は操作体験版です。選手は過去所属の参考データで、2026年の在籍・対象資格は未確認です。'
+                  : isOfficial
+                    ? `2026年推定年俸で仮判定。FA・前年現役ドラフト等を照合済み／契約条件未確認あり。名簿・成績：${dataset.asOf}取得。`
+                    : `2026年データ：${dataset.label}（${dataset.asOf}時点・利用者による取り込み／自動照合なし）`}
+              </span>
+              <button onClick={() => setModal('data')}>
+                データ詳細
+                <ChevronRight size={13} />
+              </button>
+            </div>
+            {game?.stage === 'nominate' && (
+              <p className="transfer-rule-note">
+                <strong>2026年の対象範囲変更：</strong>
+                7月31日までに通常のトレード等で加入した選手も、他の条件を満たせば対象です。前年の現役ドラフトで加入した選手は対象外です。
+                <a
+                  href="https://www.nikkansports.com/baseball/news/202610140000570.html"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  制度変更の出典
+                </a>
+              </p>
+            )}
+          </CompactDetails>
           {error && (
             <div className="error-message" role="alert">
               <Info size={17} />
@@ -671,7 +733,9 @@ export default function App() {
                     <div className="step-label">
                       STEP 01 <span>球団選択</span>
                     </div>
-                    <h2>どの球団の未来を、つくりますか。</h2>
+                    <h2 ref={flowTarget} className="flow-target" tabIndex={-1}>
+                      どの球団の未来を、つくりますか。
+                    </h2>
                     <p>あなたが指揮する球団をひとつ選んでください。</p>
                   </div>
                   <div className="league-tabs" aria-label="リーグで絞り込み">
@@ -819,10 +883,17 @@ export default function App() {
                   {(game.stage === 'nominate' ||
                     game.stage === 'vote' ||
                     userTurn) && (
-                    <section className="panel roster-panel">
+                    <section
+                      className="panel roster-panel"
+                      data-stage={game.stage}
+                    >
                       <div className="panel-heading">
                         <div>
-                          <h2>
+                          <h2
+                            ref={flowTarget}
+                            className="flow-target"
+                            tabIndex={-1}
+                          >
                             {game.stage === 'nominate'
                               ? '提出候補を選ぶ'
                               : game.stage === 'vote'
@@ -832,10 +903,10 @@ export default function App() {
                           </h2>
                           <p>
                             {game.stage === 'nominate'
-                              ? '2026年推定年俸で仮判定。FA・前年現役ドラフト等を除外し、契約情報未確認は明示しています。'
+                              ? '候補を2名以上選択してください。'
                               : game.stage === 'vote'
                                 ? '予備指名した選手を指名できる場合、本指名でもその選手を獲得します。'
-                                : '「ゲーム内適合度」はNPC用の仮想スコアで、実際の成績・評価ではありません。'}
+                                : '指名可能な候補から、獲得する選手を選んでください。'}
                           </p>
                         </div>
                         {userTurn && (
@@ -845,19 +916,7 @@ export default function App() {
                           </span>
                         )}
                       </div>
-                      {game.stage === 'nominate' && (
-                        <p className="transfer-rule-note">
-                          <strong>2026年の対象範囲変更：</strong>
-                          7月31日までに通常のトレード等で加入した選手も、他の条件を満たせば対象です。前年の現役ドラフトで加入した選手は対象外です。
-                          <a
-                            href="https://www.nikkansports.com/baseball/news/202610140000570.html"
-                            target="_blank"
-                            rel="noreferrer"
-                          >
-                            制度変更の出典
-                          </a>
-                        </p>
-                      )}
+
                       {game.stage === 'nominate' && (
                         <button
                           className="excluded-toggle"
@@ -950,20 +1009,36 @@ export default function App() {
                                 </span>
                                 <span className="player-name">
                                   <strong>{p.name}</strong>
-                                  <small>
-                                    {teamById[p.team].name}
+                                  <small className="player-affiliation">
+                                    <span className="player-team-full">
+                                      {teamById[p.team].name}
+                                    </span>
+                                    <span className="player-team-short">
+                                      {teamById[p.team].short}
+                                    </span>
                                     {p.number ? ` · #${p.number}` : ''}
                                   </small>
                                   {isOfficial && <StatSummary player={p} />}
                                   <small className="salary-info">
-                                    {p.draftFacts?.salaryManYen == null
-                                      ? '2026年俸未確認'
-                                      : `2026推定 ${p.draftFacts.salaryManYen.toLocaleString()}万円`}{' '}
+                                    {p.draftFacts?.salaryManYen == null ? (
+                                      '2026年俸未確認'
+                                    ) : (
+                                      <>
+                                        <span className="salary-year">
+                                          2026
+                                        </span>
+                                        推定{' '}
+                                        {p.draftFacts.salaryManYen.toLocaleString()}
+                                        万円
+                                      </>
+                                    )}{' '}
                                     · {eligibilityOf(p).label}
                                   </small>
                                   {eligibilityOf(p).allowed &&
                                   p.draftFacts?.unresolved.length ? (
-                                    <small>契約等未確認・仮判定</small>
+                                    <small className="player-contract-note">
+                                      契約等未確認・仮判定
+                                    </small>
                                   ) : null}
                                   {!eligibilityOf(p).allowed && (
                                     <small>
@@ -982,6 +1057,20 @@ export default function App() {
                                     </a>
                                   )}
                                 </span>
+                                <button
+                                  type="button"
+                                  className="player-details-button"
+                                  aria-label={`${p.name}の詳細`}
+                                  onClick={(event) => {
+                                    event.preventDefault()
+                                    event.stopPropagation()
+                                    setDetailPlayerId(p.id)
+                                    setModal('player')
+                                  }}
+                                >
+                                  詳細
+                                  <ChevronRight size={13} />
+                                </button>
                                 <span className="player-position">
                                   {p.position}
                                 </span>
@@ -1075,7 +1164,13 @@ export default function App() {
                     <section className="panel npc-stage">
                       <div className="eyebrow dark">NOW ON THE CLOCK</div>
                       <TeamMark team={teamById[game.current!]} />
-                      <h2>{teamById[game.current!].name}</h2>
+                      <h2
+                        ref={flowTarget}
+                        className="flow-target"
+                        tabIndex={-1}
+                      >
+                        {teamById[game.current!].name}
+                      </h2>
                       <p>NPCの編成責任者が、補強ポイントをもとに指名します。</p>
                       <span className="need-chip">
                         補強ポイント：{teamById[game.current!].need}{' '}
@@ -1116,7 +1211,13 @@ export default function App() {
                       <span className="eyebrow dark">
                         SECOND ROUND / PARTICIPATION
                       </span>
-                      <h2>第2巡の参加意向を選んでください</h2>
+                      <h2
+                        ref={flowTarget}
+                        className="flow-target"
+                        tabIndex={-1}
+                      >
+                        第2巡の参加意向を選んでください
+                      </h2>
                       <p>
                         残った候補選手で、もう一度補強を検討できます。
                         <br />
@@ -1168,7 +1269,13 @@ export default function App() {
                     <section className="panel round-two-confirm">
                       <div className="panel-heading">
                         <div>
-                          <h2>参加状況と入札を確認</h2>
+                          <h2
+                            ref={flowTarget}
+                            className="flow-target"
+                            tabIndex={-1}
+                          >
+                            参加状況と入札を確認
+                          </h2>
                           <p>
                             参加確定後の辞退はできません。無条件入札が優先され、同条件は第1巡の実際の指名順の逆順で調整します。
                           </p>
@@ -1198,20 +1305,26 @@ export default function App() {
                             <option value="out">不参加</option>
                           </select>
                         </label>
-                        <div className="participation-grid">
-                          {teams.map((t) => (
-                            <div key={t.id}>
-                              <strong>{t.short}</strong>
-                              <span>
-                                {game.roundTwo!.intents[t.id] === 'buy'
-                                  ? '獲得希望'
-                                  : game.roundTwo!.intents[t.id] === 'supply'
-                                    ? '放出のみ'
-                                    : '不参加'}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
+                        <CompactDetails
+                          compact={compact}
+                          title="12球団の参加状況"
+                          className="participation-disclosure"
+                        >
+                          <div className="participation-grid">
+                            {teams.map((t) => (
+                              <div key={t.id}>
+                                <strong>{t.short}</strong>
+                                <span>
+                                  {game.roundTwo!.intents[t.id] === 'buy'
+                                    ? '獲得希望'
+                                    : game.roundTwo!.intents[t.id] === 'supply'
+                                      ? '放出のみ'
+                                      : '不参加'}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </CompactDetails>
                         {game.roundTwo.intents[team.id] === 'buy' && (
                           <>
                             <label>
@@ -1337,7 +1450,13 @@ export default function App() {
                           <CheckCheck size={18} />
                           DRAFT COMPLETE
                         </div>
-                        <h2>{team.short}の、新しい一歩。</h2>
+                        <h2
+                          ref={flowTarget}
+                          className="flow-target"
+                          tabIndex={-1}
+                        >
+                          {team.short}の、新しい一歩。
+                        </h2>
                         <p>あなたの指名で、新たなチャンスが生まれました。</p>
                         <div className="movement-grid">
                           {game.picks
@@ -1456,7 +1575,11 @@ export default function App() {
                   )}
 
                   {game.picks.length > 0 && game.stage !== 'results' && (
-                    <section className="panel">
+                    <CompactDetails
+                      compact={compact}
+                      title={`指名履歴（${game.picks.length}件）`}
+                      className="panel timeline-panel"
+                    >
                       <div className="panel-heading">
                         <h2>指名のタイムライン</h2>
                         <span className="muted">{game.picks.length} PICKS</span>
@@ -1486,83 +1609,89 @@ export default function App() {
                           </li>
                         ))}
                       </ol>
-                    </section>
+                    </CompactDetails>
                   )}
                 </div>
-                <aside className="game-aside">
-                  <section className="panel your-team">
-                    <span className="eyebrow dark">YOUR TEAM</span>
-                    <TeamMark team={team} />
-                    <h3>{team.name}</h3>
-                    <span className="gm-tag">編成責任者：あなた</span>
-                    <div className="team-objective">
-                      <span>ゲーム内の補強ポイント</span>
-                      <strong>{team.need}</strong>
-                      <p>{team.philosophy}</p>
-                    </div>
-                    {game.stage !== 'nominate' && (
-                      <div className="submitted-list">
-                        <span>提出した候補選手</span>
-                        {game.offers[team.id]?.map((id) => (
-                          <div key={id}>
-                            <span>{player(id).name}</span>
-                            <small>{player(id).position}</small>
-                          </div>
-                        ))}
+                <CompactDetails
+                  compact={compact}
+                  title="球団情報・得票・編成のヒント"
+                  className="aside-disclosure"
+                >
+                  <aside className="game-aside">
+                    <section className="panel your-team">
+                      <span className="eyebrow dark">YOUR TEAM</span>
+                      <TeamMark team={team} />
+                      <h3>{team.name}</h3>
+                      <span className="gm-tag">編成責任者：あなた</span>
+                      <div className="team-objective">
+                        <span>ゲーム内の補強ポイント</span>
+                        <strong>{team.need}</strong>
+                        <p>{team.philosophy}</p>
                       </div>
+                      {game.stage !== 'nominate' && (
+                        <div className="submitted-list">
+                          <span>提出した候補選手</span>
+                          {game.offers[team.id]?.map((id) => (
+                            <div key={id}>
+                              <span>{player(id).name}</span>
+                              <small>{player(id).position}</small>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </section>
+                    {game.stage === 'draft' ||
+                    game.stage === 'round2' ||
+                    game.stage === 'round2confirm' ||
+                    game.stage === 'results' ? (
+                      <section className="panel vote-panel">
+                        <div className="panel-heading">
+                          <h3>第1巡の事前投票</h3>
+                          <span>12票</span>
+                        </div>
+                        {[...teamIds]
+                          .sort(
+                            (a, b) =>
+                              voteCount(game, b, players) -
+                              voteCount(game, a, players),
+                          )
+                          .map((id) => (
+                            <div className="vote-row" key={id}>
+                              <span>{teamById[id].short}</span>
+                              <span className="vote-bar">
+                                <i
+                                  style={{
+                                    width: `${(voteCount(game, id, players) / 12) * 100}%`,
+                                  }}
+                                />
+                              </span>
+                              <strong>{voteCount(game, id, players)}</strong>
+                            </div>
+                          ))}
+                        <p className="aside-footnote">
+                          票は候補選手の所属球団に集計。同票は2026年の新人ドラフト第2巡の指名順です。
+                        </p>
+                      </section>
+                    ) : (
+                      <section className="panel tip-card">
+                        <BookOpen size={20} />
+                        <h3>編成のヒント</h3>
+                        <p>
+                          {game.stage === 'nominate'
+                            ? '他球団に求められる選手を提出すると、最初の指名権を得られる可能性が高まります。残す戦力と、獲得のチャンスを考えてみましょう。'
+                            : 'NPCは設定された補強ポイントを重視します。人気の集まる候補と、自球団に必要な選手が一致するとは限りません。'}
+                        </p>
+                        <button
+                          className="text-button"
+                          onClick={() => setModal('rules')}
+                        >
+                          進行ルールを見る
+                          <ArrowUpRight size={14} />
+                        </button>
+                      </section>
                     )}
-                  </section>
-                  {game.stage === 'draft' ||
-                  game.stage === 'round2' ||
-                  game.stage === 'round2confirm' ||
-                  game.stage === 'results' ? (
-                    <section className="panel vote-panel">
-                      <div className="panel-heading">
-                        <h3>第1巡の事前投票</h3>
-                        <span>12票</span>
-                      </div>
-                      {[...teamIds]
-                        .sort(
-                          (a, b) =>
-                            voteCount(game, b, players) -
-                            voteCount(game, a, players),
-                        )
-                        .map((id) => (
-                          <div className="vote-row" key={id}>
-                            <span>{teamById[id].short}</span>
-                            <span className="vote-bar">
-                              <i
-                                style={{
-                                  width: `${(voteCount(game, id, players) / 12) * 100}%`,
-                                }}
-                              />
-                            </span>
-                            <strong>{voteCount(game, id, players)}</strong>
-                          </div>
-                        ))}
-                      <p className="aside-footnote">
-                        票は候補選手の所属球団に集計。同票は2026年の新人ドラフト第2巡の指名順です。
-                      </p>
-                    </section>
-                  ) : (
-                    <section className="panel tip-card">
-                      <BookOpen size={20} />
-                      <h3>編成のヒント</h3>
-                      <p>
-                        {game.stage === 'nominate'
-                          ? '他球団に求められる選手を提出すると、最初の指名権を得られる可能性が高まります。残す戦力と、獲得のチャンスを考えてみましょう。'
-                          : 'NPCは設定された補強ポイントを重視します。人気の集まる候補と、自球団に必要な選手が一致するとは限りません。'}
-                      </p>
-                      <button
-                        className="text-button"
-                        onClick={() => setModal('rules')}
-                      >
-                        進行ルールを見る
-                        <ArrowUpRight size={14} />
-                      </button>
-                    </section>
-                  )}
-                </aside>
+                  </aside>
+                </CompactDetails>
               </div>
             </>
           )}
@@ -1589,6 +1718,65 @@ export default function App() {
           onCommit={setGame}
           onFinish={() => setAnnouncements(null)}
         />
+      )}
+      {modal === 'player' && detailPlayer && (
+        <ModalShell
+          title={`${detailPlayer.name}の詳細`}
+          close={() => setModal(null)}
+        >
+          <p>
+            {teamById[detailPlayer.team].name} / {detailPlayer.position}
+            {detailPlayer.number ? ` / #${detailPlayer.number}` : ''}
+          </p>
+          {isOfficial && <StatSummary player={detailPlayer} />}
+          <h3>2026年推定年俸</h3>
+          <p>
+            {detailPlayer.draftFacts?.salaryManYen == null
+              ? '未確認'
+              : `${detailPlayer.draftFacts.salaryManYen.toLocaleString()}万円`}
+          </p>
+          <h3>候補資格：{eligibilityOf(detailPlayer).label}</h3>
+          {eligibilityOf(detailPlayer).reasons.length > 0 && (
+            <ul>
+              {eligibilityOf(detailPlayer).reasons.map((reason) => (
+                <li key={reason}>{reason}</li>
+              ))}
+            </ul>
+          )}
+          <p>
+            2026年推定年俸を使用した仮判定です。実際の候補リストを示すものではありません。
+          </p>
+          <h3>未確認の条件</h3>
+          <ul>
+            {eligibilityOf(detailPlayer).unresolved.map((reason) => (
+              <li key={reason}>{reason}</li>
+            ))}
+          </ul>
+          <div className="player-detail-sources">
+            {detailPlayer.draftFacts?.salarySource && (
+              <a
+                className="source-link"
+                href={detailPlayer.draftFacts.salarySource}
+                target="_blank"
+                rel="noreferrer"
+              >
+                年俸出典
+                <ExternalLink size={14} />
+              </a>
+            )}
+            {detailPlayer.sourceUrl && (
+              <a
+                className="source-link"
+                href={detailPlayer.sourceUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                選手データの出典
+                <ExternalLink size={14} />
+              </a>
+            )}
+          </div>
+        </ModalShell>
       )}
       {modal === 'privacy' && (
         <ModalShell title="利用状況の計測について" close={() => setModal(null)}>

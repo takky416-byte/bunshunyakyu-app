@@ -2,6 +2,7 @@ import { StrictMode, lazy, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'
 import './styles.css'
+import './mobile-layout.css'
 const AnalyticsAdmin = lazy(() => import('./AnalyticsAdmin'))
 
 createRoot(document.getElementById('root')!).render(
