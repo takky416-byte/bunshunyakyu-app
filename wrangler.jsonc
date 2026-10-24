@@ -14,7 +14,7 @@
     {
       "binding": "DB",
       "database_name": "geneki-draft-analytics",
-      "database_id": "SET_YOUR_D1_DATABASE_ID",
+      "database_id": "59b49957-9950-489a-a098-6ce9448b01af",
       "migrations_dir": "cloudflare/migrations",
     },
   ],

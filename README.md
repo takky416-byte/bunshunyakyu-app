@@ -31,7 +31,7 @@ CHROMIUM_PATH=/usr/bin/chromium npm run test:e2e
 
 初回起動時に管理キーを暗号学的乱数で生成し、開発用は `.local-data/analytics-dev.key`、公開用は `.local-data/analytics.key` に権限600で保存します。このファイルをサーバー側で安全に確認し、管理画面に入力してください。キーをチャット、公開ファイル、クライアント用の `VITE_` 環境変数には含めないでください。既存キーを起動のたびに作り直すことはありません。
 
-無料枠での本番公開は **Cloudflare Workers＋D1** を使います。ゲームと集計を同じHTTPS URLで提供します。公開手順と必要なアカウント設定は [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) を参照してください。本番アカウントへのデプロイとURL発行は未実施です。
+無料枠での本番公開は **Cloudflare Workers＋D1** を使います。ゲームと集計を同じHTTPS URLで提供します。公開手順と必要なアカウント設定は [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) を参照してください。本番URL：[https://geneki-draft-room.takky416.workers.dev](https://geneki-draft-room.takky416.workers.dev)（2026-10-24公開）。プレーヤーのアカウント登録は不要です。
 
 Node.js＋SQLite版をローカルで起動する場合は次の通りです。
 
