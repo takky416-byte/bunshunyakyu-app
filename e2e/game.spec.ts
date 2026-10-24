@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from './fixtures'
 import { readFile } from 'node:fs/promises'
 
 test('select a club, nominate, vote, draft, restore, and export results', async ({

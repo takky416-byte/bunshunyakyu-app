@@ -4,7 +4,7 @@ GitHubにソースを保存し、**Cloudflare Workers Free＋Static Assets＋D1 
 
 2026-10-24に本番公開済み。ゲーム：[https://geneki-draft-room.takky416.workers.dev](https://geneki-draft-room.takky416.workers.dev)。管理画面は同じURLの `/admin`。プレーヤーにはCloudflare認証もアカウント登録も不要。
 
-D1の初期化、管理キーのWorker Secret登録、公開アセットのビルド一致、HTTPSと認証付きAPI、開始・完了の記録、重複送信の排除、日本時間の集計を確認した。再デプロイ後も管理キーと記録が維持されることを確認し、検証用ブラウザIDの記録だけを削除済み。単体・データ試験45件とブラウザ試験11件が成功。管理キーは `.local-data/cloudflare-admin.key` の非公開ファイルに保持し、ソースや本文へ掲載しない。作業環境のChromiumは公開HTTPS証明書の信頼設定が合わず、公開URLを直接使うブラウザ試験は未実施。同じアプリの操作試験と、証明書検証を有効にした公開HTTPS/API試験で検証する。
+D1の初期化、管理キーのWorker Secret登録、公開アセットのビルド一致、HTTPSと認証付きAPI、開始・完了の記録、重複送信の排除、日本時間の集計を確認した。再デプロイ後も管理キーと記録が維持されることを確認し、検証用ブラウザIDの記録だけを削除済み。文字サイズと発表演出の更新後、単体・データ試験46件とブラウザ試験17件が成功。管理キーは `.local-data/cloudflare-admin.key` の非公開ファイルに保持し、ソースや本文へ掲載しない。作業環境のChromiumは公開HTTPS証明書の信頼設定が合わず、公開URLを直接使うブラウザ試験は未実施。同じアプリの操作試験と、証明書検証を有効にした公開HTTPS/API試験で検証する。
 
 ## 費用と上限
 

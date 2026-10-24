@@ -16,7 +16,7 @@
   gap: 17px;
   align-items: center;
   margin-right: auto;
-  font-size: 17px;
+  font-size: 1.125rem;
   font-weight: 600;
   letter-spacing: 0.03em;
   white-space: nowrap;
@@ -24,7 +24,7 @@
 .admin-brand small {
   display: block;
   color: #a1b595;
-  font-size: 7px;
+  font-size: 0.875rem;
   letter-spacing: 0.2em;
   margin-top: 7px;
   font-weight: 400;
@@ -33,7 +33,7 @@
   display: flex;
   gap: 7px;
   align-items: center;
-  font-size: 10px;
+  font-size: 0.875rem;
   color: #c0cdb0;
   white-space: nowrap;
 }
@@ -70,7 +70,7 @@
   margin: 20px 0 12px;
 }
 .admin-login > p {
-  font-size: 12px;
+  font-size: 0.875rem;
   line-height: 2.2;
   color: #8a9679;
 }
@@ -80,7 +80,7 @@
 }
 .admin-login form > label {
   display: block;
-  font-size: 11px;
+  font-size: 0.875rem;
   color: #7f906b;
   margin-bottom: 9px;
 }
@@ -90,18 +90,18 @@
   border: 1px solid #dce4d0;
   background: #fff;
   border-radius: 4px;
-  font-size: 13px;
+  font-size: 1rem;
   color: #435c35;
 }
 .admin-login form > .button {
   width: 100%;
   margin-top: 16px;
   min-height: 46px;
-  font-size: 12px;
+  font-size: 0.875rem;
 }
 .admin-login > small {
   display: block;
-  font-size: 9px;
+  font-size: 0.875rem;
   color: #9aa68a;
   line-height: 1.8;
   margin-top: 23px;
@@ -121,7 +121,7 @@
   margin: 11px 0 9px;
 }
 .admin-title p {
-  font-size: 11px;
+  font-size: 0.875rem;
   color: #8a977a;
 }
 .admin-period {
@@ -134,13 +134,13 @@
   color: #80916a;
 }
 .admin-period > span {
-  font-size: 11px;
+  font-size: 0.875rem;
 }
 .admin-period label {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 9px;
+  font-size: 0.875rem;
   color: #939f84;
 }
 .admin-period input {
@@ -149,7 +149,7 @@
   padding: 8px;
   background: #fff;
   color: #536b43;
-  font-size: 11px;
+  font-size: 0.875rem;
   max-width: 150px;
 }
 .admin-presets {
@@ -161,7 +161,7 @@
   border-radius: 4px;
 }
 .admin-presets button {
-  font-size: 10px;
+  font-size: 0.875rem;
   padding: 8px 11px;
   color: #859571;
   border-radius: 3px;
@@ -181,7 +181,7 @@
   padding: 20px;
 }
 .admin-metric > span {
-  font-size: 11px;
+  font-size: 0.875rem;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -201,7 +201,7 @@
   margin-left: 7px;
 }
 .admin-metric > p {
-  font-size: 9px;
+  font-size: 0.875rem;
   line-height: 1.8;
   color: #9ca68c;
   margin-top: 12px;
@@ -213,7 +213,7 @@
   margin-bottom: 21px;
 }
 .admin-legend {
-  font-size: 8px;
+  font-size: 0.875rem;
   display: flex;
   align-items: center;
   gap: 5px;
@@ -278,13 +278,13 @@
 .admin-hour > small {
   position: absolute;
   bottom: -17px;
-  font-size: 8px;
+  font-size: 0.875rem;
   color: #9da98e;
   left: 50%;
   transform: translateX(-50%);
 }
 .admin-chart-note {
-  font-size: 8px;
+  font-size: 0.875rem;
   color: #98a58b;
   margin: 13px 24px 20px;
   line-height: 1.9;
@@ -311,7 +311,7 @@
   flex-shrink: 0;
 }
 .admin-team-list strong {
-  font-size: 10px;
+  font-size: 0.875rem;
   font-weight: 400;
   width: 74px;
   flex-shrink: 0;
@@ -346,13 +346,13 @@
   border-collapse: collapse;
   width: 100%;
   white-space: nowrap;
-  font-size: 11px;
+  font-size: 0.875rem;
   text-align: left;
 }
 .analytics-admin th {
   padding: 13px 20px;
   background: #f5f8ec;
-  font-size: 9px;
+  font-size: 0.875rem;
   color: #95a183;
   font-weight: 500;
 }
@@ -365,11 +365,11 @@
   max-height: 470px;
 }
 .admin-completed {
-  font-size: 10px;
+  font-size: 0.875rem;
   color: #66894e;
 }
 .admin-pending {
-  font-size: 9px;
+  font-size: 0.875rem;
   color: #a5ad97;
 }
 .admin-daily {
@@ -382,12 +382,12 @@
 .admin-empty-table {
   padding: 40px 20px;
   text-align: center;
-  font-size: 11px;
+  font-size: 0.875rem;
   color: #a3ad93;
 }
 .admin-notes {
   margin-top: 23px;
-  font-size: 10px;
+  font-size: 0.875rem;
   color: #8e9c7c;
   line-height: 2;
 }
@@ -401,7 +401,7 @@
 .admin-notes > span {
   display: block;
   text-align: right;
-  font-size: 9px;
+  font-size: 0.875rem;
   margin-top: 20px;
   color: #a0aa91;
 }
@@ -411,7 +411,7 @@
   border: 1px solid #e6cdb8;
   border-radius: 4px;
   color: #9a693f;
-  font-size: 11px;
+  font-size: 0.875rem;
   line-height: 1.9;
   margin: 15px 0;
 }
@@ -420,7 +420,7 @@
   border: 1px solid #dce4ca;
   border-radius: 5px;
   background: #eff3e5;
-  font-size: 11px;
+  font-size: 0.875rem;
   color: #81946a;
   margin-bottom: 23px;
 }
@@ -428,7 +428,7 @@
   padding: 75px 20px;
   text-align: center;
   color: #94a381;
-  font-size: 12px;
+  font-size: 0.875rem;
 }
 .admin-spinning {
   animation: admin-spin 1s linear infinite;
@@ -446,7 +446,7 @@
     padding: 16px;
   }
   .admin-metric > span {
-    font-size: 10px;
+    font-size: 0.875rem;
     gap: 6px;
   }
   .admin-chart-grid,
@@ -468,7 +468,7 @@
     padding: 8px;
   }
   .admin-legend {
-    font-size: 7px;
+    font-size: 0.875rem;
   }
 }
 @media (max-width: 760px) {
@@ -478,24 +478,24 @@
     flex-wrap: wrap;
   }
   .admin-brand {
-    font-size: 14px;
+    font-size: 1rem;
     gap: 13px;
   }
   .admin-brand small {
-    font-size: 6px;
+    font-size: 0.875rem;
   }
   .admin-back {
-    font-size: 8px;
+    font-size: 0.875rem;
     gap: 4px;
   }
   .admin-main {
     padding: 29px 18px;
   }
   .admin-title h1 {
-    font-size: 25px;
+    font-size: 1.5625rem;
   }
   .admin-title p {
-    font-size: 10px;
+    font-size: 0.875rem;
     line-height: 1.9;
   }
   .admin-title {
@@ -504,7 +504,7 @@
   }
   .admin-title > .button {
     padding: 10px;
-    font-size: 9px;
+    font-size: 0.875rem;
     gap: 6px;
   }
   .admin-metrics {
@@ -515,7 +515,7 @@
     padding: 18px 15px;
   }
   .admin-metric > strong {
-    font-size: 29px;
+    font-size: 1.8125rem;
   }
   .admin-chart-grid,
   .admin-lower-grid {
@@ -533,11 +533,11 @@
     margin-bottom: 3px;
   }
   .admin-period label {
-    font-size: 8px;
+    font-size: 0.875rem;
     gap: 5px;
   }
   .admin-period input {
-    font-size: 10px;
+    font-size: 0.875rem;
     max-width: 132px;
     padding: 8px;
   }
@@ -545,26 +545,26 @@
     margin-left: 0;
   }
   .admin-period > span:not(:first-of-type) {
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .admin-chart {
     padding: 13px 8px 0;
   }
   .admin-legend {
-    font-size: 8px;
+    font-size: 0.875rem;
   }
   .admin-hours {
     height: 185px;
   }
   .admin-notes {
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .admin-login {
     margin: 30px auto;
     padding: 33px 26px;
   }
   .admin-login h1 {
-    font-size: 24px;
+    font-size: 1.5rem;
   }
   .admin-recent {
     max-height: 350px;
@@ -576,10 +576,10 @@
     gap: 15px;
   }
   .admin-brand {
-    font-size: 13px;
+    font-size: 1rem;
   }
   .admin-back {
-    font-size: 8px;
+    font-size: 0.875rem;
   }
   .admin-header > .admin-back:last-child:not(:nth-child(2)) {
     margin-left: auto;
@@ -591,7 +591,7 @@
     margin-top: 0;
   }
   .admin-title h1 {
-    font-size: 25px;
+    font-size: 1.5625rem;
   }
   .admin-metrics {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -600,7 +600,7 @@
     grid-column: 1/3;
   }
   .admin-metric:first-child > strong {
-    font-size: 36px;
+    font-size: 2.25rem;
   }
   .admin-period {
     gap: 9px;
@@ -629,26 +629,26 @@
     padding: 18px 16px;
   }
   .analytics-admin .panel-heading h2 {
-    font-size: 13px;
+    font-size: 1rem;
   }
   .analytics-admin .panel-heading p {
-    font-size: 8px;
+    font-size: 0.875rem;
   }
   .analytics-admin .panel-heading .button {
-    font-size: 9px;
+    font-size: 0.875rem;
     padding: 9px;
     gap: 6px;
   }
   .analytics-admin th,
   .analytics-admin td {
     padding: 13px 12px;
-    font-size: 10px;
+    font-size: 0.875rem;
   }
   .analytics-admin th {
-    font-size: 8px;
+    font-size: 0.875rem;
   }
   .admin-legend {
-    font-size: 7px;
+    font-size: 0.875rem;
     gap: 4px;
   }
   .admin-legend b {

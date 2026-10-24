@@ -45,13 +45,11 @@ import {
   type TeamId,
 } from './data'
 import {
-  advanceToUser,
   beginDraft,
   choicesFor,
   fit,
   makePick,
   newGame,
-  npcPick,
   offeredPlayers,
   restoreGame,
   startRoundTwo,
@@ -75,6 +73,8 @@ import {
   type TrackedPlay,
 } from './analytics'
 import PrivacySettings from './PrivacySettings'
+import DraftAnnouncement from './DraftAnnouncement'
+import { npcAnnouncements, type Announcement } from './announcements'
 
 const STORAGE_KEY = 'geneki-draft-room:v2'
 type Modal = 'rules' | 'data' | 'reset' | 'privacy' | null
@@ -290,6 +290,19 @@ export default function App() {
   const [error, setError] = useState(initial.warning ?? '')
   const [storageError, setStorageError] = useState(false)
   const [importMessage, setImportMessage] = useState('')
+  const [announcements, setAnnouncements] = useState<Announcement[] | null>(
+    null,
+  )
+  const [presentationEnabled, setPresentationEnabled] = useState(() => {
+    try {
+      return localStorage.getItem('geneki-draft:presentation:v1') !== 'off'
+    } catch {
+      return true
+    }
+  })
+  const [reducedMotion, setReducedMotion] = useState(
+    () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  )
   const file = useRef<HTMLInputElement>(null)
   const team = teamById[game?.userTeam ?? chosenTeam]
   const players = dataset.players
@@ -322,6 +335,12 @@ export default function App() {
   useEffect(() => {
     trackPageView()
   }, [])
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const change = () => setReducedMotion(media.matches)
+    media.addEventListener('change', change)
+    return () => media.removeEventListener('change', change)
+  }, [])
   useEffect(
     () =>
       subscribePrivacy(() => {
@@ -345,6 +364,23 @@ export default function App() {
       setError(e instanceof Error ? e.message : '処理に失敗しました。')
     }
   }
+  function announce(sequence: Announcement[]) {
+    if (!sequence.length) return
+    if (presentationEnabled && !reducedMotion) setAnnouncements(sequence)
+    else setGame(sequence.at(-1)!.game)
+  }
+  function togglePresentation() {
+    const enabled = !presentationEnabled
+    setPresentationEnabled(enabled)
+    try {
+      localStorage.setItem(
+        'geneki-draft:presentation:v1',
+        enabled ? 'on' : 'off',
+      )
+    } catch {
+      /* usable without storage */
+    }
+  }
   function start() {
     act(() => {
       const seed = crypto.getRandomValues(new Uint32Array(1))[0]
@@ -357,6 +393,7 @@ export default function App() {
     })
   }
   function reset() {
+    setAnnouncements(null)
     setGame(null)
     setTrackedPlay(null)
     setNominees([])
@@ -752,13 +789,30 @@ export default function App() {
                             : `第${game.round}巡${game.round === 2 ? '（入札方式）' : '（暫定モデル）'}。指名された選手の所属球団へ、次の指名権が移ります。`}
                   </p>
                 </div>
-                <button
-                  className="button ghost"
-                  onClick={() => setModal('reset')}
-                >
-                  <RotateCcw size={15} />
-                  新しいドラフト
-                </button>
+                <div className="presentation-controls">
+                  <button
+                    className="presentation-toggle"
+                    aria-label="指名発表の演出"
+                    aria-pressed={presentationEnabled && !reducedMotion}
+                    disabled={reducedMotion}
+                    title={
+                      reducedMotion
+                        ? 'ブラウザの「動きを減らす」設定に合わせて演出を省略しています'
+                        : '指名発表の待ち時間と演出を切り替えます'
+                    }
+                    onClick={togglePresentation}
+                  >
+                    演出：
+                    {presentationEnabled && !reducedMotion ? 'あり' : 'なし'}
+                  </button>
+                  <button
+                    className="button ghost"
+                    onClick={() => setModal('reset')}
+                  >
+                    <RotateCcw size={15} />
+                    新しいドラフト
+                  </button>
+                </div>
               </div>
               <div className="game-layout">
                 <div className="game-main">
@@ -791,6 +845,19 @@ export default function App() {
                           </span>
                         )}
                       </div>
+                      {game.stage === 'nominate' && (
+                        <p className="transfer-rule-note">
+                          <strong>2026年の対象範囲変更：</strong>
+                          7月31日までに通常のトレード等で加入した選手も、他の条件を満たせば対象です。前年の現役ドラフトで加入した選手は対象外です。
+                          <a
+                            href="https://www.nikkansports.com/baseball/news/202610140000570.html"
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            制度変更の出典
+                          </a>
+                        </p>
+                      )}
                       {game.stage === 'nominate' && (
                         <button
                           className="excluded-toggle"
@@ -977,8 +1044,19 @@ export default function App() {
                                   submitNominations(game, nominees, players),
                                 )
                               else if (game.stage === 'vote')
-                                setGame(beginDraft(game, votedId, players))
-                              else setGame(makePick(game, selectedId, players))
+                                announce([
+                                  {
+                                    kind: 'order',
+                                    game: beginDraft(game, votedId, players),
+                                  },
+                                ])
+                              else
+                                announce([
+                                  {
+                                    kind: 'pick',
+                                    game: makePick(game, selectedId, players),
+                                  },
+                                ])
                             })
                           }
                         >
@@ -1007,7 +1085,9 @@ export default function App() {
                         <button
                           className="button primary"
                           onClick={() =>
-                            act(() => setGame(npcPick(game, players)))
+                            act(() =>
+                              announce(npcAnnouncements(game, players, false)),
+                            )
                           }
                         >
                           <Play size={15} />
@@ -1016,7 +1096,9 @@ export default function App() {
                         <button
                           className="button ghost"
                           onClick={() =>
-                            act(() => setGame(advanceToUser(game, players)))
+                            act(() =>
+                              announce(npcAnnouncements(game, players, true)),
+                            )
                           }
                         >
                           自分の番まで進める
@@ -1226,16 +1308,19 @@ export default function App() {
                           }
                           onClick={() =>
                             act(() =>
-                              setGame(
-                                confirmRoundTwo(
-                                  game,
-                                  game.roundTwo!.intents[team.id] === 'buy'
-                                    ? roundPreferences
-                                    : [],
-                                  bidCondition,
-                                  players,
-                                ),
-                              ),
+                              announce([
+                                {
+                                  kind: 'round2',
+                                  game: confirmRoundTwo(
+                                    game,
+                                    game.roundTwo!.intents[team.id] === 'buy'
+                                      ? roundPreferences
+                                      : [],
+                                    bidCondition,
+                                    players,
+                                  ),
+                                },
+                              ]),
                             )
                           }
                         >
@@ -1497,6 +1582,14 @@ export default function App() {
         </main>
       </div>
 
+      {announcements && (
+        <DraftAnnouncement
+          sequence={announcements}
+          players={players}
+          onCommit={setGame}
+          onFinish={() => setAnnouncements(null)}
+        />
+      )}
       {modal === 'privacy' && (
         <ModalShell title="利用状況の計測について" close={() => setModal(null)}>
           <PrivacySettings />
@@ -1553,7 +1646,23 @@ export default function App() {
               <ExternalLink size={14} />
             </a>
           </p>
-          <h3>この体験版の流れ</h3>
+          <h3>シーズン中に移籍した選手は？</h3>
+          <p>
+            2026年10月の規定改定により、7月31日までに通常のトレード等で獲得した選手も、他の資格条件を満たせば対象です。前年の現役ドラフトで獲得した選手は引き続き対象外です。
+            また、開催年の年度連盟選手権試合終了の翌日以降に契約譲渡で獲得した選手と、同じ基準日以降に育成から支配下へ移行した選手は除外されます。加入時期・契約等の選手別最終確認は残ります。
+          </p>
+          <p>
+            <a
+              className="source-link"
+              href="https://news.infoseek.co.jp/article/sponichin_20261015_0022/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              スポニチ：今年7月までに移籍した選手も対象（10月15日）
+              <ExternalLink size={14} />
+            </a>
+          </p>
+          <h3>ドラフトの流れ</h3>
           <ol className="guide-list">
             <li>
               <strong>候補提出</strong>

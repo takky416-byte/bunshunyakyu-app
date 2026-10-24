@@ -16,7 +16,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 100%;
   --green: #234c3e;
   --ink: #233c31;
   --muted: #7c847e;
@@ -28,6 +28,7 @@
 }
 body {
   margin: 0;
+  line-height: 1.75;
 }
 button,
 input,
@@ -102,7 +103,7 @@ button svg {
   display: flex;
   align-items: center;
   gap: 13px;
-  font-size: 22px;
+  font-size: 1.375rem;
   font-weight: 750;
   letter-spacing: 0.07em;
   line-height: 1.38;
@@ -126,7 +127,7 @@ button svg {
 }
 .brand-bottom {
   display: block;
-  font-size: 23px;
+  font-size: 1.4375rem;
 }
 .brand-dot {
   color: #d1b06d;
@@ -134,7 +135,7 @@ button svg {
 .season-label {
   margin-top: 23px;
   color: #b3c0b2;
-  font-size: 10px;
+  font-size: 0.875rem;
   letter-spacing: 0.2em;
   display: flex;
   gap: 9px;
@@ -148,7 +149,7 @@ button svg {
   background: #b8c78a;
 }
 .nav-caption {
-  font-size: 9px;
+  font-size: 0.875rem;
   letter-spacing: 0.16em;
   color: #839b8b;
   margin: 43px 0 15px 3px;
@@ -161,7 +162,7 @@ button svg {
   padding: 13px 12px;
   border-radius: 5px;
   color: #adbcaf;
-  font-size: 12px;
+  font-size: 0.875rem;
   margin-bottom: 5px;
   text-align: left;
   transition: background 0.2s;
@@ -195,7 +196,7 @@ button svg {
   align-items: center;
   gap: 13px;
   position: relative;
-  font-size: 11px;
+  font-size: 0.875rem;
   color: #7e9787;
   padding: 0 0 25px;
 }
@@ -216,7 +217,7 @@ button svg {
   justify-content: center;
   border: 1px solid #63766665;
   border-radius: 50%;
-  font-size: 9px;
+  font-size: 0.875rem;
   font-family: monospace;
 }
 .side-steps li.current {
@@ -243,20 +244,20 @@ button svg {
   display: flex;
   align-items: center;
   gap: 11px;
-  font-size: 11px;
+  font-size: 0.875rem;
 }
 .single-label svg {
   color: #a2b792;
 }
 .single-label small {
   display: block;
-  font-size: 10px;
+  font-size: 0.875rem;
   color: #8da390;
   margin-top: 5px;
 }
 .sidebar-note {
   font-family: 'Yu Mincho', serif;
-  font-size: 14px;
+  font-size: 1rem;
   line-height: 2.1;
   color: #a0af9c;
   letter-spacing: 0.08em;
@@ -264,7 +265,7 @@ button svg {
 }
 .version {
   display: block;
-  font-size: 7px;
+  font-size: 0.875rem;
   color: #728b78;
   letter-spacing: 0.13em;
   margin-top: 21px;
@@ -281,20 +282,24 @@ button svg {
   padding: 0 43px;
   background: #fafaf5;
 }
+.sidebar {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
 .breadcrumb {
   display: flex;
   align-items: center;
   gap: 15px;
-  font-size: 9px;
+  font-size: 0.875rem;
   letter-spacing: 0.12em;
   color: #889087;
 }
 .breadcrumb > span {
   color: #c9cec3;
-  font-size: 15px;
+  font-size: 1rem;
 }
 .breadcrumb strong {
-  font-size: 11px;
+  font-size: 0.875rem;
   font-weight: 500;
   color: #48574b;
   letter-spacing: 0.04em;
@@ -305,7 +310,7 @@ button svg {
   gap: 25px;
 }
 .save-state {
-  font-size: 10px;
+  font-size: 0.875rem;
   color: #7a877a;
   display: flex;
   align-items: center;
@@ -328,7 +333,7 @@ main {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 10px;
+  font-size: 0.875rem;
   color: #8d7a4b;
   line-height: 1.7;
   margin: 0 0 19px;
@@ -344,7 +349,7 @@ main {
   align-items: center;
   gap: 3px;
   white-space: nowrap;
-  font-size: 10px;
+  font-size: 0.875rem;
   color: #7c704e;
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -380,7 +385,7 @@ main {
   flex-shrink: 0;
 }
 .eyebrow {
-  font-size: 8px;
+  font-size: 0.875rem;
   letter-spacing: 0.18em;
   display: flex;
   align-items: center;
@@ -395,14 +400,14 @@ main {
 }
 .hero h1 {
   font-family: 'Yu Mincho', 'Hiragino Mincho ProN', serif;
-  font-size: 36px;
+  font-size: 2.25rem;
   font-weight: 500;
   letter-spacing: 0.1em;
   line-height: 1.65;
   margin: 17px 0 15px;
 }
 .hero p {
-  font-size: 11px;
+  font-size: 0.875rem;
   line-height: 2;
   color: #c0cdbb;
   letter-spacing: 0.05em;
@@ -412,7 +417,7 @@ main {
   gap: 18px;
   margin-top: 23px;
   color: #c3c8a6;
-  font-size: 8px;
+  font-size: 0.875rem;
   letter-spacing: 0.06em;
 }
 .hero-tags span {
@@ -434,7 +439,7 @@ main {
 }
 .field-caption {
   text-align: right;
-  font-size: 8px;
+  font-size: 0.875rem;
   line-height: 1.8;
   letter-spacing: 0.22em;
   color: #849e82;
@@ -445,7 +450,7 @@ main {
   color: #b9be94;
 }
 .field-footnote {
-  font-size: 6px;
+  font-size: 0.875rem;
   letter-spacing: 0.19em;
   color: #90a389;
   display: block;
@@ -460,7 +465,7 @@ main {
   margin: 37px 0 21px;
 }
 .step-label {
-  font-size: 8px;
+  font-size: 0.875rem;
   letter-spacing: 0.15em;
   font-weight: 700;
   color: #938969;
@@ -470,21 +475,21 @@ main {
 }
 .step-label > span {
   letter-spacing: 0.08em;
-  font-size: 9px;
+  font-size: 0.875rem;
   font-weight: 400;
   padding-left: 10px;
   border-left: 1px solid #c8c7b9;
   color: #758170;
 }
 .section-heading h2 {
-  font-size: 20px;
+  font-size: 1.25rem;
   letter-spacing: 0.04em;
   font-weight: 600;
   margin: 10px 0 9px;
 }
 .section-heading p {
   color: #879083;
-  font-size: 10px;
+  font-size: 0.875rem;
 }
 .league-tabs {
   display: flex;
@@ -497,7 +502,7 @@ main {
 }
 .league-tabs button {
   padding: 7px 12px;
-  font-size: 10px;
+  font-size: 0.875rem;
   color: #8a9285;
   border-radius: 3px;
 }
@@ -543,7 +548,7 @@ main {
   align-items: center;
   justify-content: space-between;
   color: #919b89;
-  font-size: 8px;
+  font-size: 0.875rem;
   margin-bottom: 10px;
 }
 .selection-circle {
@@ -574,7 +579,7 @@ main {
   background: color-mix(in srgb, var(--team-color) 8%, #fcfcf7);
   font-family: Georgia, 'Times New Roman', serif;
   font-weight: 700;
-  font-size: 32px;
+  font-size: 2rem;
   font-style: italic;
   line-height: 1;
   color: var(--team-color);
@@ -599,23 +604,23 @@ main {
 .team-mark.small {
   width: 36px;
   height: 36px;
-  font-size: 20px;
+  font-size: 1.25rem;
   box-shadow: inset 0 0 0 3px #ffffffa3;
 }
 .team-mark.small:after {
   inset: 4px;
 }
 .team-mark.small > span {
-  font-size: 3px;
+  font-size: 0.875rem;
 }
 .team-city {
-  font-size: 6px;
+  font-size: 0.875rem;
   letter-spacing: 0.19em;
   color: #969b8b;
   margin-top: 12px;
 }
 .team-card > strong {
-  font-size: 11px;
+  font-size: 0.875rem;
   letter-spacing: -0.01em;
   font-weight: 600;
   margin: 7px 0 16px;
@@ -629,7 +634,7 @@ main {
   gap: 13px;
   border-top: 1px solid #e8eadf;
   padding: 9px 0;
-  font-size: 8px;
+  font-size: 0.875rem;
   color: #85927e;
 }
 .team-card.selected .team-card-bottom {
@@ -655,16 +660,16 @@ main {
 .selection-team > div > span {
   display: block;
   color: #839078;
-  font-size: 7px;
+  font-size: 0.875rem;
   letter-spacing: 0.13em;
   margin-bottom: 5px;
 }
 .selection-team strong {
-  font-size: 12px;
+  font-size: 0.875rem;
   font-weight: 600;
 }
 .gm-tag {
-  font-size: 8px;
+  font-size: 0.875rem;
   color: #7c896f;
   border: 1px solid #dce3d1;
   padding: 5px 7px;
@@ -679,7 +684,7 @@ main {
   align-items: center;
   justify-content: center;
   gap: 15px;
-  font-size: 11px;
+  font-size: 0.875rem;
   font-weight: 600;
   padding: 13px 20px;
   border-radius: 4px;
@@ -733,16 +738,16 @@ main {
   border-radius: 5px;
 }
 .home-details strong {
-  font-size: 10px;
+  font-size: 0.875rem;
   font-weight: 500;
 }
 .home-details p {
-  font-size: 9px;
+  font-size: 0.875rem;
   color: #969d8d;
   margin-top: 6px;
 }
 .home-details > button {
-  font-size: 9px;
+  font-size: 0.875rem;
   color: #708264;
   display: flex;
   gap: 8px;
@@ -756,7 +761,7 @@ main {
   border-top: 1px solid #e2e6d9;
   padding: 20px 0 23px;
   color: #98a08e;
-  font-size: 8px;
+  font-size: 0.875rem;
   margin-top: 10px;
 }
 .footer > span {
@@ -769,13 +774,13 @@ main {
   padding-left: 5px;
 }
 .footer p {
-  font-size: 8px;
+  font-size: 0.875rem;
 }
 .footer > button {
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 8px;
+  font-size: 0.875rem;
   color: #7d8a72;
   white-space: nowrap;
 }
@@ -791,13 +796,13 @@ main {
 }
 .game-title h1 {
   font-family: 'Yu Mincho', 'Hiragino Mincho ProN', serif;
-  font-size: 29px;
+  font-size: 1.8125rem;
   letter-spacing: 0.05em;
   font-weight: 500;
   margin: 12px 0;
 }
 .game-title p {
-  font-size: 11px;
+  font-size: 0.875rem;
   color: #85907c;
   line-height: 1.9;
 }
@@ -831,24 +836,24 @@ main {
   border-bottom: 1px solid #e8ebdf;
 }
 .panel-heading h2 {
-  font-size: 14px;
+  font-size: 1rem;
   font-weight: 600;
   display: flex;
   align-items: center;
   gap: 10px;
 }
 .panel-heading h3 {
-  font-size: 11px;
+  font-size: 0.875rem;
   font-weight: 500;
 }
 .panel-heading p {
-  font-size: 9px;
+  font-size: 0.875rem;
   color: #8b957f;
   margin-top: 8px;
   line-height: 1.9;
 }
 .count {
-  font-size: 9px;
+  font-size: 0.875rem;
   padding: 3px 7px;
   background: #f0f2e8;
   border-radius: 3px;
@@ -877,7 +882,7 @@ main {
 .search-box input {
   min-width: 0;
   width: 100%;
-  font-size: 10px;
+  font-size: 0.875rem;
   border: 0;
   background: transparent;
   color: #43553c;
@@ -887,7 +892,7 @@ main {
   color: #a0a994;
 }
 .roster-toolbar select {
-  font-size: 10px;
+  font-size: 0.875rem;
   padding: 7px;
   border: 1px solid #dfe4d7;
   border-radius: 4px;
@@ -936,7 +941,7 @@ main {
   background: #f0f1e7;
   border: 1px solid #e2e5d5;
   border-radius: 50%;
-  font-size: 12px;
+  font-size: 0.875rem;
   color: #8a926f;
   flex-shrink: 0;
 }
@@ -949,14 +954,14 @@ main {
 }
 .player-name strong {
   font-weight: 500;
-  font-size: 13px;
+  font-size: 1rem;
 }
 .player-name small {
-  font-size: 8px;
+  font-size: 0.875rem;
   color: #8e9882;
 }
 .player-position {
-  font-size: 9px;
+  font-size: 0.875rem;
   color: #8e9880;
   min-width: 40px;
 }
@@ -968,17 +973,17 @@ main {
   gap: 3px;
 }
 .fit-score > small {
-  font-size: 7px;
+  font-size: 0.875rem;
   color: #919981;
 }
 .fit-score > strong {
   font-family: Georgia, serif;
-  font-size: 19px;
+  font-size: 1.1875rem;
   font-weight: 400;
   color: #6d8058;
 }
 .fit-score > strong > span {
-  font-size: 8px;
+  font-size: 0.875rem;
   color: #a2aa96;
   margin-left: 2px;
 }
@@ -1010,11 +1015,11 @@ main {
   background: #f9faf3;
 }
 .panel-footer > span {
-  font-size: 10px;
+  font-size: 0.875rem;
   color: #879377;
 }
 .panel-footer strong {
-  font-size: 14px;
+  font-size: 1rem;
   color: #526f42;
   font-weight: 500;
 }
@@ -1026,16 +1031,16 @@ main {
   align-items: center;
 }
 .your-team > .eyebrow {
-  font-size: 8px;
+  font-size: 0.875rem;
 }
 .your-team > .team-mark {
   margin: 24px 0 17px;
   width: 66px;
   height: 66px;
-  font-size: 36px;
+  font-size: 2.25rem;
 }
 .your-team h3 {
-  font-size: 12px;
+  font-size: 0.875rem;
   margin-bottom: 13px;
   font-weight: 600;
 }
@@ -1047,19 +1052,19 @@ main {
   width: 100%;
 }
 .team-objective > span {
-  font-size: 8px;
+  font-size: 0.875rem;
   color: #929a83;
   display: block;
 }
 .team-objective > strong {
-  font-size: 16px;
+  font-size: 1.125rem;
   font-weight: 500;
   color: #627c4b;
   display: block;
   margin: 10px 0;
 }
 .team-objective p {
-  font-size: 10px;
+  font-size: 0.875rem;
   color: #8a957c;
   line-height: 1.9;
 }
@@ -1071,18 +1076,18 @@ main {
   text-align: left;
 }
 .submitted-list > span {
-  font-size: 8px;
+  font-size: 0.875rem;
   color: #929a83;
 }
 .submitted-list > div {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 10px;
+  font-size: 0.875rem;
   margin-top: 14px;
 }
 .submitted-list small {
-  font-size: 8px;
+  font-size: 0.875rem;
   color: #929b85;
 }
 .tip-card {
@@ -1091,19 +1096,19 @@ main {
   color: #8e9a77;
 }
 .tip-card h3 {
-  font-size: 11px;
+  font-size: 0.875rem;
   color: #6f8157;
   margin: 12px 0;
 }
 .tip-card p {
-  font-size: 10px;
+  font-size: 0.875rem;
   line-height: 2.1;
 }
 .text-button {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 10px;
+  font-size: 0.875rem;
   text-decoration: underline;
   text-underline-offset: 4px;
   padding: 4px 0;
@@ -1111,7 +1116,7 @@ main {
 }
 .tip-card > .text-button {
   margin-top: 16px;
-  font-size: 9px;
+  font-size: 0.875rem;
 }
 .npc-stage {
   text-align: center;
@@ -1127,15 +1132,15 @@ main {
 .npc-stage > .team-mark {
   width: 80px;
   height: 80px;
-  font-size: 43px;
+  font-size: 2.6875rem;
 }
 .npc-stage > h2 {
-  font-size: 21px;
+  font-size: 1.3125rem;
   font-weight: 500;
   margin: 23px 0 13px;
 }
 .npc-stage > p {
-  font-size: 10px;
+  font-size: 0.875rem;
   color: #929b87;
   line-height: 2;
 }
@@ -1146,10 +1151,10 @@ main {
   background: #eff2e6;
   color: #798b62;
   padding: 8px 12px;
-  font-size: 10px;
+  font-size: 0.875rem;
 }
 .need-chip > span {
-  font-size: 8px;
+  font-size: 0.875rem;
   color: #a2aa92;
   padding-left: 8px;
 }
@@ -1169,7 +1174,7 @@ main {
   padding: 7px 8px;
   color: #769557;
   border-radius: 4px;
-  font-size: 8px;
+  font-size: 0.875rem;
   white-space: nowrap;
 }
 .live-pill > span {
@@ -1179,7 +1184,7 @@ main {
   background: #85a45f;
 }
 .muted {
-  font-size: 8px;
+  font-size: 0.875rem;
   letter-spacing: 0.09em;
   color: #93a080;
 }
@@ -1214,7 +1219,7 @@ main {
   gap: 7px;
 }
 .timeline-team {
-  font-size: 9px;
+  font-size: 0.875rem;
   color: #6b8157;
   display: flex;
   align-items: center;
@@ -1222,14 +1227,14 @@ main {
 }
 .timeline-team > span:last-child {
   color: #a2ab93;
-  font-size: 8px;
+  font-size: 0.875rem;
 }
 .timeline strong {
-  font-size: 13px;
+  font-size: 1rem;
   font-weight: 500;
 }
 .timeline small {
-  font-size: 8px;
+  font-size: 0.875rem;
   color: #98a287;
 }
 .timeline li > svg {
@@ -1237,7 +1242,7 @@ main {
   margin-top: 12px;
 }
 .you-tag {
-  font-size: 6px;
+  font-size: 0.875rem;
   letter-spacing: 0.04em;
   background: #e4ebd6;
   color: #6d8555;
@@ -1252,7 +1257,7 @@ main {
   padding: 19px;
 }
 .vote-panel .panel-heading > span {
-  font-size: 9px;
+  font-size: 0.875rem;
   color: #8c987c;
 }
 .vote-row {
@@ -1265,7 +1270,7 @@ main {
   margin-top: 12px;
 }
 .vote-row > span:first-child {
-  font-size: 9px;
+  font-size: 0.875rem;
   width: 65px;
   white-space: nowrap;
 }
@@ -1291,7 +1296,7 @@ main {
   text-align: right;
 }
 .aside-footnote {
-  font-size: 8px;
+  font-size: 0.875rem;
   line-height: 1.9;
   color: #a0a98f;
   margin: 16px 20px 0;
@@ -1318,12 +1323,12 @@ main {
   margin-bottom: 21px;
 }
 .round-two h2 {
-  font-size: 22px;
+  font-size: 1.375rem;
   font-weight: 500;
   margin: 16px 0;
 }
 .round-two > p {
-  font-size: 11px;
+  font-size: 0.875rem;
   line-height: 2.2;
   color: #8c977e;
 }
@@ -1340,7 +1345,7 @@ main {
 }
 .result-kicker {
   color: #bdc69a;
-  font-size: 9px;
+  font-size: 0.875rem;
   letter-spacing: 0.14em;
   display: flex;
   align-items: center;
@@ -1349,12 +1354,12 @@ main {
 .result-hero > h2 {
   font-family: 'Yu Mincho', serif;
   font-weight: 400;
-  font-size: 26px;
+  font-size: 1.625rem;
   letter-spacing: 0.05em;
   margin: 18px 0 11px;
 }
 .result-hero > p {
-  font-size: 10px;
+  font-size: 0.875rem;
   color: #b4c2a4;
   line-height: 2;
 }
@@ -1374,24 +1379,24 @@ main {
   gap: 10px;
 }
 .movement-label {
-  font-size: 9px;
+  font-size: 0.875rem;
   color: #cbd5a2;
   display: flex;
   align-items: center;
   gap: 6px;
 }
 .movement > strong {
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 400;
   margin-top: 4px;
   letter-spacing: 0.03em;
 }
 .movement > span:not(.movement-label) {
-  font-size: 10px;
+  font-size: 0.875rem;
   color: #bcc9ab;
 }
 .movement > small {
-  font-size: 8px;
+  font-size: 0.875rem;
   color: #a5b18f;
   padding-top: 9px;
   border-top: 1px solid #ffffff12;
@@ -1422,12 +1427,12 @@ main {
 .result-table {
   border-collapse: collapse;
   width: 100%;
-  font-size: 11px;
+  font-size: 0.875rem;
   white-space: nowrap;
   text-align: left;
 }
 .result-table th {
-  font-size: 8px;
+  font-size: 0.875rem;
   color: #919c80;
   font-weight: 500;
   background: #f8faf1;
@@ -1448,30 +1453,30 @@ main {
   margin-left: 3px;
 }
 .result-table td:nth-child(3) > strong {
-  font-size: 11px;
+  font-size: 0.875rem;
   font-weight: 500;
   display: block;
 }
 .result-table td:nth-child(3) > small {
-  font-size: 8px;
+  font-size: 0.875rem;
   color: #98a387;
   display: block;
   margin-top: 4px;
 }
 .result-table td:nth-child(4) {
-  font-size: 10px;
+  font-size: 0.875rem;
   color: #8c9b7c;
 }
 .table-team {
   display: flex;
   align-items: center;
   gap: 9px;
-  font-size: 10px;
+  font-size: 0.875rem;
 }
 .table-team .team-mark {
   width: 25px;
   height: 25px;
-  font-size: 14px;
+  font-size: 1rem;
 }
 .table-team .team-mark > span {
   display: none;
@@ -1492,7 +1497,7 @@ main {
   gap: 15px;
 }
 .empty-state > p {
-  font-size: 11px;
+  font-size: 0.875rem;
 }
 .error-message {
   display: flex;
@@ -1504,7 +1509,7 @@ main {
   color: #9b633e;
   border-radius: 5px;
   margin-bottom: 20px;
-  font-size: 11px;
+  font-size: 0.875rem;
   line-height: 1.9;
 }
 .error-message > .icon-button {
@@ -1537,7 +1542,7 @@ main {
   z-index: 2;
 }
 .modal-head h2 {
-  font-size: 17px;
+  font-size: 1.125rem;
   font-weight: 500;
 }
 .icon-button {
@@ -1555,12 +1560,12 @@ main {
   padding: 25px 27px 30px;
 }
 .modal-body h3 {
-  font-size: 13px;
+  font-size: 1rem;
   font-weight: 600;
   margin: 25px 0 12px;
 }
 .modal-body p {
-  font-size: 11px;
+  font-size: 0.875rem;
   line-height: 2.1;
   color: #7c8b6c;
   margin: 12px 0;
@@ -1569,7 +1574,7 @@ main {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  font-size: 10px;
+  font-size: 0.875rem;
   line-height: 1.95;
   padding: 16px;
   background: #f5f1df;
@@ -1588,7 +1593,7 @@ main {
   padding-left: 19px;
 }
 .guide-list > li {
-  font-size: 11px;
+  font-size: 0.875rem;
   margin: 19px 0;
   color: #718661;
   padding-left: 7px;
@@ -1603,7 +1608,7 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 10px;
+  font-size: 0.875rem;
   color: #6f8c5c;
   text-decoration: underline;
   text-underline-offset: 4px;
@@ -1632,16 +1637,16 @@ main {
   flex: 1;
 }
 .data-summary strong {
-  font-size: 11px;
+  font-size: 0.875rem;
   font-weight: 500;
   color: #60774f;
 }
 .data-summary > div > span {
-  font-size: 9px;
+  font-size: 0.875rem;
   color: #8c9d7c;
 }
 .data-status {
-  font-size: 8px;
+  font-size: 0.875rem;
   white-space: nowrap;
   border: 1px solid #cfdbc0;
   border-radius: 3px;
@@ -1654,11 +1659,11 @@ main {
   border-radius: 4px;
   color: #788e63;
   line-height: 1.9;
-  font-size: 10px;
+  font-size: 0.875rem;
   border: 1px solid #e1e6d4;
 }
 .modal-body .small-print {
-  font-size: 9px;
+  font-size: 0.875rem;
   line-height: 2;
   color: #8e9b7c;
 }
@@ -1679,7 +1684,7 @@ main {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 10px;
+  font-size: 0.875rem;
   margin: 14px 0;
   color: #78945f;
   text-decoration: underline;
@@ -1691,7 +1696,7 @@ main {
     padding: 44px 52px;
   }
   .hero h1 {
-    font-size: 42px;
+    font-size: 2.625rem;
   }
   .hero-field {
     width: 380px;
@@ -1700,13 +1705,13 @@ main {
     padding-top: 15px;
   }
   .team-card > strong {
-    font-size: 12px;
+    font-size: 0.875rem;
     margin-bottom: 18px;
   }
   .team-mark {
     width: 65px;
     height: 65px;
-    font-size: 37px;
+    font-size: 2.3125rem;
   }
   .team-card-bottom {
     padding: 11px;
@@ -1736,11 +1741,11 @@ main {
     margin-left: 200px;
   }
   .brand {
-    font-size: 19px;
+    font-size: 1.1875rem;
     gap: 12px;
   }
   .brand-bottom {
-    font-size: 20px;
+    font-size: 1.25rem;
   }
   .brand-icon {
     width: 29px;
@@ -1757,7 +1762,7 @@ main {
     min-height: 310px;
   }
   .hero h1 {
-    font-size: 30px;
+    font-size: 1.875rem;
   }
   .hero-field {
     width: 270px;
@@ -1765,13 +1770,13 @@ main {
   }
   .hero-tags {
     gap: 10px;
-    font-size: 7px;
+    font-size: 0.875rem;
   }
   .hero .eyebrow {
-    font-size: 7px;
+    font-size: 0.875rem;
   }
   .team-card > strong {
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .team-card {
     padding-left: 10px;
@@ -1780,29 +1785,29 @@ main {
   .team-mark {
     width: 53px;
     height: 53px;
-    font-size: 29px;
+    font-size: 1.8125rem;
   }
   .section-heading h2 {
-    font-size: 18px;
+    font-size: 1.25rem;
   }
   .league-tabs button {
     padding: 7px 9px;
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .selection-team > .gm-tag {
     display: none;
   }
   .home-details p {
-    font-size: 8px;
+    font-size: 0.875rem;
   }
   .home-details strong {
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .home-details {
     gap: 10px;
   }
   .home-details > button {
-    font-size: 8px;
+    font-size: 0.875rem;
     gap: 3px;
   }
   .detail-icon {
@@ -1819,7 +1824,7 @@ main {
     padding: 22px 17px;
   }
   .your-team h3 {
-    font-size: 10px;
+    font-size: 0.875rem;
   }
   .player-row {
     padding: 16px;
@@ -1834,17 +1839,17 @@ main {
   }
   .panel-footer .button {
     padding: 12px;
-    font-size: 10px;
+    font-size: 0.875rem;
   }
   .game-title h1 {
-    font-size: 25px;
+    font-size: 1.5625rem;
   }
   .game-title > .button {
-    font-size: 9px;
+    font-size: 0.875rem;
     padding: 10px;
   }
   .game-title p {
-    font-size: 10px;
+    font-size: 0.875rem;
   }
   .roster-toolbar {
     padding: 15px;
@@ -1856,7 +1861,7 @@ main {
     gap: 9px;
   }
   .npc-actions .button {
-    font-size: 10px;
+    font-size: 0.875rem;
     padding: 12px 15px;
   }
   .result-table td,
@@ -1876,33 +1881,33 @@ main {
     margin-left: 180px;
   }
   .brand {
-    font-size: 17px;
+    font-size: 1.125rem;
     gap: 10px;
   }
   .brand-bottom {
-    font-size: 19px;
+    font-size: 1.1875rem;
   }
   .brand-icon {
     width: 26px;
     height: 26px;
   }
   .nav-item {
-    font-size: 10px;
+    font-size: 0.875rem;
     padding: 12px 9px;
     gap: 9px;
   }
   .nav-caption {
-    font-size: 7px;
+    font-size: 0.875rem;
     letter-spacing: 0.1em;
   }
   .sidebar-note {
-    font-size: 12px;
+    font-size: 0.875rem;
   }
   .side-steps {
     margin-left: 5px;
   }
   .side-steps li {
-    font-size: 10px;
+    font-size: 0.875rem;
   }
   .topbar {
     padding: 0 22px;
@@ -1915,7 +1920,7 @@ main {
     gap: 15px;
   }
   .hero h1 {
-    font-size: 27px;
+    font-size: 1.6875rem;
   }
   .hero {
     padding: 27px;
@@ -1932,25 +1937,25 @@ main {
     position: relative;
   }
   .hero p {
-    font-size: 10px;
+    font-size: 0.875rem;
   }
   .hero-tags {
-    font-size: 6px;
+    font-size: 0.875rem;
   }
   .hero-field .field-caption {
-    font-size: 6px;
+    font-size: 0.875rem;
   }
   .hero-field .field-footnote {
-    font-size: 5px;
+    font-size: 0.875rem;
   }
   .section-heading {
     align-items: flex-start;
   }
   .section-heading h2 {
-    font-size: 17px;
+    font-size: 1.125rem;
   }
   .league-tabs button {
-    font-size: 8px;
+    font-size: 0.875rem;
     padding: 7px;
   }
   .teams-grid {
@@ -1958,7 +1963,7 @@ main {
     gap: 10px;
   }
   .team-card > strong {
-    font-size: 10px;
+    font-size: 0.875rem;
   }
   .home-details {
     align-items: flex-start;
@@ -1988,23 +1993,23 @@ main {
     padding: 20px 13px;
   }
   .your-team h3 {
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .player-row {
     padding: 16px 12px;
     gap: 9px;
   }
   .player-name strong {
-    font-size: 11px;
+    font-size: 0.875rem;
   }
   .player-name small {
-    font-size: 7px;
+    font-size: 0.875rem;
   }
   .fit-score {
     min-width: 62px;
   }
   .fit-score > small {
-    font-size: 6px;
+    font-size: 0.875rem;
   }
   .player-check {
     width: 17px;
@@ -2014,7 +2019,7 @@ main {
   .position-badge {
     width: 28px;
     height: 28px;
-    font-size: 10px;
+    font-size: 0.875rem;
   }
   .panel-footer {
     flex-direction: column;
@@ -2038,36 +2043,36 @@ main {
     align-items: flex-start;
   }
   .game-title h1 {
-    font-size: 22px;
+    font-size: 1.375rem;
   }
   .game-title > .button {
     margin-top: 16px;
-    font-size: 8px;
+    font-size: 0.875rem;
     padding: 8px;
     gap: 5px;
     min-height: 35px;
   }
   .panel-heading h2 {
-    font-size: 12px;
+    font-size: 0.875rem;
   }
   .panel-heading {
     padding: 18px 15px;
   }
   .panel-heading p {
-    font-size: 8px;
+    font-size: 0.875rem;
   }
   .tip-card {
     padding: 20px 15px;
   }
   .tip-card p {
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .vote-row {
     padding: 7px 13px;
     gap: 6px;
   }
   .vote-row > span:first-child {
-    font-size: 8px;
+    font-size: 0.875rem;
     width: 58px;
   }
   .aside-footnote {
@@ -2078,25 +2083,25 @@ main {
     padding: 30px 20px;
   }
   .round-two h2 {
-    font-size: 18px;
+    font-size: 1.25rem;
   }
   .result-hero {
     padding: 26px 20px;
   }
   .result-hero h2 {
-    font-size: 22px;
+    font-size: 1.375rem;
   }
   .movement-grid {
     grid-template-columns: 1fr;
   }
   .movement > strong {
-    font-size: 18px;
+    font-size: 1.25rem;
   }
   .result-buttons {
     flex-direction: column;
   }
   .npc-stage h2 {
-    font-size: 18px;
+    font-size: 1.25rem;
   }
   .npc-stage {
     padding: 35px 18px;
@@ -2108,7 +2113,7 @@ main {
     width: 100%;
   }
   .need-chip {
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .need-chip > span {
     display: block;
@@ -2116,10 +2121,15 @@ main {
     padding: 0;
   }
   .game-title p {
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .data-notice {
-    font-size: 9px;
+    font-size: 0.875rem;
+  }
+}
+@media (max-width: 900px) {
+  .game-layout {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 @media (max-width: 760px) {
@@ -2133,13 +2143,13 @@ main {
     padding: 12px 21px;
   }
   .brand {
-    font-size: 15px;
+    font-size: 1rem;
     line-height: 1.1;
     gap: 12px;
   }
   .brand-bottom {
     display: inline;
-    font-size: 15px;
+    font-size: 1rem;
     margin-left: 2px;
   }
   .brand-icon {
@@ -2148,7 +2158,7 @@ main {
   }
   .sidebar .season-label {
     margin: 0;
-    font-size: 8px;
+    font-size: 0.875rem;
     letter-spacing: 0.12em;
   }
   .sidebar > .nav-caption,
@@ -2166,14 +2176,14 @@ main {
     padding: 0 21px;
   }
   .breadcrumb {
-    font-size: 7px;
+    font-size: 0.875rem;
     gap: 10px;
   }
   .breadcrumb strong {
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .save-state {
-    font-size: 8px;
+    font-size: 0.875rem;
   }
   .topbar-right {
     gap: 15px;
@@ -2186,7 +2196,7 @@ main {
     padding: 30px;
   }
   .hero h1 {
-    font-size: 31px;
+    font-size: 1.9375rem;
   }
   .hero-field {
     width: 260px;
@@ -2195,51 +2205,51 @@ main {
     opacity: 0.65;
   }
   .hero .eyebrow {
-    font-size: 7px;
+    font-size: 0.875rem;
   }
   .hero-tags {
-    font-size: 7px;
+    font-size: 0.875rem;
     gap: 12px;
   }
   .hero p {
-    font-size: 11px;
+    font-size: 0.875rem;
   }
   .data-notice > button {
-    font-size: 8px;
+    font-size: 0.875rem;
   }
   .data-notice > span {
-    font-size: 8px;
+    font-size: 0.875rem;
   }
   .section-heading {
     margin-top: 30px;
     align-items: flex-end;
   }
   .section-heading h2 {
-    font-size: 18px;
+    font-size: 1.25rem;
   }
   .section-heading p {
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .league-tabs button {
-    font-size: 8px;
+    font-size: 0.875rem;
     padding: 7px 9px;
   }
   .team-card > strong {
-    font-size: 11px;
+    font-size: 0.875rem;
   }
   .team-card-top {
-    font-size: 8px;
+    font-size: 0.875rem;
   }
   .team-mark {
     width: 58px;
     height: 58px;
-    font-size: 32px;
+    font-size: 2rem;
   }
   .team-city {
-    font-size: 6px;
+    font-size: 0.875rem;
   }
   .team-card-bottom {
-    font-size: 8px;
+    font-size: 0.875rem;
     padding: 10px;
   }
   .team-card {
@@ -2249,10 +2259,10 @@ main {
     padding: 16px;
   }
   .selection-team strong {
-    font-size: 11px;
+    font-size: 0.875rem;
   }
   .selection-bar > .button {
-    font-size: 10px;
+    font-size: 0.875rem;
     padding: 13px 15px;
     gap: 8px;
   }
@@ -2263,26 +2273,26 @@ main {
     padding: 17px 14px;
   }
   .player-name strong {
-    font-size: 12px;
+    font-size: 0.875rem;
   }
   .roster-toolbar {
     flex-direction: row;
   }
   .roster-toolbar select {
     max-width: 125px;
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .game-title h1 {
-    font-size: 24px;
+    font-size: 1.5rem;
   }
   .game-title p {
-    font-size: 10px;
+    font-size: 0.875rem;
   }
   .game-title .button {
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .your-team h3 {
-    font-size: 10px;
+    font-size: 0.875rem;
   }
   .panel-footer {
     flex-direction: row;
@@ -2291,16 +2301,16 @@ main {
     width: auto;
   }
   .panel-footer > span {
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .panel-footer {
     padding: 15px;
   }
   .game-aside .panel-heading h3 {
-    font-size: 10px;
+    font-size: 0.875rem;
   }
   .panel-heading p {
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .game-title {
     margin-top: 27px;
@@ -2312,13 +2322,13 @@ main {
     flex-direction: row;
   }
   .npc-actions .button {
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .round-two h2 {
-    font-size: 17px;
+    font-size: 1.125rem;
   }
   .round-two p {
-    font-size: 10px;
+    font-size: 0.875rem;
   }
   .round-two .npc-actions {
     flex-direction: column;
@@ -2328,20 +2338,20 @@ main {
   }
   .result-buttons .button {
     padding: 11px;
-    font-size: 10px;
+    font-size: 0.875rem;
     gap: 7px;
   }
   .panel-heading h2 {
-    font-size: 13px;
+    font-size: 1rem;
   }
   .selection-team > .gm-tag {
     display: none;
   }
   .home-details p {
-    font-size: 8px;
+    font-size: 0.875rem;
   }
   .home-details strong {
-    font-size: 10px;
+    font-size: 0.875rem;
   }
   .home-details {
     padding: 24px 0 12px;
@@ -2377,7 +2387,7 @@ main {
     gap: 0;
   }
   .data-notice > span {
-    font-size: 8px;
+    font-size: 0.875rem;
     line-height: 1.8;
   }
   .hero {
@@ -2385,21 +2395,21 @@ main {
     padding: 28px 24px;
   }
   .hero .eyebrow {
-    font-size: 6px;
+    font-size: 0.875rem;
     letter-spacing: 0.13em;
   }
   .hero h1 {
-    font-size: 29px;
+    font-size: 1.8125rem;
     line-height: 1.7;
     letter-spacing: 0.04em;
     margin: 19px 0 15px;
   }
   .hero p {
-    font-size: 10px;
+    font-size: 0.875rem;
     line-height: 2.2;
   }
   .hero-tags {
-    font-size: 6px;
+    font-size: 0.875rem;
     gap: 10px;
     margin-top: 22px;
   }
@@ -2424,11 +2434,11 @@ main {
     margin: 28px 0 16px;
   }
   .section-heading h2 {
-    font-size: 18px;
+    font-size: 1.25rem;
     margin: 10px 0;
   }
   .section-heading p {
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .league-tabs {
     display: inline-flex;
@@ -2436,7 +2446,7 @@ main {
     padding: 3px;
   }
   .league-tabs button {
-    font-size: 9px;
+    font-size: 0.875rem;
     padding: 7px 15px;
   }
   .teams-grid {
@@ -2447,24 +2457,24 @@ main {
     padding: 12px 13px 0;
   }
   .team-card > strong {
-    font-size: 10px;
+    font-size: 0.875rem;
     margin: 7px 0 16px;
   }
   .team-card-top {
-    font-size: 8px;
+    font-size: 0.875rem;
     margin-bottom: 9px;
   }
   .team-mark {
     width: 57px;
     height: 57px;
-    font-size: 31px;
+    font-size: 1.9375rem;
   }
   .team-card-bottom {
-    font-size: 8px;
+    font-size: 0.875rem;
     padding: 10px;
   }
   .team-city {
-    font-size: 6px;
+    font-size: 0.875rem;
     margin-top: 12px;
   }
   .selection-bar {
@@ -2478,14 +2488,14 @@ main {
     gap: 10px;
   }
   .selection-team strong {
-    font-size: 12px;
+    font-size: 0.875rem;
   }
   .selection-team > div > span {
-    font-size: 7px;
+    font-size: 0.875rem;
   }
   .selection-bar > .button {
     width: 100%;
-    font-size: 11px;
+    font-size: 0.875rem;
     justify-content: space-between;
     padding: 14px 18px;
   }
@@ -2495,13 +2505,13 @@ main {
     gap: 22px;
   }
   .home-details strong {
-    font-size: 10px;
+    font-size: 0.875rem;
   }
   .home-details p {
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .home-details > button {
-    font-size: 9px;
+    font-size: 0.875rem;
     margin-top: 2px;
   }
   .footer {
@@ -2510,7 +2520,7 @@ main {
     row-gap: 13px;
   }
   .footer p {
-    font-size: 7px;
+    font-size: 0.875rem;
     line-height: 1.8;
   }
   .game-title {
@@ -2518,16 +2528,16 @@ main {
     margin: 26px 0 19px;
   }
   .game-title h1 {
-    font-size: 25px;
+    font-size: 1.5625rem;
     margin: 13px 0;
   }
   .game-title p {
-    font-size: 10px;
+    font-size: 0.875rem;
     line-height: 2;
   }
   .game-title > .button {
     margin-top: 16px;
-    font-size: 9px;
+    font-size: 0.875rem;
     padding: 9px 12px;
   }
   .game-layout {
@@ -2555,27 +2565,27 @@ main {
   .your-team > .eyebrow {
     grid-column: 2;
     grid-row: 1;
-    font-size: 7px;
+    font-size: 0.875rem;
   }
   .your-team > .team-mark {
     grid-row: 1/4;
     grid-column: 1;
     width: 46px;
     height: 46px;
-    font-size: 25px;
+    font-size: 1.5625rem;
     margin: 0;
   }
   .your-team > h3 {
     grid-column: 2;
     grid-row: 2;
-    font-size: 12px;
+    font-size: 0.875rem;
     margin: 8px 0;
   }
   .your-team > .gm-tag {
     grid-column: 2;
     grid-row: 3;
     justify-self: start;
-    font-size: 7px;
+    font-size: 0.875rem;
     padding: 3px 6px;
   }
   .team-objective {
@@ -2587,16 +2597,16 @@ main {
     gap: 8px;
   }
   .team-objective > span {
-    font-size: 9px;
+    font-size: 0.875rem;
     align-self: center;
   }
   .team-objective > strong {
-    font-size: 13px;
+    font-size: 1rem;
     margin: 0;
   }
   .team-objective p {
     grid-column: 1/3;
-    font-size: 10px;
+    font-size: 0.875rem;
   }
   .submitted-list {
     grid-column: 1/3;
@@ -2615,10 +2625,10 @@ main {
     padding: 19px;
   }
   .panel-heading h2 {
-    font-size: 14px;
+    font-size: 1rem;
   }
   .panel-heading p {
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .roster-toolbar {
     padding: 14px 16px;
@@ -2629,7 +2639,7 @@ main {
     padding: 10px;
   }
   .roster-toolbar select {
-    font-size: 8px;
+    font-size: 0.875rem;
     max-width: 118px;
   }
   .player-row {
@@ -2637,10 +2647,10 @@ main {
     gap: 11px;
   }
   .player-name strong {
-    font-size: 13px;
+    font-size: 1rem;
   }
   .player-name small {
-    font-size: 8px;
+    font-size: 0.875rem;
   }
   .position-badge {
     width: 32px;
@@ -2650,7 +2660,7 @@ main {
     min-width: 73px;
   }
   .fit-score > small {
-    font-size: 7px;
+    font-size: 0.875rem;
   }
   .player-check {
     width: 19px;
@@ -2665,25 +2675,25 @@ main {
   }
   .panel-footer .button {
     padding: 12px 14px;
-    font-size: 10px;
+    font-size: 0.875rem;
     gap: 7px;
   }
   .panel-footer > span {
-    font-size: 9px;
+    font-size: 0.875rem;
     line-height: 1.8;
   }
   .panel-footer strong {
-    font-size: 12px;
+    font-size: 0.875rem;
   }
   .npc-stage {
     min-height: 370px;
     padding: 34px 20px;
   }
   .npc-stage > h2 {
-    font-size: 21px;
+    font-size: 1.3125rem;
   }
   .npc-stage > p {
-    font-size: 10px;
+    font-size: 0.875rem;
   }
   .npc-actions {
     width: 100%;
@@ -2691,7 +2701,7 @@ main {
     flex-direction: column;
   }
   .npc-actions .button {
-    font-size: 11px;
+    font-size: 0.875rem;
     padding: 13px;
   }
   .need-chip > span {
@@ -2700,7 +2710,7 @@ main {
     margin: 0;
   }
   .need-chip {
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .vote-panel .panel-heading {
     padding: 19px;
@@ -2710,24 +2720,24 @@ main {
     gap: 17px;
   }
   .vote-row > span:first-child {
-    font-size: 10px;
+    font-size: 0.875rem;
     width: 78px;
   }
   .aside-footnote {
     margin: 16px 21px 0;
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .tip-card {
     padding: 22px;
   }
   .tip-card h3 {
-    font-size: 12px;
+    font-size: 0.875rem;
   }
   .tip-card p {
-    font-size: 11px;
+    font-size: 0.875rem;
   }
   .tip-card > .text-button {
-    font-size: 10px;
+    font-size: 0.875rem;
   }
   .timeline {
     padding: 0 20px;
@@ -2736,16 +2746,16 @@ main {
     padding: 32px 22px;
   }
   .round-two h2 {
-    font-size: 20px;
+    font-size: 1.25rem;
   }
   .round-two > p {
-    font-size: 10px;
+    font-size: 0.875rem;
   }
   .result-hero {
     padding: 27px 23px;
   }
   .result-hero > h2 {
-    font-size: 25px;
+    font-size: 1.5625rem;
   }
   .movement-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2756,23 +2766,23 @@ main {
     gap: 9px;
   }
   .movement > strong {
-    font-size: 17px;
+    font-size: 1.125rem;
   }
   .movement > span:not(.movement-label) {
-    font-size: 9px;
+    font-size: 0.875rem;
     line-height: 1.8;
   }
   .movement > small {
-    font-size: 7px;
+    font-size: 0.875rem;
   }
   .movement-label {
-    font-size: 8px;
+    font-size: 0.875rem;
   }
   .movement-label > svg {
     width: 14px;
   }
   .result-buttons .button {
-    font-size: 10px;
+    font-size: 0.875rem;
     padding: 12px 14px;
   }
   .result-table td,
@@ -2780,16 +2790,16 @@ main {
     padding: 13px 10px;
   }
   .result-table td:nth-child(3) > strong {
-    font-size: 10px;
+    font-size: 0.875rem;
   }
   .table-team {
     gap: 5px;
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .table-team .team-mark {
     width: 23px;
     height: 23px;
-    font-size: 13px;
+    font-size: 1rem;
   }
   .table-team .you-tag {
     display: none;
@@ -2802,19 +2812,19 @@ main {
     padding: 18px 20px;
   }
   .modal-head h2 {
-    font-size: 16px;
+    font-size: 1.125rem;
   }
   .modal-body {
     padding: 20px;
   }
   .modal-body p {
-    font-size: 11px;
+    font-size: 0.875rem;
   }
   .modal-actions {
     gap: 8px;
   }
   .modal-actions .button {
-    font-size: 10px;
+    font-size: 0.875rem;
     padding: 12px;
   }
   .data-summary {
@@ -2822,22 +2832,22 @@ main {
     gap: 10px;
   }
   .data-summary strong {
-    font-size: 10px;
+    font-size: 0.875rem;
   }
   .data-summary > div > span {
-    font-size: 8px;
+    font-size: 0.875rem;
   }
   .data-status {
-    font-size: 7px;
+    font-size: 0.875rem;
   }
   .import-actions {
     flex-direction: column;
   }
   .inline-notice {
-    font-size: 10px;
+    font-size: 0.875rem;
   }
   .topbar-right .save-state {
-    font-size: 7px;
+    font-size: 0.875rem;
   }
   .topbar-right {
     gap: 12px;
@@ -2857,17 +2867,17 @@ main {
   white-space: nowrap;
 }
 .sidebar-note {
-  font-size: 13px;
+  font-size: 1rem;
   letter-spacing: 0.02em;
 }
 .player-stats {
-  font-size: 8px;
+  font-size: 0.875rem;
   color: #7d8d6f;
   line-height: 1.6;
   white-space: nowrap;
 }
 .player-stats > b {
-  font-size: 7px;
+  font-size: 0.875rem;
   font-weight: 500;
   color: #9caa8b;
   margin-right: 7px;
@@ -2880,7 +2890,7 @@ main {
 }
 @media (max-width: 980px) and (min-width: 571px) {
   .player-stats {
-    font-size: 7px;
+    font-size: 0.875rem;
   }
   .player-stats > b {
     display: none;
@@ -2893,11 +2903,11 @@ main {
 }
 .salary-info {
   color: #7c865c !important;
-  font-size: 9px !important;
+  font-size: 0.875rem !important;
   line-height: 1.8;
 }
 .salary-source {
-  font-size: 8px;
+  font-size: 0.875rem;
   text-decoration: underline;
   color: #739063;
   width: fit-content;
@@ -2906,14 +2916,14 @@ main {
   display: block;
   margin: 13px 20px;
   color: #748b61;
-  font-size: 10px;
+  font-size: 0.875rem;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 .nomination-error {
   padding: 12px 20px;
   color: #9b713e;
-  font-size: 10px;
+  font-size: 0.875rem;
   line-height: 1.9;
   background: #faf4e8;
 }
@@ -2929,7 +2939,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 12px;
+  font-size: 0.875rem;
   color: #758b60;
   gap: 12px;
 }
@@ -2940,7 +2950,7 @@ main {
   background: #fff;
   color: #667b55;
   max-width: 70%;
-  font-size: 11px;
+  font-size: 0.875rem;
 }
 .participation-grid {
   display: grid;
@@ -2955,7 +2965,7 @@ main {
   display: flex;
   justify-content: space-between;
   gap: 8px;
-  font-size: 9px;
+  font-size: 0.875rem;
 }
 .participation-grid strong {
   font-weight: 500;
@@ -2964,11 +2974,11 @@ main {
   color: #8c9a79;
 }
 .round-two-body h3 {
-  font-size: 14px;
+  font-size: 1rem;
   margin: 25px 0 10px;
 }
 .round-two-body > p {
-  font-size: 10px;
+  font-size: 0.875rem;
   color: #8e9c7d;
   line-height: 2;
   margin: 12px 0 18px;
@@ -2989,12 +2999,12 @@ main {
   cursor: pointer;
 }
 .second-round-choices strong {
-  font-size: 12px;
+  font-size: 0.875rem;
   font-weight: 500;
   flex: 1;
 }
 .second-round-choices span {
-  font-size: 9px;
+  font-size: 0.875rem;
   color: #97a285;
 }
 .second-round-choices input {
@@ -3002,14 +3012,14 @@ main {
 }
 .bid-preferences {
   padding-left: 24px;
-  font-size: 12px;
+  font-size: 0.875rem;
   color: #70895b;
 }
 .bid-preferences li {
   padding: 9px 0;
 }
 .bid-preferences button {
-  font-size: 9px;
+  font-size: 0.875rem;
   border: 1px solid #d9e1cb;
   padding: 5px 7px;
   margin-left: 10px;
@@ -3026,21 +3036,209 @@ main {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .round-two-body > label {
-    font-size: 10px;
+    font-size: 0.875rem;
   }
   .round-two-body select {
-    font-size: 9px;
+    font-size: 0.875rem;
   }
   .salary-info {
-    font-size: 8px !important;
+    font-size: 0.875rem !important;
   }
   .player-row .player-name {
     overflow-wrap: anywhere;
   }
   .salary-source {
-    font-size: 8px;
+    font-size: 0.875rem;
   }
   .second-round-choices strong {
-    font-size: 11px;
+    font-size: 0.875rem;
+  }
+}
+
+/* Reading sizes remain stable on narrow screens; layouts wrap instead. */
+.topbar {
+  height: auto;
+  min-height: 73px;
+  padding-block: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.breadcrumb,
+.topbar-right,
+.hero-tags,
+.data-notice {
+  flex-wrap: wrap;
+}
+.game-title {
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.game-title > div:first-child {
+  flex: 1 1 380px;
+  min-width: 0;
+}
+.presentation-controls {
+  flex: 0 1 auto;
+}
+.app-shell .button,
+.app-shell .league-tabs button,
+.app-shell .search-box input,
+.app-shell .roster-toolbar select,
+.app-shell .round-two-body select,
+.app-shell .presentation-toggle,
+.admin-login input,
+.admin-filters input {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.button {
+  min-height: 44px;
+}
+.player-name strong {
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+.player-name small,
+.player-stats,
+.salary-info,
+.salary-source {
+  line-height: 1.8;
+}
+.player-name small,
+.panel-heading p,
+.game-title p,
+.aside-footnote,
+.small-print,
+.modal-body p,
+.footer p {
+  color: #66735f;
+}
+.player-row {
+  align-items: flex-start;
+}
+.player-check {
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+.player-position {
+  flex-shrink: 0;
+}
+.team-card > strong {
+  white-space: normal;
+  min-height: 3em;
+  line-height: 1.5;
+}
+.hero-tags {
+  line-height: 1.8;
+}
+.hero-copy {
+  min-width: 0;
+  flex-shrink: 1;
+  max-width: 100%;
+}
+.hero .eyebrow {
+  overflow-wrap: anywhere;
+}
+.hero p,
+.game-title p,
+.panel-heading p,
+.modal-body p,
+.guide-list p,
+.home-details p,
+.section-heading p {
+  font-size: 1rem;
+}
+.league-tabs {
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+.league-tabs button {
+  padding-inline: 10px;
+}
+.team-mark > span {
+  display: none;
+}
+.footer {
+  flex-wrap: wrap;
+}
+.modal-body {
+  line-height: 1.9;
+}
+@media (max-width: 760px) {
+  .game-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .presentation-controls {
+    margin-top: 10px;
+    justify-content: flex-start;
+  }
+  .panel-footer {
+    flex-wrap: wrap;
+  }
+  .panel-footer > .button {
+    width: 100%;
+    justify-content: center;
+  }
+  .fit-score {
+    min-width: 58px;
+  }
+  .fit-score > small {
+    max-width: 75px;
+  }
+  .roster-toolbar {
+    flex-wrap: wrap;
+  }
+  .search-box {
+    flex-basis: 160px;
+  }
+  .topbar-right {
+    gap: 12px;
+  }
+  .data-notice > span {
+    flex-basis: calc(100% - 24px);
+    min-width: 0;
+  }
+  .data-notice > button {
+    margin-left: auto;
+  }
+}
+@media (max-width: 570px) {
+  .player-row {
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr) 24px;
+    column-gap: 10px;
+    padding-inline: 12px;
+  }
+  .position-badge {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .player-name {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .player-position {
+    grid-column: 2;
+    margin-left: 0;
+  }
+  .fit-score {
+    grid-column: 2 / 4;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 8px;
+    text-align: left;
+    margin: 4px 0 0;
+    min-width: 0;
+  }
+  .fit-score > small {
+    max-width: none;
+  }
+  .player-check {
+    grid-column: 3;
+    grid-row: 1;
+    margin-left: 0;
+  }
+  .announcement-topline {
+    flex-wrap: wrap;
   }
 }

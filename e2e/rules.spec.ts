@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from './fixtures'
 import { readFileSync } from 'node:fs'
 import type { Dataset, Player } from '../src/data'
 import { eligibilityOf } from '../src/eligibility'
