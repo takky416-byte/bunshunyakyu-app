@@ -1,9 +1,16 @@
 import { describe, expect, it } from 'vitest'
 import { officialDataset } from './officialData'
 import { eligibilityOf } from './eligibility'
-import { draftSpeech, playerReading } from './draftSpeech'
+import {
+  draftSpeech,
+  playerReading,
+  voiceCatalog,
+  speechKey,
+} from './draftSpeech'
+import maleVoice from './maleVoice2026.json' with { type: 'json' }
+import { existsSync } from 'node:fs'
 import { newGame } from './engine'
-import { loadSoundOptions } from './draftSound'
+import { loadSoundOptions, chooseMaleVoice } from './draftSound'
 
 describe('announcement speech', () => {
   it('reads the player, then position, then original club', () => {
@@ -21,12 +28,13 @@ describe('announcement speech', () => {
       ],
     }
     const script = draftSpeech({ kind: 'pick', game }, officialDataset.players)
-    expect(script).toEqual([
-      '第1巡。ちゅうにち ドラゴンズ。選択希望選手。',
+    expect(script.map((c) => c.text)).toEqual([
+      'だいいちじゅん、ちゅうにちドラゴンズ、選択希望選手。',
       'わたなべ しょうた。',
-      '投手。',
-      'とうほく らくてん ゴールデンイーグルス。',
+      'とうしゅ、とうほくらくてんゴールデンイーグルス。',
     ])
+    expect(script[1].rate).toBeLessThan(script[0].rate)
+    expect(script[0].rate).toBe(script[2].rate)
   })
   it('covers every currently selectable official player without guessing kana', () => {
     const selectable = officialDataset.players.filter(
@@ -48,9 +56,9 @@ describe('announcement speech', () => {
       .filter((p) => p.team === 'e')
       .slice(0, 2)
     const game = newGame('d', 1)
-    expect(draftSpeech({ kind: 'round2', game }, players)).toEqual([
-      '第2巡の指名は、ありませんでした。',
-    ])
+    expect(draftSpeech({ kind: 'round2', game }, players)[0].text).toBe(
+      'だいにじゅんは、指名がありませんでした。',
+    )
     game.picks = players.map((p) => ({
       by: 'd',
       from: 'e',
@@ -58,13 +66,42 @@ describe('announcement speech', () => {
       round: 2,
     }))
     const script = draftSpeech({ kind: 'round2', game }, players)
-    expect(script).toHaveLength(8)
-    expect(script[1]).toBe(`${playerReading(players[0])}。`)
-    expect(script[5]).toBe(`${playerReading(players[1])}。`)
+    expect(script).toHaveLength(6)
+    expect(script[1].text).toBe(`${playerReading(players[0])}。`)
+    expect(script[4].text).toBe(`${playerReading(players[1])}。`)
+    const onlySecond = draftSpeech(
+      { kind: 'round2', game, pickIndex: 1 },
+      players,
+    )
+    expect(onlySecond).toHaveLength(3)
+    expect(onlySecond[0].text).toMatch(/^だいにじゅん、/)
+    expect(onlySecond[1].text).toBe(`${playerReading(players[1])}。`)
   })
 })
 
+it('provides a male recording for every official phrase and player name', () => {
+  expect(maleVoice.gender).toBe('Male')
+  const clips = maleVoice.clips as Record<string, string>
+  for (const clause of voiceCatalog()) {
+    const path = clips[speechKey(clause)]
+    expect(path).toBeTruthy()
+    expect(existsSync(new URL('../public' + path, import.meta.url))).toBe(true)
+  }
+})
+
 describe('sound preferences', () => {
+  it('never mistakes female metadata or an unknown Japanese voice for a male fallback', () => {
+    const voices = [
+      'Haruka Japanese Female',
+      'Google 日本語',
+      'Microsoft Ichiro Japanese Male',
+    ].map(
+      (name) =>
+        ({ name, lang: 'ja-JP', voiceURI: name }) as SpeechSynthesisVoice,
+    )
+    expect(chooseMaleVoice(voices)).toBe(voices[2])
+    expect(chooseMaleVoice(voices.slice(0, 2))).toBeNull()
+  })
   it('starts silent and accepts only typed, bounded saved settings', () => {
     expect(loadSoundOptions(null).enabled).toBe(false)
     expect(loadSoundOptions('broken').enabled).toBe(false)

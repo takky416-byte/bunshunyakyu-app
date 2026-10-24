@@ -1,3 +1,5 @@
+import { speechKey, type SpeechClause } from './draftSpeech'
+import maleVoice from './maleVoice2026.json' with { type: 'json' }
 export const SOUND_KEY = 'geneki-draft:sound:v1'
 export interface SoundOptions {
   enabled: boolean
@@ -12,6 +14,7 @@ interface SoundState {
   ready: boolean
   voiceStatus: VoiceStatus
   audioSupported: boolean
+  voiceError: boolean
 }
 const defaults: SoundOptions = {
   enabled: false,
@@ -36,6 +39,23 @@ export function loadSoundOptions(raw: string | null): SoundOptions {
 
 type SoundWindow = Window & { webkitAudioContext?: typeof AudioContext }
 
+export function chooseMaleVoice(
+  voices: SpeechSynthesisVoice[],
+): SpeechSynthesisVoice | null {
+  return (
+    voices.find((voice) => {
+      const name = voice.name + ' ' + voice.voiceURI
+      return (
+        /^ja(?:[-_]|$)/i.test(voice.lang) &&
+        !/female|女性|nanami|haruka|sayaka|kyoko/i.test(name) &&
+        /ichiro|keita|otoya|takumi|hattori|(?:^|[\s(_-])male(?:$|[\s)_-])|男性|いちろう|おとや/i.test(
+          name,
+        )
+      )
+    }) ?? null
+  )
+}
+
 /** All oscillators are original synthesis. No media downloads or paid services. */
 export class DraftSound {
   private state: SoundState
@@ -44,8 +64,10 @@ export class DraftSound {
   private master: GainNode | null = null
   private music: GainNode | null = null
   private effects: GainNode | null = null
-  private musicNodes = new Set<OscillatorNode>()
-  private effectNodes = new Set<OscillatorNode>()
+  private narrationGain: GainNode | null = null
+  private musicNodes = new Set<AudioScheduledSourceNode>()
+  private effectNodes = new Set<AudioScheduledSourceNode>()
+  private speechCache = new Map<string, AudioBuffer>()
   private musicTimer: number | undefined
   private voiceTimer: number | undefined
   private nextBeat = 0
@@ -66,10 +88,14 @@ export class DraftSound {
     this.state = {
       options,
       ready: false,
+      voiceError: false,
       voiceStatus:
-        'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window
-          ? 'loading'
-          : 'unsupported',
+        window.AudioContext || (window as SoundWindow).webkitAudioContext
+          ? 'available'
+          : Boolean(window.speechSynthesis) &&
+              typeof window.SpeechSynthesisUtterance === 'function'
+            ? 'loading'
+            : 'unsupported',
       audioSupported: Boolean(
         window.AudioContext || (window as SoundWindow).webkitAudioContext,
       ),
@@ -115,7 +141,7 @@ export class DraftSound {
     document.addEventListener('visibilitychange', visibility)
     window.addEventListener('pagehide', hide)
     window.addEventListener('pageshow', visibility)
-    if (this.state.voiceStatus !== 'unsupported') {
+    if (Boolean(window.speechSynthesis)) {
       window.speechSynthesis.addEventListener('voiceschanged', this.findVoice)
       this.voiceTimer = window.setTimeout(() => {
         if (this.state.voiceStatus === 'loading')
@@ -131,7 +157,7 @@ export class DraftSound {
       document.removeEventListener('visibilitychange', visibility)
       window.removeEventListener('pagehide', hide)
       window.removeEventListener('pageshow', visibility)
-      if (this.state.voiceStatus !== 'unsupported')
+      if (Boolean(window.speechSynthesis))
         window.speechSynthesis.removeEventListener(
           'voiceschanged',
           this.findVoice,
@@ -140,12 +166,12 @@ export class DraftSound {
     }
   }
   private findVoice = () => {
-    if (this.state.voiceStatus === 'unsupported') return
-    const japanese = window.speechSynthesis
-      .getVoices()
-      .filter((v) => /^ja(?:[-_]|$)/i.test(v.lang))
-    this.voice = japanese.find((v) => v.localService) ?? japanese[0] ?? null
-    if (this.voice) this.publish({ voiceStatus: 'available' })
+    if (!Boolean(window.speechSynthesis)) return
+    // The primary voice is a fixed male recording. Never substitute a known
+    // female system voice when imported/legacy text needs the fallback.
+    this.voice = chooseMaleVoice(window.speechSynthesis.getVoices())
+    if (this.state.audioSupported || this.voice)
+      this.publish({ voiceStatus: 'available' })
     else if (this.state.voiceStatus !== 'loading')
       this.publish({ voiceStatus: 'unavailable' })
   }
@@ -174,7 +200,11 @@ export class DraftSound {
   }
   activate = () => {
     if (!this.state.options.enabled || document.hidden || !this.mounted) return
-    if (!this.activated && this.state.voiceStatus !== 'unsupported') {
+    if (
+      !this.activated &&
+      this.voice &&
+      typeof window.SpeechSynthesisUtterance === 'function'
+    ) {
       // A direct gesture primes speech on mobile browsers as well as Web Audio.
       const prime = new SpeechSynthesisUtterance(' ')
       prime.volume = 0
@@ -201,13 +231,39 @@ export class DraftSound {
         this.master = this.context.createGain()
         this.music = this.context.createGain()
         this.effects = this.context.createGain()
+        this.narrationGain = this.context.createGain()
+        this.narrationGain.gain.value = 1.3
         this.music.connect(this.master)
         this.effects.connect(this.master)
-        this.master.connect(this.context.destination)
+        this.narrationGain.connect(this.master)
+        const reverb = this.context.createConvolver()
+        const impulse = this.context.createBuffer(
+          2,
+          this.context.sampleRate * 2,
+          this.context.sampleRate,
+        )
+        for (let channel = 0; channel < 2; channel++) {
+          const data = impulse.getChannelData(channel)
+          for (let i = 0; i < data.length; i++)
+            data[i] =
+              (Math.random() * 2 - 1) * (1 - i / data.length) ** 3 * 0.18
+        }
+        reverb.buffer = impulse
+        const wet = this.context.createGain()
+        wet.gain.value = 0.2
+        this.music.connect(reverb)
+        reverb.connect(wet)
+        wet.connect(this.master)
+        const compressor = this.context.createDynamicsCompressor()
+        compressor.threshold.value = -6
+        compressor.knee.value = 6
+        compressor.ratio.value = 4
+        this.master.connect(compressor)
+        compressor.connect(this.context.destination)
       }
       this.master!.gain.value = this.state.options.volume
-      this.music!.gain.value = this.speaking ? 0.018 : 0.075
-      this.effects!.gain.value = 0.16
+      this.music!.gain.value = this.speaking ? 0.025 : 0.17
+      this.effects!.gain.value = 0.7
       const context = this.context
       void context
         .resume()
@@ -232,23 +288,32 @@ export class DraftSound {
     level: number,
     group: 'music' | 'effect',
     type: OscillatorType = 'sine',
+    attack = 0.025,
+    cutoff = 1800,
+    detune = 0,
   ) {
     if (!this.context) return
     const node = this.context.createOscillator(),
       envelope = this.context.createGain()
     const pool = group === 'music' ? this.musicNodes : this.effectNodes
     node.type = type
+    node.detune.value = detune
     node.frequency.value = 440 * 2 ** ((midi - 69) / 12)
     envelope.gain.setValueAtTime(0.0001, at)
-    envelope.gain.exponentialRampToValueAtTime(level, at + 0.025)
+    envelope.gain.exponentialRampToValueAtTime(level, at + attack)
     envelope.gain.exponentialRampToValueAtTime(0.0001, at + duration)
-    node.connect(envelope)
+    const filter = this.context.createBiquadFilter()
+    filter.type = 'lowpass'
+    filter.frequency.value = cutoff
+    node.connect(filter)
+    filter.connect(envelope)
     envelope.connect((group === 'music' ? this.music : this.effects)!)
     pool.add(node)
     node.onended = () => {
       pool.delete(node)
       node.disconnect()
       envelope.disconnect()
+      filter.disconnect()
     }
     node.start(at)
     node.stop(at + duration + 0.02)
@@ -272,22 +337,46 @@ export class DraftSound {
     const schedule = () => {
       if (!this.context) return
       while (this.nextBeat < this.context.currentTime + 0.3) {
-        const chord = chords[Math.floor(this.beat / 8) % chords.length]
-        this.tone(
-          chord[this.beat % 4] + 12,
-          this.nextBeat,
-          0.6,
-          0.28,
-          'music',
-          'triangle',
-        )
-        if (this.beat % 4 === 0)
-          this.tone(chord[0] - 12, this.nextBeat, 1.8, 0.5, 'music')
-        if (this.beat % 8 === 0)
-          for (const note of chord.slice(1))
-            this.tone(note, this.nextBeat, 3.7, 0.2, 'music')
+        const chord = chords[this.beat % chords.length]
+        // Slow string swells and soft simultaneous piano chords; no high
+        // arpeggio, short pulse loop, or game-console lead tone.
+        for (const note of chord) {
+          this.tone(
+            note,
+            this.nextBeat,
+            6.2,
+            0.09,
+            'music',
+            'sawtooth',
+            1.1,
+            680,
+            -4,
+          )
+          this.tone(
+            note,
+            this.nextBeat,
+            6.2,
+            0.09,
+            'music',
+            'sawtooth',
+            1.1,
+            680,
+            4,
+          )
+          this.tone(
+            note + 12,
+            this.nextBeat + 0.1,
+            3.3,
+            0.12,
+            'music',
+            'sine',
+            0.03,
+            1200,
+          )
+        }
+        this.tone(chord[0] - 12, this.nextBeat, 5.2, 0.25, 'music', 'sine', 0.3)
         this.beat++
-        this.nextBeat += 0.48
+        this.nextBeat += 4.8
       }
     }
     schedule()
@@ -304,21 +393,47 @@ export class DraftSound {
       return
     const now = this.context.currentTime + 0.01
     if (kind === 'waiting') {
-      for (let i = 0; i < 9; i++)
-        this.tone(
-          38 + (i % 2),
-          now + i * 0.14,
-          0.12,
-          0.2 + i * 0.025,
-          'effect',
-          'triangle',
-        )
+      for (let i = 0; i < 15; i++)
+        this.noise(now + i * 0.085, 0.11, 0.2 + i * 0.012, 700)
     } else {
-      for (const [i, note] of [62, 69, 74, 77].entries())
-        this.tone(note, now + i * 0.075, 0.65, 0.45, 'effect', 'triangle')
+      this.noise(now, 1.2, 0.65, 3500)
+      this.tone(36, now, 0.9, 0.8, 'effect', 'sine')
+      for (const note of [50, 57, 62])
+        this.tone(note, now, 1.25, 0.16, 'effect', 'sawtooth', 0.035, 1600)
     }
   }
-  speak(clauses: string[]): {
+  private noise(at: number, duration: number, level: number, highpass: number) {
+    if (!this.context || !this.effects) return
+    const buffer = this.context.createBuffer(
+      1,
+      Math.ceil(this.context.sampleRate * duration),
+      this.context.sampleRate,
+    )
+    const data = buffer.getChannelData(0)
+    for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1
+    const node = this.context.createBufferSource(),
+      filter = this.context.createBiquadFilter(),
+      gain = this.context.createGain()
+    node.buffer = buffer
+    filter.type = 'highpass'
+    filter.frequency.value = highpass
+    gain.gain.setValueAtTime(0.0001, at)
+    gain.gain.exponentialRampToValueAtTime(level, at + 0.008)
+    gain.gain.exponentialRampToValueAtTime(0.0001, at + duration)
+    node.connect(filter)
+    filter.connect(gain)
+    gain.connect(this.effects)
+    this.effectNodes.add(node)
+    node.onended = () => {
+      this.effectNodes.delete(node)
+      node.disconnect()
+      filter.disconnect()
+      gain.disconnect()
+    }
+    node.start(at)
+    node.stop(at + duration)
+  }
+  speak(clauses: SpeechClause[]): {
     active: boolean
     finished: Promise<void>
     cancel: () => void
@@ -330,7 +445,7 @@ export class DraftSound {
       !this.state.options.volume ||
       !this.state.ready ||
       document.hidden ||
-      !this.voice ||
+      (!this.context && !this.voice) ||
       !clauses.length
     )
       return { active: false, finished: Promise.resolve(), cancel: () => {} }
@@ -338,6 +453,41 @@ export class DraftSound {
       timer: number | undefined,
       watchdog: number | undefined
     let utterance: SpeechSynthesisUtterance | null = null
+    let source: AudioBufferSourceNode | null = null
+    let request: AbortController | null = null
+    let nativeActive = false
+    const prepared = new Map<string, Promise<AudioBuffer>>()
+    if (this.context) {
+      const context = this.context
+      request = new AbortController()
+      const signal = request.signal
+      // Fetch all three parts together so a mobile connection doesn't insert
+      // a network pause between the player's name and affiliation.
+      for (const clause of clauses) {
+        const path = (maleVoice.clips as Record<string, string>)[
+          speechKey(clause)
+        ]
+        if (!path || prepared.has(path)) continue
+        const load = async () => {
+          const cached = this.speechCache.get(path)
+          if (cached) return cached
+          const response = await fetch(path, { signal })
+          if (!response.ok) throw new Error('Voice clip unavailable')
+          const buffer = await context.decodeAudioData(
+            await response.arrayBuffer(),
+          )
+          if (!ended) {
+            this.speechCache.set(path, buffer)
+            if (this.speechCache.size > 48)
+              this.speechCache.delete(this.speechCache.keys().next().value!)
+          }
+          return buffer
+        }
+        const pending = load()
+        void pending.catch(() => {})
+        prepared.set(path, pending)
+      }
+    }
     let resolve!: () => void
     const finished = new Promise<void>((done) => {
       resolve = done
@@ -351,15 +501,25 @@ export class DraftSound {
         utterance.onend = null
         utterance.onerror = null
       }
+      request?.abort()
+      if (source) {
+        source.onended = null
+        try {
+          source.stop()
+        } catch {
+          /* ended */
+        }
+        source.disconnect()
+      }
       this.speaking = false
       if (this.music && this.context)
-        this.music.gain.setTargetAtTime(0.075, this.context.currentTime, 0.2)
+        this.music.gain.setTargetAtTime(0.17, this.context.currentTime, 0.2)
       if (this.cancelCurrentSpeech === cancel) this.cancelCurrentSpeech = null
       resolve()
     }
     const cancel = () => {
       complete()
-      window.speechSynthesis.cancel()
+      if (nativeActive) window.speechSynthesis.cancel()
     }
     const run = (index: number) => {
       if (ended) return
@@ -367,33 +527,75 @@ export class DraftSound {
         complete()
         return
       }
-      utterance = new SpeechSynthesisUtterance(clauses[index])
-      utterance.lang = 'ja-JP'
-      utterance.voice = this.voice
-      utterance.rate = 0.88
-      utterance.pitch = 1
-      utterance.volume = Math.min(1, this.state.options.volume * 1.7)
-      utterance.onend = () => {
+      const clause = clauses[index]
+      const advance = () => {
         window.clearTimeout(watchdog)
-        if (!ended) timer = window.setTimeout(() => run(index + 1), 420)
+        if (!ended)
+          timer = window.setTimeout(() => run(index + 1), clause.pauseAfterMs)
       }
-      utterance.onerror = complete
-      // Some mobile engines omit end/error. Never hold the draft indefinitely.
+      const native = () => {
+        if (
+          !this.voice ||
+          !(typeof window.SpeechSynthesisUtterance === 'function')
+        ) {
+          this.publish({ voiceError: true })
+          advance()
+          return
+        }
+        nativeActive = true
+        utterance = new SpeechSynthesisUtterance(clause.text)
+        utterance.lang = 'ja-JP'
+        utterance.voice = this.voice
+        utterance.rate = clause.rate
+        utterance.pitch = 1
+        utterance.volume = Math.min(1, this.state.options.volume * 1.7)
+        utterance.onend = advance
+        utterance.onerror = complete
+        try {
+          window.speechSynthesis.speak(utterance)
+        } catch {
+          complete()
+        }
+      }
+      // Fetch, decode and native engines all have a bounded completion path.
       watchdog = window.setTimeout(
         cancel,
-        Math.min(20000, Math.max(7000, clauses[index].length * 500)),
+        Math.min(25000, Math.max(12000, clause.text.length * 600)),
       )
-      try {
-        window.speechSynthesis.speak(utterance)
-      } catch {
-        complete()
+      const path = (maleVoice.clips as Record<string, string>)[
+        speechKey(clause)
+      ]
+      if (!path || !this.context || !this.narrationGain) {
+        native()
+        return
       }
+      const context = this.context
+      const gain = this.narrationGain
+      const load = async () => {
+        const buffer = await prepared.get(path)!
+        if (ended || document.hidden) return
+        source = context.createBufferSource()
+        source.buffer = buffer
+        source.connect(gain)
+        source.onended = () => {
+          source?.disconnect()
+          source = null
+          advance()
+        }
+        source.start()
+      }
+      void load().catch(() => {
+        if (!ended) {
+          this.publish({ voiceError: true })
+          native()
+        }
+      })
     }
     this.cancelCurrentSpeech = cancel
-    window.speechSynthesis.cancel()
+    if (Boolean(window.speechSynthesis)) window.speechSynthesis.cancel()
     this.speaking = true
     if (this.music && this.context)
-      this.music.gain.setTargetAtTime(0.018, this.context.currentTime, 0.12)
+      this.music.gain.setTargetAtTime(0.025, this.context.currentTime, 0.12)
     run(0)
     return { active: true, finished, cancel }
   }
@@ -403,7 +605,7 @@ export class DraftSound {
   stopEffects = () => {
     this.stopNodes(this.effectNodes)
   }
-  private stopNodes(pool: Set<OscillatorNode>) {
+  private stopNodes(pool: Set<AudioScheduledSourceNode>) {
     for (const node of pool) {
       try {
         node.stop()

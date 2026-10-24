@@ -102,3 +102,9 @@ python scripts/update_player_career_data.py --refresh
 `src/playerReadings2026.json` は2026-10-24時点の選択可能な501名について、NPB個人プロフィールのふりがなを公式ID・登録名・生年月日で照合した記録。登録名に続く括弧内の本名は読み重ねず、登録名のふりがなだけを使う。元ページのURL・取得日・SHA-256を各記録に保持する。更新は `python scripts/update_player_readings.py`（再取得は `--refresh`）。現在の選択可能選手を全員照合してからファイルを置換する。
 
 読み上げ時もID・登録名・生年月日の一致を確認する。参考・取り込みデータや条件更新で未収録になった選手には、他人のふりがなを当てず元の表示名を渡す。表示名・ゲーム進行・選考モデル・過去の保存データは変更しない。
+
+## 男性アナウンスの静的音声
+
+`src/maleVoice2026.json` は読み上げ文と `public/audio/voice-male-v2/` のMP3を対応付ける。日本語男性モデル `ja-JP-KeitaNeural` を用い、名前は16%低速・本文は通常速度。音声前後の無音を除去済み。587本・約8.5MBで、プレー中は必要な発表の音声だけを取得する。同一サイトから配信し、プレーヤーの情報や選択を外部TTSへ送らない。
+
+更新は `scripts/build_male_voice.py`。任意の生成作業でのみ `edge-tts==7.3.1` とFFmpegが必要（ゲームの起動・ビルド・デプロイには不要）。例えば `python -m pip install --target /tmp/genneki-tts edge-tts==7.3.1` の後、`PYTHONPATH=/tmp/genneki-tts python scripts/build_male_voice.py`。既存の検証済みCAストアとプロキシを使い、TLS検証を無効化しない。生成済みファイルは再利用し、対象の読み上げ文が増えたときだけ追加生成する。音声の生成・加工が完了してからアプリをビルドする。

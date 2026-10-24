@@ -54,18 +54,22 @@ export default function DraftAnnouncement({
   const active = pageVisible && !paused
   const item = sequence[index]
   const { game } = item
-  const pick = game.picks.at(-1)
+  const roundTwoPicks = game.picks.filter((p) => p.round === 2)
+  const isRoundTwoPick = item.kind === 'round2' && item.pickIndex !== undefined
+  const isPick = item.kind === 'pick' || isRoundTwoPick
+  const pick = isRoundTwoPick
+    ? roundTwoPicks[item.pickIndex!]
+    : game.picks.at(-1)
   const selected = players.find((p) => p.id === pick?.playerId)
   const club =
     teamById[
-      item.kind === 'pick'
+      isPick
         ? pick!.by
         : item.kind === 'nominations' || item.kind === 'round2'
           ? game.userTeam
           : game.order[0]
     ]
-  const roundTwoPicks = game.picks.filter((p) => p.round === 2)
-  const ownRelease = item.kind === 'pick' && pick?.from === game.userTeam
+  const ownRelease = isPick && pick?.from === game.userTeam
 
   useEffect(() => {
     dialog.current?.showModal()
@@ -138,7 +142,7 @@ export default function DraftAnnouncement({
       setIndex(index + 1)
     }
   }, [index, sequence.length, finish])
-  const canAutoAdvance = item.kind === 'pick' || item.kind === 'order'
+  const canAutoAdvance = isPick || item.kind === 'order'
   const awaitingAudio =
     soundOptions.enabled &&
     soundOptions.narration &&
@@ -196,7 +200,7 @@ export default function DraftAnnouncement({
               : item.kind === 'order'
                 ? 'OPENING'
                 : item.kind === 'round2'
-                  ? 'ROUND 02'
+                  ? `ROUND 02${isRoundTwoPick ? ` / ${String(item.pickIndex! + 1).padStart(2, '0')}` : ''}`
                   : `ROUND 01 / ${String(game.picks.length).padStart(2, '0')}`}
           </span>
         </div>
@@ -206,7 +210,7 @@ export default function DraftAnnouncement({
               ? `${club.short}の候補を受け付けました。`
               : item.kind === 'order'
                 ? '12球団の予備指名、集計完了。'
-                : item.kind === 'round2'
+                : item.kind === 'round2' && !isRoundTwoPick
                   ? '第2巡、入札条件の照合。'
                   : `${club.name}、選択希望選手。`}
           </span>
@@ -220,7 +224,7 @@ export default function DraftAnnouncement({
               </>
             ) : item.kind === 'order' ? (
               '最初の指名権は、'
-            ) : item.kind === 'round2' ? (
+            ) : item.kind === 'round2' && !isRoundTwoPick ? (
               'もうひとつの移籍が、'
             ) : revealed ? (
               `${club.short}の指名`
@@ -229,7 +233,7 @@ export default function DraftAnnouncement({
             )}
           </h2>
           <div className="announcement-envelope" aria-hidden="true">
-            <span>{item.kind === 'pick' ? club.mark : '2026'}</span>
+            <span>{isPick ? club.mark : '2026'}</span>
             <i />
           </div>
           <div
@@ -250,7 +254,7 @@ export default function DraftAnnouncement({
                     ? '他の11球団の候補リストを取りまとめています'
                     : item.kind === 'order'
                       ? '指名順位を確認しています'
-                      : item.kind === 'round2'
+                      : item.kind === 'round2' && !isRoundTwoPick
                         ? '入札の成立を確認しています'
                         : 'まもなく、指名を発表します'}
                 </p>
@@ -289,12 +293,14 @@ export default function DraftAnnouncement({
                       同票の場合は2026年新人ドラフト第2巡の指名順で決定
                     </small>
                   </>
-                ) : item.kind === 'pick' ? (
+                ) : isPick ? (
                   <>
                     <span className="announcement-result-label">
-                      {ownRelease
-                        ? 'あなたの提出候補が指名されました'
-                        : '選択希望選手'}
+                      {isRoundTwoPick
+                        ? 'SECOND ROUND'
+                        : ownRelease
+                          ? 'あなたの提出候補が指名されました'
+                          : '選択希望選手'}
                     </span>
                     <strong className="announcement-name">
                       {selected!.name}
@@ -308,9 +314,11 @@ export default function DraftAnnouncement({
                       <b>{club.short}</b>
                     </div>
                     <small>
-                      {game.current
-                        ? `次の指名権：${teamById[game.current].name}`
-                        : '第1巡、12球団の指名が終了しました。'}
+                      {isRoundTwoPick
+                        ? `第2巡 ${item.pickIndex! + 1} / ${roundTwoPicks.length}件${item.pickIndex === roundTwoPicks.length - 1 ? ' · すべての発表が終了しました。' : ' · 次の指名へ続きます。'}`
+                        : game.current
+                          ? `次の指名権：${teamById[game.current].name}`
+                          : '第1巡、12球団の指名が終了しました。'}
                     </small>
                   </>
                 ) : (
@@ -381,9 +389,11 @@ export default function DraftAnnouncement({
             <SkipForward size={14} />
             演出をスキップ
             {sequence.length > 1
-              ? sequence.at(-1)!.game.stage === 'round2'
-                ? 'して第2巡へ進む'
-                : 'して自分の番へ進む'
+              ? sequence.at(-1)!.game.stage === 'results'
+                ? 'して結果を見る'
+                : sequence.at(-1)!.game.stage === 'round2'
+                  ? 'して第2巡へ進む'
+                  : 'して自分の番へ進む'
               : ''}
           </button>
         </div>

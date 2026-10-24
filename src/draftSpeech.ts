@@ -1,57 +1,115 @@
 import readings from './playerReadings2026.json' with { type: 'json' }
-import type { Player, TeamId } from './data'
+import type { Player, TeamId, Position } from './data'
 import type { Announcement } from './announcements'
 
-const clubReadings: Record<TeamId, string> = {
-  d: 'ちゅうにち ドラゴンズ',
-  t: 'はんしん タイガース',
-  c: 'ひろしま とうよう カープ',
-  s: 'とうきょう ヤクルト スワローズ',
-  db: 'よこはま ディーエヌエー ベイスターズ',
-  g: 'よみうり ジャイアンツ',
-  h: 'ふくおか ソフトバンク ホークス',
-  l: 'さいたま せいぶ ライオンズ',
-  f: 'ほっかいどう にっぽんハム ファイターズ',
-  b: 'オリックス バファローズ',
-  m: 'ちば ロッテ マリーンズ',
-  e: 'とうほく らくてん ゴールデンイーグルス',
+export interface SpeechClause {
+  text: string
+  kind: 'body' | 'name'
+  rate: number
+  pauseAfterMs: number
 }
+const clubReadings: Record<TeamId, string> = {
+  d: 'ちゅうにちドラゴンズ',
+  t: 'はんしんタイガース',
+  c: 'ひろしまとうようカープ',
+  s: 'とうきょうヤクルトスワローズ',
+  db: 'よこはまディーエヌエーベイスターズ',
+  g: 'よみうりジャイアンツ',
+  h: 'ふくおかソフトバンクホークス',
+  l: 'さいたませいぶライオンズ',
+  f: 'ほっかいどうにっぽんハムファイターズ',
+  b: 'オリックスバファローズ',
+  m: 'ちばロッテマリーンズ',
+  e: 'とうほくらくてんゴールデンイーグルス',
+}
+export const positionReadings: Record<Position, string> = {
+  外野手: 'がいやしゅ',
+  内野手: 'ないやしゅ',
+  捕手: 'ほしゅ',
+  投手: 'とうしゅ',
+}
+export const speechClause = (
+  text: string,
+  kind: SpeechClause['kind'] = 'body',
+): SpeechClause => ({
+  text,
+  kind,
+  rate: kind === 'name' ? 0.84 : 1,
+  pauseAfterMs: kind === 'name' ? 200 : 120,
+})
+export const speechKey = (clause: SpeechClause) =>
+  `${clause.kind}|${clause.text}`
+const introduction = (round: 1 | 2, team: TeamId) =>
+  speechClause(
+    `${round === 1 ? 'だいいちじゅん' : 'だいにじゅん'}、${clubReadings[team]}、選択希望選手。`,
+  )
+const affiliation = (position: Position, team: TeamId) =>
+  speechClause(`${positionReadings[position]}、${clubReadings[team]}。`)
+const nominations = () =>
+  speechClause('じゅうにきゅうだんの候補が、そろいました。')
+const noSecondRound = () =>
+  speechClause('だいにじゅんは、指名がありませんでした。')
+const opening = (team: TeamId) =>
+  speechClause(`最初の指名権は、${clubReadings[team]}です。`)
+export const speechSample = () => [
+  introduction(1, 'd'),
+  speechClause('わたなべ しょうた。', 'name'),
+  affiliation('投手', 'e'),
+]
 
 export function playerReading(player: Player): string {
   const entry = (
     readings.players as Record<
       string,
-      {
-        name: string
-        birthDate: string
-        reading: string
-      }
+      { name: string; birthDate: string; reading: string }
     >
   )[player.id]
   return entry?.name === player.name && entry.birthDate === player.birthDate
     ? entry.reading
     : player.name
 }
-
-/** Separate clauses make the pauses explicit without imitating a real voice. */
-export function draftSpeech(item: Announcement, players: Player[]): string[] {
+export function draftSpeech(
+  item: Announcement,
+  players: Player[],
+): SpeechClause[] {
   const { game } = item
-  if (item.kind === 'nominations') return ['12球団の候補が、揃いました。']
-  if (item.kind === 'order')
-    return ['最初の指名権は。', `${clubReadings[game.order[0]]}。`]
+  if (item.kind === 'nominations') return [nominations()]
+  if (item.kind === 'order') return [opening(game.order[0])]
+  const all = game.picks.filter((p) => p.round === 2)
   const picks =
     item.kind === 'round2'
-      ? game.picks.filter((p) => p.round === 2)
+      ? item.pickIndex === undefined
+        ? all
+        : all.slice(item.pickIndex, item.pickIndex + 1)
       : game.picks.slice(-1)
-  if (!picks.length) return ['第2巡の指名は、ありませんでした。']
+  if (!picks.length) return [noSecondRound()]
   return picks.flatMap((pick) => {
     const player = players.find((p) => p.id === pick.playerId)
-    if (!player) return []
-    return [
-      `第${pick.round}巡。${clubReadings[pick.by]}。選択希望選手。`,
-      `${playerReading(player)}。`,
-      `${player.position}。`,
-      `${clubReadings[pick.from]}。`,
-    ]
+    return player
+      ? [
+          introduction(pick.round, pick.by),
+          speechClause(`${playerReading(player)}。`, 'name'),
+          affiliation(player.position, pick.from),
+        ]
+      : []
   })
+}
+
+/** Exported for the offline asset builder; all game requests stay on this site. */
+export function voiceCatalog(): SpeechClause[] {
+  const result: SpeechClause[] = [
+    nominations(),
+    noSecondRound(),
+    ...speechSample(),
+  ]
+  for (const team of Object.keys(clubReadings) as TeamId[]) {
+    result.push(opening(team), introduction(1, team), introduction(2, team))
+    for (const position of Object.keys(positionReadings) as Position[])
+      result.push(affiliation(position, team))
+  }
+  for (const p of Object.values(readings.players))
+    result.push(speechClause(`${p.reading}。`, 'name'))
+  return [
+    ...new Map(result.map((clause) => [speechKey(clause), clause])).values(),
+  ]
 }

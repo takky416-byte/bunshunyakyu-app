@@ -75,7 +75,11 @@ import {
 import PrivacySettings from './PrivacySettings'
 import DraftAnnouncement from './DraftAnnouncement'
 import CompactDetails from './CompactDetails'
-import { npcAnnouncements, type Announcement } from './announcements'
+import {
+  npcAnnouncements,
+  roundTwoAnnouncements,
+  type Announcement,
+} from './announcements'
 import Diamond from './Diamond'
 import Splash, { needsSplash, SPLASH_KEY } from './Splash'
 import ResultShare from './ResultShare'
@@ -1436,10 +1440,9 @@ export default function App() {
                           }
                           onClick={() =>
                             act(() =>
-                              announce([
-                                {
-                                  kind: 'round2',
-                                  game: confirmRoundTwo(
+                              announce(
+                                roundTwoAnnouncements(
+                                  confirmRoundTwo(
                                     game,
                                     game.roundTwo!.intents[team.id] === 'buy'
                                       ? roundPreferences
@@ -1447,8 +1450,8 @@ export default function App() {
                                     bidCondition,
                                     players,
                                   ),
-                                },
-                              ]),
+                                ),
+                              ),
                             )
                           }
                         >

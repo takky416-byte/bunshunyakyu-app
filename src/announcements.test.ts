@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { npcAnnouncements } from './announcements'
+import { npcAnnouncements, roundTwoAnnouncements } from './announcements'
 import { referenceDataset, teamIds } from './data'
 import {
   advanceToUser,
@@ -37,4 +37,31 @@ it('announces NPC picks in legal individual checkpoints and preserves the skip r
       sequence.length ? 1 : 0,
     )
   }
+})
+
+it('reveals second-round assignments individually without inventing partial game states', () => {
+  const game = {
+    ...newGame('t', 3),
+    stage: 'results' as const,
+    picks: [
+      {
+        round: 2 as const,
+        by: 'd' as const,
+        from: 'e' as const,
+        playerId: 'e-1',
+      },
+      {
+        round: 2 as const,
+        by: 'e' as const,
+        from: 'd' as const,
+        playerId: 'd-1',
+      },
+    ],
+  }
+  const sequence = roundTwoAnnouncements(game)
+  expect(sequence.map((item) => item.pickIndex)).toEqual([0, 1])
+  expect(sequence.every((item) => item.game === game)).toBe(true)
+  expect(roundTwoAnnouncements({ ...game, picks: [] })).toEqual([
+    { kind: 'round2', game: { ...game, picks: [] } },
+  ])
 })

@@ -4,6 +4,15 @@ import type { Player } from './data'
 export interface Announcement {
   kind: 'nominations' | 'order' | 'pick' | 'round2'
   game: Game
+  /** Second-round assignments are atomic; this index only controls the reveal. */
+  pickIndex?: number
+}
+
+export function roundTwoAnnouncements(game: Game): Announcement[] {
+  const picks = game.picks.filter((p) => p.round === 2)
+  return picks.length
+    ? picks.map((_, pickIndex) => ({ kind: 'round2', game, pickIndex }))
+    : [{ kind: 'round2', game }]
 }
 
 // Each announcement carries a legal checkpoint. The UI commits it only when

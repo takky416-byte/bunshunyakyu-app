@@ -9,6 +9,7 @@ import {
   npcPick,
   submitNominations,
   startRoundTwo,
+  confirmRoundTwo,
 } from '../src/engine'
 
 test.beforeEach(async ({ page }) => {
@@ -18,9 +19,9 @@ test.beforeEach(async ({ page }) => {
   })
 })
 
-function opening() {
+function opening(seed = 9) {
   const game = submitNominations(
-    newGame('t', 9),
+    newGame('t', seed),
     ['t-1', 't-2'],
     referenceDataset.players,
   )
@@ -124,6 +125,7 @@ test('opening waits before revealing the first club and preserves a single legal
   page,
 }) => {
   await page.clock.install()
+  await page.clock.pauseAt(new Date(Date.now() + 60000))
   await vote(page)
   const dialog = page.getByRole('dialog')
   await expect(dialog).toContainText('指名順位を確認しています')
@@ -301,9 +303,17 @@ test('second-round results stay pending until announcement and then lead to the 
 }) => {
   const players = referenceDataset.players
   let game = opening()
-  while (game.stage === 'draft')
-    game = makePick(game, choicesFor(game, players)[0].id, players)
-  game = startRoundTwo(game, 'out', players)
+  let final = game
+  for (let seed = 1; seed <= 80; seed++) {
+    game = opening(seed)
+    while (game.stage === 'draft')
+      game = makePick(game, choicesFor(game, players)[0].id, players)
+    game = startRoundTwo(game, 'out', players)
+    final = confirmRoundTwo(game, [], 'unconditional', players)
+    if (final.picks.filter((p) => p.round === 2).length >= 2) break
+  }
+  const assignments = final.picks.filter((p) => p.round === 2)
+  expect(assignments.length).toBeGreaterThanOrEqual(2)
   await page.addInitScript(
     ({ game, dataset }) =>
       localStorage.setItem(
@@ -318,7 +328,7 @@ test('second-round results stay pending until announcement and then lead to the 
     .getByRole('button', { name: '参加・入札を確定して結果を見る' })
     .click()
   const dialog = page.getByRole('dialog')
-  await expect(dialog).toContainText('入札の成立を確認しています')
+  await expect(dialog).toContainText('まもなく、指名を発表します')
   expect(
     await page.evaluate(
       () =>
@@ -335,6 +345,16 @@ test('second-round results stay pending until announcement and then lead to the 
         JSON.parse(localStorage.getItem('geneki-draft-room:v2')!).game.stage,
     ),
   ).toBe('results')
+  for (let i = 0; i < assignments.length; i++) {
+    const selected = players.find((p) => p.id === assignments[i].playerId)!
+    await expect(dialog.locator('.announcement-name')).toHaveText(selected.name)
+    await expect(dialog).toHaveAttribute('data-team', assignments[i].by)
+    if (i + 1 < assignments.length) {
+      await dialog.getByRole('button', { name: '次の指名発表へ' }).click()
+      await expect(dialog.locator('.announcement-name')).toHaveCount(0)
+      await page.clock.runFor(1900)
+    }
+  }
   await dialog.getByRole('button', { name: 'ドラフト結果を見る' }).click()
   await expect(
     page.getByRole('heading', { name: '12球団のドラフト結果' }),

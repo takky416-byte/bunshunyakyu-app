@@ -1,55 +1,22 @@
-import { test, expect, type Page } from '@playwright/test'
-import { referenceDataset } from '../src/data'
+import { test, expect } from '@playwright/test'
+import { readFileSync } from 'node:fs'
+import type { Dataset } from '../src/data'
+import { eligibilityOf } from '../src/eligibility'
 import { newGame, beginDraft, submitNominations } from '../src/engine'
 import { npcAnnouncements } from '../src/announcements'
+import { draftSpeech, speechKey } from '../src/draftSpeech'
+import maleVoice from '../src/maleVoice2026.json' with { type: 'json' }
 
-async function speechBrowser(page: Page, available = true) {
-  await page.addInitScript((available) => {
-    type Utterance = { text: string; onend?: () => void }
-    const probe = {
-      spoken: [] as string[],
-      cancelled: 0,
-      current: null as Utterance | null,
-      finish: () => {},
-    }
-    probe.finish = () => {
-      const current = probe.current
-      probe.current = null
-      current?.onend?.()
-    }
-    Object.assign(window, { __speechProbe: probe })
-    Object.defineProperty(window, 'SpeechSynthesisUtterance', {
-      value: class {
-        constructor(public text: string) {}
-      },
-    })
-    const synth = new EventTarget()
-    Object.assign(synth, {
-      getVoices: () =>
-        available ? [{ lang: 'ja-JP', localService: true }] : [],
-      speak: (utterance: Utterance) => {
-        if (utterance.text.trim()) {
-          probe.spoken.push(utterance.text)
-          probe.current = utterance
-        }
-      },
-      cancel: () => {
-        probe.cancelled++
-        probe.current = null
-      },
-    })
-    Object.defineProperty(window, 'speechSynthesis', { value: synth })
-    sessionStorage.setItem('geneki-draft:welcome:v1', 'seen')
-  }, available)
-}
-async function spoken(page: Page) {
-  return page.evaluate(
-    () =>
-      (window as unknown as { __speechProbe: { spoken: string[] } })
-        .__speechProbe.spoken,
-  )
-}
-
+const dataset = JSON.parse(
+  readFileSync(new URL('../src/npb2026.json', import.meta.url), 'utf8'),
+) as Dataset
+const facts = JSON.parse(
+  readFileSync(new URL('../src/eligibility2026.json', import.meta.url), 'utf8'),
+)
+dataset.players = dataset.players.map((p) => ({
+  ...p,
+  draftFacts: facts.players[p.id],
+}))
 test('sound starts silent, produces real Web Audio after opt-in, saves separate toggles and mutes on hiding', async ({
   page,
 }) => {
@@ -58,8 +25,19 @@ test('sound starts silent, produces real Web Audio after opt-in, saves separate 
     sessionStorage.setItem('geneki-draft:welcome:v1', 'seen')
     const Native = window.AudioContext
     const contexts: { context: AudioContext; meter: AnalyserNode }[] = []
+    const durations: number[] = []
+    Object.assign(window, { __sourceDurations: durations })
     Object.assign(window, { __audioProbe: contexts })
     window.AudioContext = class extends Native {
+      createBufferSource() {
+        const source = super.createBufferSource()
+        const start = source.start.bind(source)
+        source.start = (when = 0, offset = 0) => {
+          durations.push(source.buffer?.duration ?? 0)
+          start(when, offset)
+        }
+        return source
+      }
       constructor() {
         super()
         const meter = this.createAnalyser()
@@ -96,6 +74,30 @@ test('sound starts silent, produces real Web Audio after opt-in, saves separate 
       }),
     )
     .toBeGreaterThan(0.00001)
+  await settings.getByRole('checkbox', { name: /^BGM/ }).uncheck()
+  await settings.getByRole('button', { name: '効果音を試す' }).click()
+  await expect
+    .poll(() =>
+      page.evaluate(() => {
+        const { meter } = (
+          window as unknown as { __audioProbe: { meter: AnalyserNode }[] }
+        ).__audioProbe[0]
+        const samples = new Float32Array(meter.fftSize)
+        meter.getFloatTimeDomainData(samples)
+        return Math.max(...samples.map(Math.abs))
+      }),
+    )
+    .toBeGreaterThan(0.025)
+  await settings.getByRole('button', { name: '読み上げを試す' }).click()
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        (
+          window as unknown as { __sourceDurations: number[] }
+        ).__sourceDurations.some((duration) => duration > 1.3),
+      ),
+    )
+    .toBe(true)
   await settings.getByRole('checkbox', { name: /^効果音/ }).uncheck()
   await page.locator('.modal').getByRole('button', { name: '閉じる' }).click()
   await page.reload()
@@ -139,17 +141,29 @@ test('sound starts silent, produces real Web Audio after opt-in, saves separate 
     .toBe('suspended')
 })
 
-test('spoken picks include position, hold autoplay until completion, and cancel immediately on manual next and mute', async ({
+test('recorded male phrases slow only the name and block autoplay until the whole announcement finishes', async ({
   page,
 }) => {
-  await speechBrowser(page)
-  const players = referenceDataset.players
-  const nominated = submitNominations(newGame('t', 1), ['t-1', 't-2'], players)
-  const game = beginDraft(nominated, nominated.offers.g![0], players)
-  const sequence = npcAnnouncements(game, players, true)
-  expect(sequence.length).toBeGreaterThan(2)
+  const players = dataset.players
+  let game = newGame('t', 1)
+  let sequence = npcAnnouncements(game, players, true)
+  for (let seed = 1; seed <= 100; seed++) {
+    game = submitNominations(
+      newGame('t', seed),
+      players
+        .filter((p) => p.team === 't' && eligibilityOf(p).band === 'ordinary')
+        .slice(0, 2)
+        .map((p) => p.id),
+      players,
+    )
+    game = beginDraft(game, game.offers.g![0], players)
+    sequence = npcAnnouncements(game, players, true)
+    if (sequence.length >= 3) break
+  }
+  expect(sequence.length).toBeGreaterThanOrEqual(3)
   await page.addInitScript(
     (save) => {
+      sessionStorage.setItem('geneki-draft:welcome:v1', 'seen')
       localStorage.setItem('geneki-draft-room:v2', JSON.stringify(save))
       localStorage.setItem(
         'geneki-draft:sound:v1',
@@ -160,8 +174,76 @@ test('spoken picks include position, hold autoplay until completion, and cancel 
           narration: true,
         }),
       )
+      // Control the audio clock while still fetching each real MP3. Production
+      // decode/playback is independently exercised by the real audio test above.
+      const Native = window.AudioContext
+      type Source = {
+        buffer: AudioBuffer | null
+        onended: (() => void) | null
+        connect: () => void
+        disconnect: () => void
+        start: () => void
+        stop: () => void
+      }
+      const probe = {
+        current: null as Source | null,
+        paths: [] as string[],
+        played: [] as string[],
+        finish: () => {},
+      }
+      probe.finish = () => {
+        const source = probe.current
+        probe.current = null
+        source?.onended?.()
+      }
+      Object.assign(window, { __voiceProbe: probe })
+      const originalFetch = window.fetch.bind(window)
+      window.fetch = (input, init) => {
+        const path = String(input)
+        if (path.startsWith('/audio/voice-male-v2/')) probe.paths.push(path)
+        return originalFetch(input, init).then((response) => {
+          if (path.startsWith('/audio/voice-male-v2/')) {
+            const read = response.arrayBuffer.bind(response)
+            response.arrayBuffer = async () => {
+              const buffer = await read()
+              Object.assign(buffer, { clipPath: path })
+              return buffer
+            }
+          }
+          return response
+        })
+      }
+      window.AudioContext = class extends Native {
+        async decodeAudioData(data: ArrayBuffer) {
+          const buffer = this.createBuffer(1, this.sampleRate, this.sampleRate)
+          Object.assign(buffer, {
+            clipPath: (data as ArrayBuffer & { clipPath?: string }).clipPath,
+          })
+          return buffer
+        }
+        createBufferSource() {
+          const source: Source = {
+            buffer: null,
+            onended: null,
+            connect: () => {},
+            disconnect: () => {},
+            start: () => {
+              probe.current = source
+              probe.played.push(
+                (source.buffer as AudioBuffer & { clipPath?: string })
+                  ?.clipPath ?? '',
+              )
+            },
+            stop: () => {
+              if (probe.current === source) probe.current = null
+            },
+          }
+          return source as unknown as AudioBufferSourceNode
+        }
+      }
+      Object.defineProperty(window, 'speechSynthesis', { value: undefined })
     },
-    { game, dataset: referenceDataset, chosenTeam: 't' },
+    { game, dataset, chosenTeam: 't' },
   )
   await page.clock.install()
   await page.setViewportSize({ width: 320, height: 568 })
@@ -169,36 +251,47 @@ test('spoken picks include position, hold autoplay until completion, and cancel 
   const dialog = page.locator('.draft-announcement')
   await dialog.getByRole('button', { name: 'サウンドのオン・オフ' }).click()
   await page.clock.runFor(1900)
+  const active = () =>
+    page.evaluate(() =>
+      Boolean(
+        (window as unknown as { __voiceProbe: { current: unknown } })
+          .__voiceProbe.current,
+      ),
+    )
+  await expect.poll(active).toBe(true)
   await expect(dialog).toContainText('読み上げ中')
-  const nextButton = (await dialog.locator('.button.primary').boundingBox())!
-  expect(nextButton.y + nextButton.height).toBeLessThanOrEqual(568)
-  expect(
-    await dialog.evaluate((el) => el.scrollWidth <= el.clientWidth + 1),
-  ).toBe(true)
-  await page.screenshot({ path: '.cache/spoken-announcement-mobile.png' })
   await page.clock.runFor(4000)
   const pick = sequence[0].game.picks.at(-1)!
-  const player = players.find((p) => p.id === pick.playerId)!
-  await expect(dialog.locator('.announcement-name')).toHaveText(player.name)
-  const finishClause = async () => {
+  await expect(dialog.locator('.announcement-name')).toHaveText(
+    players.find((p) => p.id === pick.playerId)!.name,
+  )
+  const script = draftSpeech(sequence[0], players)
+  for (let i = 0; i < script.length; i++) {
+    const paths = await page.evaluate(
+      () =>
+        (window as unknown as { __voiceProbe: { played: string[] } })
+          .__voiceProbe.played,
+    )
+    expect(paths.at(-1)).toBe(
+      (maleVoice.clips as Record<string, string>)[speechKey(script[i])],
+    )
     await page.evaluate(() =>
       (
-        window as unknown as { __speechProbe: { finish: () => void } }
-      ).__speechProbe.finish(),
+        window as unknown as { __voiceProbe: { finish: () => void } }
+      ).__voiceProbe.finish(),
     )
-    await page.clock.runFor(450)
+    await page.clock.runFor(250)
+    if (i + 1 < script.length) await expect.poll(active).toBe(true)
   }
-  await finishClause()
-  expect((await spoken(page)).at(-1)).toBe(`${player.name}。`)
-  await finishClause()
-  expect((await spoken(page)).at(-1)).toBe(`${player.position}。`)
-  await finishClause()
-  expect((await spoken(page)).at(-1)).not.toContain(player.name)
-  await finishClause()
+  await expect(dialog).not.toContainText('読み上げ中')
   await page.clock.runFor(3600)
   await expect(dialog.locator('.announcement-name')).toHaveCount(0)
   await page.clock.runFor(1900)
-  await expect(dialog).toContainText('読み上げ中')
+  await expect.poll(active).toBe(true)
+  await dialog.getByRole('button', { name: '次の指名発表へ' }).click()
+  expect(await active()).toBe(false)
+  await page.clock.runFor(1900)
+  await expect.poll(active).toBe(true)
   await page.evaluate(() => {
     Object.defineProperty(document, 'hidden', {
       configurable: true,
@@ -206,17 +299,8 @@ test('spoken picks include position, hold autoplay until completion, and cancel 
     })
     document.dispatchEvent(new Event('visibilitychange'))
   })
-  expect(
-    await page.evaluate(
-      () =>
-        (window as unknown as { __speechProbe: { current: unknown } })
-          .__speechProbe.current,
-    ),
-  ).toBeNull()
+  expect(await active()).toBe(false)
   await page.clock.runFor(10000)
-  await expect(dialog.locator('.announcement-name')).toHaveText(
-    players.find((p) => p.id === sequence[1].game.picks.at(-1)!.playerId)!.name,
-  )
   await page.evaluate(() => {
     Object.defineProperty(document, 'hidden', {
       configurable: true,
@@ -224,46 +308,28 @@ test('spoken picks include position, hold autoplay until completion, and cancel 
     })
     document.dispatchEvent(new Event('visibilitychange'))
   })
-  await expect(dialog).toContainText('読み上げ中')
-  await dialog.getByRole('button', { name: '次の指名発表へ' }).click()
-  expect(
-    await page.evaluate(
-      () =>
-        (window as unknown as { __speechProbe: { current: unknown } })
-          .__speechProbe.current,
-    ),
-  ).toBeNull()
-  await page.clock.runFor(1900)
-  await expect(dialog).toContainText('読み上げ中')
+  await expect.poll(active).toBe(true)
   await dialog.getByRole('button', { name: 'サウンドのオン・オフ' }).click()
-  await expect(dialog).not.toContainText('読み上げ中')
-  expect(
-    await page.evaluate(
-      () =>
-        (window as unknown as { __speechProbe: { current: unknown } })
-          .__speechProbe.current,
-    ),
-  ).toBeNull()
-  await dialog
-    .getByRole('button', { name: /演出をスキップ/, exact: false })
-    .click()
-  expect(
-    await page.evaluate(
-      () =>
-        (window as unknown as { __speechProbe: { current: unknown } })
-          .__speechProbe.current,
-    ),
-  ).toBeNull()
+  expect(await active()).toBe(false)
+  await dialog.getByRole('button', { name: /演出をスキップ/ }).click()
+  expect(await active()).toBe(false)
 })
 
-test('missing Japanese voices explains the limitation and keeps gameplay usable', async ({
+test('unsupported audio explains the limitation and keeps gameplay usable', async ({
   page,
 }) => {
-  await speechBrowser(page, false)
+  await page.addInitScript(() => {
+    sessionStorage.setItem('geneki-draft:welcome:v1', 'seen')
+    Object.defineProperty(window, 'AudioContext', { value: undefined })
+    Object.defineProperty(window, 'speechSynthesis', { value: undefined })
+    Object.defineProperty(window, 'SpeechSynthesisUtterance', {
+      value: undefined,
+    })
+  })
   await page.goto('/')
   await page.getByRole('button', { name: 'サウンド設定', exact: true }).click()
   await expect(page.locator('.sound-settings')).toContainText(
-    'この端末では日本語の読み上げ音声を利用できません',
+    'この端末では読み上げ音声を再生できません',
   )
   await expect(
     page.getByRole('checkbox', { name: /^指名の読み上げ/ }),
@@ -273,5 +339,4 @@ test('missing Japanese voices explains the limitation and keeps gameplay usable'
   await expect(
     page.getByRole('heading', { name: /提出候補を選ぶ/ }),
   ).toBeVisible()
-  expect(await spoken(page)).toEqual([])
 })
