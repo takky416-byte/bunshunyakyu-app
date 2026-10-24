@@ -30,6 +30,8 @@ test('welcome explains the concept, fits a phone, and appears once per session w
   await page.goto('/')
   const welcome = page.getByRole('dialog', { name: '現役ドラフトルーム' })
   await expect(welcome).toContainText('11球団のCPU')
+  await expect(welcome).toContainText('GENNEKI DRAFT ROOM')
+  await expect(welcome).not.toContainText('GENEKI')
   const enter = welcome.getByRole('button', { name: '球団を選んではじめる' })
   await expect(enter).toBeFocused()
   const bounds = await enter.boundingBox()
@@ -73,6 +75,7 @@ test('compact selection follows league order, previews club colors, and guides t
     sessionStorage.setItem('geneki-draft:welcome:v1', 'seen'),
   )
   await page.goto('/')
+  await expect(page.locator('a[href^="http"]')).toHaveCount(0)
   const central = page.getByRole('region', { name: 'セ・リーグ', exact: true })
   const pacific = page.getByRole('region', { name: 'パ・リーグ', exact: true })
   expect(

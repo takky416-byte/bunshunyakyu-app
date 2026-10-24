@@ -32,7 +32,7 @@ export default function Splash({
       }}
     >
       <div className="welcome-content">
-        <span className="welcome-kicker">2026 / GENEKI DRAFT ROOM</span>
+        <span className="welcome-kicker">2026 / GENNEKI DRAFT ROOM</span>
         <Diamond className="welcome-diamond" />
         <h1 id="welcome-title">現役ドラフトルーム</h1>
         <p className="welcome-lead">

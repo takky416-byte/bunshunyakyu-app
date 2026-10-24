@@ -80,7 +80,7 @@ test('select a club, nominate, vote, draft, restore, and share results', async (
   const downloaded = page.waitForEvent('download')
   await page.getByRole('button', { name: 'PNG画像を保存' }).click()
   const resultFile = await downloaded
-  expect(resultFile.suggestedFilename()).toMatch(/^geneki-draft-2026-f\.png$/)
+  expect(resultFile.suggestedFilename()).toMatch(/^genneki-draft-2026-f\.png$/)
   const result = await readFile((await resultFile.path())!)
   expect(result.subarray(0, 8).toString('hex')).toBe('89504e470d0a1a0a')
   expect(result.readUInt32BE(16)).toBe(1200)
@@ -99,6 +99,7 @@ test('mobile selection, position filter, rules dialog, and guarded restart', asy
   ).toBe(true)
   await page.getByRole('button', { name: 'ルールと遊び方' }).click()
   await expect(page.getByRole('dialog')).toBeVisible()
+  await expect(page.getByRole('dialog').getByRole('link')).toHaveCount(0)
   await page.keyboard.press('Escape')
   await expect(page.getByRole('dialog')).toHaveCount(0)
   await page.getByRole('button', { name: 'この球団ではじめる' }).click()
@@ -158,6 +159,7 @@ test('reports official provenance, validates imports, and keeps user data across
   await page.goto('/')
   await page.getByRole('button', { name: 'データ詳細', exact: true }).click()
   const dialog = page.getByRole('dialog')
+  await expect(dialog.getByRole('link')).toHaveCount(0)
   await expect(dialog).toContainText(
     '名簿・打撃・投手の計36ページを取得しました。',
   )

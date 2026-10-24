@@ -86,14 +86,7 @@ test('domestic-treated players are selectable and reported departures stay exclu
   await expect(page.getByRole('dialog')).toContainText(
     '戦力外・退団・引退の報道あり',
   )
-  await expect(
-    page
-      .getByRole('dialog')
-      .getByRole('link', { name: '戦力外・退団・引退の報道ありの出典' }),
-  ).toHaveAttribute(
-    'href',
-    'https://www.nikkansports.com/baseball/news/202609280000276.html',
-  )
+  await expect(page.getByRole('dialog').getByRole('link')).toHaveCount(0)
 })
 
 test('mobile layout keeps large type, folds supporting panels, and opens details without selecting the player', async ({
@@ -131,7 +124,7 @@ test('mobile layout keeps large type, folds supporting panels, and opens details
   const dialog = page.getByRole('dialog')
   await expect(dialog).toContainText('2026年推定年俸')
   await expect(dialog).not.toContainText(/仮対象|仮判定|未確認|補強ポイント/)
-  await expect(dialog.getByRole('link', { name: '年俸出典' })).toBeVisible()
+  await expect(dialog.getByRole('link')).toHaveCount(0)
   await expect(page.locator('.roster-list input:checked')).toHaveCount(0)
   await page.keyboard.press('Escape')
   await expect(detail).toBeFocused()

@@ -94,7 +94,7 @@ export default function DraftAnnouncement({
     >
       <div className="announcement-inner" key={index}>
         <div className="announcement-topline">
-          <span>GENEKI DRAFT / 2026</span>
+          <span>GENNEKI DRAFT / 2026</span>
           <span>
             {item.kind === 'nominations'
               ? 'CANDIDATE LISTS'

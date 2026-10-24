@@ -47,7 +47,7 @@ export default function ResultShare({
       const url = URL.createObjectURL(blob),
         a = document.createElement('a')
       a.href = url
-      a.download = `geneki-draft-2026-${game.userTeam}.png`
+      a.download = `genneki-draft-2026-${game.userTeam}.png`
       a.click()
       window.setTimeout(() => URL.revokeObjectURL(url), 1000)
       setMessage('結果をPNG画像にしました。ブログの画像として使えます。')

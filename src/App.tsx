@@ -18,7 +18,6 @@ import {
   Database,
   Share2,
   Download,
-  ExternalLink,
   Home,
   Info,
   Play,
@@ -82,7 +81,6 @@ import {
   centralSelection,
   pacificSelection,
   selectionNames,
-  standingsSource,
   clubThemes,
   clubStyle,
 } from './presentation'
@@ -600,13 +598,6 @@ export default function App() {
               <p className="transfer-rule-note">
                 <strong>2026年の対象範囲変更：</strong>
                 7月31日までに通常のトレード等で加入した選手も、他の条件を満たせば対象です。前年の現役ドラフトで加入した選手は対象外です。
-                <a
-                  href="https://www.nikkansports.com/baseball/news/202610140000570.html"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  制度変更の出典
-                </a>
               </p>
             )}
             {game?.stage === 'nominate' && (
@@ -700,16 +691,6 @@ export default function App() {
                       >
                         <div className="league-title">
                           <h3>{division.name}</h3>
-                          {division.name === 'パ・リーグ' && (
-                            <a
-                              href={standingsSource}
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              2026年順位順
-                              <ExternalLink size={12} />
-                            </a>
-                          )}
                         </div>
                         <div className="teams-grid">
                           {division.ids.map((id) => {
@@ -1662,42 +1643,6 @@ export default function App() {
           <p>
             2026年推定年俸を使用しています。実際の候補リストを示すものではありません。
           </p>
-          <div className="player-detail-sources">
-            {detailPlayer.draftFacts?.exclusions.map((exclusion, index) => (
-              <a
-                className="source-link"
-                href={exclusion.source}
-                target="_blank"
-                rel="noreferrer"
-                key={`${exclusion.source}-${index}`}
-              >
-                {exclusion.reason}の出典
-                <ExternalLink size={14} />
-              </a>
-            ))}
-            {detailPlayer.draftFacts?.salarySource && (
-              <a
-                className="source-link"
-                href={detailPlayer.draftFacts.salarySource}
-                target="_blank"
-                rel="noreferrer"
-              >
-                年俸出典
-                <ExternalLink size={14} />
-              </a>
-            )}
-            {detailPlayer.sourceUrl && (
-              <a
-                className="source-link"
-                href={detailPlayer.sourceUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                選手データの出典
-                <ExternalLink size={14} />
-              </a>
-            )}
-          </div>
         </ModalShell>
       )}
       {modal === 'privacy' && (
@@ -1734,43 +1679,10 @@ export default function App() {
               新聞報道から2026年の対象範囲改定と2025年の第2巡変更を参照し、同票時の順位・予備指名の拘束・条件付き入札を実装しています。年俸は2026年推定額を使用します。選手別の契約情報と入札の内部調整は完全再現を保証しません。
             </span>
           </div>
-          <p>
-            <a
-              className="source-link"
-              href="https://www.nikkansports.com/baseball/news/202610140000570.html"
-              target="_blank"
-              rel="noreferrer"
-            >
-              日刊スポーツ：2026年の対象範囲変更（10月14日）
-              <ExternalLink size={14} />
-            </a>
-          </p>
-          <p>
-            <a
-              className="source-link"
-              href="https://www.daily.co.jp/baseball/2025/12/03/0019774070.shtml"
-              target="_blank"
-              rel="noreferrer"
-            >
-              デイリースポーツ：第2巡の参加と入札手順（2025年12月3日）
-              <ExternalLink size={14} />
-            </a>
-          </p>
           <h3>シーズン中に移籍した選手は？</h3>
           <p>
             2026年10月の規定改定により、7月31日までに通常のトレード等で獲得した選手も、他の資格条件を満たせば対象です。前年の現役ドラフトで獲得した選手は引き続き対象外です。
             また、開催年の年度連盟選手権試合終了の翌日以降に契約譲渡で獲得した選手と、同じ基準日以降に育成から支配下へ移行した選手は除外されます。加入時期・契約等の選手別最終確認は残ります。
-          </p>
-          <p>
-            <a
-              className="source-link"
-              href="https://news.infoseek.co.jp/article/sponichin_20261015_0022/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              スポニチ：今年7月までに移籍した選手も対象（10月15日）
-              <ExternalLink size={14} />
-            </a>
           </p>
           <h3>ドラフトの流れ</h3>
           <ol className="guide-list">
@@ -1807,19 +1719,10 @@ export default function App() {
           <p>
             実際の候補リストや球団の判断を予測するものではありません。CPUの選考は独自設定で、実際の編成方針・成績・選手評価ではありません。
           </p>
-          <a
-            className="source-link"
-            href="https://npb.jp/geneki_draft/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            NPB公式「現役ドラフト」結果ページ
-            <ExternalLink size={14} />
-          </a>
         </ModalShell>
       )}
       {modal === 'data' && (
-        <ModalShell title="選手データと出典" close={() => setModal(null)}>
+        <ModalShell title="選手データ" close={() => setModal(null)}>
           <div className="data-summary">
             <Database size={24} />
             <div>
@@ -1917,31 +1820,6 @@ export default function App() {
               <RotateCcw size={14} />
             </button>
           )}
-          <div className="source-list">
-            <h3>公式情報と取得状況</h3>
-            <a
-              href="https://npb.jp/geneki_draft/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              NPB 現役ドラフト（2025年度結果は取得済み）
-              <ExternalLink size={13} />
-            </a>
-            <a
-              href="https://npb.jp/bis/teams/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              NPB 2026年度 球団別選手情報（取得済み）
-              <ExternalLink size={13} />
-            </a>
-            {dataset.sourceUrl && !isOfficial && (
-              <a href={dataset.sourceUrl} target="_blank" rel="noreferrer">
-                取り込みデータの指定出典（利用者提供）
-                <ExternalLink size={13} />
-              </a>
-            )}
-          </div>
         </ModalShell>
       )}
     </div>

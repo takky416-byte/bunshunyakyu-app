@@ -53,6 +53,7 @@ test('submitted nominations wait for the other clubs before revealing their list
   await expect(dialog).toContainText(
     '他の11球団の候補リストを取りまとめています',
   )
+  await expect(dialog).toContainText('GENNEKI DRAFT / 2026')
   await expect(dialog.locator('.announcement-name')).toHaveCount(0)
   await expect(page.getByRole('radio')).toHaveCount(0)
   const stage = () =>

@@ -98,7 +98,6 @@ export const clubThemes: Record<TeamId, ClubTheme> = {
 export const centralSelection: TeamId[] = ['d', 't', 'c', 's', 'db', 'g']
 // NPB 2026 standings, checked 2026-10-24. Do not fetch on app startup.
 export const pacificSelection: TeamId[] = ['h', 'l', 'f', 'b', 'm', 'e']
-export const standingsSource = 'https://npb.jp/bis/2026/stats/std_p.html'
 export const selectionNames: Record<TeamId, string> = {
   d: '中日',
   t: '阪神',
