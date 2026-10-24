@@ -11,8 +11,8 @@ export interface ClubTheme {
 }
 export const clubThemes: Record<TeamId, ClubTheme> = {
   d: {
-    secondary: '#ffffff',
-    onSecondary: '#202326',
+    secondary: '#d71920',
+    onSecondary: '#ffffff',
     accent: '#005bac',
     deep: '#102d50',
     soft: '#edf5ff',
@@ -29,8 +29,8 @@ export const clubThemes: Record<TeamId, ClubTheme> = {
     link: '#756000',
   },
   c: {
-    secondary: '#15284b',
-    onSecondary: '#ffffff',
+    secondary: '#ffffff',
+    onSecondary: '#202326',
     accent: '#c82127',
     deep: '#491c23',
     soft: '#fff1f1',
@@ -65,8 +65,8 @@ export const clubThemes: Record<TeamId, ClubTheme> = {
     link: '#994600',
   },
   h: {
-    secondary: '#1e1e1e',
-    onSecondary: '#ffffff',
+    secondary: '#ffffff',
+    onSecondary: '#202326',
     accent: '#f4c300',
     deep: '#2d2d24',
     soft: '#fffbe7',
