@@ -118,7 +118,10 @@ export function SoundSettings({ sound }: { sound: DraftSound }) {
           voiceStatus !== 'available' ||
           !options.volume
         }
-        onClick={() => sound.speak(speechSample())}
+        onClick={() => {
+          sound.stopEffects()
+          sound.speak(speechSample())
+        }}
       >
         読み上げを試す
       </button>
@@ -127,7 +130,10 @@ export function SoundSettings({ sound }: { sound: DraftSound }) {
         disabled={
           !options.enabled || !options.effects || !ready || !options.volume
         }
-        onClick={sound.previewEffects}
+        onClick={() => {
+          sound.stopSpeech()
+          sound.previewEffects()
+        }}
       >
         効果音を試す
       </button>
@@ -150,7 +156,7 @@ export function SoundSettings({ sound }: { sound: DraftSound }) {
           </p>
         )}
         <p>
-          読み上げは低い男性アナウンスです。獲得球団の後に長めの間を置き、選手名をゆっくり読みます。続けてポジションと所属球団を案内します。
+          読み上げは自然な男性アナウンスです。名前も他の部分と同じ速さで読み、苗字と名前を区切ります。選手名とポジションの間にも少し間を置きます。
         </p>
         {voiceError && (
           <p>

@@ -163,7 +163,7 @@ test('sound starts silent, produces real Web Audio after opt-in, saves separate 
     .toBe('suspended')
 })
 
-test('recorded male phrases slow only the name and block autoplay until the whole announcement finishes', async ({
+test('natural male speech uses clear pauses without overlapping or advancing early', async ({
   page,
 }) => {
   const players = dataset.players
@@ -211,6 +211,7 @@ test('recorded male phrases slow only the name and block autoplay until the whol
         current: null as Source | null,
         paths: [] as string[],
         played: [] as string[],
+        overlaps: 0,
         finish: () => {},
       }
       probe.finish = () => {
@@ -250,6 +251,7 @@ test('recorded male phrases slow only the name and block autoplay until the whol
             connect: () => {},
             disconnect: () => {},
             start: () => {
+              if (probe.current) probe.overlaps++
               probe.current = source
               probe.played.push(
                 (source.buffer as AudioBuffer & { clipPath?: string })
@@ -307,9 +309,20 @@ test('recorded male phrases slow only the name and block autoplay until the whol
       await page.clock.runFor(700)
       expect(await active()).toBe(false)
       await page.clock.runFor(420)
+    } else if (i === 1) {
+      await page.clock.runFor(400)
+      expect(await active()).toBe(false)
+      await page.clock.runFor(420)
     } else await page.clock.runFor(script[i].pauseAfterMs + 20)
     if (i + 1 < script.length) await expect.poll(active).toBe(true)
   }
+  expect(
+    await page.evaluate(
+      () =>
+        (window as unknown as { __voiceProbe: { overlaps: number } })
+          .__voiceProbe.overlaps,
+    ),
+  ).toBe(0)
   await expect(dialog).not.toContainText('読み上げ中')
   await page.clock.runFor(3600)
   await expect(dialog.locator('.announcement-name')).toHaveCount(0)

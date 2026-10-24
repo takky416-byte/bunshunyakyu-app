@@ -590,7 +590,7 @@ export class DraftSound {
         utterance.lang = 'ja-JP'
         utterance.voice = this.voice
         utterance.rate = clause.rate
-        utterance.pitch = 0.84
+        utterance.pitch = 1
         utterance.volume = Math.min(1, this.state.options.volume * 1.7)
         utterance.onend = advance
         utterance.onerror = complete

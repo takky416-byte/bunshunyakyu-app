@@ -6,6 +6,7 @@ import {
   playerReading,
   voiceCatalog,
   speechKey,
+  nameSpeech,
 } from './draftSpeech'
 import maleVoice from './maleVoice2026.json' with { type: 'json' }
 import { existsSync } from 'node:fs'
@@ -29,11 +30,13 @@ describe('announcement speech', () => {
     }
     const script = draftSpeech({ kind: 'pick', game }, officialDataset.players)
     expect(script.map((c) => c.text)).toEqual([
-      'だいいちじゅん選択希望選手、ちゅうにち。',
-      'わたなべ しょうた。',
+      'だいいちじゅん獲得希望選手、ちゅうにち。',
+      'わたなべ、しょうた。',
       'とうしゅ、とうほくらくてんゴールデンイーグルス。',
     ])
-    expect(script[1].rate).toBe(0.5)
+    expect(script.every((clause) => clause.rate === 1)).toBe(true)
+    expect(script[1].pauseAfterMs).toBe(800)
+    expect(nameSpeech('リチャード').text).toBe('リチャード。')
     expect(script[0].pauseAfterMs).toBe(1100)
     expect(script[0].pauseAfterMs).toBeGreaterThan(script[1].pauseAfterMs)
     expect(script[0].rate).toBe(script[2].rate)
@@ -69,22 +72,24 @@ describe('announcement speech', () => {
     }))
     const script = draftSpeech({ kind: 'round2', game }, players)
     expect(script).toHaveLength(6)
-    expect(script[1].text).toBe(`${playerReading(players[0])}。`)
-    expect(script[4].text).toBe(`${playerReading(players[1])}。`)
+    expect(script[1].text).toBe(nameSpeech(playerReading(players[0])).text)
+    expect(script[4].text).toBe(nameSpeech(playerReading(players[1])).text)
     const onlySecond = draftSpeech(
       { kind: 'round2', game, pickIndex: 1 },
       players,
     )
     expect(onlySecond).toHaveLength(3)
-    expect(onlySecond[0].text).toMatch(/^だいにじゅん選択希望選手、/)
-    expect(onlySecond[1].text).toBe(`${playerReading(players[1])}。`)
+    expect(onlySecond[0].text).toMatch(/^だいにじゅん獲得希望選手、/)
+    expect(onlySecond[1].text).toBe(nameSpeech(playerReading(players[1])).text)
   })
 })
 
 it('provides a male recording for every official phrase and player name', () => {
   expect(maleVoice.gender).toBe('Male')
-  expect(maleVoice.pitchSemitones).toBe(-3)
-  expect(maleVoice.nameRate).toBe('-50%')
+  expect(maleVoice.pitchSemitones).toBe(0)
+  expect(maleVoice.processing).toBe('natural-v4')
+  expect(maleVoice.nameRate).toBe(maleVoice.bodyRate)
+  expect(maleVoice.nameRate).toBe('+0%')
   const clips = maleVoice.clips as Record<string, string>
   for (const clause of voiceCatalog()) {
     const path = clips[speechKey(clause)]

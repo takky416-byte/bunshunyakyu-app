@@ -34,8 +34,8 @@ export const speechClause = (
 ): SpeechClause => ({
   text,
   kind,
-  rate: kind === 'name' ? 0.5 : 1,
-  pauseAfterMs: kind === 'name' ? 260 : 120,
+  rate: 1,
+  pauseAfterMs: kind === 'name' ? 800 : 120,
 })
 export const speechKey = (clause: SpeechClause) =>
   `${clause.kind}|${clause.text}`
@@ -55,7 +55,7 @@ const clubShortReadings: Record<TeamId, string> = {
 }
 const introduction = (round: 1 | 2, team: TeamId): SpeechClause => ({
   ...speechClause(
-    `${round === 1 ? 'だいいちじゅん' : 'だいにじゅん'}選択希望選手、${clubShortReadings[team]}。`,
+    `${round === 1 ? 'だいいちじゅん' : 'だいにじゅん'}獲得希望選手、${clubShortReadings[team]}。`,
   ),
   pauseAfterMs: 1100,
 })
@@ -67,9 +67,11 @@ const noSecondRound = () =>
   speechClause('だいにじゅんは、指名がありませんでした。')
 const opening = (team: TeamId) =>
   speechClause(`最初の指名権は、${clubReadings[team]}です。`)
+export const nameSpeech = (reading: string): SpeechClause =>
+  speechClause(`${reading.trim().replace(/\s+/, '、')}。`, 'name')
 export const speechSample = () => [
   introduction(1, 'd'),
-  speechClause('わたなべ しょうた。', 'name'),
+  nameSpeech('わたなべ しょうた'),
   affiliation('投手', 'e'),
 ]
 
@@ -104,7 +106,7 @@ export function draftSpeech(
     return player
       ? [
           introduction(pick.round, pick.by),
-          speechClause(`${playerReading(player)}。`, 'name'),
+          nameSpeech(playerReading(player)),
           affiliation(player.position, pick.from),
         ]
       : []
@@ -124,7 +126,7 @@ export function voiceCatalog(): SpeechClause[] {
       result.push(affiliation(position, team))
   }
   for (const p of Object.values(readings.players))
-    result.push(speechClause(`${p.reading}。`, 'name'))
+    result.push(nameSpeech(p.reading))
   return [
     ...new Map(result.map((clause) => [speechKey(clause), clause])).values(),
   ]

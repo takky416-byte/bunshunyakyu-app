@@ -212,7 +212,7 @@ export default function DraftAnnouncement({
                 ? '12球団の予備指名、集計完了。'
                 : item.kind === 'round2' && !isRoundTwoPick
                   ? '第2巡、入札条件の照合。'
-                  : `${club.name}、選択希望選手。`}
+                  : `${club.name}、獲得希望選手。`}
           </span>
           <h2 id="announcement-title" tabIndex={-1}>
             {item.kind === 'nominations' && revealed ? (
@@ -300,7 +300,7 @@ export default function DraftAnnouncement({
                         ? 'SECOND ROUND'
                         : ownRelease
                           ? 'あなたの提出候補が指名されました'
-                          : '選択希望選手'}
+                          : '獲得希望選手'}
                     </span>
                     <strong className="announcement-name">
                       {selected!.name}
