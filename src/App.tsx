@@ -79,6 +79,7 @@ import Diamond from './Diamond'
 import Splash, { needsSplash, SPLASH_KEY } from './Splash'
 import ResultShare from './ResultShare'
 import { usePageVisible } from './usePageVisible'
+import { playerAge, playerCareerYears } from './playerBio'
 import {
   centralSelection,
   pacificSelection,
@@ -1009,12 +1010,19 @@ export default function App() {
                                     {p.number ? ` · #${p.number}` : ''}
                                   </small>
                                   <small className="salary-info">
-                                    {p.draftFacts?.salaryManYen == null
-                                      ? '年俸データなし'
-                                      : `${p.draftFacts.salaryManYen.toLocaleString()}万円`}
-                                    {eligibilityOf(p).band === 'exception'
-                                      ? ' / 高年俸枠'
-                                      : ''}
+                                    <span>
+                                      {p.draftFacts?.salaryManYen == null
+                                        ? '年俸データなし'
+                                        : `${p.draftFacts.salaryManYen.toLocaleString()}万円`}
+                                    </span>
+                                    <span className="player-age">
+                                      {playerAge(p.birthDate) == null
+                                        ? '年齢 —'
+                                        : `${playerAge(p.birthDate)}歳`}
+                                    </span>
+                                    {eligibilityOf(p).band === 'exception' && (
+                                      <span>高年俸枠</span>
+                                    )}
                                   </small>
                                   {!eligibilityOf(p).allowed && (
                                     <small>
@@ -1690,6 +1698,27 @@ export default function App() {
           <p>
             {teamById[detailPlayer.team].name} / {detailPlayer.position}
             {detailPlayer.number ? ` / #${detailPlayer.number}` : ''}
+          </p>
+          <dl className="player-bio">
+            <div>
+              <dt>年齢</dt>
+              <dd>
+                {playerAge(detailPlayer.birthDate) == null
+                  ? '—'
+                  : `${playerAge(detailPlayer.birthDate)}歳`}
+              </dd>
+            </div>
+            <div>
+              <dt>プロ年数</dt>
+              <dd>
+                {playerCareerYears(detailPlayer) == null
+                  ? '—'
+                  : `${playerCareerYears(detailPlayer)}年目`}
+              </dd>
+            </div>
+          </dl>
+          <p className="player-bio-basis">
+            年齢は2026年12月9日時点。プロ年数は2026シーズン基準（NPB入団年を1年目、育成期間を含む）。
           </p>
           {isOfficial && <StatSummary player={detailPlayer} />}
           <h3>2026年推定年俸</h3>

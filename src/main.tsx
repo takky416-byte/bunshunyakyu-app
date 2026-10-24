@@ -6,6 +6,7 @@ import './mobile-layout.css'
 import './experience.css'
 import './play-layout.css'
 import './club-presentation.css'
+import './player-bio.css'
 const AnalyticsAdmin = lazy(() => import('./AnalyticsAdmin'))
 
 createRoot(document.getElementById('root')!).render(

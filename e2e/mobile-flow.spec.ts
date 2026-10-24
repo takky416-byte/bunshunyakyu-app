@@ -50,6 +50,16 @@ test('domestic-treated players are selectable and reported departures stay exclu
       .filter({ has: page.getByText(name, { exact: true }) })
   const waters = rowFor('ワォーターズ')
   await expect(waters.getByRole('checkbox')).toBeEnabled()
+  await expect(waters.locator('.salary-info')).toContainText('21歳')
+  await waters.getByRole('button', { name: /の詳細$/ }).click()
+  await expect(page.getByRole('dialog').locator('.player-bio')).toContainText(
+    '21歳',
+  )
+  await expect(page.getByRole('dialog').locator('.player-bio')).toContainText(
+    '3年目',
+  )
+  await expect(page.getByRole('dialog')).toContainText('2026年12月9日時点')
+  await page.keyboard.press('Escape')
   await waters.getByRole('checkbox').check()
   await expect(waters.getByRole('checkbox')).toBeChecked()
   await expect(rowFor('陽 柏翔').getByRole('checkbox')).toBeEnabled()
@@ -123,6 +133,8 @@ test('mobile layout keeps large type, folds supporting panels, and opens details
   await detail.click()
   const dialog = page.getByRole('dialog')
   await expect(dialog).toContainText('2026年推定年俸')
+  await expect(dialog.locator('.player-bio')).toContainText(/\d+歳/)
+  await expect(dialog.locator('.player-bio')).toContainText(/\d+年目/)
   await expect(dialog).not.toContainText(/仮対象|仮判定|未確認|補強ポイント/)
   await expect(dialog.getByRole('link')).toHaveCount(0)
   await expect(page.locator('.roster-list input:checked')).toHaveCount(0)
