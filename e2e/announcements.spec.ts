@@ -11,6 +11,21 @@ import {
   startRoundTwo,
 } from '../src/engine'
 
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() =>
+    sessionStorage.setItem('geneki-draft:welcome:v1', 'seen'),
+  )
+})
+
+function opening() {
+  const game = submitNominations(
+    newGame('t', 9),
+    ['t-1', 't-2'],
+    referenceDataset.players,
+  )
+  return beginDraft(game, game.offers.g![0], referenceDataset.players)
+}
+
 async function vote(page: import('@playwright/test').Page) {
   await page.goto('/')
   await page.getByRole('button', { name: 'この球団ではじめる' }).click()
@@ -61,11 +76,7 @@ test('NPC announcements reveal one name at a time, survive reload, and skip with
   page,
 }) => {
   const players = referenceDataset.players
-  let game = beginDraft(
-    submitNominations(newGame('t', 9), ['t-1', 't-2'], players),
-    'g-1',
-    players,
-  )
+  let game = opening()
   if (game.current === game.userTeam)
     game = makePick(game, choicesFor(game, players)[0].id, players)
   const next = npcPick(game, players)
@@ -164,14 +175,7 @@ test('a human pick can be skipped with Escape and is committed exactly once', as
   page,
 }) => {
   const players = referenceDataset.players
-  const game = advanceToUser(
-    beginDraft(
-      submitNominations(newGame('t', 9), ['t-1', 't-2'], players),
-      'g-1',
-      players,
-    ),
-    players,
-  )
+  const game = advanceToUser(opening(), players)
   await page.addInitScript(
     ({ game, dataset }) =>
       localStorage.setItem(
@@ -212,11 +216,7 @@ test('second-round results stay pending until announcement and then lead to the 
   page,
 }) => {
   const players = referenceDataset.players
-  let game = beginDraft(
-    submitNominations(newGame('t', 9), ['t-1', 't-2'], players),
-    'g-1',
-    players,
-  )
+  let game = opening()
   while (game.stage === 'draft')
     game = makePick(game, choicesFor(game, players)[0].id, players)
   game = startRoundTwo(game, 'out', players)

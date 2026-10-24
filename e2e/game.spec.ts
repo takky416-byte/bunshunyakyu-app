@@ -1,14 +1,14 @@
 import { test, expect } from './fixtures'
 import { readFile } from 'node:fs/promises'
 
-test('select a club, nominate, vote, draft, restore, and export results', async ({
+test('select a club, nominate, vote, draft, restore, and share results', async ({
   page,
 }) => {
   const errors: string[] = []
   page.on('pageerror', (e) => errors.push(e.message))
   await page.goto('/')
   await expect(
-    page.getByRole('heading', { name: /その選択が、\s*選手の未来を変える。/ }),
+    page.getByRole('heading', { name: '現役ドラフトのGM体験' }),
   ).toBeVisible()
   await expect(
     page.getByRole('group', { name: '操作する球団' }).getByRole('button'),
@@ -73,16 +73,17 @@ test('select a club, nominate, vote, draft, restore, and export results', async 
   const rowCount = await rows.count()
   await page.reload()
   await expect(page.locator('.result-table tbody tr')).toHaveCount(rowCount)
-  const downloaded = page.waitForEvent('download')
-  await page.getByRole('button', { name: '結果を保存', exact: true }).click()
-  const resultFile = await downloaded
-  expect(resultFile.suggestedFilename()).toMatch(
-    /^geneki-draft-2026-\d+\.json$/,
+  await page.getByRole('button', { name: 'プレー結果を共有' }).click()
+  await expect(page.getByRole('dialog')).toContainText(
+    '獲得・放出と12球団の結果',
   )
-  const result = JSON.parse(await readFile((await resultFile.path())!, 'utf8'))
-  expect(result.picks).toHaveLength(rowCount)
-  expect(result.dataset.kind).toBe('official-roster')
-  expect(result.rules).toBe('2026-salary-proxy-v2')
+  const downloaded = page.waitForEvent('download')
+  await page.getByRole('button', { name: 'PNG画像を保存' }).click()
+  const resultFile = await downloaded
+  expect(resultFile.suggestedFilename()).toMatch(/^geneki-draft-2026-f\.png$/)
+  const result = await readFile((await resultFile.path())!)
+  expect(result.subarray(0, 8).toString('hex')).toBe('89504e470d0a1a0a')
+  expect(result.readUInt32BE(16)).toBe(1200)
   expect(errors).toEqual([])
 })
 
@@ -188,7 +189,7 @@ test('reports official provenance, validates imports, and keeps user data across
   await expect(page.locator('.data-notice')).toContainText(
     '利用者による取り込み',
   )
-  await expect(page.locator('.hero-tags')).toContainText(
+  await expect(page.locator('.concept-label')).toContainText(
     '2026年の取り込みデータ',
   )
   await page.reload()

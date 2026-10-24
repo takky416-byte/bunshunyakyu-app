@@ -1,0 +1,564 @@
+.app-shell {
+  color: var(--club-deep);
+  background: var(--club-page);
+}
+.app-shell .sidebar {
+  background: var(--club-deep);
+}
+.app-shell .topbar {
+  background: var(--club-page);
+  border-color: var(--club-line);
+}
+.app-shell .sidebar .nav-item.active {
+  background: color-mix(in srgb, var(--club-accent) 20%, var(--club-deep));
+  border-color: var(--club-accent);
+  color: white;
+}
+.app-shell .sidebar .season-label,
+.app-shell .sidebar .nav-caption,
+.app-shell .sidebar .nav-item,
+.app-shell .sidebar .single-label small,
+.app-shell .sidebar-note {
+  color: #d5dfe3;
+}
+.app-shell .sidebar .brand-dot,
+.app-shell .sidebar .single-label svg {
+  color: var(--club-accent);
+}
+.app-shell .brand-icon {
+  border-color: var(--club-accent);
+}
+.app-shell .brand-icon span {
+  background: var(--club-accent);
+  outline-color: var(--club-accent);
+  border-color: var(--club-deep);
+}
+.app-shell .side-steps .current > span {
+  background: var(--club-accent);
+  color: var(--club-on-accent);
+}
+.app-shell .button.primary,
+.app-shell .draft-announcement .button.primary {
+  background: var(--club-accent);
+  color: var(--club-on-accent);
+  border-color: var(--club-accent);
+}
+.app-shell .button.primary:hover:not(:disabled) {
+  filter: brightness(0.96);
+}
+.app-shell .button.ghost,
+.app-shell .presentation-toggle {
+  color: var(--club-link);
+  border-color: var(--club-line);
+  background: var(--club-soft);
+}
+.app-shell .source-link,
+.app-shell .text-button,
+.app-shell .excluded-toggle,
+.app-shell .player-details-button,
+.app-shell .salary-source {
+  color: var(--club-link);
+}
+.app-shell .panel,
+.app-shell .compact-details > summary,
+.app-shell .selection-bar {
+  border-color: var(--club-line);
+}
+.app-shell .compact-details > summary,
+.app-shell .roster-toolbar,
+.app-shell .position-badge,
+.app-shell .count {
+  background: var(--club-soft);
+  color: var(--club-link);
+}
+.app-shell .player-row.checked {
+  background: var(--club-soft);
+  box-shadow: inset 3px 0 var(--club-accent);
+}
+.app-shell .player-check {
+  color: var(--club-link);
+}
+.app-shell .checked .player-check {
+  background: var(--club-accent);
+  color: var(--club-on-accent);
+  border-color: var(--club-accent);
+}
+.app-shell .vote-bar i {
+  background: var(--club-accent);
+}
+.app-shell .transfer-rule-note {
+  background: var(--club-soft);
+  border-left-color: var(--club-accent);
+}
+.app-shell .hero,
+.app-shell .result-hero {
+  background: linear-gradient(
+    120deg,
+    var(--club-deep),
+    color-mix(in srgb, var(--club-accent) 24%, var(--club-deep))
+  );
+}
+.app-shell .result-hero p,
+.app-shell .result-hero .movement > span,
+.app-shell .result-hero small {
+  color: #e2e9e5;
+}
+.app-shell .result-hero .button.light {
+  background: var(--club-accent);
+  color: var(--club-on-accent);
+}
+.app-shell .draft-announcement {
+  background: var(--club-deep);
+  border-color: color-mix(in srgb, var(--club-accent) 45%, #ffffff);
+}
+.app-shell .announcement-stage {
+  background: radial-gradient(
+    ellipse at 50% 44%,
+    color-mix(in srgb, var(--club-accent) 16%, transparent),
+    transparent 68%
+  );
+}
+.app-shell .announcement-envelope {
+  background: color-mix(in srgb, var(--club-accent) 15%, var(--club-deep));
+  color: #f5eed2;
+  border-color: #d5c898;
+}
+.app-shell .announcement-envelope::after {
+  background: var(--club-deep);
+}
+.app-shell .announcement-result-label,
+.app-shell .announcement-transfer b {
+  color: color-mix(in srgb, var(--club-accent) 40%, #ffffff);
+}
+.app-shell .announcement-dots i {
+  background: var(--club-accent);
+}
+
+.app-shell .concept-intro {
+  min-height: 0;
+  padding: 23px 28px;
+  gap: 24px;
+}
+.concept-intro .concept-label {
+  font-size: 0.875rem;
+  color: #dbe5df;
+  letter-spacing: 0.08em;
+}
+.app-shell .concept-intro h1 {
+  font-size: 1.875rem;
+  line-height: 1.4;
+  margin: 7px 0;
+  letter-spacing: 0.04em;
+}
+.app-shell .concept-intro p {
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: 690px;
+}
+.concept-diamond {
+  width: 108px;
+  height: 90px;
+  flex-shrink: 0;
+}
+.app-shell .section-heading {
+  margin: 20px 0 13px;
+}
+.app-shell .section-heading h2 {
+  font-size: 1.375rem;
+  margin: 7px 0;
+}
+.team-leagues {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.league-group {
+  min-width: 0;
+}
+.league-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.league-title h3 {
+  font-size: 1rem;
+}
+.league-title a {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.875rem;
+  color: var(--club-link);
+}
+.team-leagues .teams-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.team-leagues .team-card {
+  display: grid;
+  place-items: center;
+  min-height: 62px;
+  padding: 12px 8px;
+  border-radius: 7px;
+  border-left: 4px solid var(--team-color);
+  position: relative;
+}
+.team-leagues .team-card > strong {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
+  min-height: 0;
+  color: #263a35;
+}
+.team-leagues .team-card.selected {
+  border-color: var(--team-color);
+  background: color-mix(in srgb, var(--team-color) 10%, white);
+  box-shadow: inset 0 0 0 1px var(--team-color);
+}
+.team-choice-check {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  color: var(--club-link);
+}
+.app-shell .selection-bar {
+  margin-top: 15px;
+  padding: 14px 18px;
+  background: var(--club-soft);
+}
+.app-shell .selection-team {
+  min-width: 0;
+}
+.app-shell .selection-team strong {
+  font-size: 1.125rem;
+  color: var(--club-deep);
+}
+.app-shell .selection-team > div > span {
+  color: var(--club-link);
+}
+.play-progress {
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  background: var(--club-page);
+  margin: 0 0 12px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--club-line);
+}
+.play-progress ol {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  gap: 5px;
+}
+.play-progress li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+  font-size: 0.875rem;
+  color: #6e7a73;
+}
+.play-progress li > span {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--club-line);
+  border-radius: 50%;
+  font-size: 0.875rem;
+}
+.play-progress li[aria-current='step'] {
+  color: var(--club-link);
+  font-weight: 700;
+}
+.play-progress li[aria-current='step'] > span {
+  background: var(--club-accent);
+  border-color: var(--club-accent);
+  color: var(--club-on-accent);
+}
+.play-progress .complete > span {
+  color: var(--club-link);
+}
+.app-shell[data-playing='true'] .flow-target {
+  scroll-margin-top: 65px;
+}
+.app-shell .game-title {
+  margin: 18px 0 12px;
+}
+.app-shell .game-title h1 {
+  font-size: 1.375rem;
+  line-height: 1.5;
+  margin: 5px 0;
+}
+.share-preview {
+  margin: 18px 0;
+  padding: 16px;
+  border: 1px solid var(--club-line);
+  border-radius: 8px;
+  background: var(--club-soft);
+}
+.share-preview strong {
+  display: block;
+  color: var(--club-deep);
+}
+.share-preview p {
+  margin-top: 6px;
+}
+.share-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 16px 0;
+}
+.share-message {
+  color: var(--club-link);
+  margin: 12px 0;
+}
+.share-help {
+  font-size: 0.875rem !important;
+  margin-top: 14px;
+}
+.result-share textarea {
+  width: 100%;
+  margin-top: 12px;
+  font: inherit;
+  line-height: 1.7;
+  padding: 12px;
+  border: 1px solid var(--club-line);
+  border-radius: 5px;
+}
+
+.welcome-screen {
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 24px;
+  border: 0;
+  color: #f7f5eb;
+  background: radial-gradient(
+    ellipse at 50% 30%,
+    #285449 0,
+    #112d31 60%,
+    #0b2129 100%
+  );
+}
+.welcome-screen::backdrop {
+  background: #112d31;
+}
+.welcome-content {
+  min-height: 100%;
+  max-width: 640px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  animation: welcome-appear 0.7s ease-out both;
+}
+.welcome-kicker {
+  color: #d9c595;
+  font-size: 0.875rem;
+  letter-spacing: 0.17em;
+}
+.welcome-diamond {
+  width: 180px;
+  height: 135px;
+  margin: 25px 0 16px;
+}
+.welcome-content h1 {
+  font-family: 'Yu Mincho', serif;
+  font-weight: 500;
+  font-size: clamp(28px, 4vw, 42px);
+  letter-spacing: 0.08em;
+}
+.welcome-content .welcome-lead {
+  font-family: 'Yu Mincho', serif;
+  font-size: 1.375rem;
+  line-height: 1.8;
+  margin: 17px 0 14px;
+}
+.welcome-content > p:not(.welcome-lead) {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #d4e0da;
+}
+.welcome-steps {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 23px 0;
+  font-size: 0.875rem;
+  color: #ead9af;
+}
+.welcome-enter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 14px 24px;
+  min-height: 52px;
+  border-radius: 7px;
+  background: #e6ce94;
+  color: #172d30;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.welcome-content > small {
+  margin-top: 20px;
+  color: #b6c8c0;
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+@keyframes welcome-appear {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 1100px) {
+  .team-leagues {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 760px) {
+  .result-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .app-shell .result-buttons .button {
+    min-width: 0;
+    white-space: normal;
+    padding: 10px;
+    line-height: 1.5;
+    justify-content: center;
+  }
+  .app-shell .concept-intro {
+    padding: 15px 18px;
+  }
+  .app-shell .concept-intro h1 {
+    font-size: 1.5rem;
+    margin: 5px 0;
+  }
+  .concept-label {
+    letter-spacing: 0 !important;
+  }
+  .concept-diamond {
+    position: absolute;
+    width: 75px;
+    height: 60px;
+    right: 10px;
+    bottom: 0;
+    opacity: 0.16;
+  }
+  .team-leagues {
+    gap: 13px;
+  }
+  .team-leagues .team-card {
+    min-height: 60px;
+    padding: 10px 4px;
+  }
+  .team-leagues .team-card > strong {
+    white-space: normal;
+  }
+  .app-shell .selection-bar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+    padding: 12px;
+    align-items: center;
+  }
+  .selection-team .team-mark {
+    display: none;
+  }
+  .selection-team strong {
+    white-space: normal;
+    line-height: 1.5;
+  }
+  .app-shell .selection-bar > .button {
+    width: auto;
+    padding: 11px 12px;
+    gap: 8px;
+  }
+  .app-shell .game-title {
+    margin: 10px 0;
+  }
+  .app-shell .game-title h1 {
+    font-size: 1.25rem;
+  }
+  .play-progress {
+    margin-bottom: 10px;
+  }
+  .play-progress li {
+    gap: 5px;
+  }
+  .share-actions {
+    flex-direction: column;
+  }
+  .share-actions .button {
+    justify-content: center;
+  }
+  .welcome-screen {
+    padding: 20px;
+  }
+  .welcome-diamond {
+    width: 135px;
+    height: 100px;
+    margin-top: 18px;
+  }
+  .welcome-content .welcome-lead {
+    font-size: 1.25rem;
+    margin: 12px 0;
+  }
+  .welcome-steps {
+    margin: 19px 0;
+    gap: 7px;
+  }
+}
+@media (max-width: 379px) {
+  .team-leagues .teams-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 359px) {
+  .play-progress li > span {
+    display: none;
+  }
+  .welcome-content h1 {
+    font-size: 1.625rem;
+  }
+}
+@media (max-height: 680px) {
+  .welcome-diamond {
+    width: 100px;
+    height: 75px;
+    margin: 12px 0;
+  }
+  .welcome-content .welcome-lead {
+    margin: 10px 0;
+  }
+  .welcome-steps {
+    margin: 14px 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .welcome-content {
+    animation: none;
+  }
+}

@@ -1,0 +1,190 @@
+{
+  "sourceCommit": "dd56a1f7905b3c9cbe6b9871051a07a49ab85cdf",
+  "game": {
+    "version": 2,
+    "seed": 909,
+    "userTeam": "t",
+    "stage": "results",
+    "round": 2,
+    "offers": {
+      "t": ["t-1", "t-2"],
+      "g": ["g-2", "g-3"],
+      "db": ["db-4", "db-5"],
+      "c": ["c-3", "c-5"],
+      "s": ["s-5", "s-4"],
+      "d": ["d-1", "d-6"],
+      "h": ["h-5", "h-2"],
+      "f": ["f-2", "f-4"],
+      "m": ["m-4", "m-6"],
+      "e": ["e-4", "e-2"],
+      "b": ["b-3", "b-2"],
+      "l": ["l-2", "l-3"]
+    },
+    "ballots": {
+      "t": "g-2",
+      "g": "db-5",
+      "db": "g-3",
+      "c": "d-6",
+      "s": "g-3",
+      "d": "h-5",
+      "h": "s-4",
+      "f": "db-5",
+      "m": "b-2",
+      "e": "d-6",
+      "b": "s-4",
+      "l": "d-6"
+    },
+    "order": ["d", "g", "s", "db", "b", "h", "e", "m", "c", "f", "l", "t"],
+    "current": null,
+    "participants": ["t", "g", "c", "s", "f", "m", "e", "l"],
+    "picks": [
+      {
+        "round": 1,
+        "by": "d",
+        "from": "h",
+        "playerId": "h-5"
+      },
+      {
+        "round": 1,
+        "by": "h",
+        "from": "s",
+        "playerId": "s-4"
+      },
+      {
+        "round": 1,
+        "by": "s",
+        "from": "g",
+        "playerId": "g-3"
+      },
+      {
+        "round": 1,
+        "by": "g",
+        "from": "db",
+        "playerId": "db-5"
+      },
+      {
+        "round": 1,
+        "by": "db",
+        "from": "t",
+        "playerId": "t-1"
+      },
+      {
+        "round": 1,
+        "by": "t",
+        "from": "c",
+        "playerId": "c-3"
+      },
+      {
+        "round": 1,
+        "by": "c",
+        "from": "d",
+        "playerId": "d-6"
+      },
+      {
+        "round": 1,
+        "by": "b",
+        "from": "f",
+        "playerId": "f-2"
+      },
+      {
+        "round": 1,
+        "by": "f",
+        "from": "m",
+        "playerId": "m-4"
+      },
+      {
+        "round": 1,
+        "by": "m",
+        "from": "b",
+        "playerId": "b-2"
+      },
+      {
+        "round": 1,
+        "by": "e",
+        "from": "l",
+        "playerId": "l-2"
+      },
+      {
+        "round": 1,
+        "by": "l",
+        "from": "e",
+        "playerId": "e-2"
+      },
+      {
+        "by": "l",
+        "from": "m",
+        "playerId": "m-6",
+        "round": 2
+      },
+      {
+        "by": "f",
+        "from": "s",
+        "playerId": "s-5",
+        "round": 2
+      },
+      {
+        "by": "t",
+        "from": "g",
+        "playerId": "g-2",
+        "round": 2
+      },
+      {
+        "by": "e",
+        "from": "f",
+        "playerId": "f-4",
+        "round": 2
+      },
+      {
+        "by": "m",
+        "from": "e",
+        "playerId": "e-4",
+        "round": 2
+      }
+    ],
+    "roundTwo": {
+      "intents": {
+        "t": "buy",
+        "g": "supply",
+        "db": "out",
+        "c": "supply",
+        "s": "supply",
+        "d": "out",
+        "h": "out",
+        "f": "buy",
+        "m": "buy",
+        "e": "buy",
+        "b": "out",
+        "l": "buy"
+      },
+      "bids": [
+        {
+          "team": "l",
+          "condition": "unconditional",
+          "preferences": ["m-6", "f-4", "s-5", "e-4", "g-2", "t-2", "c-5"]
+        },
+        {
+          "team": "e",
+          "condition": "balanced",
+          "preferences": ["m-6", "g-2", "f-4", "l-3", "s-5", "t-2", "c-5"]
+        },
+        {
+          "team": "m",
+          "condition": "balanced",
+          "preferences": ["l-3", "g-2", "t-2", "s-5", "e-4", "f-4", "c-5"]
+        },
+        {
+          "team": "f",
+          "condition": "unconditional",
+          "preferences": ["s-5", "c-5", "m-6", "e-4", "l-3", "g-2", "t-2"]
+        },
+        {
+          "team": "t",
+          "condition": "unconditional",
+          "preferences": ["g-2", "c-5", "s-5", "f-4", "m-6", "e-4", "l-3"]
+        }
+      ],
+      "userCondition": "unconditional",
+      "userPreferences": ["g-2", "c-5", "s-5", "f-4", "m-6", "e-4", "l-3"]
+    }
+  }
+}

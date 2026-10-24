@@ -16,9 +16,9 @@ import {
   CircleHelp,
   ClipboardList,
   Database,
+  Share2,
   Download,
   ExternalLink,
-  Flag,
   Home,
   Info,
   Play,
@@ -60,7 +60,6 @@ import {
   type Game,
 } from './engine'
 import { eligibilityOf, nominationErrors } from './eligibility'
-import { RULESET_ID, salaryPolicy } from './rules2026'
 import type { Participation, BidCondition } from './roundTwo'
 import { officialDataset } from './officialData'
 import {
@@ -76,9 +75,20 @@ import PrivacySettings from './PrivacySettings'
 import DraftAnnouncement from './DraftAnnouncement'
 import CompactDetails from './CompactDetails'
 import { npcAnnouncements, type Announcement } from './announcements'
+import Diamond from './Diamond'
+import Splash, { needsSplash, SPLASH_KEY } from './Splash'
+import ResultShare from './ResultShare'
+import {
+  centralSelection,
+  pacificSelection,
+  selectionNames,
+  standingsSource,
+  clubThemes,
+  clubStyle,
+} from './presentation'
 
 const STORAGE_KEY = 'geneki-draft-room:v2'
-type Modal = 'rules' | 'data' | 'reset' | 'privacy' | 'player' | null
+type Modal = 'rules' | 'data' | 'reset' | 'privacy' | 'player' | 'share' | null
 interface Saved {
   dataset: Dataset
   game: Game | null
@@ -132,17 +142,17 @@ function download(name: string, value: unknown) {
   const url = URL.createObjectURL(
     new Blob([JSON.stringify(value, null, 2)], { type: 'application/json' }),
   )
-  const a = document.createElement('a')
-  a.href = url
-  a.download = name
-  a.click()
-  setTimeout(() => URL.revokeObjectURL(url), 1000)
+  const link = document.createElement('a')
+  link.href = url
+  link.download = name
+  link.click()
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000)
 }
 function TeamMark({ team, small = false }: { team: Team; small?: boolean }) {
   return (
     <span
       className={`team-mark ${small ? 'small' : ''}`}
-      style={{ '--team-color': team.color } as CSSProperties}
+      style={{ '--team-color': clubThemes[team.id].accent } as CSSProperties}
       aria-hidden="true"
     >
       {team.mark}
@@ -160,72 +170,6 @@ function StatSummary({ player }: { player: Player }) {
         ? `${s.games}登板 / 防御率 ${s.era == null ? '—' : s.era.toFixed(2)}`
         : `${s.games}試合 / 打率 ${s.average == null ? '—' : s.average.toFixed(3)} / ${s.homeRuns ?? '—'}本`}
     </span>
-  )
-}
-function Diamond({ className = '' }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 360 270"
-      fill="none"
-      role="img"
-      aria-label="野球場のイラスト"
-    >
-      <defs>
-        <linearGradient
-          id="field"
-          x1="180"
-          y1="0"
-          x2="180"
-          y2="270"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#3e6e56" />
-          <stop offset="1" stopColor="#254938" />
-        </linearGradient>
-        <pattern
-          id="stripes"
-          width="36"
-          height="36"
-          patternUnits="userSpaceOnUse"
-          patternTransform="rotate(45)"
-        >
-          <path d="M0 0h18v36H0z" fill="#fff" opacity=".028" />
-        </pattern>
-      </defs>
-      <path
-        d="M180 244 23 87Q180-49 337 87Z"
-        fill="url(#field)"
-        stroke="#72927a"
-        strokeWidth="1"
-      />
-      <path d="M180 244 23 87Q180-49 337 87Z" fill="url(#stripes)" />
-      <path
-        d="M180 227 42 88Q180-24 318 88Z"
-        stroke="#b6c7a3"
-        strokeOpacity=".35"
-        strokeDasharray="3 5"
-      />
-      <path d="m180 244-96-96 96-96 96 96Z" fill="#c3a16d" fillOpacity=".85" />
-      <path d="m180 222-74-74 74-74 74 74Z" fill="#416b4e" />
-      <path
-        d="M180 244 23 87M180 244 337 87"
-        stroke="#e9e5cd"
-        strokeOpacity=".8"
-      />
-      <circle cx="180" cy="148" r="14" fill="#c3a16d" />
-      <rect x="175" y="145" width="10" height="3" rx="1" fill="#f7f1df" />
-      <path d="m180 238 5 5v6h-10v-6Z" fill="#f7f1df" />
-      <path
-        d="m87 148 5-5 5 5-5 5ZM175 56l5-5 5 5-5 5ZM263 148l5-5 5 5-5 5Z"
-        fill="#f7f1df"
-      />
-      <circle cx="180" cy="244" r="19" stroke="#b6c7a3" strokeOpacity=".45" />
-      <path d="M56 213h29M275 213h29" stroke="#d6bd78" strokeOpacity=".5" />
-      <circle cx="104" cy="105" r="5" fill="#d6bd78" />
-      <circle cx="253" cy="101" r="5" fill="#d6bd78" />
-      <circle cx="180" cy="30" r="5" fill="#d6bd78" />
-    </svg>
   )
 }
 function ModalShell({
@@ -278,6 +222,7 @@ const steps = [
 
 export default function App() {
   const [initial] = useState(load)
+  const [showSplash, setShowSplash] = useState(needsSplash)
   const [dataset, setDataset] = useState(initial.dataset)
   const [game, setGame] = useState<Game | null>(initial.game)
   const [chosenTeam, setChosenTeam] = useState<TeamId>(initial.chosenTeam)
@@ -349,7 +294,8 @@ export default function App() {
   useEffect(() => {
     if (previousFlow.current !== flowKey) pendingFlowFocus.current = true
     previousFlow.current = flowKey
-    if (modal || announcements || !pendingFlowFocus.current) return
+    if (showSplash || modal || announcements || !pendingFlowFocus.current)
+      return
     const frame = requestAnimationFrame(() => {
       pendingFlowFocus.current = false
       const target = flowTarget.current
@@ -361,7 +307,23 @@ export default function App() {
       target.scrollIntoView({ block: 'start', behavior: 'auto' })
     })
     return () => cancelAnimationFrame(frame)
-  }, [flowKey, modal, announcements])
+  }, [flowKey, modal, announcements, showSplash])
+
+  function enterApp() {
+    try {
+      sessionStorage.setItem(SPLASH_KEY, 'seen')
+    } catch {
+      /* usable with unavailable storage */
+    }
+    pendingFlowFocus.current = true
+    setShowSplash(false)
+  }
+  useEffect(() => {
+    const meta = document.querySelector<HTMLMetaElement>(
+      'meta[name="theme-color"]',
+    )
+    if (meta) meta.content = clubThemes[team.id].deep
+  }, [team.id])
 
   useEffect(() => {
     try {
@@ -469,33 +431,6 @@ export default function App() {
     }
     if (file.current) file.current.value = ''
   }
-  function exportResult() {
-    if (!game) return
-    download(`geneki-draft-2026-${game.seed}.json`, {
-      app: '現役ドラフトルーム',
-      version: 1,
-      targetSeason: 2026,
-      seed: game.seed,
-      rules: RULESET_ID,
-      salaryPolicy,
-      dataset: {
-        label: dataset.label,
-        season: dataset.season,
-        asOf: dataset.asOf,
-        sourceUrl: dataset.sourceUrl,
-        kind: dataset.kind,
-      },
-      notice:
-        '非公式シミュレーション。2026年推定年俸を使う仮判定です。契約情報等に未確認部分があり、入札の内部調整は独自実装です。ゲーム内適合度は実績ではありません。',
-      picks: game.picks.map((p) => ({
-        round: p.round,
-        team: teamById[p.by].name,
-        from: teamById[p.from].name,
-        player: player(p.playerId).name,
-        position: player(p.playerId).position,
-      })),
-    })
-  }
   let roster: Player[] = []
   if (game?.stage === 'nominate')
     roster = players.filter(
@@ -519,9 +454,22 @@ export default function App() {
       (position === 'すべて' || p.position === position) &&
       p.name.replace(/\s/g, '').includes(search.replace(/\s/g, '')),
   )
+  const progressStep =
+    !game || game.stage === 'nominate'
+      ? 0
+      : game.stage === 'vote'
+        ? 1
+        : game.stage === 'results'
+          ? 3
+          : 2
 
   return (
-    <div className="app-shell">
+    <div
+      className="app-shell"
+      style={clubStyle(team.id) as CSSProperties}
+      data-team={team.id}
+      data-playing={Boolean(game)}
+    >
       <aside className="sidebar">
         <a
           className="brand"
@@ -598,7 +546,7 @@ export default function App() {
           <div className="single-label">
             <Users size={16} />
             <span>
-              シングルプレー<small>あなた ＋ NPC 11球団</small>
+              シングルプレー<small>あなた ＋ CPU 11球団</small>
             </span>
           </div>
           <div className="sidebar-note">
@@ -685,47 +633,21 @@ export default function App() {
 
           {!game ? (
             <>
-              <section className="hero">
+              <section className="hero concept-intro">
                 <div className="hero-copy">
-                  <div className="eyebrow">
-                    <span />
-                    THE NEXT CHAPTER STARTS WITH YOU
-                  </div>
-                  <h1>
-                    その選択が、
-                    <br />
-                    選手の未来を変える。
-                  </h1>
-                  <p>
-                    あなたが、球団の編成責任者。
-                    <br />
-                    12球団の思惑が交わる現役ドラフトへ。
-                  </p>
-                  <div className="hero-tags">
-                    <span>
-                      <Users size={13} />1 PLAYER + 11 NPCs
-                    </span>
-                    <span>
-                      <Flag size={13} />
-                      {isOfficial
-                        ? '2026年公式名簿・成績'
-                        : isReference
-                          ? '操作体験用の参考データ'
-                          : '2026年の取り込みデータ'}
-                    </span>
-                  </div>
-                </div>
-                <div className="hero-field">
-                  <div className="field-caption">
-                    A NEW OPPORTUNITY.
-                    <br />
-                    <strong>A NEW BEGINNING.</strong>
-                  </div>
-                  <Diamond />
-                  <span className="field-footnote">
-                    GENEKI DRAFT / FRONT OFFICE SIMULATION
+                  <span className="concept-label">
+                    {isOfficial
+                      ? '2026 現役ドラフトシミュレーション'
+                      : isReference
+                        ? '参考データでプレー'
+                        : '2026年の取り込みデータ'}
                   </span>
+                  <h1>現役ドラフトのGM体験</h1>
+                  <p>
+                    好きな球団で候補を出し、11球団のCPUと新しい戦力を指名します。
+                  </p>
                 </div>
+                <Diamond className="concept-diamond" />
               </section>
               <section className="team-selection">
                 <div className="section-heading">
@@ -751,34 +673,66 @@ export default function App() {
                   </div>
                 </div>
                 <div
-                  className="teams-grid"
+                  className="team-leagues"
                   role="group"
                   aria-label="操作する球団"
                 >
-                  {teams
-                    .filter((t) => league === 'すべて' || t.league === league)
-                    .map((t) => (
-                      <button
-                        key={t.id}
-                        className={`team-card ${chosenTeam === t.id ? 'selected' : ''}`}
-                        style={{ '--team-color': t.color } as CSSProperties}
-                        onClick={() => setChosenTeam(t.id)}
-                        aria-pressed={chosenTeam === t.id}
+                  {[
+                    { name: 'セ・リーグ', ids: centralSelection },
+                    { name: 'パ・リーグ', ids: pacificSelection },
+                  ]
+                    .filter(
+                      (division) =>
+                        league === 'すべて' || league === division.name,
+                    )
+                    .map((division) => (
+                      <section
+                        className="league-group"
+                        key={division.name}
+                        aria-label={division.name}
                       >
-                        <div className="team-card-top">
-                          <span>{t.league}</span>
-                          <span className="selection-circle">
-                            {chosenTeam === t.id && <Check size={12} />}
-                          </span>
+                        <div className="league-title">
+                          <h3>{division.name}</h3>
+                          {division.name === 'パ・リーグ' && (
+                            <a
+                              href={standingsSource}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              2026年順位順
+                              <ExternalLink size={12} />
+                            </a>
+                          )}
                         </div>
-                        <TeamMark team={t} />
-                        <span className="team-city">{t.city}</span>
-                        <strong>{t.name}</strong>
-                        <span className="team-card-bottom">
-                          編成を担当する
-                          <ArrowRight size={14} />
-                        </span>
-                      </button>
+                        <div className="teams-grid">
+                          {division.ids.map((id) => {
+                            const t = teamById[id]
+                            return (
+                              <button
+                                key={id}
+                                className={`team-card ${chosenTeam === id ? 'selected' : ''}`}
+                                style={
+                                  {
+                                    '--team-color': clubThemes[id].accent,
+                                  } as CSSProperties
+                                }
+                                aria-label={t.name}
+                                title={t.name}
+                                aria-pressed={chosenTeam === id}
+                                onClick={() => setChosenTeam(id)}
+                              >
+                                <strong>{selectionNames[id]}</strong>
+                                {chosenTeam === id && (
+                                  <Check
+                                    size={14}
+                                    className="team-choice-check"
+                                  />
+                                )}
+                              </button>
+                            )
+                          })}
+                        </div>
+                      </section>
                     ))}
                 </div>
               </section>
@@ -786,10 +740,9 @@ export default function App() {
                 <div className="selection-team">
                   <TeamMark team={team} small />
                   <div>
-                    <span>YOUR TEAM</span>
-                    <strong>{team.name}</strong>
+                    <span>あなたの球団</span>
+                    <strong title={team.name}>{selectionNames[team.id]}</strong>
                   </div>
-                  <span className="gm-tag">あなたが編成責任者</span>
                 </div>
                 <button className="button primary" onClick={start}>
                   この球団ではじめる
@@ -828,18 +781,7 @@ export default function App() {
                   <div className="eyebrow dark">
                     YOUR FRONT OFFICE / {team.city}
                   </div>
-                  <h1>
-                    {game.stage === 'nominate'
-                      ? 'チャンスを、次の場所へ。'
-                      : game.stage === 'vote'
-                        ? '新たな戦力を、見極める。'
-                        : game.stage === 'round2' ||
-                            game.stage === 'round2confirm'
-                          ? 'もうひとつの、可能性。'
-                          : game.stage === 'results'
-                            ? '新しい物語が、動き出す。'
-                            : '編成の未来を、指名する。'}
-                  </h1>
+                  <h1>{team.short}のドラフト</h1>
                   <p>
                     {game.stage === 'nominate'
                       ? '自球団の支配下登録選手から、提出する候補を2名以上選んでください。'
@@ -878,6 +820,22 @@ export default function App() {
                   </button>
                 </div>
               </div>
+              <nav className="play-progress" aria-label="プレーの流れ">
+                <ol>
+                  {['候補提出', '希望投票', '指名', '結果'].map((label, i) => (
+                    <li
+                      key={label}
+                      aria-current={progressStep === i ? 'step' : undefined}
+                      className={progressStep > i ? 'complete' : ''}
+                    >
+                      <span>
+                        {progressStep > i ? <Check size={12} /> : i + 1}
+                      </span>
+                      {label}
+                    </li>
+                  ))}
+                </ol>
+              </nav>
               <div className="game-layout">
                 <div className="game-main">
                   {(game.stage === 'nominate' ||
@@ -903,10 +861,12 @@ export default function App() {
                           </h2>
                           <p>
                             {game.stage === 'nominate'
-                              ? '候補を2名以上選択してください。'
+                              ? '他球団へ送り出す候補を2名以上選んでください。'
                               : game.stage === 'vote'
-                                ? '予備指名した選手を指名できる場合、本指名でもその選手を獲得します。'
-                                : '指名可能な候補から、獲得する選手を選んでください。'}
+                                ? '他球団の候補から欲しい選手を1人選び、投票を確定してください。'
+                                : roster.length === 1
+                                  ? '指名できる選手は1人です。選んで「この選手を指名」を押してください。'
+                                  : '獲得する選手を1人選び、「この選手を指名」を押してください。'}
                           </p>
                         </div>
                         {userTurn && (
@@ -1171,7 +1131,9 @@ export default function App() {
                       >
                         {teamById[game.current!].name}
                       </h2>
-                      <p>NPCの編成責任者が、補強ポイントをもとに指名します。</p>
+                      <p>
+                        次はCPU球団の番です。指名を1球団ずつ確認するか、自分の番まで進めてください。
+                      </p>
                       <span className="need-chip">
                         補強ポイント：{teamById[game.current!].need}{' '}
                         <span>ゲーム内設定</span>
@@ -1186,7 +1148,7 @@ export default function App() {
                           }
                         >
                           <Play size={15} />
-                          NPCの指名を進める
+                          CPUの指名を進める
                         </button>
                         <button
                           className="button ghost"
@@ -1219,14 +1181,14 @@ export default function App() {
                         第2巡の参加意向を選んでください
                       </h2>
                       <p>
-                        残った候補選手で、もう一度補強を検討できます。
+                        もう1人の獲得を狙うか、ここで補強を終えるかを選びます。
                         <br />
-                        あなたが見送っても、参加するNPC同士の指名は進みます。
+                        あなたが見送っても、参加するCPU同士の指名は進みます。
                       </p>
                       <div className="inline-notice">
                         <Info size={17} />
                         <span>
-                          獲得希望・放出のみ・不参加の3区分から選び、参加状況を確認して入札します。参加確定後は不参加へ変更できません。
+                          「獲得希望」は追加の補強、「放出のみ」は他球団への移籍を認める選択です。次の画面で最終確認できます。
                         </span>
                       </div>
                       <div className="npc-actions">
@@ -1277,7 +1239,7 @@ export default function App() {
                             参加状況と入札を確認
                           </h2>
                           <p>
-                            参加確定後の辞退はできません。無条件入札が優先され、同条件は第1巡の実際の指名順の逆順で調整します。
+                            獲得希望なら候補を希望順に選び、内容を確定してください。確定後は変更できません。
                           </p>
                         </div>
                       </div>
@@ -1339,10 +1301,10 @@ export default function App() {
                                 }
                               >
                                 <option value="unconditional">
-                                  無条件（人数の増減を許容）
+                                  無条件（放出なしでも獲得する）
                                 </option>
                                 <option value="balanced">
-                                  獲得・放出の人数が均衡するときだけ
+                                  獲得・放出が両方成立するときだけ
                                 </option>
                               </select>
                             </label>
@@ -1410,7 +1372,7 @@ export default function App() {
                           </>
                         )}
                         <p className="small-print">
-                          参加確定後、NPCの入札と合わせて成立条件を判定します。指名が成立しない場合や、獲得のみ・放出のみになる場合もあります。
+                          参加確定後、CPUの入札と合わせて成立条件を判定します。指名が成立しない場合や、獲得のみ・放出のみになる場合もあります。
                         </p>
                         <button
                           className="button primary"
@@ -1455,9 +1417,9 @@ export default function App() {
                           className="flow-target"
                           tabIndex={-1}
                         >
-                          {team.short}の、新しい一歩。
+                          {team.short}の獲得・放出
                         </h2>
-                        <p>あなたの指名で、新たなチャンスが生まれました。</p>
+                        <p>今回の結果を振り返り、ブログなどで共有できます。</p>
                         <div className="movement-grid">
                           {game.picks
                             .filter((p) => p.by === team.id)
@@ -1502,10 +1464,10 @@ export default function App() {
                         <div className="result-buttons">
                           <button
                             className="button light"
-                            onClick={exportResult}
+                            onClick={() => setModal('share')}
                           >
-                            <Download size={16} />
-                            結果を保存
+                            <Share2 size={16} />
+                            プレー結果を共有
                           </button>
                           <button
                             className="button result-reset"
@@ -1679,7 +1641,7 @@ export default function App() {
                         <p>
                           {game.stage === 'nominate'
                             ? '他球団に求められる選手を提出すると、最初の指名権を得られる可能性が高まります。残す戦力と、獲得のチャンスを考えてみましょう。'
-                            : 'NPCは設定された補強ポイントを重視します。人気の集まる候補と、自球団に必要な選手が一致するとは限りません。'}
+                            : 'CPUは設定された補強ポイントを重視します。人気の集まる候補と、自球団に必要な選手が一致するとは限りません。'}
                         </p>
                         <button
                           className="text-button"
@@ -1711,6 +1673,7 @@ export default function App() {
         </main>
       </div>
 
+      {showSplash && <Splash resume={Boolean(game)} onEnter={enterApp} />}
       {announcements && (
         <DraftAnnouncement
           sequence={announcements}
@@ -1718,6 +1681,11 @@ export default function App() {
           onCommit={setGame}
           onFinish={() => setAnnouncements(null)}
         />
+      )}
+      {modal === 'share' && game?.stage === 'results' && (
+        <ModalShell title="プレー結果を共有" close={() => setModal(null)}>
+          <ResultShare game={game} dataset={dataset} />
+        </ModalShell>
       )}
       {modal === 'player' && detailPlayer && (
         <ModalShell
@@ -1855,7 +1823,7 @@ export default function App() {
             <li>
               <strong>候補提出</strong>
               <p>
-                自球団から2名以上を選びます。NPC11球団はゲーム内適合度をもとに、各2名を提出します。
+                自球団から2名以上を選びます。CPU11球団は主力級を保護し、出場機会・年齢・補強ポイントに応じて候補を選びます。新しいプレーでは候補の組み合わせが変わります。
               </p>
             </li>
             <li>
@@ -1873,7 +1841,7 @@ export default function App() {
             <li>
               <strong>第2巡の参加と入札</strong>
               <p>
-                獲得希望・放出のみ・不参加を選び、参加状況を確認して確定します。獲得希望は順位と、無条件または人数均衡の条件を指定します。無条件、次に第1巡の実指名順の逆順を優先し、成立可能な組合せを探索します。NPCの意向と入札はゲーム内判断で、実際の内部調整結果を保証するものではありません。
+                獲得希望・放出のみ・不参加を選び、参加状況を確認して確定します。獲得希望は順位と、無条件または人数均衡の条件を指定します。無条件、次に第1巡の実指名順の逆順を優先し、成立可能な組合せを探索します。CPUの意向と入札はゲーム内判断で、実際の内部調整結果を保証するものではありません。
               </p>
             </li>
           </ol>
@@ -1883,7 +1851,7 @@ export default function App() {
             eligible: true にしてください。
           </p>
           <p>
-            実際の候補リストや球団の判断を予測するものではありません。補強ポイント・NPCの選考・ゲーム内適合度は独自設定で、実際の編成方針・成績・選手評価ではありません。
+            実際の候補リストや球団の判断を予測するものではありません。補強ポイント・CPUの選考・ゲーム内適合度は独自設定で、実際の編成方針・成績・選手評価ではありません。
           </p>
           <a
             className="source-link"
@@ -1928,7 +1896,7 @@ export default function App() {
                 : '取り込まれたデータを使用しています。ファイルの形式は検証しますが、在籍・参加資格・出典の正確性は自動照合しません。'}
           </p>
           <p>
-            年俸はgurazeni.comの2026年推定額を使用し、金額不明は補完せず候補を保留します。実際の翌季年俸による対象判定とは異なります。成績は公式ページの掲載値です。「ゲーム内適合度」は成績・守備位置・ゲーム内乱数から算出した独自スコア、NPCの補強方針は仮想設定です。
+            年俸はgurazeni.comの2026年推定額を使用し、金額不明は補完せず候補を保留します。実際の翌季年俸による対象判定とは異なります。成績は公式ページの掲載値です。「ゲーム内適合度」は成績・守備位置・ゲーム内乱数から算出した独自スコア、CPUの補強方針は仮想設定です。
           </p>
           <h3>2026年データの取り込み</h3>
           <p>
