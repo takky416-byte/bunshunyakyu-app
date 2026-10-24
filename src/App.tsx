@@ -3,6 +3,7 @@ import {
   useCallback,
   useRef,
   useState,
+  useSyncExternalStore,
   type CSSProperties,
   type ReactNode,
 } from 'react'
@@ -80,6 +81,9 @@ import Splash, { needsSplash, SPLASH_KEY } from './Splash'
 import ResultShare from './ResultShare'
 import { usePageVisible } from './usePageVisible'
 import { playerAge, playerCareerYears } from './playerBio'
+import { DraftSound } from './draftSound'
+import { draftSpeech } from './draftSpeech'
+import { SoundControls, SoundSettings } from './SoundControls'
 import {
   centralSelection,
   pacificSelection,
@@ -89,7 +93,8 @@ import {
 } from './presentation'
 
 const STORAGE_KEY = 'geneki-draft-room:v2'
-type Modal = 'rules' | 'data' | 'reset' | 'privacy' | 'player' | 'share' | null
+type Modal =
+  'rules' | 'data' | 'reset' | 'privacy' | 'player' | 'share' | 'sound' | null
 interface Saved {
   dataset: Dataset
   game: Game | null
@@ -238,6 +243,9 @@ const steps = [
 ]
 
 export default function App() {
+  const [sound] = useState(() => new DraftSound())
+  const soundState = useSyncExternalStore(sound.subscribe, sound.getSnapshot)
+  useEffect(sound.mount, [sound])
   const [initial] = useState(load)
   const [showSplash, setShowSplash] = useState(needsSplash)
   const [dataset, setDataset] = useState(initial.dataset)
@@ -367,7 +375,10 @@ export default function App() {
       const sequence = npcAnnouncements(game, players, true)
       if (!sequence.length) return
       if (presentationEnabled && !reducedMotion) setAnnouncements(sequence)
-      else setGame(sequence.at(-1)!.game)
+      else {
+        setGame(sequence.at(-1)!.game)
+        sound.speak(sequence.flatMap((item) => draftSpeech(item, players)))
+      }
     } catch (error) {
       setError(
         error instanceof Error ? error.message : '指名を進められませんでした。',
@@ -383,6 +394,7 @@ export default function App() {
     showSplash,
     presentationEnabled,
     reducedMotion,
+    sound,
   ])
   useEffect(() => {
     const meta = document.querySelector<HTMLMetaElement>(
@@ -436,7 +448,10 @@ export default function App() {
   function announce(sequence: Announcement[]) {
     if (!sequence.length) return
     if (presentationEnabled && !reducedMotion) setAnnouncements(sequence)
-    else setGame(sequence.at(-1)!.game)
+    else {
+      setGame(sequence.at(-1)!.game)
+      sound.speak(sequence.flatMap((item) => draftSpeech(item, players)))
+    }
   }
   function togglePresentation() {
     const enabled = !presentationEnabled
@@ -462,6 +477,8 @@ export default function App() {
     })
   }
   function reset() {
+    sound.stopSpeech()
+    sound.stopEffects()
     if (dataset.kind === 'official-roster') setDataset(officialDataset)
     setDetailPlayerId('')
     setAnnouncements(null)
@@ -860,6 +877,10 @@ export default function App() {
                   </p>
                 </div>
                 <div className="presentation-controls">
+                  <SoundControls
+                    sound={sound}
+                    onSettings={() => setModal('sound')}
+                  />
                   <button
                     className="presentation-toggle autoplay-toggle"
                     aria-label="指名発表の自動送り"
@@ -1687,6 +1708,9 @@ export default function App() {
               非公式ファンプロジェクト。NPB・各球団・選手とは関係ありません。
             </p>
             <button onClick={() => setModal('privacy')}>利用状況の計測</button>
+            {!game && (
+              <button onClick={() => setModal('sound')}>サウンド設定</button>
+            )}
             <button onClick={() => setModal('rules')}>
               ルールの確認状況
               <ArrowUpRight size={12} />
@@ -1704,7 +1728,18 @@ export default function App() {
           onAutoPlayChange={changeAutoPlay}
           onCommit={setGame}
           onFinish={finishAnnouncements}
+          sound={sound}
+          soundOptions={soundState.options}
+          soundReady={soundState.ready}
+          voiceAvailable={soundState.voiceStatus === 'available'}
+          paused={modal === 'sound'}
+          onSoundSettings={() => setModal('sound')}
         />
+      )}
+      {modal === 'sound' && (
+        <ModalShell title="サウンド設定" close={() => setModal(null)}>
+          <SoundSettings sound={sound} />
+        </ModalShell>
       )}
       {modal === 'share' && game?.stage === 'results' && (
         <ModalShell title="プレー結果を共有" close={() => setModal(null)}>

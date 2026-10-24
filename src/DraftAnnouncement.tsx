@@ -11,6 +11,9 @@ import { voteCount, type Game } from './engine'
 import type { Announcement } from './announcements'
 import { clubStyle } from './presentation'
 import { usePageVisible } from './usePageVisible'
+import { DraftSound, type SoundOptions } from './draftSound'
+import { draftSpeech } from './draftSpeech'
+import { SoundControls } from './SoundControls'
 import './draft-announcement.css'
 
 export default function DraftAnnouncement({
@@ -20,6 +23,12 @@ export default function DraftAnnouncement({
   onAutoPlayChange,
   onCommit,
   onFinish,
+  sound,
+  soundOptions,
+  soundReady,
+  voiceAvailable,
+  paused,
+  onSoundSettings,
 }: {
   sequence: Announcement[]
   players: Player[]
@@ -27,6 +36,12 @@ export default function DraftAnnouncement({
   onAutoPlayChange: (enabled: boolean) => void
   onCommit: (game: Game) => void
   onFinish: () => void
+  sound: DraftSound
+  soundOptions: SoundOptions
+  soundReady: boolean
+  voiceAvailable: boolean
+  paused: boolean
+  onSoundSettings: () => void
 }) {
   const dialog = useRef<HTMLDialogElement>(null)
   const [index, setIndex] = useState(0)
@@ -35,6 +50,8 @@ export default function DraftAnnouncement({
   const transitioned = useRef(-1)
   const finished = useRef(false)
   const pageVisible = usePageVisible()
+  const [reading, setReading] = useState(false)
+  const active = pageVisible && !paused
   const item = sequence[index]
   const { game } = item
   const pick = game.picks.at(-1)
@@ -59,10 +76,43 @@ export default function DraftAnnouncement({
       dialog.current?.querySelector('h2')?.focus({ preventScroll: true })
   }, [index])
   useEffect(() => {
-    if (revealed || !pageVisible) return
+    if (revealed || !active) return
     const timer = window.setTimeout(() => setRevealed(true), 1800)
     return () => window.clearTimeout(timer)
-  }, [index, revealed, pageVisible])
+  }, [index, revealed, active])
+  useEffect(() => {
+    if (!active) return
+    sound.cue(revealed ? 'reveal' : 'waiting')
+    return sound.stopEffects
+  }, [index, revealed, active, sound])
+  useEffect(() => {
+    if (!revealed || !active) {
+      setReading(false)
+      return
+    }
+    let current = true
+    const playback = sound.speak(draftSpeech(item, players))
+    setReading(playback.active)
+    void playback.finished.then(() => {
+      if (current) setReading(false)
+    })
+    return () => {
+      current = false
+      playback.cancel()
+    }
+  }, [
+    index,
+    revealed,
+    active,
+    item,
+    players,
+    sound,
+    soundOptions.enabled,
+    soundOptions.narration,
+    soundOptions.volume,
+    soundReady,
+    voiceAvailable,
+  ])
   useEffect(() => {
     if (revealed && committed.current < index) {
       committed.current = index
@@ -89,11 +139,25 @@ export default function DraftAnnouncement({
     }
   }, [index, sequence.length, finish])
   const canAutoAdvance = item.kind === 'pick' || item.kind === 'order'
+  const awaitingAudio =
+    soundOptions.enabled &&
+    soundOptions.narration &&
+    soundOptions.volume > 0 &&
+    voiceAvailable &&
+    !soundReady
   useEffect(() => {
-    if (!canAutoAdvance || !autoPlay || !revealed || !pageVisible) return
+    if (
+      !canAutoAdvance ||
+      !autoPlay ||
+      !revealed ||
+      !active ||
+      reading ||
+      awaitingAudio
+    )
+      return
     const timer = window.setTimeout(next, 3500)
     return () => window.clearTimeout(timer)
-  }, [canAutoAdvance, autoPlay, revealed, pageVisible, next])
+  }, [canAutoAdvance, autoPlay, revealed, active, reading, awaitingAudio, next])
   const last = index === sequence.length - 1
   const nextLabel = !last
     ? '次の指名発表へ'
@@ -114,7 +178,9 @@ export default function DraftAnnouncement({
       style={clubStyle(club.id) as CSSProperties}
       data-team={club.id}
       data-kind={item.kind}
-      data-autoplay={autoPlay && canAutoAdvance && pageVisible}
+      data-autoplay={
+        autoPlay && canAutoAdvance && active && !reading && !awaitingAudio
+      }
       aria-labelledby="announcement-title"
       onCancel={(event) => {
         event.preventDefault()
@@ -270,25 +336,30 @@ export default function DraftAnnouncement({
           </div>
         </div>
         <div className="announcement-actions">
-          {canAutoAdvance && (
-            <div className="announcement-playback">
-              <button
-                className="announcement-autoplay"
-                aria-label="指名発表の自動送り"
-                aria-pressed={autoPlay}
-                onClick={() => onAutoPlayChange(!autoPlay)}
-              >
-                {autoPlay ? <Pause size={15} /> : <Play size={15} />}
-                自動送り：{autoPlay ? 'オン' : 'オフ'}
-              </button>
-              <small>
-                {autoPlay ? '自分の指名番で停止' : 'ボタンで次へ進む'}
-              </small>
-            </div>
-          )}
+          <div className="announcement-sound-row">
+            {canAutoAdvance && (
+              <div className="announcement-playback">
+                <button
+                  className="announcement-autoplay"
+                  aria-label="指名発表の自動送り"
+                  aria-pressed={autoPlay}
+                  onClick={() => onAutoPlayChange(!autoPlay)}
+                >
+                  {autoPlay ? <Pause size={15} /> : <Play size={15} />}
+                  自動送り：{autoPlay ? 'オン' : 'オフ'}
+                </button>
+                <small>
+                  {autoPlay ? '自分の指名番で停止' : 'ボタンで次へ進む'}
+                </small>
+              </div>
+            )}
+            <SoundControls sound={sound} onSettings={onSoundSettings} />
+          </div>
           <div className="announcement-footer">
             <span>
-              {revealed ? (
+              {reading ? (
+                '読み上げ中'
+              ) : revealed ? (
                 <>
                   <Check size={14} />
                   発表済み

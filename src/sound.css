@@ -1,0 +1,115 @@
+.sound-controls {
+  display: inline-flex;
+  flex: 0 0 auto;
+  border: 1px solid var(--club-line);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--club-soft);
+  color: var(--club-link);
+}
+.sound-controls > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 36px;
+  padding: 5px 8px;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  color: inherit;
+}
+.sound-controls .sound-settings-button {
+  border-left: 1px solid var(--club-line);
+  min-width: 36px;
+}
+.sound-controls button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -3px;
+}
+.draft-announcement .sound-controls {
+  background: transparent;
+  border-color: #ffffff66;
+  color: #ffffff;
+}
+.draft-announcement .sound-settings-button {
+  border-color: #ffffff66;
+}
+.announcement-sound-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 8px;
+  margin-bottom: 8px;
+}
+.announcement-sound-row .announcement-playback {
+  margin: 0;
+}
+.announcement-sound-row .announcement-playback small {
+  display: none;
+}
+@media (max-width: 379px) {
+  .announcement-sound-row .announcement-autoplay > svg {
+    display: none;
+  }
+  .announcement-sound-row .announcement-autoplay {
+    padding-inline: 8px;
+  }
+}
+.sound-settings > p {
+  margin-top: 0;
+}
+.sound-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--club-line);
+  cursor: pointer;
+}
+.sound-option > span {
+  min-width: 0;
+}
+.sound-option strong {
+  display: block;
+  font-size: 1rem;
+}
+.sound-option small {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+.sound-option input {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 auto;
+  accent-color: var(--club-link);
+}
+.sound-master {
+  margin-top: 12px;
+}
+.sound-volume {
+  display: block;
+  margin: 18px 0;
+}
+.sound-volume > span {
+  display: flex;
+  justify-content: space-between;
+}
+.sound-volume input {
+  width: 100%;
+  margin-top: 12px;
+  accent-color: var(--club-link);
+}
+.app-shell .sound-help p {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+.sound-help button {
+  color: var(--club-link);
+  text-decoration: underline;
+}

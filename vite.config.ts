@@ -16,6 +16,8 @@ export default defineConfig({
         manualChunks(id) {
           if (id.endsWith('/npb2026.json')) return 'players-2026'
           if (id.endsWith('/playerCareer2026.json')) return 'player-career-2026'
+          if (id.endsWith('/playerReadings2026.json'))
+            return 'player-readings-2026'
           if (id.includes('/node_modules/')) return 'vendor'
         },
       },

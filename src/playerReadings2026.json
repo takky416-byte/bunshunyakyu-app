@@ -1,0 +1,5017 @@
+{
+  "version": 1,
+  "season": 2026,
+  "asOf": "2026-10-24",
+  "players": {
+    "npb-71375150": {
+      "name": "伊原 陵人",
+      "birthDate": "2000-08-07",
+      "reading": "いはら たかと",
+      "source": {
+        "url": "https://npb.jp/bis/players/71375150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "1a3ebe25ff53907e06849ee221f5cb1c75c5e9df04a0045eb27130411157f395"
+      }
+    },
+    "npb-61965159": {
+      "name": "下村 海翔",
+      "birthDate": "2002-03-27",
+      "reading": "しもむら かいと",
+      "source": {
+        "url": "https://npb.jp/bis/players/61965159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "6a438cb867a619a77d381fa5a9eb34397b599dc23599e0facdf38d028dee8101"
+      }
+    },
+    "npb-21925159": {
+      "name": "椎葉 剛",
+      "birthDate": "2002-03-18",
+      "reading": "しいば つよし",
+      "source": {
+        "url": "https://npb.jp/bis/players/21925159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "e35aa303717e08df7b46755ce2b6172c75107766f79a02ef8e8a50726a500bbe"
+      }
+    },
+    "npb-31935150": {
+      "name": "今朝丸 裕喜",
+      "birthDate": "2006-06-02",
+      "reading": "けさまる ゆうき",
+      "source": {
+        "url": "https://npb.jp/bis/players/31935150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "4b620873cd82a22e5347306abebfb5f3a5d67d12b79d823af8e75f08c2141cbe"
+      }
+    },
+    "npb-91095136": {
+      "name": "髙橋 遥人",
+      "birthDate": "1995-11-07",
+      "reading": "たかはし はると",
+      "source": {
+        "url": "https://npb.jp/bis/players/91095136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d8ee9096219f24631e758eaed28a6ae4fc2bd1a82cc22f0a7bf182ca38016d08"
+      }
+    },
+    "npb-53355157": {
+      "name": "門別 啓人",
+      "birthDate": "2004-07-10",
+      "reading": "もんべつ けいと",
+      "source": {
+        "url": "https://npb.jp/bis/players/53355157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "39fa9924484bbb85f00a157a6215bba7dcf14fb8176b9664076d7a44e66dccb1"
+      }
+    },
+    "npb-31635134": {
+      "name": "畠 世周",
+      "birthDate": "1994-05-31",
+      "reading": "はたけ せいしゅう",
+      "source": {
+        "url": "https://npb.jp/bis/players/31635134.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ac36266273341928b855ef0cc8df69d61526b458756632cdf612fb8b1888e17e"
+      }
+    },
+    "npb-31635152": {
+      "name": "早瀬 朔",
+      "birthDate": "2007-08-30",
+      "reading": "はやせ さく",
+      "source": {
+        "url": "https://npb.jp/bis/players/31635152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "37eae09a26f13a02f107560e8cbda9dcaff8589cd4fc3fc786b7ae9923b5cf76"
+      }
+    },
+    "npb-01705155": {
+      "name": "桐敷 拓馬",
+      "birthDate": "1999-06-20",
+      "reading": "きりしき たくま",
+      "source": {
+        "url": "https://npb.jp/bis/players/01705155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d52dbf75c2e567df9cbe301914b261280f9331ffded9d71d21c7b88099abacdf"
+      }
+    },
+    "npb-81185157": {
+      "name": "茨木 秀俊",
+      "birthDate": "2004-06-08",
+      "reading": "いばらぎ ひでとし",
+      "source": {
+        "url": "https://npb.jp/bis/players/81185157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "15229ee0a9a03760629c1df17450f55355701c5674cbfbeb88d677877fefc7dd"
+      }
+    },
+    "npb-81785150": {
+      "name": "工藤 泰成",
+      "birthDate": "2001-11-19",
+      "reading": "くどう たいせい",
+      "source": {
+        "url": "https://npb.jp/bis/players/81785150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "75a1dbcb3db4fc4fdab0a48c00c2aa4d6150cc0956f2e6c46657ec0cf60f384f"
+      }
+    },
+    "npb-51255157": {
+      "name": "富田 蓮",
+      "birthDate": "2001-09-06",
+      "reading": "とみだ れん",
+      "source": {
+        "url": "https://npb.jp/bis/players/51255157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "0f2e431b07a86e2cc878c9aa1887796f3af96ae9ed04a0444246a04650b2aeda"
+      }
+    },
+    "npb-57955159": {
+      "name": "早川 太貴",
+      "birthDate": "1999-12-18",
+      "reading": "はやかわ だいき",
+      "source": {
+        "url": "https://npb.jp/bis/players/57955159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "3c90895a8c1d28b36fb2ecefabd8aa2fb81789f78e9829d86042a308779a9aa3"
+      }
+    },
+    "npb-41745150": {
+      "name": "木下 里都",
+      "birthDate": "2001-01-27",
+      "reading": "きのした りと",
+      "source": {
+        "url": "https://npb.jp/bis/players/41745150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "84a8fa5137cdde222e474b7fb7c55be381f9ca36ec52c037d5348f3ae98f358d"
+      }
+    },
+    "npb-01105159": {
+      "name": "石黒 佑弥",
+      "birthDate": "2001-06-20",
+      "reading": "いしぐろ ゆうや",
+      "source": {
+        "url": "https://npb.jp/bis/players/01105159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "e365feebe8a2ba31157b7099f0b4c73b89047de861d9a27acfa9cca28891c9ea"
+      }
+    },
+    "npb-11515155": {
+      "name": "岡留 英貴",
+      "birthDate": "1999-11-07",
+      "reading": "おかどめ ひでたか",
+      "source": {
+        "url": "https://npb.jp/bis/players/11515155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "55fcf0fba11e9853786d97fa92290b3f6ed1dd9fb8d833177be0617b37937f7d"
+      }
+    },
+    "npb-41845138": {
+      "name": "湯浅 京己",
+      "birthDate": "1999-07-17",
+      "reading": "ゆあさ あつき",
+      "source": {
+        "url": "https://npb.jp/bis/players/41845138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2272a75d030aa65433038c71c0f3b68d2795228265d879fd4df5b141bbde4b7f"
+      }
+    },
+    "npb-11415159": {
+      "name": "津田 淳哉",
+      "birthDate": "2001-08-27",
+      "reading": "つだ じゅんや",
+      "source": {
+        "url": "https://npb.jp/bis/players/11415159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "c1ff160ab6962756617d355e55c74f53604ffbfdf27d60cf615bae6ebdeac394"
+      }
+    },
+    "npb-41845150": {
+      "name": "町田 隼乙",
+      "birthDate": "2003-04-03",
+      "reading": "まちだ はやと",
+      "source": {
+        "url": "https://npb.jp/bis/players/41845150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "e6a62839d48864cfaa97b87cabe1f19defd4e8961548cbe9c95080972184a71e"
+      }
+    },
+    "npb-91695151": {
+      "name": "藤田 健斗",
+      "birthDate": "2001-10-18",
+      "reading": "ふじた けんと",
+      "source": {
+        "url": "https://npb.jp/bis/players/91695151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "271842e37e180652aa0139a71b708cb835f2a0ce7a9c64c9572dc6a047127575"
+      }
+    },
+    "npb-51455155": {
+      "name": "中川 勇斗",
+      "birthDate": "2004-01-27",
+      "reading": "なかがわ はやと",
+      "source": {
+        "url": "https://npb.jp/bis/players/51455155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "44f6061cc6c844a50285d0c456353b8b4811a2561a9f939ae12ec68d0e663efa"
+      }
+    },
+    "npb-33335153": {
+      "name": "元山 飛優",
+      "birthDate": "1998-12-04",
+      "reading": "もとやま ひゆう",
+      "source": {
+        "url": "https://npb.jp/bis/players/33335153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "91c1486b0474561eb6a014843a899cce7ff6c8f5bb0129bcda909b1c6cd39a2c"
+      }
+    },
+    "npb-91295152": {
+      "name": "立石 正広",
+      "birthDate": "2003-11-01",
+      "reading": "たていし まさひろ",
+      "source": {
+        "url": "https://npb.jp/bis/players/91295152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "87c13e8a56b4e8baf5452a6442fd32e06af2e7b9ee082dea034ba4be9549668b"
+      }
+    },
+    "npb-01205152": {
+      "name": "谷端 将伍",
+      "birthDate": "2004-03-17",
+      "reading": "たにはた しょうご",
+      "source": {
+        "url": "https://npb.jp/bis/players/01205152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "05d84131cf0226011021b6279aa17889a6f41507a61e436a5997fc06d0f970f2"
+      }
+    },
+    "npb-31535138": {
+      "name": "小幡 竜平",
+      "birthDate": "2000-09-21",
+      "reading": "おばた りゅうへい",
+      "source": {
+        "url": "https://npb.jp/bis/players/31535138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "05245f5fad10d083ae379d4063065175f97307a5f6194adfaa2c1fc73414c80b"
+      }
+    },
+    "npb-91095150": {
+      "name": "佐野 大陽",
+      "birthDate": "2002-02-14",
+      "reading": "さの たいよう",
+      "source": {
+        "url": "https://npb.jp/bis/players/91095150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "870bc404f91378a0778497da2c95504cbeb8936a7dde950256ab38ae704c77cd"
+      }
+    },
+    "npb-63365159": {
+      "name": "山田 脩也",
+      "birthDate": "2005-08-20",
+      "reading": "やまだ しゅうや",
+      "source": {
+        "url": "https://npb.jp/bis/players/63365159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "b712bd1769fc181dddf0a38e34c511bc5f9fe7c551c2e706d6ea0cbd9b7267a6"
+      }
+    },
+    "npb-23325159": {
+      "name": "百﨑 蒼生",
+      "birthDate": "2005-09-11",
+      "reading": "ももさき あおい",
+      "source": {
+        "url": "https://npb.jp/bis/players/23325159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2e7f94d4c1ef7445016d8e45423bf7470d73a980a99714874949b1289960c428"
+      }
+    },
+    "npb-41245153": {
+      "name": "髙寺 望夢",
+      "birthDate": "2002-10-17",
+      "reading": "たかてら のぞむ",
+      "source": {
+        "url": "https://npb.jp/bis/players/41245153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "fb5e0caf3d7db7b4b72f67326359d3e3c53697a3ef0c802167f33cb087854526"
+      }
+    },
+    "npb-91595152": {
+      "name": "岡城 快生",
+      "birthDate": "2003-06-23",
+      "reading": "おかしろ かいせい",
+      "source": {
+        "url": "https://npb.jp/bis/players/91595152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "0765e605e585049e358f783de19d2ada4e0aaed53d68afbfce285d48874fbdaa"
+      }
+    },
+    "npb-41145157": {
+      "name": "井坪 陽生",
+      "birthDate": "2005-03-17",
+      "reading": "いつぼ ひなせ",
+      "source": {
+        "url": "https://npb.jp/bis/players/41145157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "0c3fb1d7a7f0ae34985da08523bc1dd89745fd221a1d1f8a62253c1d558764c8"
+      }
+    },
+    "npb-21825155": {
+      "name": "前川 右京",
+      "birthDate": "2003-05-18",
+      "reading": "まえがわ うきょう",
+      "source": {
+        "url": "https://npb.jp/bis/players/21825155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "113ef751862be25b893ea6b0bfb46d0145bd3ac49a28322061fadf12997bab88"
+      }
+    },
+    "npb-71775151": {
+      "name": "小野寺 暖",
+      "birthDate": "1998-03-17",
+      "reading": "おのでら だん",
+      "source": {
+        "url": "https://npb.jp/bis/players/71775151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "7231dc440e2a12f0d5264142d52e22f69de1459e5f30d718c5a33d71298bd532"
+      }
+    },
+    "npb-31635159": {
+      "name": "西舘 勇陽",
+      "birthDate": "2002-03-11",
+      "reading": "にしだて ゆうひ",
+      "source": {
+        "url": "https://npb.jp/bis/players/31635159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "28847c74386c948ad2ad43f216b5c1287df67fba273fb1870dbb4ee1915814b0"
+      }
+    },
+    "npb-71275152": {
+      "name": "竹丸 和幸",
+      "birthDate": "2002-02-26",
+      "reading": "たけまる かずゆき",
+      "source": {
+        "url": "https://npb.jp/bis/players/71275152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "25a8e9854efd626e2661c9087239532cea13ff8ff78f88466462aa582e5226e6"
+      }
+    },
+    "npb-11015155": {
+      "name": "代木 大和",
+      "birthDate": "2003-09-08",
+      "reading": "しろき やまと",
+      "source": {
+        "url": "https://npb.jp/bis/players/11015155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "85e2cfdbc68aac8b9407fc9330c08b99b4baa1513a98315d51d125b7ac485212"
+      }
+    },
+    "npb-21225152": {
+      "name": "田和 廉",
+      "birthDate": "2003-05-02",
+      "reading": "たわ れん",
+      "source": {
+        "url": "https://npb.jp/bis/players/21225152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "338c7a531bca699cb399014538a24bb53566ff2abfd4e6735db47f1b1c7ca92a"
+      }
+    },
+    "npb-51155155": {
+      "name": "赤星 優志",
+      "birthDate": "1999-07-02",
+      "reading": "あかほし ゆうじ",
+      "source": {
+        "url": "https://npb.jp/bis/players/51155155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "0d6e3433e130ee2471ba065751a0a96a1d444f1279aab6356244666ecde49339"
+      }
+    },
+    "npb-43145152": {
+      "name": "山城 京平",
+      "birthDate": "2003-09-20",
+      "reading": "やましろ きょうへい",
+      "source": {
+        "url": "https://npb.jp/bis/players/43145152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "4a6f91fef654c58c54bdb34bb20bfef65b164dd0d19ff25af487a464ddc19432"
+      }
+    },
+    "npb-61065136": {
+      "name": "田中 瑛斗",
+      "birthDate": "1999-07-13",
+      "reading": "たなか えいと",
+      "source": {
+        "url": "https://npb.jp/bis/players/61065136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2176e35969b770ee265794d024c0910afb5db6909d71c59747df79970ba71dcf"
+      }
+    },
+    "npb-33135159": {
+      "name": "又木 鉄平",
+      "birthDate": "1999-02-12",
+      "reading": "またき てっぺい",
+      "source": {
+        "url": "https://npb.jp/bis/players/33135159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "5a4b2d0bb7b7894f874a509c5a57d8f99cc364b5533c4d615068a9ceda0e45c4"
+      }
+    },
+    "npb-43345159": {
+      "name": "森田 駿哉",
+      "birthDate": "1997-02-11",
+      "reading": "もりた しゅんや",
+      "source": {
+        "url": "https://npb.jp/bis/players/43345159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "185b797a635563184749f54eccf6ca8ccb145141c577ebac283d3652fa387986"
+      }
+    },
+    "npb-01505136": {
+      "name": "北浦 竜次",
+      "birthDate": "2000-01-12",
+      "reading": "きたうら りゅうじ",
+      "source": {
+        "url": "https://npb.jp/bis/players/01505136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "5258ac9a71ed388b46903a1114d52d68dc11f53d29b533068a5f60975c0fabc1"
+      }
+    },
+    "npb-13115150": {
+      "name": "宮原 駿介",
+      "birthDate": "2002-09-12",
+      "reading": "みやはら しゅんすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/13115150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "e049881ba7feffb85606f6043c23e2b8f213f764767f7eb4fafd990dedbb1032"
+      }
+    },
+    "npb-31835157": {
+      "name": "船迫 大雅",
+      "birthDate": "1996-10-16",
+      "reading": "ふなばさま ひろまさ",
+      "source": {
+        "url": "https://npb.jp/bis/players/31835157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "8f034e3f2246f42abee8b0d5c181b226617848e35f1874daac2935aedc7b78c4"
+      }
+    },
+    "npb-81885138": {
+      "name": "横川 凱",
+      "birthDate": "2000-08-30",
+      "reading": "よこがわ かい",
+      "source": {
+        "url": "https://npb.jp/bis/players/81885138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "0ea51f4e802f289d0940d635cefb3644a6f67eb6dcca84e7206ca6327545f351"
+      }
+    },
+    "npb-01105138": {
+      "name": "泉 圭輔",
+      "birthDate": "1997-03-02",
+      "reading": "いずみ けいすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/01105138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d3062d5e36d63f4c993ed5e08e1528673ae5b4a134922948e4f753292e75ba4d"
+      }
+    },
+    "npb-61165153": {
+      "name": "石川 達也",
+      "birthDate": "1998-04-15",
+      "reading": "いしかわ たつや",
+      "source": {
+        "url": "https://npb.jp/bis/players/61165153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "fa5e8114e4a482caff9deae3e0972e04e669f8f78c0438ed0807e6d7c9c88fae"
+      }
+    },
+    "npb-21825153": {
+      "name": "平内 龍太",
+      "birthDate": "1998-08-01",
+      "reading": "へいない りゅうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/21825153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "4699ce71cae8c1868f7a627de914ce2df3046eb5317b86f6c2eb07d7568f9980"
+      }
+    },
+    "npb-21625151": {
+      "name": "堀田 賢慎",
+      "birthDate": "2001-05-21",
+      "reading": "ほった けんしん",
+      "source": {
+        "url": "https://npb.jp/bis/players/21625151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "69f974e60e93085c4a8c2570a86e4831deaf2d4b7d5bbf34f87817ec34d48929"
+      }
+    },
+    "npb-51355151": {
+      "name": "井上 温大",
+      "birthDate": "2001-05-13",
+      "reading": "いのうえ はると",
+      "source": {
+        "url": "https://npb.jp/bis/players/51355151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "008e97cc27325c1eabc28fc094705555721d98b0486a42334bb2e620f3adc39b"
+      }
+    },
+    "npb-91595136": {
+      "name": "岸田 行倫",
+      "birthDate": "1996-10-10",
+      "reading": "きしだ ゆきのり",
+      "source": {
+        "url": "https://npb.jp/bis/players/91595136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "3b4f453e11f7bb5997d7372dddf4b17d23a3bb50523d9c1685d3b011a00dfe86"
+      }
+    },
+    "npb-03105151": {
+      "name": "山瀬 慎之助",
+      "birthDate": "2001-05-04",
+      "reading": "やませ しんのすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/03105151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "334ff044527fbd5b8da1ab6147b4e11b0b54a630fb060692610257a29f65c9aa"
+      }
+    },
+    "npb-43145136": {
+      "name": "湯浅 大",
+      "birthDate": "2000-01-24",
+      "reading": "ゆあさ だい",
+      "source": {
+        "url": "https://npb.jp/bis/players/43145136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "1e5eeac903160065c3e1f4cb4b549b31f84ad7ee63a25d975e133a0a24a94ad0"
+      }
+    },
+    "npb-11515157": {
+      "name": "門脇 誠",
+      "birthDate": "2001-01-24",
+      "reading": "かどわき まこと",
+      "source": {
+        "url": "https://npb.jp/bis/players/11515157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "64bd8d9bb3e5f0917bc0212bc3d74eaff0c4facd7b31464e7586b55f1abbb9a0"
+      }
+    },
+    "npb-61165150": {
+      "name": "石塚 裕惺",
+      "birthDate": "2006-04-06",
+      "reading": "いしづか ゆうせい",
+      "source": {
+        "url": "https://npb.jp/bis/players/61165150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "cbe48af0aeba589607fa965bac2d0831e691316ef75fcd8fc82e51d6f223ce11"
+      }
+    },
+    "npb-81385150": {
+      "name": "浦田 俊輔",
+      "birthDate": "2002-08-30",
+      "reading": "うらた しゅんすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/81385150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "0fadcd697e198401be6e47dc5e81caff1cbe85851303e4298ad572c051c71daf"
+      }
+    },
+    "npb-61765152": {
+      "name": "小濱 佑斗",
+      "birthDate": "2001-10-05",
+      "reading": "こはま ゆうと",
+      "source": {
+        "url": "https://npb.jp/bis/players/61765152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "9360e5b4e2fc607f06b8f6f5c3871e5b0e9f21bf334881848f28bf3f7ddee815"
+      }
+    },
+    "npb-61165159": {
+      "name": "泉口 友汰",
+      "birthDate": "1999-05-17",
+      "reading": "いずぐち ゆうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/61165159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "c9920062f37321bbc225691fac513718bf5747ee5ef17e166a57c3418962ab13"
+      }
+    },
+    "npb-11015136": {
+      "name": "リチャード",
+      "birthDate": "1999-06-18",
+      "reading": "りちゃーど",
+      "source": {
+        "url": "https://npb.jp/bis/players/11015136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "5f1a3194f8fd94a98bbd5ce07d197d3e57eeeb3bf3d829cc3bac114796edee54"
+      }
+    },
+    "npb-71175150": {
+      "name": "荒巻 悠",
+      "birthDate": "2002-12-23",
+      "reading": "あらまき ゆう",
+      "source": {
+        "url": "https://npb.jp/bis/players/71175150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "f82e876ae1b1807d80fc26bdf478fe555baa9f45101712a2e4039e2037700419"
+      }
+    },
+    "npb-01605138": {
+      "name": "増田 陸",
+      "birthDate": "2000-06-17",
+      "reading": "ますだ りく",
+      "source": {
+        "url": "https://npb.jp/bis/players/01605138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "c1fe1354f4a4aaceab1f538567e2d33a49dadff0baaacb190159f144d6d45dbd"
+      }
+    },
+    "npb-21625152": {
+      "name": "藤井 健翔",
+      "birthDate": "2007-08-15",
+      "reading": "ふじい けんしょう",
+      "source": {
+        "url": "https://npb.jp/bis/players/21625152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "b3360009a9607579a535b1b657a8d3d7e049cea5560f4b5cbbf662aec64fb420"
+      }
+    },
+    "npb-33135152": {
+      "name": "皆川 岳飛",
+      "birthDate": "2003-04-30",
+      "reading": "みなかわ がくと",
+      "source": {
+        "url": "https://npb.jp/bis/players/33135152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "16bf072ed3701d651a1a5ebe6f4b0c30fa8ee0a4d4600b7acf37c554f392c380"
+      }
+    },
+    "npb-51655153": {
+      "name": "中山 礼都",
+      "birthDate": "2002-04-12",
+      "reading": "なかやま らいと",
+      "source": {
+        "url": "https://npb.jp/bis/players/51655153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "7fbea7309cb58b5236f7e7c5e82fb5d1b46229034c465bc8b66620b39b6e3d6b"
+      }
+    },
+    "npb-51955159": {
+      "name": "佐々木 俊輔",
+      "birthDate": "1999-11-06",
+      "reading": "ささき しゅんすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/51955159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "f396b57a14d2cb19353830915faf28c78c64ea7fc8c2496e83a5293bab5f1f5c"
+      }
+    },
+    "npb-91195157": {
+      "name": "浅野 翔吾",
+      "birthDate": "2004-11-24",
+      "reading": "あさの しょうご",
+      "source": {
+        "url": "https://npb.jp/bis/players/91195157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "0efb604206f79282d6eb7e3e5b3152e5a9075dcd65313fb4f282dff2257597a7"
+      }
+    },
+    "npb-91095155": {
+      "name": "鈴木 大和",
+      "birthDate": "1999-04-27",
+      "reading": "すずき やまと",
+      "source": {
+        "url": "https://npb.jp/bis/players/91095155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "4cd34a37a341240e02aca32439883357b82c55e6ac6ed4d7eb19733492710fc5"
+      }
+    },
+    "npb-13115157": {
+      "name": "三塚 琉生",
+      "birthDate": "2004-05-10",
+      "reading": "みつか るい",
+      "source": {
+        "url": "https://npb.jp/bis/players/13115157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "cc18c4ba048f3f9c53891631b15e15dcc5f2b0b56add478bb81f44d3dae83673"
+      }
+    },
+    "npb-11415150": {
+      "name": "竹田 祐",
+      "birthDate": "1999-07-05",
+      "reading": "たけだ ゆう",
+      "source": {
+        "url": "https://npb.jp/bis/players/11415150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "34fd27c798a8825ebb04ea9d79fdf7190a3a2c21e7bb92cfbf7ca23bb101f8a7"
+      }
+    },
+    "npb-11315130": {
+      "name": "石田 健大",
+      "birthDate": "1993-03-01",
+      "reading": "いしだ けんた",
+      "source": {
+        "url": "https://npb.jp/bis/players/11315130.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "3cf1254764e2ad752c0ea69c698007b0d30e5a06cc3807862a03f6d733ab50ca"
+      }
+    },
+    "npb-11015152": {
+      "name": "島田 舜也",
+      "birthDate": "2003-04-30",
+      "reading": "しまだ しゅんや",
+      "source": {
+        "url": "https://npb.jp/bis/players/11015152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ccadb761e108bf9c4a1a2e3aabdc4409dede1bddd1f9ebdbea4833d04efc77e3"
+      }
+    },
+    "npb-11015151": {
+      "name": "坂本 裕哉",
+      "birthDate": "1997-07-28",
+      "reading": "さかもと ゆうや",
+      "source": {
+        "url": "https://npb.jp/bis/players/11015151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "6e709db3d29b587bf5d4dd35fa026d80465e11d3e0e9a9b3aa29a72ba31562c9"
+      }
+    },
+    "npb-61365153": {
+      "name": "入江 大生",
+      "birthDate": "1998-08-26",
+      "reading": "いりえ たいせい",
+      "source": {
+        "url": "https://npb.jp/bis/players/61365153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "573aaf37ddcb71f6d74d7d60505091ec39ace1477e25e73f57701ad0e983e518"
+      }
+    },
+    "npb-33535157": {
+      "name": "吉野 光樹",
+      "birthDate": "1998-07-19",
+      "reading": "よしの てるき",
+      "source": {
+        "url": "https://npb.jp/bis/players/33535157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "a80da1abf3c813bf04c3bba5d43415d90980e62fa9cfddf0ab307aac51ca80c0"
+      }
+    },
+    "npb-41045150": {
+      "name": "篠木 健太郎",
+      "birthDate": "2002-05-07",
+      "reading": "しのぎ けんたろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/41045150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "b97b86ee27342bdb94907e7fb889571ee42adcf61ce1057596b62b89d72a808e"
+      }
+    },
+    "npb-91295159": {
+      "name": "武田 陸玖",
+      "birthDate": "2005-06-06",
+      "reading": "たけだ りく",
+      "source": {
+        "url": "https://npb.jp/bis/players/91295159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "728b996e9aa130da3d0074797312b570836bc76ea47caace7803ff53c11126fb"
+      }
+    },
+    "npb-61365136": {
+      "name": "尾形 崇斗",
+      "birthDate": "1999-05-15",
+      "reading": "おがた しゅうと",
+      "source": {
+        "url": "https://npb.jp/bis/players/61365136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "9b64c324ac8598ac64b9268f5a118b6568af4dc6f2185d94d9d4caedee34c0ec"
+      }
+    },
+    "npb-23125159": {
+      "name": "松本 凌人",
+      "birthDate": "2001-12-05",
+      "reading": "まつもと りょうと",
+      "source": {
+        "url": "https://npb.jp/bis/players/23125159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "cec4d8944619b1573c6849de23fd70697bec94e98377f54462cf08adbd2e99f8"
+      }
+    },
+    "npb-63365150": {
+      "name": "若松 尚輝",
+      "birthDate": "2000-05-10",
+      "reading": "わかまつ なおき",
+      "source": {
+        "url": "https://npb.jp/bis/players/63365150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ea14d0c67e04711cd75fab78c438f8c7510e9a5f4175f6a33eff4a7f5e3e857d"
+      }
+    },
+    "npb-61665155": {
+      "name": "深沢 鳳介",
+      "birthDate": "2003-11-05",
+      "reading": "ふかざわ おうすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/61665155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "7d313dcc3d5710d685df60b7c0eb7bd8a34f0515004a231b32e31f59823d6d8e"
+      }
+    },
+    "npb-61565152": {
+      "name": "片山 皓心",
+      "birthDate": "1998-10-31",
+      "reading": "かたやま ひろみ",
+      "source": {
+        "url": "https://npb.jp/bis/players/61565152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "82af27c6b23af8d2d791b396478b15a612809e6f97e5276c87b00887fb29dbfa"
+      }
+    },
+    "npb-21125159": {
+      "name": "石田 裕太郎",
+      "birthDate": "2002-01-22",
+      "reading": "いしだ ゆうたろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/21125159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ab1e860d952ea6121221c34a372f40715162891484fd07cd245cf942baa6ff11"
+      }
+    },
+    "npb-01905139": {
+      "name": "平良 拳太郎",
+      "birthDate": "1995-07-12",
+      "reading": "たいら けんたろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/01905139.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ed8b026a64d50bda6abeab6f26145722fc059b28d828b72a5cae0eaab1283f84"
+      }
+    },
+    "npb-21225136": {
+      "name": "中川 虎大",
+      "birthDate": "1999-10-02",
+      "reading": "なかがわ こお",
+      "source": {
+        "url": "https://npb.jp/bis/players/21225136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "7bb7ddd958538e87bec3ee52fccd6b4b671664cf3f782d276c2f23947224dd34"
+      }
+    },
+    "npb-51855138": {
+      "name": "宮城 滝太",
+      "birthDate": "2000-07-15",
+      "reading": "みやぎ だいた",
+      "source": {
+        "url": "https://npb.jp/bis/players/51855138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "16f536e1ce0932845b2e24dda0208a3998f5bb0db304162853379d1ee1002e6d"
+      }
+    },
+    "npb-81385153": {
+      "name": "岩田 将貴",
+      "birthDate": "1998-06-16",
+      "reading": "いわた まさき",
+      "source": {
+        "url": "https://npb.jp/bis/players/81385153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "898435dd4d739849e0cab7564c753cdd9ef179c1308de962a19d60852ae7ed89"
+      }
+    },
+    "npb-41445136": {
+      "name": "馬場 皐輔",
+      "birthDate": "1995-05-18",
+      "reading": "ばば こうすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/41445136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "62acddd18811f867c3b9a0b574d07adb9951f02065eb9ddffc1d90c571064e2b"
+      }
+    },
+    "npb-21825157": {
+      "name": "松尾 汐恩",
+      "birthDate": "2004-07-06",
+      "reading": "まつお しおん",
+      "source": {
+        "url": "https://npb.jp/bis/players/21825157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "c49cb6dff6e3491ae808d6368458d020420b1ea29db8707f3ca3a86f4d2922bd"
+      }
+    },
+    "npb-91895155": {
+      "name": "古市 尊",
+      "birthDate": "2002-06-15",
+      "reading": "ふるいち たける",
+      "source": {
+        "url": "https://npb.jp/bis/players/91895155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "3bae7e96530115a455f8bb6946f7d87d11e32d3f1f3790fb816a00150e237f4b"
+      }
+    },
+    "npb-31735134": {
+      "name": "九鬼 隆平",
+      "birthDate": "1998-09-05",
+      "reading": "くき りゅうへい",
+      "source": {
+        "url": "https://npb.jp/bis/players/31735134.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "e77728df533c060d16d47af8e575ce576363dbb8cee75db1eab4ff3b2fc63866"
+      }
+    },
+    "npb-41545152": {
+      "name": "小田 康一郎",
+      "birthDate": "2003-08-15",
+      "reading": "おだ こういちろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/41545152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "0193caae902b791712cfb014dca949dd483edd3c923ba8c44a8891a218b9a6e0"
+      }
+    },
+    "npb-33135151": {
+      "name": "森 敬斗",
+      "birthDate": "2002-01-28",
+      "reading": "もり けいと",
+      "source": {
+        "url": "https://npb.jp/bis/players/33135151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "38bc849355c363d19618d138a09f154ce37e68b813e431275ac11ff7d7342134"
+      }
+    },
+    "npb-53155152": {
+      "name": "宮下 朝陽",
+      "birthDate": "2004-01-26",
+      "reading": "みやした あさひ",
+      "source": {
+        "url": "https://npb.jp/bis/players/53155152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2aa2d4189f7e6a72e0dc7ec44f9a882db2a86de8a0974dd197e4ef931ede7f3c"
+      }
+    },
+    "npb-21525150": {
+      "name": "加藤 響",
+      "birthDate": "2002-06-15",
+      "reading": "かとう ひびき",
+      "source": {
+        "url": "https://npb.jp/bis/players/21525150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2df2cc0b04930e0f24ccd5493d65f97eedcd36a4471102043669072114b902ea"
+      }
+    },
+    "npb-01305153": {
+      "name": "井上 朋也",
+      "birthDate": "2003-01-28",
+      "reading": "いのうえ ともや",
+      "source": {
+        "url": "https://npb.jp/bis/players/01305153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "89b2567d00d85ef43b5dda1d696101d3b6a4e6414861e78a44da7d114405b2ba"
+      }
+    },
+    "npb-91195159": {
+      "name": "石上 泰輝",
+      "birthDate": "2001-05-18",
+      "reading": "いしかみ たいき",
+      "source": {
+        "url": "https://npb.jp/bis/players/91195159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2e3e5ec1b9fb28c880213b7aebac461129e4cd577cb69cc3a2e9e0e388c7f055"
+      }
+    },
+    "npb-91495152": {
+      "name": "成瀬 脩人",
+      "birthDate": "2001-05-23",
+      "reading": "なるせ しゅうと",
+      "source": {
+        "url": "https://npb.jp/bis/players/91495152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "41043d725fc35802b8c4c86b4210bf7f4edff4164653571919feff2cc8d3862c"
+      }
+    },
+    "npb-91495150": {
+      "name": "田内 真翔",
+      "birthDate": "2007-03-06",
+      "reading": "たない まなと",
+      "source": {
+        "url": "https://npb.jp/bis/players/91495150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d8e7abffc02c05283e0df989e344ff0e03f90114cc973331e99ed15c5f53e370"
+      }
+    },
+    "npb-33535159": {
+      "name": "度会 隆輝",
+      "birthDate": "2002-10-04",
+      "reading": "わたらい りゅうき",
+      "source": {
+        "url": "https://npb.jp/bis/players/33535159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "1b19fc5f552048a03578f943844841fe58360d7fcc7667538759214417e346b8"
+      }
+    },
+    "npb-41545138": {
+      "name": "勝又 温史",
+      "birthDate": "2000-05-22",
+      "reading": "かつまた あつし",
+      "source": {
+        "url": "https://npb.jp/bis/players/41545138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "b4e5ba5487024393f5b4feb0d1e9a7d3eac91a8f1c4c4fd104888f6e5a45a62e"
+      }
+    },
+    "npb-51555155": {
+      "name": "梶原 昂希",
+      "birthDate": "1999-09-19",
+      "reading": "かじわら こうき",
+      "source": {
+        "url": "https://npb.jp/bis/players/51555155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "314f152795b83e0d0a45cc265b7a317e691255b02494a99d624a5eff4969c697"
+      }
+    },
+    "npb-51555151": {
+      "name": "蝦名 達夫",
+      "birthDate": "1997-09-20",
+      "reading": "えびな たつお",
+      "source": {
+        "url": "https://npb.jp/bis/players/51555151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "98d61480e1b7bacd4fe99540e6844e9d28f24c794ee6f0c3ebb6288c11c10d83"
+      }
+    },
+    "npb-31935139": {
+      "name": "関根 大気",
+      "birthDate": "1995-06-28",
+      "reading": "せきね たいき",
+      "source": {
+        "url": "https://npb.jp/bis/players/31935139.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "6659f8f320e57ecff153d1b8a1f236300d50725359de74838cf1b70e0498a5c2"
+      }
+    },
+    "npb-51955152": {
+      "name": "齊藤 汰直",
+      "birthDate": "2003-12-07",
+      "reading": "さいとう たいち",
+      "source": {
+        "url": "https://npb.jp/bis/players/51955152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "c81765ffa26a6543eb7d26c8675dd6c57eaef8cd1f3d4219a7bc71bac6571e2a"
+      }
+    },
+    "npb-93395155": {
+      "name": "森 翔平",
+      "birthDate": "1998-01-01",
+      "reading": "もり しょうへい",
+      "source": {
+        "url": "https://npb.jp/bis/players/93395155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "e4f7a92d1c736692ec123f00475a20022e6ff7f381abdb6a22e455b220cbc5fe"
+      }
+    },
+    "npb-31435159": {
+      "name": "常廣 羽也斗",
+      "birthDate": "2001-09-18",
+      "reading": "つねひろ はやと",
+      "source": {
+        "url": "https://npb.jp/bis/players/31435159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "920899438a42921dc0f61495d06f2d5c6f2508eee2363c8468f460ad45b731ce"
+      }
+    },
+    "npb-41045159": {
+      "name": "髙 太一",
+      "birthDate": "2001-07-26",
+      "reading": "たか たいち",
+      "source": {
+        "url": "https://npb.jp/bis/players/41045159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "3edb47050d0ff1be1749feb3d2cfac660b84ddccbb3dc9abaaf8c23f9eb0d4b9"
+      }
+    },
+    "npb-41745155": {
+      "name": "黒原 拓未",
+      "birthDate": "1999-11-29",
+      "reading": "くろはら たくみ",
+      "source": {
+        "url": "https://npb.jp/bis/players/41745155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d6d87022d07aeef6b6782f90b362ef733ce16987b40d2c962dea17d973acfa5b"
+      }
+    },
+    "npb-91895157": {
+      "name": "益田 武尚",
+      "birthDate": "1998-10-06",
+      "reading": "ますだ たけひさ",
+      "source": {
+        "url": "https://npb.jp/bis/players/91895157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "78bdca2bc5b5bcc472886c97561771147767c3e2cb283c2ca74cc55584ed4d4d"
+      }
+    },
+    "npb-71075150": {
+      "name": "佐藤 柳之介",
+      "birthDate": "2002-11-01",
+      "reading": "さとう りゅうのすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/71075150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "5a8d146af49bd78930ddce5a46f8d2ef44c696a9201b5d4b074e2854a9cf314c"
+      }
+    },
+    "npb-31235159": {
+      "name": "滝田 一希",
+      "birthDate": "2001-12-28",
+      "reading": "たきた かずき",
+      "source": {
+        "url": "https://npb.jp/bis/players/31235159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "89ffee65bbfe44d6c5eb92afe0a8f0c38c2cd84fdf90856e13ed579d38c127a0"
+      }
+    },
+    "npb-01005134": {
+      "name": "高橋 昂也",
+      "birthDate": "1998-09-27",
+      "reading": "たかはし こうや",
+      "source": {
+        "url": "https://npb.jp/bis/players/01005134.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "da2d4e09118814762c954ba3fc73cdad164b5b2e947bdbd141c748a742cce54d"
+      }
+    },
+    "npb-91795152": {
+      "name": "工藤 泰己",
+      "birthDate": "2003-09-29",
+      "reading": "くどう たいき",
+      "source": {
+        "url": "https://npb.jp/bis/players/91795152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2ad4fcfe09661099cf3c0d7b55d26702d18b972df498a0b58873f954f70897fe"
+      }
+    },
+    "npb-21625130": {
+      "name": "塹江 敦哉",
+      "birthDate": "1997-02-21",
+      "reading": "ほりえ あつや",
+      "source": {
+        "url": "https://npb.jp/bis/players/21625130.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "89ab4bce3f769f1002cc3c4892621f90ee575abfde37873de066da39de2ad3b9"
+      }
+    },
+    "npb-31135152": {
+      "name": "赤木 晴哉",
+      "birthDate": "2003-10-05",
+      "reading": "あかぎ せいや",
+      "source": {
+        "url": "https://npb.jp/bis/players/31135152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "70356a0f27b68369cc64dd9fda0229f11df573e61f7c9b5bf1902b1d20bd447e"
+      }
+    },
+    "npb-61065151": {
+      "name": "鈴木 健矢",
+      "birthDate": "1997-12-11",
+      "reading": "すずき けんや",
+      "source": {
+        "url": "https://npb.jp/bis/players/61065151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "cb394a1ab4098657b132362a1b6e25198ecf9d8fbae83a5b0e5631adcf10f40c"
+      }
+    },
+    "npb-81085152": {
+      "name": "髙木 快大",
+      "birthDate": "2004-03-19",
+      "reading": "たかぎ はやと",
+      "source": {
+        "url": "https://npb.jp/bis/players/81085152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "53fad7e975803892bb3d03b8f1f425e4e585fbcdc98bc7d220c7cb3509592bb4"
+      }
+    },
+    "npb-61765157": {
+      "name": "斉藤 優汰",
+      "birthDate": "2004-05-27",
+      "reading": "さいとう ゆうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/61765157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "1591bae9fa21b5b903becbf21de7b2b7dc8a582a7f0ac3a2e9b3a8d3900c5333"
+      }
+    },
+    "npb-31135134": {
+      "name": "アドゥワ 誠",
+      "birthDate": "1998-10-02",
+      "reading": "あどぅわ まこと",
+      "source": {
+        "url": "https://npb.jp/bis/players/31135134.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "3097be0be21b7c01ee8a29694ce14f240745317f5dc8f250dca90b27c6f20e86"
+      }
+    },
+    "npb-91595150": {
+      "name": "岡本 駿",
+      "birthDate": "2002-06-12",
+      "reading": "おかもと しゅん",
+      "source": {
+        "url": "https://npb.jp/bis/players/91595150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "4e61d55ad318f1f3f4652701ac6506e7c6592f058bba55336402a940eb71aaa1"
+      }
+    },
+    "npb-41245151": {
+      "name": "玉村 昇悟",
+      "birthDate": "2001-04-16",
+      "reading": "たまむら しょうご",
+      "source": {
+        "url": "https://npb.jp/bis/players/41245151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "96e49a6780d37f500cf68d317160adbf7ea7acf75e733ac662ef94d8392ada1d"
+      }
+    },
+    "npb-71375136": {
+      "name": "遠藤 淳志",
+      "birthDate": "1999-04-08",
+      "reading": "えんどう あつし",
+      "source": {
+        "url": "https://npb.jp/bis/players/71375136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "b78a40e0fdd05f02ef18d27d33b237991935f2c6efffea0734cd3c7593613383"
+      }
+    },
+    "npb-91795150": {
+      "name": "菊地 ハルン",
+      "birthDate": "2007-01-21",
+      "reading": "きくち はるん",
+      "source": {
+        "url": "https://npb.jp/bis/players/91795150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "69a7c9b802c9f34ded1a6966914bdbb409ba3457da283dacc4b2efb75e1674ce"
+      }
+    },
+    "npb-21125151": {
+      "name": "石原 貴規",
+      "birthDate": "1998-02-03",
+      "reading": "いしはら ともき",
+      "source": {
+        "url": "https://npb.jp/bis/players/21125151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d094b3bd7c2930abdf078b95f112b269e3d219b5abdb374182ae9dd94f1711cf"
+      }
+    },
+    "npb-81885151": {
+      "name": "持丸 泰輝",
+      "birthDate": "2001-10-26",
+      "reading": "もちまる たいき",
+      "source": {
+        "url": "https://npb.jp/bis/players/81885151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "6521267632ba4c04f3f8742bce1856a5d1c35e798ca0297e5297be32c22c3252"
+      }
+    },
+    "npb-91995157": {
+      "name": "清水 叶人",
+      "birthDate": "2004-07-06",
+      "reading": "しみず かなと",
+      "source": {
+        "url": "https://npb.jp/bis/players/91995157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "28d1ac5970daad6852bc6d1d854d164df0f27a999a2ca0a7f68c25d47eaa9214"
+      }
+    },
+    "npb-11215155": {
+      "name": "髙木 翔斗",
+      "birthDate": "2003-08-12",
+      "reading": "たかぎ しょうと",
+      "source": {
+        "url": "https://npb.jp/bis/players/11215155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "e37b03c93c174cb99d00b3e3dcea06388bcb4a70d7a09513c1c334d6b642b024"
+      }
+    },
+    "npb-81585152": {
+      "name": "勝田 成",
+      "birthDate": "2003-06-21",
+      "reading": "かつだ なる",
+      "source": {
+        "url": "https://npb.jp/bis/players/81585152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "53216a12348958c55fd63ded16884ab6d44218f249e302a0352b304cc227ecce"
+      }
+    },
+    "npb-11015150": {
+      "name": "佐々木 泰",
+      "birthDate": "2002-12-24",
+      "reading": "ささき たい",
+      "source": {
+        "url": "https://npb.jp/bis/players/11015150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "9b8b0c5ac0e4890f55f65b6aea72960f0417c51e76927b2b28ec94af9f498224"
+      }
+    },
+    "npb-01405138": {
+      "name": "林 晃汰",
+      "birthDate": "2000-11-16",
+      "reading": "はやし こうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/01405138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "afd83e0565d1599efcd321bade30e652ea021ffee590a1b6d89ae5f50bddf57e"
+      }
+    },
+    "npb-13515150": {
+      "name": "渡邉 悠斗",
+      "birthDate": "2002-07-07",
+      "reading": "わたなべ ゆうと",
+      "source": {
+        "url": "https://npb.jp/bis/players/13515150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d6ca22a34883ce682e3b46d8999eae57ffba9d1106d36143e9dd0118ad0d1ccb"
+      }
+    },
+    "npb-01405152": {
+      "name": "西川 篤夢",
+      "birthDate": "2007-12-28",
+      "reading": "にしかわ あつむ",
+      "source": {
+        "url": "https://npb.jp/bis/players/01405152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "c18816b512184dfe774247612483dbb650325d2be31724dbdd8261ee0c545df7"
+      }
+    },
+    "npb-41445159": {
+      "name": "仲田 侑仁",
+      "birthDate": "2005-07-31",
+      "reading": "なかだ ゆうと",
+      "source": {
+        "url": "https://npb.jp/bis/players/41445159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "22799eec47ed9337a967dbc978ff7194c733683b2af9bb3d88f5ee5268cfcb77"
+      }
+    },
+    "npb-51355157": {
+      "name": "内田 湘大",
+      "birthDate": "2004-09-22",
+      "reading": "うちだ しょうだい",
+      "source": {
+        "url": "https://npb.jp/bis/players/51355157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "26c7fb6a32647e6ca6fa8ec4e1dfa435f4d3001322ba55df9907cf3b8226bd3b"
+      }
+    },
+    "npb-71975159": {
+      "name": "佐藤 啓介",
+      "birthDate": "2001-05-24",
+      "reading": "さとう けいすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/71975159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "de5a44bc79e31727f3b6a8dd6095c8fe8b7553bce367fa860b53fab65b720327"
+      }
+    },
+    "npb-91895153": {
+      "name": "二俣 翔一",
+      "birthDate": "2002-10-21",
+      "reading": "ふたまた しょういち",
+      "source": {
+        "url": "https://npb.jp/bis/players/91895153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "64e2ad530870ea5c3b2b6e86be2b22d1098b866011aab6fba743c46f40d4b34c"
+      }
+    },
+    "npb-71675152": {
+      "name": "平川 蓮",
+      "birthDate": "2004-03-31",
+      "reading": "ひらかわ れん",
+      "source": {
+        "url": "https://npb.jp/bis/players/71675152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "94ecfe49705763383f0706601830fad7660b45bd46b797cd65bc87772af49967"
+      }
+    },
+    "npb-51055155": {
+      "name": "末包 昇大",
+      "birthDate": "1996-05-27",
+      "reading": "すえかね しょうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/51055155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ee61e0a8d054048bac89b456397bfe68d289f703e0a13286421a06c457683a11"
+      }
+    },
+    "npb-81585157": {
+      "name": "久保 修",
+      "birthDate": "2000-09-29",
+      "reading": "くぼ しゅう",
+      "source": {
+        "url": "https://npb.jp/bis/players/81585157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ae41deb46657eb4d18d71c53407f584bbe5cc6b7ba304b9f6b52b5965d2e68fe"
+      }
+    },
+    "npb-21325138": {
+      "name": "大盛 穂",
+      "birthDate": "1996-08-31",
+      "reading": "おおもり みのる",
+      "source": {
+        "url": "https://npb.jp/bis/players/21325138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ca0ff981d586c2d26f4ffc8e4ca1d5a54e013709732d042ad1d19d91982676c9"
+      }
+    },
+    "npb-81285136": {
+      "name": "中村 奨成",
+      "birthDate": "1999-06-06",
+      "reading": "なかむら しょうせい",
+      "source": {
+        "url": "https://npb.jp/bis/players/81285136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "e4843ef3759abdac041f40c5b6af6c7562fbdab771f91bb0d285b231704c5b62"
+      }
+    },
+    "npb-91695150": {
+      "name": "中村 優斗",
+      "birthDate": "2003-02-08",
+      "reading": "なかむら ゆうと",
+      "source": {
+        "url": "https://npb.jp/bis/players/91695150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "3f76185b38c8106a30e845c03a09d09dafbcf63fcf3c2a9d091459b1c78c0b11"
+      }
+    },
+    "npb-51955138": {
+      "name": "清水 昇",
+      "birthDate": "1996-10-15",
+      "reading": "しみず のぼる",
+      "source": {
+        "url": "https://npb.jp/bis/players/51955138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "58242698a7130f553eb69314695b3af3441eb7a9b74030472efc6a017d3aab15"
+      }
+    },
+    "npb-31735151": {
+      "name": "奥川 恭伸",
+      "birthDate": "2001-04-16",
+      "reading": "おくがわ やすのぶ",
+      "source": {
+        "url": "https://npb.jp/bis/players/31735151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d25d244e9da5b05f85911c2db2d5dcc39f461f5f45feec9d863dea98f749b576"
+      }
+    },
+    "npb-11915153": {
+      "name": "木澤 尚文",
+      "birthDate": "1998-04-25",
+      "reading": "きざわ なおふみ",
+      "source": {
+        "url": "https://npb.jp/bis/players/11915153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "f0f2795dd0677f1a5403209e5bff2aee299d736688ffeb56dca50072b9d0d9b2"
+      }
+    },
+    "npb-53555157": {
+      "name": "吉村 貢司郎",
+      "birthDate": "1998-01-19",
+      "reading": "よしむら こうじろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/53555157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "62c72e72a2ac32186c6d1eb8800eeec9fb7b897eb9da9671d503969bee368a6d"
+      }
+    },
+    "npb-63365153": {
+      "name": "山野 太一",
+      "birthDate": "1999-03-24",
+      "reading": "やまの たいち",
+      "source": {
+        "url": "https://npb.jp/bis/players/63365153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "4608121dccf824ec44590e96bb7553fd2fed3cec202b74056e3f2be31b6a5912"
+      }
+    },
+    "npb-03105159": {
+      "name": "松本 健吾",
+      "birthDate": "1999-04-14",
+      "reading": "まつもと けんご",
+      "source": {
+        "url": "https://npb.jp/bis/players/03105159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "977f7f3bc0fcd817871e453044afbc03a097f32c4d1d4f8d89b8e1e99f6217be"
+      }
+    },
+    "npb-91295150": {
+      "name": "荘司 宏太",
+      "birthDate": "2000-05-22",
+      "reading": "しょうじ こうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/91295150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "81549ad9511c3f6fef38e8455d9a7952f211a5a3ab7aa5d3f449c2f3f1e5998e"
+      }
+    },
+    "npb-23125152": {
+      "name": "山崎 太陽",
+      "birthDate": "2003-07-06",
+      "reading": "やまざき たいよう",
+      "source": {
+        "url": "https://npb.jp/bis/players/23125152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "37634b17a707a4320d641cb598924c4141afa64be1cafba05b1bed2ef47ea1c7"
+      }
+    },
+    "npb-41145159": {
+      "name": "石原 勇輝",
+      "birthDate": "2001-08-30",
+      "reading": "いしはら ゆうき",
+      "source": {
+        "url": "https://npb.jp/bis/players/41145159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d725211627a31f2328c96b3a95e47c4768e0ca05385fe0305c4f8d696c8592a5"
+      }
+    },
+    "npb-71575134": {
+      "name": "拓也",
+      "birthDate": "1994-12-31",
+      "reading": "たくや",
+      "source": {
+        "url": "https://npb.jp/bis/players/71575134.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "bab7d9ecc2f28994c3a59fb3bc7d5c15e090e6a18701a85533097fa59065fd92"
+      }
+    },
+    "npb-01805152": {
+      "name": "増居 翔太",
+      "birthDate": "2000-05-25",
+      "reading": "ますい しょうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/01805152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "8cd61dbaf4d835bbe0debebabeeaa68c6cf728c3149e8d9a8ae879acceb2d21b"
+      }
+    },
+    "npb-41545151": {
+      "name": "大西 広樹",
+      "birthDate": "1997-11-08",
+      "reading": "おおにし ひろき",
+      "source": {
+        "url": "https://npb.jp/bis/players/41545151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "33742ad8cb744740019042387ab9eef311c4557d507bf4be4a9b57777f332a00"
+      }
+    },
+    "npb-01705132": {
+      "name": "小澤 怜史",
+      "birthDate": "1998-03-09",
+      "reading": "こざわ れいじ",
+      "source": {
+        "url": "https://npb.jp/bis/players/01705132.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "db460022d9e78fdab3be65f5e3d39238c037a0ae536b59e9ef6d9ff47ce0b870"
+      }
+    },
+    "npb-51055132": {
+      "name": "高橋 奎二",
+      "birthDate": "1997-05-14",
+      "reading": "たかはし けいじ",
+      "source": {
+        "url": "https://npb.jp/bis/players/51055132.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "233624a251e3693c9d43d854e283c615d7c0a4f886264bfd91b208d38e79e64c"
+      }
+    },
+    "npb-61065152": {
+      "name": "鈴木 蓮吾",
+      "birthDate": "2007-08-18",
+      "reading": "すずき れんご",
+      "source": {
+        "url": "https://npb.jp/bis/players/61065152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "1e23275909c16e7a4f44642ea58833423ab968d4a78ec4403c5a20631f90e2aa"
+      }
+    },
+    "npb-81785157": {
+      "name": "坂本 拓己",
+      "birthDate": "2004-07-06",
+      "reading": "さかもと たくみ",
+      "source": {
+        "url": "https://npb.jp/bis/players/81785157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "e99eeaa536f6f25b337aeef2daa0aaf6fa5d0cf82fdf780d8af1b0bc2a3620a3"
+      }
+    },
+    "npb-01105152": {
+      "name": "飯田 琉斗",
+      "birthDate": "1999-06-24",
+      "reading": "いいだ りゅうと",
+      "source": {
+        "url": "https://npb.jp/bis/players/01105152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "e0a0e4b6552e38c0fd3aaa55655cc37a5a98c1c092f4497103f4c35829e8a04e"
+      }
+    },
+    "npb-81785136": {
+      "name": "阪口 皓亮",
+      "birthDate": "1999-08-15",
+      "reading": "さかぐち こうすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/81785136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "62b723dcd870a8aed6071f8897be73d404e9b270cf0186f5b2232755b9de61dd"
+      }
+    },
+    "npb-43145153": {
+      "name": "丸山 翔大",
+      "birthDate": "1998-08-22",
+      "reading": "まるやま しょうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/43145153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "c7a1841c3c59d8c11b85e5966df533d5a1073b8e2a759177660d903a555bd3ac"
+      }
+    },
+    "npb-77575159": {
+      "name": "下川 隼佑",
+      "birthDate": "2000-03-22",
+      "reading": "しもかわ しゅんすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/77575159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "efffc65e2bbdba5f33210975e35dc797bb58f1126b62602f8f4adcbdb6eda9f6"
+      }
+    },
+    "npb-01705134": {
+      "name": "古賀 優大",
+      "birthDate": "1998-08-07",
+      "reading": "こが ゆうだい",
+      "source": {
+        "url": "https://npb.jp/bis/players/01705134.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2affd4ce06a2414fb45786ff9bd8cc260009047dc9a1cfb3cdb6f0da00328c1b"
+      }
+    },
+    "npb-51855136": {
+      "name": "松本 直樹",
+      "birthDate": "1993-10-17",
+      "reading": "まつもと なおき",
+      "source": {
+        "url": "https://npb.jp/bis/players/51855136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d62ceb51aad1be1ae146130d5a66c37074e75394ce77f0062ded0e14dc3e1c63"
+      }
+    },
+    "npb-21525132": {
+      "name": "柿沼 友哉",
+      "birthDate": "1993-05-12",
+      "reading": "かきぬま ともや",
+      "source": {
+        "url": "https://npb.jp/bis/players/21525132.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "0dc7ceb900f74c672649c94516532d40cbccbd82a93abf397d2c73d6155c5aaf"
+      }
+    },
+    "npb-11615157": {
+      "name": "橋本 星哉",
+      "birthDate": "2000-09-18",
+      "reading": "はしもと せいや",
+      "source": {
+        "url": "https://npb.jp/bis/players/11615157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "e9d2cdd32b097b546957b26c6ff42f9e2e33f85409e3d9adc696c56451fcd7f8"
+      }
+    },
+    "npb-43145150": {
+      "name": "矢野 泰二郎",
+      "birthDate": "2002-05-22",
+      "reading": "やの たいじろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/43145150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "402878022cec32748df506e3b29622ade17c66188b1ae5b0f9650e86ab8d1a88"
+      }
+    },
+    "npb-01005159": {
+      "name": "鈴木 叶",
+      "birthDate": "2006-03-21",
+      "reading": "すずき きょう",
+      "source": {
+        "url": "https://npb.jp/bis/players/01005159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "4fa98fd2ec071a679f893f096522cd4a4481a048c75b725fc1cdc9fd1465037e"
+      }
+    },
+    "npb-51155153": {
+      "name": "赤羽 由紘",
+      "birthDate": "2000-06-29",
+      "reading": "あかはね よしひろ",
+      "source": {
+        "url": "https://npb.jp/bis/players/51155153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "e4763d248594c5dd9496703bd737401f375bcb380df9bdfac181e919e769f3aa"
+      }
+    },
+    "npb-91595153": {
+      "name": "内山 壮真",
+      "birthDate": "2002-06-30",
+      "reading": "うちやま そうま",
+      "source": {
+        "url": "https://npb.jp/bis/players/91595153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "25a600ca084a6e1276bd80d12d052bb31a8f46617fd5cef05ded0d94dc806500"
+      }
+    },
+    "npb-61865152": {
+      "name": "松下 歩叶",
+      "birthDate": "2003-04-14",
+      "reading": "まつした あゆと",
+      "source": {
+        "url": "https://npb.jp/bis/players/61865152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "b2e3f864a2a2023c73df8593c3ca240377219f320fa0b8a71e2f7e04f7f685b3"
+      }
+    },
+    "npb-51455151": {
+      "name": "長岡 秀樹",
+      "birthDate": "2001-09-26",
+      "reading": "ながおか ひでき",
+      "source": {
+        "url": "https://npb.jp/bis/players/51455151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ef51982a773a6305ed7338417567e2ba16b4720a9a6f1536073034d3aa604892"
+      }
+    },
+    "npb-61865132": {
+      "name": "茂木 栄五郎",
+      "birthDate": "1994-02-14",
+      "reading": "もぎ えいごろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/61865132.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "9179310429eae42738746c6d2f6debb91a1bf5a14490b36d22ace3fed488d079"
+      }
+    },
+    "npb-41145152": {
+      "name": "石井 巧",
+      "birthDate": "2002-03-02",
+      "reading": "いしい たくみ",
+      "source": {
+        "url": "https://npb.jp/bis/players/41145152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "122d5609754f618b0af51865d3865bba58522bb313f13a0553db1c410d53b878"
+      }
+    },
+    "npb-41845152": {
+      "name": "松川 玲央",
+      "birthDate": "2004-03-26",
+      "reading": "まつかわ れお",
+      "source": {
+        "url": "https://npb.jp/bis/players/41845152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "54cd14916fd20acc11105f2a8d7190993fd0827715e9bea592c84de1337bcb12"
+      }
+    },
+    "npb-01505157": {
+      "name": "北村 恵吾",
+      "birthDate": "2000-12-18",
+      "reading": "きたむら けいご",
+      "source": {
+        "url": "https://npb.jp/bis/players/01505157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "eabfb1d91a5e67ace9d922090c574ecf161ac7b5bdefb086a356245d81c84ec2"
+      }
+    },
+    "npb-01405150": {
+      "name": "田中 陽翔",
+      "birthDate": "2006-06-25",
+      "reading": "たなか はると",
+      "source": {
+        "url": "https://npb.jp/bis/players/01405150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "5f5f06109336fb69ae7b592ee47ec2d3ee7445d038936752630a909d5188aab6"
+      }
+    },
+    "npb-71275151": {
+      "name": "武岡 龍世",
+      "birthDate": "2001-05-28",
+      "reading": "たけおか りゅうせい",
+      "source": {
+        "url": "https://npb.jp/bis/players/71275151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "8fcbe4e90ee6b6adbb05cdcdfbfa3d3ed1776ac9f501d7e5d3075bdd4d3f1abb"
+      }
+    },
+    "npb-81185159": {
+      "name": "伊藤 琉偉",
+      "birthDate": "2002-09-11",
+      "reading": "いとう りゅうい",
+      "source": {
+        "url": "https://npb.jp/bis/players/81185159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "8c70dbd5b4bf1a2d9125e6f248f08d2db4fb903f5322ec478ec0b41e7e1b67c9"
+      }
+    },
+    "npb-91695153": {
+      "name": "並木 秀尊",
+      "birthDate": "1999-03-23",
+      "reading": "なみき ひでたか",
+      "source": {
+        "url": "https://npb.jp/bis/players/91695153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "5860039146a88ab9d5764250e37910b2363cb6c8e8f5ba684f1c8a38194cafd8"
+      }
+    },
+    "npb-93195155": {
+      "name": "丸山 和郁",
+      "birthDate": "1999-07-18",
+      "reading": "まるやま かずや",
+      "source": {
+        "url": "https://npb.jp/bis/players/93195155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "5ba2685e703d3f31f8bb9e7cf3f84b735e5acc50b109c31de9e7315525883864"
+      }
+    },
+    "npb-71975136": {
+      "name": "塩見 泰隆",
+      "birthDate": "1993-06-12",
+      "reading": "しおみ やすたか",
+      "source": {
+        "url": "https://npb.jp/bis/players/71975136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "e0217046c83b3b9230e3b90f9b276b76b8a4f5ae87a9356a988e73d7c8f275b5"
+      }
+    },
+    "npb-93195150": {
+      "name": "モイセエフ ニキータ",
+      "birthDate": "2006-11-29",
+      "reading": "もいせえふ にきーた",
+      "source": {
+        "url": "https://npb.jp/bis/players/93195150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "615f8e5d4d3e56a7ec89ecdde6d2af202f2e99a2286a6e7fa2964ab92cae778c"
+      }
+    },
+    "npb-91495157": {
+      "name": "西村 瑠伊斗",
+      "birthDate": "2004-07-01",
+      "reading": "にしむら るいと",
+      "source": {
+        "url": "https://npb.jp/bis/players/91495157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "0d2be23ebf6723cfbccddbefacb34044b5037656774497d296d5ec06e1a9a547"
+      }
+    },
+    "npb-51955157": {
+      "name": "澤井 廉",
+      "birthDate": "2000-05-31",
+      "reading": "さわい れん",
+      "source": {
+        "url": "https://npb.jp/bis/players/51955157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2c93d98d59fe7fb1be085c269e12b62247cca7f4d51ab6e5a2d2d95b4d5322c5"
+      }
+    },
+    "npb-11815136": {
+      "name": "増田 珠",
+      "birthDate": "1999-05-21",
+      "reading": "ますだ しゅう",
+      "source": {
+        "url": "https://npb.jp/bis/players/11815136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "490fc5cc9afc312edb825bbfc9ec5b255ac689004e19e139b1c1fbfc1c3bd3bc"
+      }
+    },
+    "npb-51355155": {
+      "name": "岩田 幸宏",
+      "birthDate": "1997-07-31",
+      "reading": "いわた ゆきひろ",
+      "source": {
+        "url": "https://npb.jp/bis/players/51355155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "a38d14e634e890c34819d85a45ffce500684f6a2d8835b230b4b3665b23aef21"
+      }
+    },
+    "npb-23125157": {
+      "name": "モンテル",
+      "birthDate": "2000-03-18",
+      "reading": "もんてる",
+      "source": {
+        "url": "https://npb.jp/bis/players/23125157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "55bcc3d7293ed16756c6dd18a1457d63dd7ad8531731bc01c6870618c55555d4"
+      }
+    },
+    "npb-51455152": {
+      "name": "中西 聖輝",
+      "birthDate": "2003-12-18",
+      "reading": "なかにし まさき",
+      "source": {
+        "url": "https://npb.jp/bis/players/51455152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "fe9ed488a570c73e3cab3200f840ad4e0bb7c180bfb9bbbf00cf847ea7227b7e"
+      }
+    },
+    "npb-21425151": {
+      "name": "橋本 侑樹",
+      "birthDate": "1998-01-08",
+      "reading": "はしもと ゆうき",
+      "source": {
+        "url": "https://npb.jp/bis/players/21425151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "7e67e6d69512f36d18f54b9e54a0c1483725b353f7a61319dd42aa30925c3639"
+      }
+    },
+    "npb-91795159": {
+      "name": "草加 勝",
+      "birthDate": "2001-11-21",
+      "reading": "くさか しょう",
+      "source": {
+        "url": "https://npb.jp/bis/players/91795159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "7f38ffc024a84779373f7295a832d740d3253b059af6791e60bbfa4d8d0d6db4"
+      }
+    },
+    "npb-21925152": {
+      "name": "櫻井 頼之介",
+      "birthDate": "2003-07-21",
+      "reading": "さくらい よりのすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/21925152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "1800099771a029f21afffffc92290b5dadb606026f262c03b911519f7c35dfa2"
+      }
+    },
+    "npb-61565150": {
+      "name": "金丸 夢斗",
+      "birthDate": "2003-02-01",
+      "reading": "かねまる ゆめと",
+      "source": {
+        "url": "https://npb.jp/bis/players/61565150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "3dec5021f7f2cbb83f44fc3fad9bcc194e65f02293644b3a8a844f6e25d83624"
+      }
+    },
+    "npb-41245157": {
+      "name": "仲地 礼亜",
+      "birthDate": "2001-02-15",
+      "reading": "なかち れいあ",
+      "source": {
+        "url": "https://npb.jp/bis/players/41245157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "cf7c9467cc20f633a0c2f589d13f98b86b715aecf682895d76c28115aa76f841"
+      }
+    },
+    "npb-73175153": {
+      "name": "松木平 優太",
+      "birthDate": "2003-02-24",
+      "reading": "まつきひら ゆうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/73175153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "884c9bf1f325b613fa8d0cb621ce2ecc2451eeb5c500f99ec50c25edaaef3554"
+      }
+    },
+    "npb-81285138": {
+      "name": "根尾 昂",
+      "birthDate": "2000-04-19",
+      "reading": "ねお あきら",
+      "source": {
+        "url": "https://npb.jp/bis/players/81285138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "95505c2b3f1ac4e526b2e244083da93dd702c80a30b24d714d2ec47c14df9416"
+      }
+    },
+    "npb-61165157": {
+      "name": "伊藤 茉央",
+      "birthDate": "2000-11-19",
+      "reading": "いとう まお",
+      "source": {
+        "url": "https://npb.jp/bis/players/61165157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "698a54e738bf9ee863c4a89caa4d14cbcf823b06249f44d8bc50713b486bb968"
+      }
+    },
+    "npb-61765139": {
+      "name": "杉浦 稔大",
+      "birthDate": "1992-02-25",
+      "reading": "すぎうら としひろ",
+      "source": {
+        "url": "https://npb.jp/bis/players/61765139.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "a985dd9c4040338dd9fbe4e847faca52731b4c5f25aefa4033b04e803f33c4dc"
+      }
+    },
+    "npb-31835159": {
+      "name": "福田 幸之介",
+      "birthDate": "2005-08-11",
+      "reading": "ふくだ こうのすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/31835159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "c5de9b808af10e6f8f884537600a715b7c6be9b2528f8ef2567f890856a3e9fb"
+      }
+    },
+    "npb-21525138": {
+      "name": "勝野 昌慶",
+      "birthDate": "1997-06-12",
+      "reading": "かつの あきよし",
+      "source": {
+        "url": "https://npb.jp/bis/players/21525138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2dc1b9dfb17fc287d082819a0b1ec4c7c1109f07306a1d98bd55565dc2080a6c"
+      }
+    },
+    "npb-51355134": {
+      "name": "梅野 雄吾",
+      "birthDate": "1999-01-13",
+      "reading": "うめの ゆうご",
+      "source": {
+        "url": "https://npb.jp/bis/players/51355134.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ba5d3cc172044b711c89ee8688a63a1b6fb3f5052bc9ceebd3b5c5b632a06be9"
+      }
+    },
+    "npb-93395150": {
+      "name": "吉田 聖弥",
+      "birthDate": "2002-05-23",
+      "reading": "よしだ せいや",
+      "source": {
+        "url": "https://npb.jp/bis/players/93395150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "6e9036a9dc1ee7766e91a99af8c3e78459929eb48583a322654aa3bd6d2246a6"
+      }
+    },
+    "npb-81985152": {
+      "name": "篠﨑 国忠",
+      "birthDate": "2005-06-12",
+      "reading": "しのざき くにただ",
+      "source": {
+        "url": "https://npb.jp/bis/players/81985152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "83812c4f751363a15b1677d2bc0fc24e01cc1de4b0352b7f5c5d5beeea662198"
+      }
+    },
+    "npb-11915130": {
+      "name": "齋藤 綱記",
+      "birthDate": "1996-12-18",
+      "reading": "さいとう こうき",
+      "source": {
+        "url": "https://npb.jp/bis/players/11915130.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2eb3995860a093040b995cdfba62fda363befcb92ce90cfebb59991feaf0c7ff"
+      }
+    },
+    "npb-41245150": {
+      "name": "高橋 幸佑",
+      "birthDate": "2006-12-31",
+      "reading": "たかはし こうすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/41245150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "e861e860aca1c271e5ebdc88547ca456cd8311a00b1eed74c492681a4e25af94"
+      }
+    },
+    "npb-91195150": {
+      "name": "有馬 惠叶",
+      "birthDate": "2006-09-20",
+      "reading": "ありま けいと",
+      "source": {
+        "url": "https://npb.jp/bis/players/91195150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "325dc1b76bcc9edd70720bcd5ac763e3f73ed1d85b4d95e851cbd2561be547a8"
+      }
+    },
+    "npb-11015153": {
+      "name": "近藤 廉",
+      "birthDate": "1998-09-22",
+      "reading": "こんどう れん",
+      "source": {
+        "url": "https://npb.jp/bis/players/11015153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "31ace7cc258d6b8bbc4606426a31a4cb939361d9724d8a8b04c8f72a3fa80c6f"
+      }
+    },
+    "npb-21125150": {
+      "name": "石伊 雄太",
+      "birthDate": "2000-08-18",
+      "reading": "いしい ゆうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/21125150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "3158d158f81829b5a9c521a8a25b1e9c0a8dc13f548f6a68af4329c8a5f8b4b7"
+      }
+    },
+    "npb-31735132": {
+      "name": "木下 拓哉",
+      "birthDate": "1991-12-18",
+      "reading": "きのした たくや",
+      "source": {
+        "url": "https://npb.jp/bis/players/31735132.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ba47a0d872f7ae9f1b036be1e2a49df4c5cdbd9ab59618ba94fd9063411ca175"
+      }
+    },
+    "npb-61365132": {
+      "name": "宇佐見 真吾",
+      "birthDate": "1993-06-04",
+      "reading": "うさみ しんご",
+      "source": {
+        "url": "https://npb.jp/bis/players/61365132.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "1bfe1fbf0e4d50b5e946fd250c6d62ea99223e1d35a63540a0b64e3639631b6f"
+      }
+    },
+    "npb-83185155": {
+      "name": "味谷 大誠",
+      "birthDate": "2003-06-14",
+      "reading": "みや たいせい",
+      "source": {
+        "url": "https://npb.jp/bis/players/83185155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "6a39f1529bcb3e0641a65ff6eefffbe36e5a833c55028810b5b843519e44f66c"
+      }
+    },
+    "npb-91195138": {
+      "name": "石橋 康太",
+      "birthDate": "2000-12-07",
+      "reading": "いしばし こうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/91195138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "55a55bb4cc58b8276fc1d5746e34c126f46105136f90fbf0ef78239c1c096496"
+      }
+    },
+    "npb-21025157": {
+      "name": "田中 幹也",
+      "birthDate": "2000-11-28",
+      "reading": "たなか みきや",
+      "source": {
+        "url": "https://npb.jp/bis/players/21025157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "bd4e0ea46bd2a4967412908588990bd3e770d4ba84d90d9ac8a22f48c1f164c2"
+      }
+    },
+    "npb-03105157": {
+      "name": "村松 開人",
+      "birthDate": "2001-01-06",
+      "reading": "むらまつ かいと",
+      "source": {
+        "url": "https://npb.jp/bis/players/03105157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "9f09f6b5ddacf7ab784f52b52251794a6515315288b0648f151205d065294d16"
+      }
+    },
+    "npb-81685157": {
+      "name": "福永 裕基",
+      "birthDate": "1996-09-16",
+      "reading": "ふくなが ひろき",
+      "source": {
+        "url": "https://npb.jp/bis/players/81685157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "982b3b80cccb295e15d1450ef4b1fe3157c7a1cf26295d81015c492aa600e13c"
+      }
+    },
+    "npb-91195151": {
+      "name": "石川 昂弥",
+      "birthDate": "2001-06-22",
+      "reading": "いしかわ たかや",
+      "source": {
+        "url": "https://npb.jp/bis/players/91195151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "742ad07a72d6b364be5273d1b6999590aadd7dae23dd13b72d1e519961621626"
+      }
+    },
+    "npb-03105150": {
+      "name": "森 駿太",
+      "birthDate": "2006-12-25",
+      "reading": "もり しゅんた",
+      "source": {
+        "url": "https://npb.jp/bis/players/03105150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "b8f741e7af304c5877616685d14095647ed930ad3b90febb6370398d3cef2801"
+      }
+    },
+    "npb-51455153": {
+      "name": "土田 龍空",
+      "birthDate": "2002-12-30",
+      "reading": "つちだ りゅうく",
+      "source": {
+        "url": "https://npb.jp/bis/players/51455153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "cfdf63d6a8b26eac4a9b6b67d2ebdad356c9da178beb8226d437b43d96291d36"
+      }
+    },
+    "npb-91095152": {
+      "name": "新保 茉良",
+      "birthDate": "2003-11-29",
+      "reading": "しんぽ まお",
+      "source": {
+        "url": "https://npb.jp/bis/players/91095152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d9e4cc230c6b1ceeef93b2b3b1dd8a9eb3ce0ea44f415cb6867b416fdef3dd90"
+      }
+    },
+    "npb-91395132": {
+      "name": "板山 祐太郎",
+      "birthDate": "1994-03-27",
+      "reading": "いたやま ゆうたろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/91395132.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "b7b394b58e4d4d24e77ab5e4c1f0f51b7ebb160297a6d9dfc7228b40277ff374"
+      }
+    },
+    "npb-21625157": {
+      "name": "樋口 正修",
+      "birthDate": "1998-11-17",
+      "reading": "ひぐち せいしゅう",
+      "source": {
+        "url": "https://npb.jp/bis/players/21625157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "704407780e7ea6c6f09e14b9b2a1be11da238ebcc161aac2eefbb03a356b7b56"
+      }
+    },
+    "npb-31835155": {
+      "name": "福元 悠真",
+      "birthDate": "1999-12-01",
+      "reading": "ふくもと ゆうま",
+      "source": {
+        "url": "https://npb.jp/bis/players/31835155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "37865a203e94690093e493723859ce378956bf69e5dbb0d14c619ba79ba072fa"
+      }
+    },
+    "npb-81585132": {
+      "name": "川越 誠司",
+      "birthDate": "1993-06-30",
+      "reading": "かわごえ せいじ",
+      "source": {
+        "url": "https://npb.jp/bis/players/81585132.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "6f8b62cae5c5544395728d9d1e7919f3bdf91c8fdbf8c6dc58504e453de282db"
+      }
+    },
+    "npb-61465152": {
+      "name": "花田 旭",
+      "birthDate": "2003-04-23",
+      "reading": "はなだ あさひ",
+      "source": {
+        "url": "https://npb.jp/bis/players/61465152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "aa349d8f9df726d6b9d502aedc0d7e6ffd881fa85aa9beaf1af273bf9c6a9e1c"
+      }
+    },
+    "npb-71375155": {
+      "name": "鵜飼 航丞",
+      "birthDate": "1999-05-30",
+      "reading": "うかい こうすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/71375155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "86e2eb7b8f7cd5b6d746a4430b9dfe5a52ebff157c35f95008ac25f69b4d9dd9"
+      }
+    },
+    "npb-41445152": {
+      "name": "能戸 輝夢",
+      "birthDate": "2007-05-15",
+      "reading": "のと きらむ",
+      "source": {
+        "url": "https://npb.jp/bis/players/41445152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "c713322d93ba841d4ee5d895105c25e9adf474b018aaed9db929737ba1a21511"
+      }
+    },
+    "npb-81285151": {
+      "name": "津森 宥紀",
+      "birthDate": "1998-01-21",
+      "reading": "つもり ゆうき",
+      "source": {
+        "url": "https://npb.jp/bis/players/81285151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "141f799c66b8044922989a7deba1a0f5588ac7dccdaf7a9c562731b9de030315"
+      }
+    },
+    "npb-51355152": {
+      "name": "稲川 竜汰",
+      "birthDate": "2004-02-25",
+      "reading": "いながわ りゅうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/51355152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "b6fdbf77e5ecb8095e8369c5ade5e75d6682d962c37c662013eaf6261bba01c8"
+      }
+    },
+    "npb-01305157": {
+      "name": "大津 亮介",
+      "birthDate": "1999-01-13",
+      "reading": "おおつ りょうすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/01305157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "fd2475eb8c85301121a3efc8aa44beb8edc5d4ae97c64f98ad22ffba40003d64"
+      }
+    },
+    "npb-73175150": {
+      "name": "村上 泰斗",
+      "birthDate": "2007-02-20",
+      "reading": "むらかみ たいと",
+      "source": {
+        "url": "https://npb.jp/bis/players/73175150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "e15604c2194282d2f2caa41a93ecfbe5464d7b041b35cdffae9de2dbb63a2906"
+      }
+    },
+    "npb-21025152": {
+      "name": "鈴木 豪太",
+      "birthDate": "2003-08-31",
+      "reading": "すずき ごうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/21025152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "08cf5c444b98c0e47e689fbcea918d30c491172de6083f6f74e8a99cbcb77611"
+      }
+    },
+    "npb-51355159": {
+      "name": "岩井 俊介",
+      "birthDate": "2001-07-30",
+      "reading": "いわい しゅんすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/51355159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "10c823a79ac3efbbb258b956aa689b6c06069d53344d1e507add498b9eb03c34"
+      }
+    },
+    "npb-01105150": {
+      "name": "安德 駿",
+      "birthDate": "2002-05-18",
+      "reading": "あんとく しゅん",
+      "source": {
+        "url": "https://npb.jp/bis/players/01105150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "54d737d37ec8da863cb897c70659972182b449e8e3ced9d72a8af22ad7885e26"
+      }
+    },
+    "npb-91995138": {
+      "name": "杉山 一樹",
+      "birthDate": "1997-12-07",
+      "reading": "すぎやま かずき",
+      "source": {
+        "url": "https://npb.jp/bis/players/91995138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "39cea89dae19218cb5513b0877ebf49684092c3f471e574acae4d658d4f64280"
+      }
+    },
+    "npb-13115159": {
+      "name": "前田 悠伍",
+      "birthDate": "2005-08-04",
+      "reading": "まえだ ゆうご",
+      "source": {
+        "url": "https://npb.jp/bis/players/13115159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "1fea87d2736e9dc4024179b73943e5b3d42b81213642978a2dba93b65fe7a08b"
+      }
+    },
+    "npb-91395153": {
+      "name": "伊藤 優輔",
+      "birthDate": "1997-01-14",
+      "reading": "いとう ゆうすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/91395153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "f8d33c1d6c8dac02d345b27985e1bc712928fd9e58fda4b4888941086a36265d"
+      }
+    },
+    "npb-11815152": {
+      "name": "北斗",
+      "birthDate": "2004-03-10",
+      "reading": "ほくと",
+      "source": {
+        "url": "https://npb.jp/bis/players/11815152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "cf1ff1ee1fc4a1d7a5b66e76477b6232b268520c22ce77ec27ffe31913f67831"
+      }
+    },
+    "npb-41845157": {
+      "name": "松本 晴",
+      "birthDate": "2001-02-24",
+      "reading": "まつもと はる",
+      "source": {
+        "url": "https://npb.jp/bis/players/41845157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "09fea4ee77cddaa8b7742cd262554ff482f0b77d9f7a10410ed48327c4aa0581"
+      }
+    },
+    "npb-91995152": {
+      "name": "相良 雅斗",
+      "birthDate": "2003-09-24",
+      "reading": "さがら まさと",
+      "source": {
+        "url": "https://npb.jp/bis/players/91995152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "dc738538f54cc3df9af01430a58aed50cf05c68f4d27c10a43ed44277df68383"
+      }
+    },
+    "npb-71875157": {
+      "name": "前田 純",
+      "birthDate": "2000-06-04",
+      "reading": "まえだ じゅん",
+      "source": {
+        "url": "https://npb.jp/bis/players/71875157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "aa4a8b52b10c316d2a115cfcea694d7019602fdcd765aa904b6e2023830b0bd8"
+      }
+    },
+    "npb-11515159": {
+      "name": "大山 凌",
+      "birthDate": "2002-03-27",
+      "reading": "おおやま りょう",
+      "source": {
+        "url": "https://npb.jp/bis/players/11515159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "43b3832037e65159b77e7c01f2b8959c61489235e572fd99bb628371f8d2db1d"
+      }
+    },
+    "npb-71775155": {
+      "name": "木村 大成",
+      "birthDate": "2003-09-12",
+      "reading": "きむら たいせい",
+      "source": {
+        "url": "https://npb.jp/bis/players/71775155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "c339b190feaea0637e52742d75f33a88dee366cd74f45171af6ca8097f0fa363"
+      }
+    },
+    "npb-21325157": {
+      "name": "大野 稼頭央",
+      "birthDate": "2004-08-06",
+      "reading": "おおの かずお",
+      "source": {
+        "url": "https://npb.jp/bis/players/21325157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ebf0ecba620101b3dd185bd1038d0cfb8296a78482970255e86f42346526410d"
+      }
+    },
+    "npb-81585138": {
+      "name": "上茶谷 大河",
+      "birthDate": "1996-08-31",
+      "reading": "かみちゃたに たいが",
+      "source": {
+        "url": "https://npb.jp/bis/players/81585138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "e9208b8c9730f1347608c2833c1d6ae2dffa3d32379ae5ae3c6a5865355a8bc6"
+      }
+    },
+    "npb-41545157": {
+      "name": "木村 光",
+      "birthDate": "2000-07-02",
+      "reading": "きむら ひかる",
+      "source": {
+        "url": "https://npb.jp/bis/players/41545157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "c217967ad152784c1b60bacbe417aeeb6a0bec713d42acd6b6a09b8a1550f38d"
+      }
+    },
+    "npb-21325150": {
+      "name": "岩崎 峻典",
+      "birthDate": "2003-03-11",
+      "reading": "いわさき しゅんすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/21325150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "66f12284f50378903590b49ac4a1d8c9fa3ac2643fa17759a2b847c868bc43a1"
+      }
+    },
+    "npb-61965153": {
+      "name": "小林 樹斗",
+      "birthDate": "2003-01-16",
+      "reading": "こばやし たつと",
+      "source": {
+        "url": "https://npb.jp/bis/players/61965153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "bb8203834262e718671ffcedb9394f191a27a22aef5f518ca25c7e4fc311d536"
+      }
+    },
+    "npb-93195138": {
+      "name": "渡邉 陸",
+      "birthDate": "2000-09-24",
+      "reading": "わたなべ りく",
+      "source": {
+        "url": "https://npb.jp/bis/players/93195138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "684cb485ff2fcdf029b65870a242e0caafc85112ddb0cdcf30fabb2e2d95cb42"
+      }
+    },
+    "npb-71475139": {
+      "name": "嶺井 博希",
+      "birthDate": "1991-06-04",
+      "reading": "みねい ひろき",
+      "source": {
+        "url": "https://npb.jp/bis/players/71475139.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "c6ae228cedca6e18d8a6e146eef8bd5381614911d11a6ee8f2dfe72476cbcc67"
+      }
+    },
+    "npb-23125136": {
+      "name": "山本 祐大",
+      "birthDate": "1998-09-11",
+      "reading": "やまもと ゆうだい",
+      "source": {
+        "url": "https://npb.jp/bis/players/23125136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "c8c181b70c51b7f2577f0a9ec63329a209040186384b881b2d8fe9ef4e8bcf38"
+      }
+    },
+    "npb-11215132": {
+      "name": "谷川原 健太",
+      "birthDate": "1997-04-16",
+      "reading": "たにがわら けんた",
+      "source": {
+        "url": "https://npb.jp/bis/players/11215132.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "9a15d0e40becedf47a63a2a00d407521d4ecff38bb5577ce75616486f21bddbc"
+      }
+    },
+    "npb-01105151": {
+      "name": "石塚 綜一郎",
+      "birthDate": "2001-06-07",
+      "reading": "いしづか そういちろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/01105151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "137c3a32ca3fd6ea59f02789472ff96baa788d1df33e01ff57a69b653676d918"
+      }
+    },
+    "npb-81385151": {
+      "name": "海野 隆司",
+      "birthDate": "1997-07-15",
+      "reading": "うみの たかし",
+      "source": {
+        "url": "https://npb.jp/bis/players/81385151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "205f8a6a33e09368d6d87442d9d33bc5b358506e4bced95c6f63ec84f932bb98"
+      }
+    },
+    "npb-91895159": {
+      "name": "藤田 悠太郎",
+      "birthDate": "2005-06-03",
+      "reading": "ふじた ゆうたろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/91895159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "b64bb6ee982c1810bc6dfe827804008a3e2ed8e4df11bc15e74d31245d052061"
+      }
+    },
+    "npb-11715132": {
+      "name": "川瀬 晃",
+      "birthDate": "1997-09-15",
+      "reading": "かわせ ひかる",
+      "source": {
+        "url": "https://npb.jp/bis/players/11715132.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "f71157b7ef353c4db019a7faa659c0421ba212de4848440607fc9164e5d99f75"
+      }
+    },
+    "npb-01205150": {
+      "name": "庄子 雄大",
+      "birthDate": "2002-10-02",
+      "reading": "しょうじ ゆうだい",
+      "source": {
+        "url": "https://npb.jp/bis/players/01205150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "eb24079b91a04c8a02980f6124a14058fd2aebd995b7f128d9905b5bea5e0b5d"
+      }
+    },
+    "npb-61665159": {
+      "name": "廣瀨 隆太",
+      "birthDate": "2001-04-07",
+      "reading": "ひろせ りゅうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/61665159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "fa8452a85047752e1e3ecba53ae4bc4ce491fff9e08662b2756ddbe05e5fa696"
+      }
+    },
+    "npb-11315157": {
+      "name": "イヒネ イツア",
+      "birthDate": "2004-09-02",
+      "reading": "いひね いつあ",
+      "source": {
+        "url": "https://npb.jp/bis/players/11315157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "79c606fa294c7129dfd19f840848c1679a010343492eaf35a79ec2ff0f4873a9"
+      }
+    },
+    "npb-61365150": {
+      "name": "宇野 真仁朗",
+      "birthDate": "2006-07-05",
+      "reading": "うの しんじろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/61365150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "bb2b90bd93a5ad4114e83abd34625660192e43a5efd6f5dc1dcd99a8b50bfce8"
+      }
+    },
+    "npb-71175153": {
+      "name": "秋広 優人",
+      "birthDate": "2002-09-17",
+      "reading": "あきひろ ゆうと",
+      "source": {
+        "url": "https://npb.jp/bis/players/71175153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "456930d11e0484454814a168984f3ab9105772fbe41d8ff97ea95cf2fbd44b3c"
+      }
+    },
+    "npb-31235152": {
+      "name": "髙橋 隆慶",
+      "birthDate": "2001-12-21",
+      "reading": "たかはし たかのり",
+      "source": {
+        "url": "https://npb.jp/bis/players/31235152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "da70943e318de87154082ac995851157c2b28dd4f5fb497a3b8c3182b8432c6d"
+      }
+    },
+    "npb-81185150": {
+      "name": "石見 颯真",
+      "birthDate": "2006-06-10",
+      "reading": "いしみ そうま",
+      "source": {
+        "url": "https://npb.jp/bis/players/81185150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "71747dffa3ddc25b79b959f3a9fd7a7a433eeba3c2d2f25791e310d5866e5689"
+      }
+    },
+    "npb-11615155": {
+      "name": "野村 勇",
+      "birthDate": "1996-12-01",
+      "reading": "のむら いさみ",
+      "source": {
+        "url": "https://npb.jp/bis/players/11615155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "68fceefd9868fd924851153d158d4acbf3e9cb93c9028853d3f71db15c0aa7d0"
+      }
+    },
+    "npb-81885155": {
+      "name": "正木 智也",
+      "birthDate": "1999-11-05",
+      "reading": "まさき ともや",
+      "source": {
+        "url": "https://npb.jp/bis/players/81885155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "913cb75d8a453b9fd2a1c5f68cbe2e0e395ec9995a85474b5b81cd065937e296"
+      }
+    },
+    "npb-91095153": {
+      "name": "笹川 吉康",
+      "birthDate": "2002-05-31",
+      "reading": "ささがわ よしやす",
+      "source": {
+        "url": "https://npb.jp/bis/players/91095153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "41ce9b9fdfff3622058944291590a728c05dd2a261f67022ba12782bd9e899c0"
+      }
+    },
+    "npb-81585153": {
+      "name": "緒方 理貢",
+      "birthDate": "1998-09-22",
+      "reading": "おがた りく",
+      "source": {
+        "url": "https://npb.jp/bis/players/81585153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "577bca103c1b55d7f75f765025bfde18c0fbcd2efa45df63b887b16fe0036537"
+      }
+    },
+    "npb-11715155": {
+      "name": "川村 友斗",
+      "birthDate": "1999-08-13",
+      "reading": "かわむら ゆうと",
+      "source": {
+        "url": "https://npb.jp/bis/players/11715155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "784873d47aafd249a8f8cb4e7733dd22bb6a3d88367fbb8aea7b51256864274f"
+      }
+    },
+    "npb-93595155": {
+      "name": "山本 恵大",
+      "birthDate": "1999-08-06",
+      "reading": "やまもと けいた",
+      "source": {
+        "url": "https://npb.jp/bis/players/93595155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "1d48d6857d68a7c0a8b382c0b1fae21b1f6776ee5cac39e1620c4aa9f86a976c"
+      }
+    },
+    "npb-73375157": {
+      "name": "矢澤 宏太",
+      "birthDate": "2000-08-02",
+      "reading": "やざわ こうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/73375157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "9ba962873a687249ba5068b7a4e76c250fcae2eebdbe5757864db41393dcbb5c"
+      }
+    },
+    "npb-41245138": {
+      "name": "生田目 翼",
+      "birthDate": "1995-02-19",
+      "reading": "なばため つばさ",
+      "source": {
+        "url": "https://npb.jp/bis/players/41245138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "bb7e71d8dc8012e0379fe42ff0b99591927a9a50542fbefcdc9a5b8bccf33cca"
+      }
+    },
+    "npb-01205155": {
+      "name": "達 孝太",
+      "birthDate": "2004-03-27",
+      "reading": "たつ こうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/01205155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "21176019547678c4179ce4b5e9f813c3022d4ba841a532df708de9ad0ed3773e"
+      }
+    },
+    "npb-41345132": {
+      "name": "上原 健太",
+      "birthDate": "1994-03-29",
+      "reading": "うえはら けんた",
+      "source": {
+        "url": "https://npb.jp/bis/players/41345132.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "5ef9a6ac3867c1ee4ed03c888e6f927764dd23e4e92ae381bd1f24524196a872"
+      }
+    },
+    "npb-51555157": {
+      "name": "金村 尚真",
+      "birthDate": "2000-08-29",
+      "reading": "かねむら しょうま",
+      "source": {
+        "url": "https://npb.jp/bis/players/51555157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "6018e674ea3c0c4938310d47e66229d7b316134ac09f576ec584027f98d23d84"
+      }
+    },
+    "npb-61365152": {
+      "name": "大川 慈英",
+      "birthDate": "2003-10-28",
+      "reading": "おおかわ じぇい",
+      "source": {
+        "url": "https://npb.jp/bis/players/61365152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "6590b9590749db3252f92b8d74a91fa7edd35ec201b8a3eb1318cc58a9ec2823"
+      }
+    },
+    "npb-81785151": {
+      "name": "河野 竜生",
+      "birthDate": "1998-05-30",
+      "reading": "かわの りゅうせい",
+      "source": {
+        "url": "https://npb.jp/bis/players/81785151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "3c352353025ee0b927ed2ec312b3ebbe5dcb41432676c91a536f4494b42036e0"
+      }
+    },
+    "npb-61865159": {
+      "name": "細野 晴希",
+      "birthDate": "2002-02-26",
+      "reading": "ほその はるき",
+      "source": {
+        "url": "https://npb.jp/bis/players/61865159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "1958e72f17217ebfeddd9b6bafaa7cf2296d96e5564189c1d64431146fb2c215"
+      }
+    },
+    "npb-81085150": {
+      "name": "柴田 獅子",
+      "birthDate": "2006-04-18",
+      "reading": "しばた れお",
+      "source": {
+        "url": "https://npb.jp/bis/players/81085150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "fe4f5c1731617a1363f713167edc08fa7c06d9cc358eceef863e3d1cef1283a0"
+      }
+    },
+    "npb-01805150": {
+      "name": "藤田 琉生",
+      "birthDate": "2006-11-17",
+      "reading": "ふじた りゅうせい",
+      "source": {
+        "url": "https://npb.jp/bis/players/01805150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "e87641ca2c000a26d41d99a8355d818978b805a00576b48c8521a26cd0c61d32"
+      }
+    },
+    "npb-51855134": {
+      "name": "堀 瑞輝",
+      "birthDate": "1998-05-10",
+      "reading": "ほり みずき",
+      "source": {
+        "url": "https://npb.jp/bis/players/51855134.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "66d9e3b8761df1f214f74dc7d41ec50bbea458fb8b61000d552d23c99b5188ed"
+      }
+    },
+    "npb-51155150": {
+      "name": "浅利 太門",
+      "birthDate": "2002-09-06",
+      "reading": "あさり たもん",
+      "source": {
+        "url": "https://npb.jp/bis/players/51155150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "5edf1d0d29e90272f7117743ca3a3a21ba6d193999a6bb13085bf62cd215192b"
+      }
+    },
+    "npb-51055133": {
+      "name": "島本 浩也",
+      "birthDate": "1993-02-14",
+      "reading": "しまもと ひろや",
+      "source": {
+        "url": "https://npb.jp/bis/players/51055133.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "c4c41c0ec06373ff1a94d850379eed0af9bc4609641b8dbc687c2c8b2e937385"
+      }
+    },
+    "npb-81685155": {
+      "name": "福島 蓮",
+      "birthDate": "2003-04-25",
+      "reading": "ふくしま れん",
+      "source": {
+        "url": "https://npb.jp/bis/players/81685155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "f0956a408b14bfd485a6822b905d89ba402a0ef765efdf43500aa5f2d8bd7d08"
+      }
+    },
+    "npb-61765155": {
+      "name": "畔柳 亨丞",
+      "birthDate": "2003-05-03",
+      "reading": "くろやなぎ きょうすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/61765155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "5d37e2a6f55fbc70be3cc9895db62250866deb217f19c9a080253f1c251cbd10"
+      }
+    },
+    "npb-63365155": {
+      "name": "柳川 大晟",
+      "birthDate": "2003-08-21",
+      "reading": "やながわ たいせい",
+      "source": {
+        "url": "https://npb.jp/bis/players/63365155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "df751d34b0dd35162d54df87ece2d1e577b577fcb5aa2f8a5df3277ae9af1bd6"
+      }
+    },
+    "npb-21725138": {
+      "name": "齋藤 友貴哉",
+      "birthDate": "1995-01-05",
+      "reading": "さいとう ゆきや",
+      "source": {
+        "url": "https://npb.jp/bis/players/21725138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "569efd6c9870fa8b1bfc332d8d7d64c1419b16695638f7d5e9554e35c405a55f"
+      }
+    },
+    "npb-01105134": {
+      "name": "池田 隆英",
+      "birthDate": "1994-10-01",
+      "reading": "いけだ たかひで",
+      "source": {
+        "url": "https://npb.jp/bis/players/01105134.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ce515790360099b6c1d585070a9b00496a0359d485bc66bab9af3f666f09ebf9"
+      }
+    },
+    "npb-51255150": {
+      "name": "清水 大暉",
+      "birthDate": "2006-07-17",
+      "reading": "しみず だいき",
+      "source": {
+        "url": "https://npb.jp/bis/players/51255150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "125a039cba9040b64b9ec716e70fa5044f81020195982aa10f1f16f988c283ca"
+      }
+    },
+    "npb-13315150": {
+      "name": "山城 航太郎",
+      "birthDate": "2002-09-03",
+      "reading": "やましろ こうたろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/13315150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ed9e8deab5d913893e044fe9dff75119ab40e1e4437f867c395aadb6d6e6325c"
+      }
+    },
+    "npb-03105136": {
+      "name": "山本 拓実",
+      "birthDate": "2000-01-31",
+      "reading": "やまもと たくみ",
+      "source": {
+        "url": "https://npb.jp/bis/players/03105136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "bbadc3ffd3644f69d9fed9d3d12d957b4657b83d56ac78673b9fc6e31c1ca163"
+      }
+    },
+    "npb-41945138": {
+      "name": "清宮 虎多朗",
+      "birthDate": "2000-05-26",
+      "reading": "せいみや こたろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/41945138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "fbd258011bab6a88078c40a103331e962ce891df84706d4044ec7cf804a4b2d2"
+      }
+    },
+    "npb-61965130": {
+      "name": "清水 優心",
+      "birthDate": "1996-05-22",
+      "reading": "しみず ゆうし",
+      "source": {
+        "url": "https://npb.jp/bis/players/61965130.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "281a25ca8ad88b4de92f8bebd26e4a207b9b84cb178690f7acf41932c2d18a97"
+      }
+    },
+    "npb-11015159": {
+      "name": "進藤 勇也",
+      "birthDate": "2002-03-10",
+      "reading": "しんとう ゆうや",
+      "source": {
+        "url": "https://npb.jp/bis/players/11015159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d6925dc5e8ef11da46b87f8b1ef1daaceb26d1991a8a445f6a4e59297bd1c34b"
+      }
+    },
+    "npb-61665152": {
+      "name": "藤森 海斗",
+      "birthDate": "2007-06-27",
+      "reading": "ふじもり かいと",
+      "source": {
+        "url": "https://npb.jp/bis/players/61665152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "c99453582e7d413deda03c94d0412120905507a5ad58b2da34d162d552d8cbcb"
+      }
+    },
+    "npb-13515157": {
+      "name": "吉田 賢吾",
+      "birthDate": "2001-01-18",
+      "reading": "よしだ けんご",
+      "source": {
+        "url": "https://npb.jp/bis/players/13515157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "927024525942d23cce0ae4f353a72931d3737f4371ad6d4c0dd51db54ebe2326"
+      }
+    },
+    "npb-51055138": {
+      "name": "田宮 裕涼",
+      "birthDate": "2000-06-13",
+      "reading": "たみや ゆあ",
+      "source": {
+        "url": "https://npb.jp/bis/players/51055138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "f82d36692f358d71bea521c6b7719ca98ace5da2d3b380e97741b2359ba8a40b"
+      }
+    },
+    "npb-01505155": {
+      "name": "上川畑 大悟",
+      "birthDate": "1997-01-12",
+      "reading": "かみかわばた だいご",
+      "source": {
+        "url": "https://npb.jp/bis/players/01505155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "845a96aa1c3bfe096f41564c7c62306b0881954e139d6d82d287114872e4f3a8"
+      }
+    },
+    "npb-31435138": {
+      "name": "野村 佑希",
+      "birthDate": "2000-06-26",
+      "reading": "のむら ゆうき",
+      "source": {
+        "url": "https://npb.jp/bis/players/31435138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "eec9bccbbbf82db0f944129f185d44c42b8aab2818ac86949a5be1b613812092"
+      }
+    },
+    "npb-01105155": {
+      "name": "有薗 直輝",
+      "birthDate": "2003-05-21",
+      "reading": "ありぞの なおき",
+      "source": {
+        "url": "https://npb.jp/bis/players/01105155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "64dd99bd717e520022b9630a1648df55a6600ca877ee10e4bed78a3e2cca70df"
+      }
+    },
+    "npb-63165155": {
+      "name": "水野 達稀",
+      "birthDate": "2000-07-30",
+      "reading": "みずの たつき",
+      "source": {
+        "url": "https://npb.jp/bis/players/63165155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "880616cba8f0869124675f91197739683865cb4e12b16dc6515ff0aac6b1596d"
+      }
+    },
+    "npb-71975155": {
+      "name": "阪口 樂",
+      "birthDate": "2003-06-24",
+      "reading": "さかぐち うた",
+      "source": {
+        "url": "https://npb.jp/bis/players/71975155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "98bfba64dfb86c25684dbc8b82fbf4f973851a363151489afbaf8a0d3c7adb17"
+      }
+    },
+    "npb-11515152": {
+      "name": "大塚 瑠晏",
+      "birthDate": "2003-10-26",
+      "reading": "おおつか るあん",
+      "source": {
+        "url": "https://npb.jp/bis/players/11515152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "4b0a8ef376ec4813adbd2246b8dfab607cf143b2d10de14d64299d56f5c5964d"
+      }
+    },
+    "npb-51655152": {
+      "name": "半田 南十",
+      "birthDate": "2007-05-10",
+      "reading": "はんだ みなと",
+      "source": {
+        "url": "https://npb.jp/bis/players/51655152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ea023c8f0ce517ca83f93be6703fd1894d6d24f1ca0c7afce270ff0e698ebd66"
+      }
+    },
+    "npb-63165150": {
+      "name": "山縣 秀",
+      "birthDate": "2002-05-01",
+      "reading": "やまがた しゅう",
+      "source": {
+        "url": "https://npb.jp/bis/players/63165150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "df1be8cca68af6df9da3696df121286cb014a110447cf07a23f451f7829f5cb1"
+      }
+    },
+    "npb-61865153": {
+      "name": "細川 凌平",
+      "birthDate": "2002-04-25",
+      "reading": "ほそかわ りょうへい",
+      "source": {
+        "url": "https://npb.jp/bis/players/61865153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "11b1fca9631af38b95a85cf3b56a378033f3df2dcf1ed6f931aee637184720cf"
+      }
+    },
+    "npb-31435157": {
+      "name": "奈良間 大己",
+      "birthDate": "2000-05-08",
+      "reading": "ならま たいき",
+      "source": {
+        "url": "https://npb.jp/bis/players/31435157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "b5cb988f056e613f630a904ac8d4a834171e61caaeab090cf56bc89fa64101ff"
+      }
+    },
+    "npb-31135130": {
+      "name": "淺間 大基",
+      "birthDate": "1996-06-21",
+      "reading": "あさま だいき",
+      "source": {
+        "url": "https://npb.jp/bis/players/31135130.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "f71925657d8284290c3fbc3d0591a131e4333ff0f1540c32a866d6ed16431338"
+      }
+    },
+    "npb-83185159": {
+      "name": "宮崎 一樹",
+      "birthDate": "2001-08-30",
+      "reading": "みやざき かずき",
+      "source": {
+        "url": "https://npb.jp/bis/players/83185159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "884f5726f9e1356e02260d1350343965dcc2c50df916827e357281b02a7654b5"
+      }
+    },
+    "npb-01305152": {
+      "name": "エドポロ ケイン",
+      "birthDate": "2003-07-02",
+      "reading": "えどぽろ けいん",
+      "source": {
+        "url": "https://npb.jp/bis/players/01305152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d5bce2fcce36e3b30d57abc7e0d5a3623286dc1137d92e576e4baaa6386350b0"
+      }
+    },
+    "npb-11315153": {
+      "name": "五十幡 亮汰",
+      "birthDate": "1998-11-27",
+      "reading": "いそばた りょうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/11315153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2a2c346fac055855b4d1d76cf1295702d47ec360bd358212b6e857095cb65166"
+      }
+    },
+    "npb-31835138": {
+      "name": "水谷 瞬",
+      "birthDate": "2001-03-09",
+      "reading": "みずたに しゅん",
+      "source": {
+        "url": "https://npb.jp/bis/players/31835138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "b4cd3a0c178ffc7fa83d9791c19d70d4003ac7fb239d3f878c953e272bcff03c"
+      }
+    },
+    "npb-21325153": {
+      "name": "今川 優馬",
+      "birthDate": "1997-01-25",
+      "reading": "いまがわ ゆうま",
+      "source": {
+        "url": "https://npb.jp/bis/players/21325153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "03b5d05be39e54b306b55ce7d80a68a59c5fb628634a5bb8fa3aa5d13fa86505"
+      }
+    },
+    "npb-73175152": {
+      "name": "毛利 海大",
+      "birthDate": "2003-09-14",
+      "reading": "もうり かいと",
+      "source": {
+        "url": "https://npb.jp/bis/players/73175152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "0201a2732ac42e4ce7a4b6fd29428d60717dc5a547f8994463c49f23417b7f9a"
+      }
+    },
+    "npb-23125151": {
+      "name": "横山 陸人",
+      "birthDate": "2001-08-05",
+      "reading": "よこやま りくと",
+      "source": {
+        "url": "https://npb.jp/bis/players/23125151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "fc036f6face4e25478c4d90fc185dd80c26f3482be6a1d842fddd2fbce92fc6d"
+      }
+    },
+    "npb-61165152": {
+      "name": "石垣 元気",
+      "birthDate": "2007-08-16",
+      "reading": "いしがき げんき",
+      "source": {
+        "url": "https://npb.jp/bis/players/61165152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "6c0c0a05b843a94c4379ce32efea69f3a823b34d1b5ad95935217e6b6f211efb"
+      }
+    },
+    "npb-41645155": {
+      "name": "廣畑 敦也",
+      "birthDate": "1997-12-03",
+      "reading": "ひろはた あつや",
+      "source": {
+        "url": "https://npb.jp/bis/players/41645155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d36e7b8f2878f42fd22ed59517ba5465a0e63589e4f29b45ca51cc10cf9d9d2b"
+      }
+    },
+    "npb-81385159": {
+      "name": "大谷 輝龍",
+      "birthDate": "2000-07-11",
+      "reading": "おおたに ひかる",
+      "source": {
+        "url": "https://npb.jp/bis/players/81385159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ed703172e553c66282a4e9766af6e4251612262d5a59a7f15eabaea40569fd37"
+      }
+    },
+    "npb-23325155": {
+      "name": "八木 彬",
+      "birthDate": "1997-05-26",
+      "reading": "やぎ あきら",
+      "source": {
+        "url": "https://npb.jp/bis/players/23325155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "f7d7bc37ebc8bb36d982def2ac97e069fb69ffbe5a9a2ded6d18898841d9c5ac"
+      }
+    },
+    "npb-31035157": {
+      "name": "高野 脩汰",
+      "birthDate": "1998-08-13",
+      "reading": "たかの しゅうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/31035157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "55f95bbd8ed8f7b18880ddf599a99b028c0a14ba43be0cb857a31f80cdd00a34"
+      }
+    },
+    "npb-01005157": {
+      "name": "田中 晴也",
+      "birthDate": "2004-06-06",
+      "reading": "たなか はるや",
+      "source": {
+        "url": "https://npb.jp/bis/players/01005157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "367a24471310a97013ab56876ef55293c8056bd5b5b02c363a65b67a35f30c1f"
+      }
+    },
+    "npb-41745138": {
+      "name": "坂本 光士郎",
+      "birthDate": "1994-09-09",
+      "reading": "さかもと こうしろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/41745138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "977615cc33c86f6bfb4516bc3a8f4ca508dc7d8ac5d961b9ccca60a247d1f2b6"
+      }
+    },
+    "npb-51555130": {
+      "name": "小野 郁",
+      "birthDate": "1996-10-23",
+      "reading": "おの ふみや",
+      "source": {
+        "url": "https://npb.jp/bis/players/51555130.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2c5b52509764cb03a083cd6faf16ff48a84518a5beb3d15e52db3985dd2ca035"
+      }
+    },
+    "npb-21525152": {
+      "name": "奥村 頼人",
+      "birthDate": "2007-09-08",
+      "reading": "おくむら らいと",
+      "source": {
+        "url": "https://npb.jp/bis/players/21525152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "eec5dce429a56372b298f4a48a0ed67acbaaa34c4ec950b57da912fdde364326"
+      }
+    },
+    "npb-01605152": {
+      "name": "冨士 隼斗",
+      "birthDate": "2002-03-10",
+      "reading": "ふじ はやと",
+      "source": {
+        "url": "https://npb.jp/bis/players/01605152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "4d7b3dd74cba8ad184dd436ca72d0aeec4a1f1fa071be44a9da9fd84deb00d97"
+      }
+    },
+    "npb-71275153": {
+      "name": "鈴木 昭汰",
+      "birthDate": "1998-09-07",
+      "reading": "すずき しょうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/71275153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "511d7742799e31ef5ab7d1e83c6913fd4fcb2950fafc653afe1886813eedda3c"
+      }
+    },
+    "npb-71775159": {
+      "name": "木村 優人",
+      "birthDate": "2005-06-01",
+      "reading": "きむら ゆうと",
+      "source": {
+        "url": "https://npb.jp/bis/players/71775159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "013bd489769a7ae2d7023abea5fbaa83125c382f36dbd38503ed99e1d8916d9d"
+      }
+    },
+    "npb-01905134": {
+      "name": "澤田 圭佑",
+      "birthDate": "1994-04-27",
+      "reading": "さわだ けいすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/01905134.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "048156bd1b6f571532ddda9b20d80ca6828741e2883e8d6637155e4120c8be6a"
+      }
+    },
+    "npb-31635153": {
+      "name": "中森 俊介",
+      "birthDate": "2002-05-29",
+      "reading": "なかもり しゅんすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/31635153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "98606e2c2082256c5b5543e70326ebd77c463daec8116d261f56efbe2c5343ca"
+      }
+    },
+    "npb-61765153": {
+      "name": "河村 説人",
+      "birthDate": "1997-06-18",
+      "reading": "かわむら ときと",
+      "source": {
+        "url": "https://npb.jp/bis/players/61765153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "07936c295885f5996aa91188ce3b77ba178e51138026735a58e18ca53403193b"
+      }
+    },
+    "npb-91695159": {
+      "name": "早坂 響",
+      "birthDate": "2005-07-26",
+      "reading": "はやさか おと",
+      "source": {
+        "url": "https://npb.jp/bis/players/91695159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ceb499dd0e044ea4769a907429b33fc916b221360b63b14e7a712d55249f047f"
+      }
+    },
+    "npb-63165152": {
+      "name": "大聖",
+      "birthDate": "2002-01-29",
+      "reading": "やまと",
+      "source": {
+        "url": "https://npb.jp/bis/players/63165152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "f999ee3e7dec2fecbd99bd42e1d7910dc305d88799828a1ba84b8cbf572e54a7"
+      }
+    },
+    "npb-41945150": {
+      "name": "坂井 遼",
+      "birthDate": "2006-05-08",
+      "reading": "さかい はる",
+      "source": {
+        "url": "https://npb.jp/bis/players/41945150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "9bae7a1358055f1bc7ad236cc1c5060d14df15888e2e1901c83675e6ed015678"
+      }
+    },
+    "npb-81685150": {
+      "name": "廣池 康志郎",
+      "birthDate": "2002-09-16",
+      "reading": "ひろいけ こうしろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/81685150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "b0424d9b8b19141843e3973f908c7e132321d6c853d2e4d7804030c6a23b719c"
+      }
+    },
+    "npb-73175157": {
+      "name": "宮﨑 颯",
+      "birthDate": "2000-06-14",
+      "reading": "みやざき はやと",
+      "source": {
+        "url": "https://npb.jp/bis/players/73175157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "4a659f27c93588972c9649a4c0854401a23184d43ae6a07f4538bbdd2434b4eb"
+      }
+    },
+    "npb-83385157": {
+      "name": "吉川 悠斗",
+      "birthDate": "2005-03-14",
+      "reading": "よしかわ ゆうと",
+      "source": {
+        "url": "https://npb.jp/bis/players/83385157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "a25479dd9e66924710e9e575c70a216dd773be46eb97d6b5e66a73e8cc992555"
+      }
+    },
+    "npb-61865136": {
+      "name": "森 遼大朗",
+      "birthDate": "1999-04-22",
+      "reading": "もり りょうたろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/61865136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "b0e3d3648d5588b1cea9cee7e90bf3f214d4bb27ba076371078056a847f6eb6e"
+      }
+    },
+    "npb-11215152": {
+      "name": "髙橋 快秀",
+      "birthDate": "2005-12-21",
+      "reading": "たかはし かいしゅう",
+      "source": {
+        "url": "https://npb.jp/bis/players/11215152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "8c78c0b6bb621b04ea56db74190c43c236483b71bce9a65a5a630a32d065c60e"
+      }
+    },
+    "npb-53155155": {
+      "name": "松川 虎生",
+      "birthDate": "2003-10-20",
+      "reading": "まつかわ こう",
+      "source": {
+        "url": "https://npb.jp/bis/players/53155155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d3a7b322e8fe1c5318fdb99cb9b9d8d06d48e12be1c12e2261fe7ae632f2d903"
+      }
+    },
+    "npb-41945137": {
+      "name": "田村 龍弘",
+      "birthDate": "1994-05-13",
+      "reading": "たむら たつひろ",
+      "source": {
+        "url": "https://npb.jp/bis/players/41945137.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "b05384355d63e5147d27bdd77310530c08c17d5cad33d9c861725d88d6ae1f45"
+      }
+    },
+    "npb-71075151": {
+      "name": "佐藤 都志也",
+      "birthDate": "1998-01-27",
+      "reading": "さとう としや",
+      "source": {
+        "url": "https://npb.jp/bis/players/71075151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "cb56343a629064ee9911e00cc49ea5f81539d42d484672e49ffd73980c658ab7"
+      }
+    },
+    "npb-91395151": {
+      "name": "植田 将太",
+      "birthDate": "1997-12-18",
+      "reading": "うえだ しょうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/91395151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "7e01b9a155d1eabd13aec918ed3811a1c12639c41dca2faa553120049a9b131c"
+      }
+    },
+    "npb-51455159": {
+      "name": "寺地 隆成",
+      "birthDate": "2005-08-19",
+      "reading": "てらち りゅうせい",
+      "source": {
+        "url": "https://npb.jp/bis/players/51455159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "a4d43ebca946c961a2562b007464f0b8c963c54068b30e8c88b024a49fceba0f"
+      }
+    },
+    "npb-01505152": {
+      "name": "岡村 了樹",
+      "birthDate": "2007-05-03",
+      "reading": "おかむら りょうじゅ",
+      "source": {
+        "url": "https://npb.jp/bis/players/01505152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2a3e18f50169b302c3f799e4fce3552c63972b4a94d2d18c70faf756203ab19c"
+      }
+    },
+    "npb-21125155": {
+      "name": "池田 来翔",
+      "birthDate": "1999-12-11",
+      "reading": "いけだ らいと",
+      "source": {
+        "url": "https://npb.jp/bis/players/21125155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "af1b261e921fcdb737ca97c19decdc2c720a7c670a928839b6c16b1df96aa22a"
+      }
+    },
+    "npb-71275157": {
+      "name": "友杉 篤輝",
+      "birthDate": "2000-11-07",
+      "reading": "ともすぎ あつき",
+      "source": {
+        "url": "https://npb.jp/bis/players/71275157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "58342822f249d7a1633012a24ff65bf7a286d533ebc72c83bacea66a9c8778b7"
+      }
+    },
+    "npb-81885136": {
+      "name": "安田 尚憲",
+      "birthDate": "1999-04-15",
+      "reading": "やすだ ひさのり",
+      "source": {
+        "url": "https://npb.jp/bis/players/81885136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "9acad3f9f153ee7df9c48ee66e2b5b81b7a401af7aa67bcc25445a27fe3fd437"
+      }
+    },
+    "npb-71375159": {
+      "name": "上田 希由翔",
+      "birthDate": "2001-08-12",
+      "reading": "うえだ きゅうと",
+      "source": {
+        "url": "https://npb.jp/bis/players/71375159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "3aae0e456cf39a5e3c1a607b0cfc983799163d72550d40c0996f2e7df593ca91"
+      }
+    },
+    "npb-73175136": {
+      "name": "山﨑 剛",
+      "birthDate": "1995-12-29",
+      "reading": "やまさき つよし",
+      "source": {
+        "url": "https://npb.jp/bis/players/73175136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d460a5e477534885d456fe1efbe7619d5b711bfb97594297a2beae64c0085367"
+      }
+    },
+    "npb-81885150": {
+      "name": "宮崎 竜成",
+      "birthDate": "2000-12-09",
+      "reading": "みやざき りゅうせい",
+      "source": {
+        "url": "https://npb.jp/bis/players/81885150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "11407168f90488e677f594b55f0259ccb05f1785f87e13bbf3d6fd335ddaa306"
+      }
+    },
+    "npb-71475150": {
+      "name": "立松 由宇",
+      "birthDate": "1999-02-05",
+      "reading": "たてまつ ゆう",
+      "source": {
+        "url": "https://npb.jp/bis/players/71475150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "37d7448bdc2f08aa445c92b61ffcf4b2091b28e1538c67d0ed4ba280b99db4f3"
+      }
+    },
+    "npb-01905152": {
+      "name": "櫻井 ユウヤ",
+      "birthDate": "2007-06-30",
+      "reading": "さくらい ゆうや",
+      "source": {
+        "url": "https://npb.jp/bis/players/01905152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "28e5982ff8279f86f7e9d6c2c564be83998d1f60a82c91113ccdc2178cbcd895"
+      }
+    },
+    "npb-11715153": {
+      "name": "小川 龍成",
+      "birthDate": "1998-04-05",
+      "reading": "おがわ りゅうせい",
+      "source": {
+        "url": "https://npb.jp/bis/players/11715153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "e66b354f8310e00e9b716350c061c7a94aa36d3559bd631d3d33250b645c92d2"
+      }
+    },
+    "npb-71275132": {
+      "name": "茶谷 健太",
+      "birthDate": "1998-01-16",
+      "reading": "ちゃたに けんた",
+      "source": {
+        "url": "https://npb.jp/bis/players/71275132.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "c7d207b482571677a9310f7356c9076afba107c6bd37ad372ff2f6b09eaa788f"
+      }
+    },
+    "npb-11215151": {
+      "name": "髙部 瑛斗",
+      "birthDate": "1997-12-11",
+      "reading": "たかべ あきと",
+      "source": {
+        "url": "https://npb.jp/bis/players/11215151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "7a0a6348618abb3e7f011fcbb19e3d9ed64ea9fe97a0e4de15a462ba75074bb7"
+      }
+    },
+    "npb-31635138": {
+      "name": "藤原 恭大",
+      "birthDate": "2000-05-06",
+      "reading": "ふじわら きょうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/31635138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "8ba82e1a89a8f12dd86852826c1c5b99ae20a490f306777a6ef4aaeaae803798"
+      }
+    },
+    "npb-21625150": {
+      "name": "西川 史礁",
+      "birthDate": "2003-03-25",
+      "reading": "にしかわ みしょう",
+      "source": {
+        "url": "https://npb.jp/bis/players/21625150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "67a128fc299cfd9856a24262fb0cfca962bf28af8a391bdad511c83ab84e6db9"
+      }
+    },
+    "npb-01105135": {
+      "name": "石川 慎吾",
+      "birthDate": "1993-04-27",
+      "reading": "いしかわ しんご",
+      "source": {
+        "url": "https://npb.jp/bis/players/01105135.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "df71c8b562e5f320befcf4b41818fa43879d07939be2f11e2bf36ead8c2f42b6"
+      }
+    },
+    "npb-31535132": {
+      "name": "愛斗",
+      "birthDate": "1997-04-06",
+      "reading": "あいと",
+      "source": {
+        "url": "https://npb.jp/bis/players/31535132.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "b5794f72e22f4e3e6114b04519096de815fecdd136a593dfa1c1fdd9af335ad1"
+      }
+    },
+    "npb-91895138": {
+      "name": "山口 航輝",
+      "birthDate": "2000-08-18",
+      "reading": "やまぐち こうき",
+      "source": {
+        "url": "https://npb.jp/bis/players/91895138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2060eda2667258bebcb2ef9e3c8146196376a388e0d126efbf61817274f0fdc5"
+      }
+    },
+    "npb-33535153": {
+      "name": "山本 大斗",
+      "birthDate": "2002-08-09",
+      "reading": "やまもと だいと",
+      "source": {
+        "url": "https://npb.jp/bis/players/33535153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "f6e1a6676d2c188e3fcb4c7fc49f29e23a1b5bcd9ef6170514e8caa34417be43"
+      }
+    },
+    "npb-33335136": {
+      "name": "和田 康士朗",
+      "birthDate": "1999-01-14",
+      "reading": "わだ こうしろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/33335136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "7bd437628059f2953cc5d92cfd3f4168c671197c7d1632ab51c9f3ea7ecb4014"
+      }
+    },
+    "npb-81685152": {
+      "name": "藤原 聡大",
+      "birthDate": "2003-11-20",
+      "reading": "ふじわら そうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/81685152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "8ab4c9cece016a5b38b08fec1154f0c48255ce2078ecacb3b4eb7f2ae71ffdf0"
+      }
+    },
+    "npb-21725159": {
+      "name": "古謝 樹",
+      "birthDate": "2001-08-18",
+      "reading": "こじゃ たつき",
+      "source": {
+        "url": "https://npb.jp/bis/players/21725159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d635412f5e9a8a209fbcf163e71c96d507e00cf2852c359a313177e2fd863209"
+      }
+    },
+    "npb-21925157": {
+      "name": "荘司 康誠",
+      "birthDate": "2000-10-13",
+      "reading": "しょうじ こうせい",
+      "source": {
+        "url": "https://npb.jp/bis/players/21925157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "78fd19db26cb7930b08f191d0489b9c536ee80bbc1d8b5e14fd667b62325e88b"
+      }
+    },
+    "npb-31335152": {
+      "name": "伊藤 樹",
+      "birthDate": "2003-08-24",
+      "reading": "いとう たつき",
+      "source": {
+        "url": "https://npb.jp/bis/players/31335152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ff77ca56d4d89782b2a0e0380fb85008dfdc0754b7a768e662a8566e23e3c9d3"
+      }
+    },
+    "npb-31835153": {
+      "name": "早川 隆久",
+      "birthDate": "1998-07-06",
+      "reading": "はやかわ たかひさ",
+      "source": {
+        "url": "https://npb.jp/bis/players/31835153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "67cdaed928b5e1fe8bee4ca824e0c73e2828552b67f3c45a08fd758949f7d680"
+      }
+    },
+    "npb-31635150": {
+      "name": "中込 陽翔",
+      "birthDate": "2002-01-23",
+      "reading": "なかごみ はると",
+      "source": {
+        "url": "https://npb.jp/bis/players/31635150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "1d15abf8eac5f0483dc2f6629f26bac59bc79aab6abcbf5a027133a774fe9feb"
+      }
+    },
+    "npb-91095157": {
+      "name": "田中 千晴",
+      "birthDate": "2000-09-21",
+      "reading": "たなか ちはる",
+      "source": {
+        "url": "https://npb.jp/bis/players/91095157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "66bd7c7f1814743646db0faefdb1d12479d758f900b74a7b94c63b09cb6e2f8e"
+      }
+    },
+    "npb-23525157": {
+      "name": "渡辺 翔太",
+      "birthDate": "2000-10-29",
+      "reading": "わたなべ しょうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/23525157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d0773292460913cb03d4fe208aea2ca829ba9e939b80ddd3322fd8ab26b1f6f3"
+      }
+    },
+    "npb-11515150": {
+      "name": "江原 雅裕",
+      "birthDate": "2000-08-03",
+      "reading": "えはら まさひろ",
+      "source": {
+        "url": "https://npb.jp/bis/players/11515150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "8d827eb9d62aede2df2589395aa8cab3f65aac999e001ac1eba39a230e49688e"
+      }
+    },
+    "npb-71775152": {
+      "name": "九谷 瑠",
+      "birthDate": "1999-11-05",
+      "reading": "くたに りゅう",
+      "source": {
+        "url": "https://npb.jp/bis/players/71775152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ea4135d478ea863272c7be3d9c468b99f8352d7fd7d904df72101dda9f2c8678"
+      }
+    },
+    "npb-61665134": {
+      "name": "藤平 尚真",
+      "birthDate": "1998-09-21",
+      "reading": "ふじひら しょうま",
+      "source": {
+        "url": "https://npb.jp/bis/players/61665134.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "348787f17360899d6b91dbdd13f7222842cbd5f5d2315234ea32d6eadddfc6f5"
+      }
+    },
+    "npb-71875153": {
+      "name": "藤井 聖",
+      "birthDate": "1996-10-03",
+      "reading": "ふじい まさる",
+      "source": {
+        "url": "https://npb.jp/bis/players/71875153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "b03b9f2889e23ef8d11de9df74e1557af51a1817969cfa25be6a8e03080bd680"
+      }
+    },
+    "npb-61465155": {
+      "name": "西垣 雅矢",
+      "birthDate": "1999-06-21",
+      "reading": "にしがき まさや",
+      "source": {
+        "url": "https://npb.jp/bis/players/61465155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "84d98347fcf254e0cd01eb74e878ba753f72c00b9c257501350d9aa657b8a12b"
+      }
+    },
+    "npb-11415151": {
+      "name": "津留﨑 大成",
+      "birthDate": "1997-10-10",
+      "reading": "つるさき たいせい",
+      "source": {
+        "url": "https://npb.jp/bis/players/11415151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2419b65ff1f000323f1ea370c2210b702be60c63c976f3b3bcc3a6deaaa97144"
+      }
+    },
+    "npb-11915159": {
+      "name": "坂井 陽翔",
+      "birthDate": "2005-04-05",
+      "reading": "さかい はると",
+      "source": {
+        "url": "https://npb.jp/bis/players/11915159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "27c632319b84d1c9cef9d621d318d59e4cc548d1a6b2787c288bb273641e5001"
+      }
+    },
+    "npb-01605159": {
+      "name": "日當 直喜",
+      "birthDate": "2005-07-06",
+      "reading": "ひなた なおき",
+      "source": {
+        "url": "https://npb.jp/bis/players/01605159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "a1e79af137b9a5e816de599e24c0c521f730d66508dccae6b80deb83328c1805"
+      }
+    },
+    "npb-01905138": {
+      "name": "鈴木 翔天",
+      "birthDate": "1996-08-19",
+      "reading": "すずき そら",
+      "source": {
+        "url": "https://npb.jp/bis/players/01905138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "cf9a640eeea5ebbe9e96dc7730a6187a5d4de59c9bf8a59dc71bcbf8148ad424"
+      }
+    },
+    "npb-31235151": {
+      "name": "瀧中 瞭太",
+      "birthDate": "1994-12-20",
+      "reading": "たきなか りょうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/31235151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "5d0f07f9113c68de4fa551f98709663bc84ff34761faeed838d9bc691540882e"
+      }
+    },
+    "npb-61065155": {
+      "name": "泰 勝利",
+      "birthDate": "2003-11-11",
+      "reading": "たい かつとし",
+      "source": {
+        "url": "https://npb.jp/bis/players/61065155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "357d58300f6802396980a9fea4e463aafa3ffad48ff9795a6aba2526a0165862"
+      }
+    },
+    "npb-31735157": {
+      "name": "古賀 康誠",
+      "birthDate": "2004-09-03",
+      "reading": "こが こうせい",
+      "source": {
+        "url": "https://npb.jp/bis/players/31735157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "81efdb8f7b1331ea1136a069bfc06471e404fc412708944ad53d3cb8363ba8b5"
+      }
+    },
+    "npb-41445134": {
+      "name": "西口 直人",
+      "birthDate": "1996-11-14",
+      "reading": "にしぐち なおと",
+      "source": {
+        "url": "https://npb.jp/bis/players/41445134.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "f217e8c6c4333ac6f2a2b7950963747b3410d6537454ef1ee4d286cb474e8822"
+      }
+    },
+    "npb-41345159": {
+      "name": "大内 誠弥",
+      "birthDate": "2006-03-09",
+      "reading": "おおうち せいや",
+      "source": {
+        "url": "https://npb.jp/bis/players/41345159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "1f1f09cc2f95b56ac49df9c0c5fdb3b220151242699e9d786af6b9093f96b9bc"
+      }
+    },
+    "npb-51555153": {
+      "name": "内 星龍",
+      "birthDate": "2002-04-24",
+      "reading": "うち せいりゅう",
+      "source": {
+        "url": "https://npb.jp/bis/players/51555153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "6cb7b6ea35536a4e6c5872323b05d24acaf71ed81f4ae89659448509a04010d2"
+      }
+    },
+    "npb-81985155": {
+      "name": "柴田 大地",
+      "birthDate": "1997-11-07",
+      "reading": "しばた だいち",
+      "source": {
+        "url": "https://npb.jp/bis/players/81985155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "25b49b0b9f78ab792e4476c0e778428c2f490340a35bbc58f4f9e4dfb928a681"
+      }
+    },
+    "npb-11315152": {
+      "name": "伊藤 大晟",
+      "birthDate": "2007-10-27",
+      "reading": "いとう たいせい",
+      "source": {
+        "url": "https://npb.jp/bis/players/11315152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d32e382dea97d4ce89b48978c877b43bc90cef165d035fb7f0f009e7612fcd01"
+      }
+    },
+    "npb-31235130": {
+      "name": "田中 貴也",
+      "birthDate": "1992-08-27",
+      "reading": "たなか たかや",
+      "source": {
+        "url": "https://npb.jp/bis/players/31235130.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ef58a08d16eac6bf66821cd45c3e75527058350743ea1a4bb16897b767aa234c"
+      }
+    },
+    "npb-43345155": {
+      "name": "YG安田",
+      "birthDate": "2000-03-03",
+      "reading": "わいじーやすだ",
+      "source": {
+        "url": "https://npb.jp/bis/players/43345155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d8f3808359afc49a7a74bc4d74ed4258e10954878591b507adf8a493187f5cd8"
+      }
+    },
+    "npb-11815132": {
+      "name": "堀内 謙伍",
+      "birthDate": "1997-04-15",
+      "reading": "ほりうち けんご",
+      "source": {
+        "url": "https://npb.jp/bis/players/11815132.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "5764e50c507dd1292a1e412660155c6aab923fb9c9557246b26021e0cb9e83d6"
+      }
+    },
+    "npb-61165134": {
+      "name": "石原 彪",
+      "birthDate": "1999-03-08",
+      "reading": "いしはら つよし",
+      "source": {
+        "url": "https://npb.jp/bis/players/61165134.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "428924ca86240cdef6670911cafeddd33ab00ec7722371581edcb92c64123d6f"
+      }
+    },
+    "npb-81385152": {
+      "name": "大栄 利哉",
+      "birthDate": "2007-04-23",
+      "reading": "おおさかえ としや",
+      "source": {
+        "url": "https://npb.jp/bis/players/81385152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ee636a5dbcdf9a9c1979edfd42de4bbadb21251567891dae92e6622d18cdefe2"
+      }
+    },
+    "npb-53155150": {
+      "name": "宗山 塁",
+      "birthDate": "2003-02-27",
+      "reading": "むねやま るい",
+      "source": {
+        "url": "https://npb.jp/bis/players/53155150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "6911907441639bf08009f59a28d28f0e11d39faf3f56dc8fa4e3385e8fd1af01"
+      }
+    },
+    "npb-01905151": {
+      "name": "黒川 史陽",
+      "birthDate": "2001-04-17",
+      "reading": "くろかわ ふみや",
+      "source": {
+        "url": "https://npb.jp/bis/players/01905151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ab6c903f5cf4a4a341da986952080539ef5d17a79df8d3916ba6e9b1200e6cb6"
+      }
+    },
+    "npb-61965152": {
+      "name": "繁永 晟",
+      "birthDate": "2003-04-25",
+      "reading": "しげなが あきら",
+      "source": {
+        "url": "https://npb.jp/bis/players/61965152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "18e7ecdc83a545500b2d366af2b41f1086448aa48f52d260c0cfd53cea63b031"
+      }
+    },
+    "npb-73175138": {
+      "name": "渡邊 佳明",
+      "birthDate": "1997-01-08",
+      "reading": "わたなべ よしあき",
+      "source": {
+        "url": "https://npb.jp/bis/players/73175138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "3aa04c048ba922d9d52924e501a7c2c8c05694a52bcc963493c7e6026c1bed2c"
+      }
+    },
+    "npb-41145138": {
+      "name": "伊藤 裕季也",
+      "birthDate": "1996-08-30",
+      "reading": "いとう ゆきや",
+      "source": {
+        "url": "https://npb.jp/bis/players/41145138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ab400e87a4889a8bce4ebaa959a88d18f255524a573ee8a732efbbb741ef43dc"
+      }
+    },
+    "npb-11015157": {
+      "name": "平良 竜哉",
+      "birthDate": "1998-07-09",
+      "reading": "たいら りゅうや",
+      "source": {
+        "url": "https://npb.jp/bis/players/11015157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "1e7e71bfbb32c7d8bc22c91c7eed818a579f7af265626e0dc7eb53d9678cec9a"
+      }
+    },
+    "npb-13515159": {
+      "name": "ワォーターズ",
+      "birthDate": "2005-10-14",
+      "reading": "わぉーたーず",
+      "source": {
+        "url": "https://npb.jp/bis/players/13515159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "84c4a9b3e1bae9aa874cf327f623e7354314b1b33520c29771aa9b33765d913e"
+      }
+    },
+    "npb-41345153": {
+      "name": "入江 大樹",
+      "birthDate": "2002-06-06",
+      "reading": "いりえ だいき",
+      "source": {
+        "url": "https://npb.jp/bis/players/41345153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "e99563dea9986d21ad16c5af7115ea303f3a07434362a5e327d76a9a17fb4822"
+      }
+    },
+    "npb-31135159": {
+      "name": "青野 拓海",
+      "birthDate": "2005-07-26",
+      "reading": "あおの たくみ",
+      "source": {
+        "url": "https://npb.jp/bis/players/31135159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "115ffb78d1348b4c6052e062af98c8c38aa00efde07afa36b054923e1ee3f753"
+      }
+    },
+    "npb-51955155": {
+      "name": "小森 航大郎",
+      "birthDate": "2003-04-30",
+      "reading": "こもり こうたろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/51955155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "f4851aeeaa7833e6a684a91e99014f1a93e7f75c661976e19359a2e149d0d9c5"
+      }
+    },
+    "npb-53355150": {
+      "name": "陽 柏翔",
+      "birthDate": "2005-01-23",
+      "reading": "よう ぼうしゃん",
+      "source": {
+        "url": "https://npb.jp/bis/players/53355150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "70a63927060a339fb1986ceb34d88c34086c47c7f354cea8630360ad4f7bd5b4"
+      }
+    },
+    "npb-21425159": {
+      "name": "中島 大輔",
+      "birthDate": "2001-06-04",
+      "reading": "なかしま だいすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/21425159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "16b072f2045fe7e63009af145a222c8537b04ce9426e6696db659c516ae99330"
+      }
+    },
+    "npb-03305150": {
+      "name": "吉納 翼",
+      "birthDate": "2002-08-16",
+      "reading": "よしのう つばさ",
+      "source": {
+        "url": "https://npb.jp/bis/players/03305150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "e4275030b2923d3d019b3cfdf48c93fa8cec414d5ac0869d56adeedfd50221a9"
+      }
+    },
+    "npb-71975152": {
+      "name": "阪上 翔也",
+      "birthDate": "2003-11-01",
+      "reading": "さかうえ しょうや",
+      "source": {
+        "url": "https://npb.jp/bis/players/71975152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "02eec3e571539cbfcb7c5d943d68479598254ee27900d84a6cffca9335318dee"
+      }
+    },
+    "npb-01805151": {
+      "name": "武藤 敦貴",
+      "birthDate": "2001-06-15",
+      "reading": "むとう あつき",
+      "source": {
+        "url": "https://npb.jp/bis/players/01805151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "310f9a993bcc76b5b0dd45a9b4f8130a297c3551fdcff38e2ecdbfe411c01c25"
+      }
+    },
+    "npb-81385138": {
+      "name": "小郷 裕哉",
+      "birthDate": "1996-08-03",
+      "reading": "おごう ゆうや",
+      "source": {
+        "url": "https://npb.jp/bis/players/81385138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "f887459ab49e8aff01ab87b861a71ff43c9fda42e1c7623a00d046ba7b2be403"
+      }
+    },
+    "npb-43545155": {
+      "name": "吉野 創士",
+      "birthDate": "2003-10-27",
+      "reading": "よしの そうし",
+      "source": {
+        "url": "https://npb.jp/bis/players/43545155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "061bb419a6d43bfcf112cc053c9f358c3f200066548eed303b46fe42f67d4889"
+      }
+    },
+    "npb-43345153": {
+      "name": "山下 舜平大",
+      "birthDate": "2002-07-16",
+      "reading": "やました しゅんぺいた",
+      "source": {
+        "url": "https://npb.jp/bis/players/43345153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "b11effe9941427bf8bb8d00e1e1510a306f2df16633fa6d57e93f081a74de6b4"
+      }
+    },
+    "npb-71175136": {
+      "name": "東 晃平",
+      "birthDate": "1999-12-14",
+      "reading": "あずま こうへい",
+      "source": {
+        "url": "https://npb.jp/bis/players/71175136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "1246fa2c7c44bf21f0a9f619f62806302894e5eea0160103ba05823da3794861"
+      }
+    },
+    "npb-61465150": {
+      "name": "寺西 成騎",
+      "birthDate": "2002-10-18",
+      "reading": "てらにし なるき",
+      "source": {
+        "url": "https://npb.jp/bis/players/61465150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "fa5485bcfb78b42afea432b38e2d20d5137a29af6ffdc7e0badc23e968822b0c"
+      }
+    },
+    "npb-33335155": {
+      "name": "椋木 蓮",
+      "birthDate": "2000-01-22",
+      "reading": "むくのき れん",
+      "source": {
+        "url": "https://npb.jp/bis/players/33335155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "907ceb888afa69c552b311c183b4fd9619f823271f07b7264285924228bde141"
+      }
+    },
+    "npb-81985157": {
+      "name": "曽谷 龍平",
+      "birthDate": "2000-11-30",
+      "reading": "そたに りゅうへい",
+      "source": {
+        "url": "https://npb.jp/bis/players/81985157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "4912d543fa3fa3606eaea8311c5399ce4c02a1b9d2b77039acd0e42169b929ad"
+      }
+    },
+    "npb-33335134": {
+      "name": "山﨑 颯一郎",
+      "birthDate": "1998-06-15",
+      "reading": "やまざき そういちろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/33335134.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "c86242e43d1d1184ef95aa50debc4b7a8944a9de53072d95782f4aa24e7e15ea"
+      }
+    },
+    "npb-13115138": {
+      "name": "吉田 輝星",
+      "birthDate": "2001-01-12",
+      "reading": "よしだ こうせい",
+      "source": {
+        "url": "https://npb.jp/bis/players/13115138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "68fabc90674d9f811fe78ed221ab8a1c0eae1ef7502d8066fad2ab2064bba941"
+      }
+    },
+    "npb-41745157": {
+      "name": "齋藤 響介",
+      "birthDate": "2004-11-18",
+      "reading": "さいとう きょうすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/41745157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "03f6df2a115ab6300be07fe1dfdafb4d5f8472712189505974cc5a3bbea5a6ec"
+      }
+    },
+    "npb-61065138": {
+      "name": "富山 凌雅",
+      "birthDate": "1997-05-03",
+      "reading": "とみやま りょうが",
+      "source": {
+        "url": "https://npb.jp/bis/players/61065138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "a978bf7cf1f3eeab256d7430540528f8e301057497602a8182893e8ccf7197e9"
+      }
+    },
+    "npb-41645152": {
+      "name": "藤川 敦也",
+      "birthDate": "2007-10-23",
+      "reading": "ふじかわ あつや",
+      "source": {
+        "url": "https://npb.jp/bis/players/41645152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "11691b519ab25f7a03474e3222782fa91d18d34315b4505d9cd03a89e4344fa9"
+      }
+    },
+    "npb-41745159": {
+      "name": "古田島 成龍",
+      "birthDate": "1999-06-29",
+      "reading": "こたじま せいりゅう",
+      "source": {
+        "url": "https://npb.jp/bis/players/41745159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "072fdbbcddf7bb6dd696950ba8d0fa49d0da9dc4bb9474baea67504a421714f4"
+      }
+    },
+    "npb-93195152": {
+      "name": "森 陽樹",
+      "birthDate": "2007-08-01",
+      "reading": "もり はるき",
+      "source": {
+        "url": "https://npb.jp/bis/players/93195152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "bcf5a279a455d54c8c52c92a6d6626174d75f826a9491c405abddc33910c873d"
+      }
+    },
+    "npb-41945152": {
+      "name": "佐藤 龍月",
+      "birthDate": "2007-07-13",
+      "reading": "さとう りゅうが",
+      "source": {
+        "url": "https://npb.jp/bis/players/41945152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "7ed4b5c5a011c9ba32487ac68d8cbfd75ef07e621e3f07a81e017f5529f738d9"
+      }
+    },
+    "npb-51255152": {
+      "name": "髙谷 舟",
+      "birthDate": "2003-07-27",
+      "reading": "たかや しゅう",
+      "source": {
+        "url": "https://npb.jp/bis/players/51255152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "399ee357f6568871b6ad54c981934a933e80809b270656d7223ef32d89b7013f"
+      }
+    },
+    "npb-61665136": {
+      "name": "本田 仁海",
+      "birthDate": "1999-07-27",
+      "reading": "ほんだ ひとみ",
+      "source": {
+        "url": "https://npb.jp/bis/players/61665136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2e07e8a8f89e024890b2c97a45f8d078bba0d76f86563b7b9bdd365d01ff47d9"
+      }
+    },
+    "npb-83185150": {
+      "name": "山口 廉王",
+      "birthDate": "2006-05-14",
+      "reading": "やまぐち れお",
+      "source": {
+        "url": "https://npb.jp/bis/players/83185150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2e622c96ead42cebd42d699e948c4785e4700b9117039752435091d363eea34d"
+      }
+    },
+    "npb-71475159": {
+      "name": "東松 快征",
+      "birthDate": "2005-04-29",
+      "reading": "とうまつ かいせい",
+      "source": {
+        "url": "https://npb.jp/bis/players/71475159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "cd8249de7e4124ea4e59b89037e0379f331e5df0c03e6152520477bb7301235d"
+      }
+    },
+    "npb-01505150": {
+      "name": "片山 楽生",
+      "birthDate": "2002-10-07",
+      "reading": "かたやま らいく",
+      "source": {
+        "url": "https://npb.jp/bis/players/01505150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "03d80d61f948840692c03a4da6360505e8a1d11f5219640f32866726e7ed5a95"
+      }
+    },
+    "npb-03505155": {
+      "name": "横山 楓",
+      "birthDate": "1997-12-28",
+      "reading": "よこやま かえで",
+      "source": {
+        "url": "https://npb.jp/bis/players/03505155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "86247acb0c9e5f6077241efcc3196979e11d773a30a1012dd87ec11599db801f"
+      }
+    },
+    "npb-61965136": {
+      "name": "博志",
+      "birthDate": "1997-03-22",
+      "reading": "ひろし",
+      "source": {
+        "url": "https://npb.jp/bis/players/61965136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "8c6901c4ff91473c397e027267c7d41702068ce5c6fd1d8308effae43571e56e"
+      }
+    },
+    "npb-31335157": {
+      "name": "入山 海斗",
+      "birthDate": "2000-05-26",
+      "reading": "いりやま かいと",
+      "source": {
+        "url": "https://npb.jp/bis/players/31335157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "4e45545254594b9fc7d777fcf0c7967771fd1988a65279370ed283ac7483037d"
+      }
+    },
+    "npb-51055151": {
+      "name": "佐藤 一磨",
+      "birthDate": "2001-04-16",
+      "reading": "さとう かずま",
+      "source": {
+        "url": "https://npb.jp/bis/players/51055151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "9afbe6c481f24bc6a4f9d3cf74071c1cd14bde6f1f40c8c687b04e69fe4e7867"
+      }
+    },
+    "npb-41745153": {
+      "name": "川瀬 堅斗",
+      "birthDate": "2002-06-18",
+      "reading": "かわせ けんと",
+      "source": {
+        "url": "https://npb.jp/bis/players/41745153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "917c5b88f94a69c1480ea6dc63316179bbf73cbf5df317ca0f50e6b91d340a18"
+      }
+    },
+    "npb-21725157": {
+      "name": "才木 海翔",
+      "birthDate": "2000-06-10",
+      "reading": "さいき かいと",
+      "source": {
+        "url": "https://npb.jp/bis/players/21725157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "785fbff77d0a6be8530fce70820fb9fb9395c5ad55aeb34d72caa5af4096636b"
+      }
+    },
+    "npb-61065159": {
+      "name": "髙島 泰都",
+      "birthDate": "1999-12-03",
+      "reading": "たかしま たいと",
+      "source": {
+        "url": "https://npb.jp/bis/players/61065159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "86b8116145e2fb36d63837d532455f31c289f13fb5245536d653aa07012f326d"
+      }
+    },
+    "npb-61765159": {
+      "name": "権田 琉成",
+      "birthDate": "2000-01-28",
+      "reading": "ごんだ りゅうせい",
+      "source": {
+        "url": "https://npb.jp/bis/players/61765159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "3f745238d0037b23db58a386f44e57ad9c85476c606c9e1d5d5c7a321d22c98f"
+      }
+    },
+    "npb-11815155": {
+      "name": "福永 奨",
+      "birthDate": "1999-07-28",
+      "reading": "ふくなが しょう",
+      "source": {
+        "url": "https://npb.jp/bis/players/11815155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "a7dee78ab48c14ec9d4836a86da14a6eea1a073aca2b9536747e092a879d8b08"
+      }
+    },
+    "npb-33335150": {
+      "name": "山中 稜真",
+      "birthDate": "2000-12-14",
+      "reading": "やまなか りょうま",
+      "source": {
+        "url": "https://npb.jp/bis/players/33335150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ce47ce4f40fcadaa97f839ee9b1dac51322ee14d7c22698687c36be48cdd8182"
+      }
+    },
+    "npb-21425152": {
+      "name": "野上 士耀",
+      "birthDate": "2007-05-23",
+      "reading": "のがみ しきら",
+      "source": {
+        "url": "https://npb.jp/bis/players/21425152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "e54370306b70286b46a8ae2643e8731399815a4f410eb89d8808eff691e954fc"
+      }
+    },
+    "npb-81885159": {
+      "name": "堀 柊那",
+      "birthDate": "2005-07-16",
+      "reading": "ほり しゅうな",
+      "source": {
+        "url": "https://npb.jp/bis/players/81885159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "c7d9bb9d5b5168a24d6a20066731bcbfcb78e2b6122862053cfe8c4184bc56eb"
+      }
+    },
+    "npb-91395138": {
+      "name": "太田 椋",
+      "birthDate": "2001-02-14",
+      "reading": "おおた りょう",
+      "source": {
+        "url": "https://npb.jp/bis/players/91395138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "ece7f0032921461db7baf9120c53e24f89b02037f3c7ac0dedefa0c46ac5d7da"
+      }
+    },
+    "npb-81485155": {
+      "name": "野口 智哉",
+      "birthDate": "1999-09-20",
+      "reading": "のぐち ともや",
+      "source": {
+        "url": "https://npb.jp/bis/players/81485155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "86c14487c33134b2b4649cbd3cab2cc24f1afc9629b3520b2592eedef6228046"
+      }
+    },
+    "npb-91995151": {
+      "name": "紅林 弘太郎",
+      "birthDate": "2002-02-07",
+      "reading": "くればやし こうたろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/91995151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "31dccccf0b674f6e9e5e77c990053534f9de41931cbfbe61eb27cece92a6863e"
+      }
+    },
+    "npb-91295157": {
+      "name": "内藤 鵬",
+      "birthDate": "2004-10-05",
+      "reading": "ないとう ほう",
+      "source": {
+        "url": "https://npb.jp/bis/players/91295157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "59027ecb0d1242634016e8bcfba776ccfe82893fc5239b51e501aac9e414101e"
+      }
+    },
+    "npb-21625132": {
+      "name": "廣岡 大志",
+      "birthDate": "1997-04-09",
+      "reading": "ひろおか たいし",
+      "source": {
+        "url": "https://npb.jp/bis/players/21625132.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "97780010dfaeb4d647ed9f8a84ae051bd783a1f31d4d997960bf31e466f82ff5"
+      }
+    },
+    "npb-83385159": {
+      "name": "横山 聖哉",
+      "birthDate": "2005-10-28",
+      "reading": "よこやま せいや",
+      "source": {
+        "url": "https://npb.jp/bis/players/83385159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2a7e5a22ba7c257bf81a49077b559333db41c2d216d63f87abca9d5df8e152f2"
+      }
+    },
+    "npb-63565155": {
+      "name": "渡部 遼人",
+      "birthDate": "1999-09-02",
+      "reading": "わたなべ はると",
+      "source": {
+        "url": "https://npb.jp/bis/players/63565155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "257f88c2fa26c330447f529bc11417c5ebcecf85d6cde11cb3b166569d184ca7"
+      }
+    },
+    "npb-33135150": {
+      "name": "麦谷 祐介",
+      "birthDate": "2002-07-27",
+      "reading": "むぎたに ゆうすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/33135150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "426b054221e0d3bbb1db7ece0c43c57e211561e4ba84386f63e36c956c00fab9"
+      }
+    },
+    "npb-61965157": {
+      "name": "杉澤 龍",
+      "birthDate": "2000-06-02",
+      "reading": "すぎさわ りゅう",
+      "source": {
+        "url": "https://npb.jp/bis/players/61965157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "1dd5b8f430a9a41651cf280977cc8dfe37d2c4e6d20424805b84f3f434ef51b5"
+      }
+    },
+    "npb-51955153": {
+      "name": "来田 涼斗",
+      "birthDate": "2002-10-16",
+      "reading": "きた りょうと",
+      "source": {
+        "url": "https://npb.jp/bis/players/51955153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "c8360bb5cd5be49964459fe0e4b288967683167e918e0545063e08922a523a57"
+      }
+    },
+    "npb-41145155": {
+      "name": "池田 陵真",
+      "birthDate": "2003-08-24",
+      "reading": "いけだ りょうま",
+      "source": {
+        "url": "https://npb.jp/bis/players/41145155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "9d109f3fb1d65c14cfafc9d11e007902e6584176d792193552e3d32a209b8107"
+      }
+    },
+    "npb-01705152": {
+      "name": "窪田 洋祐",
+      "birthDate": "2007-07-31",
+      "reading": "くぼた ようすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/01705152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "67e41458dbd0327c73316a63f91007781148a4a8b2a87f3893b9249a4edadc1c"
+      }
+    },
+    "npb-61965132": {
+      "name": "杉本 裕太郎",
+      "birthDate": "1991-04-05",
+      "reading": "すぎもと ゆうたろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/61965132.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "a42596ae4800aec6cb7026ada17261ce2b0f95258aa49d37ad5fa950e224daa5"
+      }
+    },
+    "npb-91395159": {
+      "name": "上田 大河",
+      "birthDate": "2001-11-15",
+      "reading": "うえだ たいが",
+      "source": {
+        "url": "https://npb.jp/bis/players/91395159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "a0fd53aca76b06f19d2280bfdfe9d79e8df51dff6835937193fcaeda196f269a"
+      }
+    },
+    "npb-53155138": {
+      "name": "渡邉 勇太朗",
+      "birthDate": "2000-09-21",
+      "reading": "わたなべ ゆうたろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/53155138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "0806f2c13e96ddacce24629792aad5f88fab5efed028bb7a3deb8626ae326bb9"
+      }
+    },
+    "npb-63165136": {
+      "name": "與座 海人",
+      "birthDate": "1995-09-15",
+      "reading": "よざ かいと",
+      "source": {
+        "url": "https://npb.jp/bis/players/63165136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "7e5fab32812bf6e02d7c45d2f39925c16dad386d60b4b217fca6099c136d5276"
+      }
+    },
+    "npb-81685138": {
+      "name": "松本 航",
+      "birthDate": "1996-11-28",
+      "reading": "まつもと わたる",
+      "source": {
+        "url": "https://npb.jp/bis/players/81685138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "7a4ce701607ad697fc265e04e64fd1381becf94f853b4291222cdf11d670d343"
+      }
+    },
+    "npb-41945155": {
+      "name": "佐藤 隼輔",
+      "birthDate": "2000-01-03",
+      "reading": "さとう しゅんすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/41945155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "4d5a9a24ab948e8454a1103d490455301611ea33b5c7dd667e6b6c16c6d66b82"
+      }
+    },
+    "npb-91395152": {
+      "name": "岩城 颯空",
+      "birthDate": "2003-09-17",
+      "reading": "いわき はくあ",
+      "source": {
+        "url": "https://npb.jp/bis/players/91395152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "4cf9f1177e2d0f95dfa6cfd85fb4ceaa8bca0d87ceb148f8ad8fe11231c0c360"
+      }
+    },
+    "npb-51255159": {
+      "name": "武内 夏暉",
+      "birthDate": "2001-07-21",
+      "reading": "たけうち なつき",
+      "source": {
+        "url": "https://npb.jp/bis/players/51255159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "62c2728e9bb5d60546c4af360904bb3a96aa4f58f589e6132e3b49290b5d6cd3"
+      }
+    },
+    "npb-11315159": {
+      "name": "糸川 亮太",
+      "birthDate": "1998-04-30",
+      "reading": "いとがわ りょうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/11315159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "70c66d2a8d738d1ff3e30d673bd7934a83856d59f08751563fea03ea1c44b661"
+      }
+    },
+    "npb-51155157": {
+      "name": "青山 美夏人",
+      "birthDate": "2000-07-19",
+      "reading": "あおやま みなと",
+      "source": {
+        "url": "https://npb.jp/bis/players/51155157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "bfff494fe8b722d251ccb619f6813cc3c75ed3d17d3814d0b044cae52e1e4055"
+      }
+    },
+    "npb-51555138": {
+      "name": "甲斐野 央",
+      "birthDate": "1996-11-16",
+      "reading": "かいの ひろし",
+      "source": {
+        "url": "https://npb.jp/bis/players/51555138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d1daed5c92c585c94217fdaba33b7796647e1208581f278b08101ff751d5082d"
+      }
+    },
+    "npb-43345157": {
+      "name": "山田 陽翔",
+      "birthDate": "2004-05-09",
+      "reading": "やまだ はると",
+      "source": {
+        "url": "https://npb.jp/bis/players/43345157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "98b6c2494d5c5c5146d8d887735d8f730df2216a5a06e6991238691270063475"
+      }
+    },
+    "npb-31835152": {
+      "name": "堀越 啓太",
+      "birthDate": "2003-07-15",
+      "reading": "ほりこし けいた",
+      "source": {
+        "url": "https://npb.jp/bis/players/31835152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "4ec84da9f5132364895cff29ecda9475445bd8ebc5a1f7cdae6ac9bc454758cc"
+      }
+    },
+    "npb-81485159": {
+      "name": "成田 晴風",
+      "birthDate": "2006-02-27",
+      "reading": "なりた はるせ",
+      "source": {
+        "url": "https://npb.jp/bis/players/81485159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "fe70be76e751e17777bcf4e4f698b5752265c69fe34185f3b1b8a3eaa2d30211"
+      }
+    },
+    "npb-51655155": {
+      "name": "羽田 慎之介",
+      "birthDate": "2003-12-25",
+      "reading": "はだ しんのすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/51655155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2e67aad55dd9c7b70d9991ae8a738ccabee09f53d897d32b0fbedb959978209a"
+      }
+    },
+    "npb-81585150": {
+      "name": "狩生 聖真",
+      "birthDate": "2006-12-25",
+      "reading": "かりう しょうま",
+      "source": {
+        "url": "https://npb.jp/bis/players/81585150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "f09a81d84018043116c3ba95806f3365cf7cea2911d6211743eac7150d3c246b"
+      }
+    },
+    "npb-91095159": {
+      "name": "杉山 遙希",
+      "birthDate": "2005-09-23",
+      "reading": "すぎやま はるき",
+      "source": {
+        "url": "https://npb.jp/bis/players/91095159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "964f44060a50e9d97d5e60712631a2519a3db6e380d193d163cd5471c94cd198"
+      }
+    },
+    "npb-61065150": {
+      "name": "篠原 響",
+      "birthDate": "2006-09-20",
+      "reading": "しのはら ひびき",
+      "source": {
+        "url": "https://npb.jp/bis/players/61065150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "0bbb88af459b20ad6102b4fc65f7b8f55b7c8a2967302e0af6b5d6f18d020966"
+      }
+    },
+    "npb-51755134": {
+      "name": "黒木 優太",
+      "birthDate": "1994-08-16",
+      "reading": "くろき ゆうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/51755134.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d859fbf70f762ddffb6e6e071c23cdbef2a97eca056e4729ddb74f896e2841af"
+      }
+    },
+    "npb-21725155": {
+      "name": "黒田 将矢",
+      "birthDate": "2004-01-24",
+      "reading": "くろだ まさや",
+      "source": {
+        "url": "https://npb.jp/bis/players/21725155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "a0282b4f7d061ad078402cceec28e4dfd8b3e70011c095fcf283ffb5becff550"
+      }
+    },
+    "npb-71075139": {
+      "name": "中村 祐太",
+      "birthDate": "1995-08-31",
+      "reading": "なかむら ゆうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/71075139.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "28171ad9c63a294c5c892b78ebe9bf02601179ca7d3d0d5f57bcc253348bd3c6"
+      }
+    },
+    "npb-23125153": {
+      "name": "豆田 泰志",
+      "birthDate": "2003-01-15",
+      "reading": "まめだ たいし",
+      "source": {
+        "url": "https://npb.jp/bis/players/23125153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "a7d6386f6d445871befedcfb12e5d3ed3f66fff78e333af2f5530809f6d8fe22"
+      }
+    },
+    "npb-71075155": {
+      "name": "菅井 信也",
+      "birthDate": "2003-06-28",
+      "reading": "すがい しんや",
+      "source": {
+        "url": "https://npb.jp/bis/players/71075155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "bb2719a2216b7aeb32929e5e4102507b1bd83b8de267b01a41f7b0ca6ef5cbc9"
+      }
+    },
+    "npb-61465151": {
+      "name": "浜屋 将太",
+      "birthDate": "1999-01-26",
+      "reading": "はまや しょうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/61465151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d14dcca51248fc202c785a8d98ca751633d8490ffeeecf71021b59407f639afe"
+      }
+    },
+    "npb-41745152": {
+      "name": "小島 大河",
+      "birthDate": "2003-10-27",
+      "reading": "こじま たいが",
+      "source": {
+        "url": "https://npb.jp/bis/players/41745152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "a8c0208ad62f3a7ebf19638bb280fbda4967ed44379202f6880fbe0e4409929e"
+      }
+    },
+    "npb-81785155": {
+      "name": "古賀 悠斗",
+      "birthDate": "1999-09-10",
+      "reading": "こが ゆうと",
+      "source": {
+        "url": "https://npb.jp/bis/players/81785155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "0958f417e53fd41f1d627420cc8385de177f04257dfd3cfcf648595f5fa70b71"
+      }
+    },
+    "npb-61265151": {
+      "name": "柘植 世那",
+      "birthDate": "1997-06-03",
+      "reading": "つげ せな",
+      "source": {
+        "url": "https://npb.jp/bis/players/61265151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "225b10ddc16af1a2451621523c02e701a4b5a4d8ef27d6354efcd36c55c4be9f"
+      }
+    },
+    "npb-71675138": {
+      "name": "牧野 翔矢",
+      "birthDate": "2001-03-04",
+      "reading": "まきの しょうや",
+      "source": {
+        "url": "https://npb.jp/bis/players/71675138.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "c4837c568544878469018ec80eeb892d5fc536358463b3276447cb155ea9e2ff"
+      }
+    },
+    "npb-51455150": {
+      "name": "龍山 暖",
+      "birthDate": "2006-05-13",
+      "reading": "たつやま はるき",
+      "source": {
+        "url": "https://npb.jp/bis/players/51455150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "a6ba60b3d4dd246f5b4fdcb9497728a85c70fe61ce5e48ffcb384c25e0c6b19d"
+      }
+    },
+    "npb-91795157": {
+      "name": "是澤 涼輔",
+      "birthDate": "2000-04-19",
+      "reading": "これさわ りょうすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/91795157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2aec810f780f5878fdcd9f1322e59d14c153561f672bc9a20f4db8c6fa1e5197"
+      }
+    },
+    "npb-91495155": {
+      "name": "仲田 慶介",
+      "birthDate": "1999-07-25",
+      "reading": "なかた けいすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/91495155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "6f0f4282cb251600605a81573f8667e46956b12757a3c7807c614deccb946aae"
+      }
+    },
+    "npb-51755157": {
+      "name": "児玉 亮涼",
+      "birthDate": "1998-07-10",
+      "reading": "こだま りょうすけ",
+      "source": {
+        "url": "https://npb.jp/bis/players/51755157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d11cb4876728ba4fb47d35508510c6aecc0805547cb559b82000471da53229f2"
+      }
+    },
+    "npb-21925150": {
+      "name": "齋藤 大翔",
+      "birthDate": "2007-01-27",
+      "reading": "さいとう ひろと",
+      "source": {
+        "url": "https://npb.jp/bis/players/21925150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "e11b293bb853dc2cf825d292c0c89902fd239d7b10629091537fdf08c3290a46"
+      }
+    },
+    "npb-21125134": {
+      "name": "石井 一成",
+      "birthDate": "1994-05-06",
+      "reading": "いしい かずなり",
+      "source": {
+        "url": "https://npb.jp/bis/players/21125134.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "8b4625558555d1be333659b25f35c0708e85fe230be19a8734565b017fb106f3"
+      }
+    },
+    "npb-83385153": {
+      "name": "山村 崇嘉",
+      "birthDate": "2002-09-28",
+      "reading": "やまむら たかよし",
+      "source": {
+        "url": "https://npb.jp/bis/players/83385153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "9581b15d7676f9885ac45abffb6ecb477fe93dc3644f063b0d80bc4a7638541a"
+      }
+    },
+    "npb-51055150": {
+      "name": "佐藤 太陽",
+      "birthDate": "2002-05-19",
+      "reading": "さとう たいよう",
+      "source": {
+        "url": "https://npb.jp/bis/players/51055150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2df9735ce2175cca39c3cccd32b1c17db305029b581c76c8abe5f9d8e77aaa25"
+      }
+    },
+    "npb-91695132": {
+      "name": "平沢 大河",
+      "birthDate": "1997-12-24",
+      "reading": "ひらさわ たいが",
+      "source": {
+        "url": "https://npb.jp/bis/players/91695132.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "8a543cf25a6aa3bb90f71f2a64326b8fd5ba0fd07002ef824a049b874e824d3d"
+      }
+    },
+    "npb-21025136": {
+      "name": "髙松 渡",
+      "birthDate": "1999-07-02",
+      "reading": "たかまつ わたる",
+      "source": {
+        "url": "https://npb.jp/bis/players/21025136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2e0f13a5638536bd5b48af69699370e592884fef3113a359971bed6e6910b836"
+      }
+    },
+    "npb-83185152": {
+      "name": "横田 蒼和",
+      "birthDate": "2007-10-24",
+      "reading": "よこた そうわ",
+      "source": {
+        "url": "https://npb.jp/bis/players/83185152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d829ca0510e26e7916ce0eb421d55f110d35389626d206e7671666d64b823470"
+      }
+    },
+    "npb-51255155": {
+      "name": "滝澤 夏央",
+      "birthDate": "2003-08-13",
+      "reading": "たきざわ なつお",
+      "source": {
+        "url": "https://npb.jp/bis/players/51255155.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2d6c34902ccff02e97d42790ed26a4f013d022ecaa6400c5034b1d05e60162fb"
+      }
+    },
+    "npb-93395159": {
+      "name": "村田 怜音",
+      "birthDate": "2001-08-04",
+      "reading": "むらた れおん",
+      "source": {
+        "url": "https://npb.jp/bis/players/93395159.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d51b2d4dbc69fae9fc41923cfb7ba90b898b45720228a271737254498e4b6bc1"
+      }
+    },
+    "npb-83385150": {
+      "name": "渡部 聖弥",
+      "birthDate": "2002-08-31",
+      "reading": "わたなべ せいや",
+      "source": {
+        "url": "https://npb.jp/bis/players/83385150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "297e1ae937adef89d46b363604274ce71f2a63fc93538907e9a30715ab872071"
+      }
+    },
+    "npb-61665157": {
+      "name": "蛭間 拓哉",
+      "birthDate": "2000-09-08",
+      "reading": "ひるま たくや",
+      "source": {
+        "url": "https://npb.jp/bis/players/61665157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "8bbdcaac754dd44e8a0e3c7a2b64c4d68277a506de33ca1e557f9f148b99b714"
+      }
+    },
+    "npb-51855157": {
+      "name": "古川 雄大",
+      "birthDate": "2004-05-25",
+      "reading": "ふるかわ ゆうだい",
+      "source": {
+        "url": "https://npb.jp/bis/players/51855157.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2afbd4eef6d59af9361dd003e859815b64d692da424427df07b309579870e871"
+      }
+    },
+    "npb-51155152": {
+      "name": "秋山 俊",
+      "birthDate": "2003-04-20",
+      "reading": "あきやま しゅん",
+      "source": {
+        "url": "https://npb.jp/bis/players/51155152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "39161289173ff23620a3b0e3bf2d42fb9cd17b7997bb1534698e00926e934572"
+      }
+    },
+    "npb-43345150": {
+      "name": "林 冠臣",
+      "birthDate": "2002-12-30",
+      "reading": "りん くぁんちぇん",
+      "source": {
+        "url": "https://npb.jp/bis/players/43345150.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "660185d5887ffdbbf3154ec03886d913a022dabbea75bc80fa28fa0042041b0c"
+      }
+    },
+    "npb-51455136": {
+      "name": "西川 愛也",
+      "birthDate": "1999-06-10",
+      "reading": "にしかわ まなや",
+      "source": {
+        "url": "https://npb.jp/bis/players/51455136.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "48e4aa2d63cd99d4928af53d67fa574119fe228dd599eef9c2fcf9eab4fc8d41"
+      }
+    },
+    "npb-61465153": {
+      "name": "仲三 優太",
+      "birthDate": "2002-10-22",
+      "reading": "なかみ ゆうた",
+      "source": {
+        "url": "https://npb.jp/bis/players/61465153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "d4be0d9cd827dc402231a328bb9a7941ac84c78ba46213ca42e15f1ae9af3877"
+      }
+    },
+    "npb-81685153": {
+      "name": "長谷川 信哉",
+      "birthDate": "2002-05-17",
+      "reading": "はせがわ しんや",
+      "source": {
+        "url": "https://npb.jp/bis/players/81685153.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "33fc1f2d329e5b215c2266427537c9b0f74417b44efdca70c75236f5f5096d5a"
+      }
+    },
+    "npb-31735152": {
+      "name": "川田 悠慎",
+      "birthDate": "2002-02-20",
+      "reading": "かわだ ゆうしん",
+      "source": {
+        "url": "https://npb.jp/bis/players/31735152.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "1fb1da0c1b7f3b39b1479d77432c0abf95e208c47095d8f595314645db7698b6"
+      }
+    },
+    "npb-51955151": {
+      "name": "岸 潤一郎",
+      "birthDate": "1996-12-08",
+      "reading": "きし じゅんいちろう",
+      "source": {
+        "url": "https://npb.jp/bis/players/51955151.html",
+        "retrievedAt": "2026-10-24",
+        "sha256": "2b4cc487014ef24fcc97a8476b9a220e7ddf44782465a719fa72104e78e44eb9"
+      }
+    }
+  }
+}
