@@ -178,10 +178,16 @@ test('result copy writes the acquisitions, releases and all clubs as plain text 
   context,
 }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write'])
+  await page.setViewportSize({ width: 390, height: 667 })
   await loadResult(page)
   await expect(
     page.getByRole('button', { name: '結果を保存', exact: true }),
   ).toHaveCount(0)
+  const preview = page.getByRole('textbox', { name: '貼り付け用のプレー結果' })
+  await expect(preview).toBeVisible()
+  const previewText = await preview.inputValue()
+  expect(previewText).toContain('【12球団の移籍結果】')
+  await page.screenshot({ path: '.cache/share-full-preview-mobile.png' })
   await page
     .getByRole('button', { name: '獲得・放出と12球団の結果のテキストをコピー' })
     .click()
@@ -196,6 +202,7 @@ test('result copy writes the acquisitions, releases and all clubs as plain text 
     }
   })
   expect(copied.types).toEqual(['text/plain'])
+  expect(copied.text).toBe(previewText)
   await expect(page.getByRole('dialog')).toContainText(
     'ブログやSNSなどに貼り付けて活用できます。',
   )
@@ -225,7 +232,7 @@ test('blocked clipboard offers selectable text instead of claiming success', asy
     .getByRole('button', { name: '獲得・放出と12球団の結果のテキストをコピー' })
     .click()
   await expect(page.getByRole('status')).toContainText(
-    '下の文章を選択してコピー',
+    '表示中の文章を選択してコピー',
   )
   const field = page.getByRole('textbox', { name: '貼り付け用のプレー結果' })
   await expect(field).toBeFocused()

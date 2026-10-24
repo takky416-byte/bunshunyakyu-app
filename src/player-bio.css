@@ -1,13 +1,13 @@
-.app-shell .roster-panel .salary-info {
+.app-shell .salary-info {
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
   gap: 0 8px;
 }
-.app-shell .roster-panel .salary-info > span {
+.app-shell .salary-info > span {
   white-space: nowrap;
 }
-.app-shell .roster-panel .player-age::before {
+.app-shell .player-age::before {
   content: '·';
   margin-right: 8px;
 }
@@ -38,4 +38,74 @@
   font-size: 0.875rem;
   line-height: 1.6;
   margin: 8px 0 12px;
+}
+
+.app-shell .salary-info {
+  color: var(--club-link) !important;
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+.app-shell .salary-info > span {
+  color: inherit;
+}
+.app-shell .second-round-choices > label {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 10px;
+  padding: 10px 12px;
+}
+.app-shell .second-round-choices .bid-player {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  color: inherit;
+}
+.app-shell .second-round-choices .bid-player-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  color: var(--club-deep);
+}
+.app-shell .second-round-choices .bid-player-heading > strong {
+  flex: 0 1 auto;
+  min-width: 0;
+  font-size: 1.125rem;
+  line-height: 1.5;
+  text-wrap: balance;
+}
+.app-shell .second-round-choices .bid-player-team {
+  white-space: nowrap;
+  color: #66735f;
+}
+.bid-preference-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+}
+.bid-preference-player {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.bid-preference-player > strong {
+  color: var(--club-deep);
+  text-wrap: balance;
+}
+.bid-preference-actions {
+  display: flex;
+  gap: 6px;
+  white-space: nowrap;
+}
+.app-shell .bid-preference-actions > button {
+  margin: 0;
+  min-height: 32px;
+}
+.app-shell .round-two-confirm .panel-heading p,
+.app-shell .round-two-body > p {
+  text-wrap: pretty;
 }

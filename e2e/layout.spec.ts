@@ -67,7 +67,7 @@ test('club labels never overlap vote bars and desktop navigation stays on one li
       ),
     { game, dataset: referenceDataset },
   )
-  for (const width of [768, 980, 1024, 1280, 1440]) {
+  for (const width of [768, 980, 1024, 1199, 1200, 1280, 1440, 1500, 1920]) {
     await page.setViewportSize({ width, height: 720 })
     await page.goto('/')
     await expect(page.locator('.vote-row')).toHaveCount(12)
@@ -97,11 +97,38 @@ test('club labels never overlap vote bars and desktop navigation stays on one li
         return range.getClientRects().length
       })
     expect(navLines, `navigation at ${width}`).toBe(1)
+    for (const selector of ['.single-label-title', '.single-label small']) {
+      const metrics = await page.locator(selector).evaluate((el) => {
+        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT)
+        const rects: DOMRect[] = []
+        while (walker.nextNode()) {
+          if (!walker.currentNode.textContent?.trim()) continue
+          const range = document.createRange()
+          range.selectNodeContents(walker.currentNode)
+          rects.push(...range.getClientRects())
+        }
+        const parent = el.closest('.single-label-copy')!.getBoundingClientRect()
+        return {
+          lines: new Set(rects.map((r) => Math.round(r.top))).size,
+          contained: rects.every(
+            (r) => r.left >= parent.left - 1 && r.right <= parent.right + 1,
+          ),
+        }
+      })
+      expect(metrics.lines, `${selector} at ${width}`).toBe(1)
+      expect(metrics.contained, `${selector} at ${width}`).toBe(true)
+    }
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,
       ),
     ).toBe(true)
   }
+  await page
+    .locator('.sidebar')
+    .evaluate((el) => (el.scrollTop = el.scrollHeight))
+  await page
+    .locator('.single-label')
+    .screenshot({ path: '.cache/sidebar-label-fixed.png' })
   await page.screenshot({ path: '.cache/vote-bars-fixed.png', fullPage: true })
 })

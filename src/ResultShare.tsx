@@ -35,7 +35,7 @@ export default function ResultShare({
     } catch {
       setManual(true)
       setMessage(
-        'コピーが許可されませんでした。下の文章を選択してコピーしてください。',
+        'コピーが許可されませんでした。表示中の文章を選択してコピーしてください。',
       )
     }
   }
@@ -62,9 +62,15 @@ export default function ResultShare({
   return (
     <div className="result-share">
       <div className="share-preview">
-        <strong>{result.club}</strong>
-        <p>獲得：{result.acquired.map((p) => p.player).join('、')}</p>
-        <p>放出：{result.released.map((p) => p.player).join('、')}</p>
+        <label htmlFor="share-result-text">コピーされるテキスト</label>
+        <textarea
+          ref={field}
+          id="share-result-text"
+          aria-label="貼り付け用のプレー結果"
+          readOnly
+          value={result.text}
+          rows={8}
+        />
       </div>
       <div className="share-actions">
         <button
@@ -91,15 +97,6 @@ export default function ResultShare({
         <p className="share-message" role="status">
           {message}
         </p>
-      )}
-      {manual && (
-        <textarea
-          ref={field}
-          aria-label="貼り付け用のプレー結果"
-          readOnly
-          value={result.text}
-          rows={10}
-        />
       )}
     </div>
   )

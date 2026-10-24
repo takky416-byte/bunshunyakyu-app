@@ -110,6 +110,34 @@
   font-size: 1rem;
   letter-spacing: normal;
 }
+.app-shell .single-label {
+  align-items: flex-start;
+  gap: 8px;
+}
+.app-shell .single-label > svg {
+  margin-top: 4px;
+}
+.app-shell .single-label-copy {
+  flex: 1;
+  min-width: 0;
+}
+.app-shell .single-label-title {
+  display: block;
+}
+.app-shell .single-label-title > span,
+.app-shell .single-label small > span {
+  display: inline-block;
+  white-space: nowrap;
+}
+.app-shell .single-label small {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 3px;
+}
+.app-shell .sidebar-note {
+  text-wrap: balance;
+  line-break: strict;
+}
 .app-shell[data-playing='true'] .game-title {
   flex-wrap: wrap;
   gap: 6px 16px;

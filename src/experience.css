@@ -611,3 +611,22 @@
     flex-wrap: nowrap;
   }
 }
+
+.result-share .share-preview > label {
+  display: block;
+  color: var(--club-deep);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+.result-share .share-preview > textarea {
+  display: block;
+  height: clamp(150px, 28dvh, 240px);
+  min-height: 120px;
+  max-height: 55dvh;
+  margin-top: 8px;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--club-deep);
+  background: #ffffff;
+  resize: vertical;
+}

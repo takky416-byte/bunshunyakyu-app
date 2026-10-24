@@ -163,6 +163,20 @@ function TeamMark({ team, small = false }: { team: Team; small?: boolean }) {
     </span>
   )
 }
+function PlayerFacts({ player }: { player: Player }) {
+  const age = playerAge(player.birthDate)
+  return (
+    <small className="salary-info">
+      <span>
+        {player.draftFacts?.salaryManYen == null
+          ? '年俸データなし'
+          : `${player.draftFacts.salaryManYen.toLocaleString()}万円`}
+      </span>
+      <span className="player-age">{age == null ? '年齢 —' : `${age}歳`}</span>
+      {eligibilityOf(player).band === 'exception' && <span>高年俸枠</span>}
+    </small>
+  )
+}
 function StatSummary({ player }: { player: Player }) {
   const s = player.stats
   if (!s) return <span className="player-stats">2026 一軍成績掲載なし</span>
@@ -594,8 +608,15 @@ export default function App() {
         <div className="sidebar-bottom">
           <div className="single-label">
             <Users size={16} />
-            <span>
-              シングルプレー<small>あなた ＋ CPU 11球団</small>
+            <span className="single-label-copy">
+              <span className="single-label-title">
+                <span>シングル</span>
+                <span>プレー</span>
+              </span>
+              <small>
+                <span>あなた＋</span>
+                <span>CPU 11球団</span>
+              </small>
             </span>
           </div>
           <div className="sidebar-note">
@@ -1009,21 +1030,7 @@ export default function App() {
                                     </span>
                                     {p.number ? ` · #${p.number}` : ''}
                                   </small>
-                                  <small className="salary-info">
-                                    <span>
-                                      {p.draftFacts?.salaryManYen == null
-                                        ? '年俸データなし'
-                                        : `${p.draftFacts.salaryManYen.toLocaleString()}万円`}
-                                    </span>
-                                    <span className="player-age">
-                                      {playerAge(p.birthDate) == null
-                                        ? '年齢 —'
-                                        : `${playerAge(p.birthDate)}歳`}
-                                    </span>
-                                    {eligibilityOf(p).band === 'exception' && (
-                                      <span>高年俸枠</span>
-                                    )}
-                                  </small>
+                                  <PlayerFacts player={p} />
                                   {!eligibilityOf(p).allowed && (
                                     <small>
                                       {eligibilityOf(p).reasons.join(' / ')}
@@ -1248,7 +1255,9 @@ export default function App() {
                             参加状況と入札を確認
                           </h2>
                           <p>
-                            獲得希望なら候補を希望順に選び、内容を確定してください。確定後は変更できません。
+                            獲得希望なら候補を希望順に選び、内容を確定してください。
+                            <span className="text-unit">確定後は</span>
+                            <span className="text-unit">変更できません。</span>
                           </p>
                         </div>
                       </div>
@@ -1324,33 +1333,40 @@ export default function App() {
                             <ol className="bid-preferences">
                               {roundPreferences.map((id, i) => (
                                 <li key={id}>
-                                  {player(id).name}
-                                  <button
-                                    aria-label={`${player(id).name}の希望順位を上げる`}
-                                    disabled={i === 0}
-                                    onClick={() =>
-                                      setRoundPreferences((old) => {
-                                        const next = [...old]
-                                        ;[next[i - 1], next[i]] = [
-                                          next[i],
-                                          next[i - 1],
-                                        ]
-                                        return next
-                                      })
-                                    }
-                                  >
-                                    ↑
-                                  </button>
-                                  <button
-                                    aria-label={`${player(id).name}を希望から外す`}
-                                    onClick={() =>
-                                      setRoundPreferences((old) =>
-                                        old.filter((v) => v !== id),
-                                      )
-                                    }
-                                  >
-                                    削除
-                                  </button>
+                                  <div className="bid-preference-row">
+                                    <span className="bid-preference-player">
+                                      <strong>{player(id).name}</strong>
+                                      <PlayerFacts player={player(id)} />
+                                    </span>
+                                    <span className="bid-preference-actions">
+                                      <button
+                                        aria-label={`${player(id).name}の希望順位を上げる`}
+                                        disabled={i === 0}
+                                        onClick={() =>
+                                          setRoundPreferences((old) => {
+                                            const next = [...old]
+                                            ;[next[i - 1], next[i]] = [
+                                              next[i],
+                                              next[i - 1],
+                                            ]
+                                            return next
+                                          })
+                                        }
+                                      >
+                                        ↑
+                                      </button>
+                                      <button
+                                        aria-label={`${player(id).name}を希望から外す`}
+                                        onClick={() =>
+                                          setRoundPreferences((old) =>
+                                            old.filter((v) => v !== id),
+                                          )
+                                        }
+                                      >
+                                        削除
+                                      </button>
+                                    </span>
+                                  </div>
                                 </li>
                               ))}
                             </ol>
@@ -1368,9 +1384,14 @@ export default function App() {
                                       )
                                     }
                                   />
-                                  <strong>{p.name}</strong>
-                                  <span>
-                                    {teamById[p.team].short} · {p.position}
+                                  <span className="bid-player">
+                                    <span className="bid-player-heading">
+                                      <strong>{p.name}</strong>
+                                      <span className="bid-player-team">
+                                        {teamById[p.team].short} · {p.position}
+                                      </span>
+                                    </span>
+                                    <PlayerFacts player={p} />
                                   </span>
                                 </label>
                               ))}
