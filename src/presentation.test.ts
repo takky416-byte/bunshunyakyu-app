@@ -16,5 +16,12 @@ it('keeps button labels and links readable across all twelve club palettes', () 
       (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05),
     ).toBeGreaterThanOrEqual(4.5)
     expect(1.05 / (luminance(theme.link) + 0.05)).toBeGreaterThanOrEqual(4.5)
+    const secondary = luminance(theme.secondary),
+      onSecondary = luminance(theme.onSecondary)
+    expect(
+      (Math.max(secondary, onSecondary) + 0.05) /
+        (Math.min(secondary, onSecondary) + 0.05),
+    ).toBeGreaterThanOrEqual(4.5)
+    expect(theme.secondary).not.toBe(theme.accent)
   }
 })

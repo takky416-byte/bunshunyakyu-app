@@ -48,6 +48,8 @@ export async function resultImage(
   context.fillRect(0, 0, 1200, 150)
   context.fillStyle = theme.accent
   context.fillRect(0, 0, 12, 150)
+  context.fillStyle = theme.secondary
+  context.fillRect(12, 144, 1188, 6)
   context.fillStyle = '#ffffff'
   context.font = `bold 34px ${font}`
   context.fillText('現役ドラフトルーム 2026', 50, 65)

@@ -1,0 +1,91 @@
+/* Main and secondary colors stay local to each announcement's club. */
+.app-shell .sidebar {
+  box-shadow: inset -4px 0 var(--club-secondary);
+  border-top: 4px solid var(--club-accent);
+}
+.app-shell .sidebar .nav-item.active {
+  box-shadow: inset 3px 0 var(--club-secondary);
+}
+.app-shell .concept-intro,
+.app-shell .result-hero {
+  border-top: 3px solid var(--club-accent);
+  border-bottom: 3px solid var(--club-secondary);
+}
+.app-shell .button.primary {
+  box-shadow: inset 0 -3px 0 var(--club-secondary);
+}
+.app-shell .team-card {
+  box-shadow: inset 0 -3px 0 var(--team-secondary);
+}
+.app-shell .autoplay-toggle[aria-pressed='true'] {
+  background: var(--club-secondary);
+  color: var(--club-on-secondary);
+  border-color: var(--club-secondary);
+}
+.app-shell .draft-announcement {
+  background: linear-gradient(
+    125deg,
+    var(--club-deep),
+    color-mix(in srgb, var(--club-accent) 16%, var(--club-deep))
+  );
+  box-shadow:
+    inset 0 4px 0 var(--club-accent),
+    inset 0 -4px 0 var(--club-secondary),
+    0 40px 140px #07190ce6;
+}
+.app-shell .draft-announcement[data-autoplay='true'] h2:focus {
+  outline: none;
+}
+.app-shell .draft-announcement .announcement-kicker,
+.app-shell .draft-announcement .announcement-result-label,
+.app-shell .draft-announcement .announcement-transfer b {
+  color: color-mix(in srgb, var(--club-secondary) 35%, #ffffff);
+}
+.app-shell .draft-announcement[data-kind='pick'] .announcement-name {
+  background: var(--club-accent);
+  color: var(--club-on-accent);
+  padding: 6px 12px;
+  border-bottom: 3px solid var(--club-secondary);
+  border-radius: 6px;
+}
+.app-shell .announcement-envelope {
+  border-color: var(--club-secondary);
+}
+.app-shell .announcement-envelope::after {
+  border-color: var(--club-secondary);
+}
+.announcement-playback {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px 12px;
+  margin-bottom: 8px;
+}
+.announcement-autoplay {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 36px;
+  padding: 5px 10px;
+  border: 1px solid #ffffff66;
+  border-radius: 6px;
+  color: #ffffff;
+  white-space: nowrap;
+  font-size: 0.875rem;
+}
+.announcement-autoplay[aria-pressed='true'] {
+  background: var(--club-secondary);
+  color: var(--club-on-secondary);
+  border-color: var(--club-secondary);
+}
+.announcement-playback small {
+  color: #e2e9e5;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+@media (max-width: 379px) {
+  .announcement-playback small {
+    display: none;
+  }
+}

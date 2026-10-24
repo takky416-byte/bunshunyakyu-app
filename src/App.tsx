@@ -1,5 +1,6 @@
 import {
   useEffect,
+  useCallback,
   useRef,
   useState,
   type CSSProperties,
@@ -77,6 +78,7 @@ import { npcAnnouncements, type Announcement } from './announcements'
 import Diamond from './Diamond'
 import Splash, { needsSplash, SPLASH_KEY } from './Splash'
 import ResultShare from './ResultShare'
+import { usePageVisible } from './usePageVisible'
 import {
   centralSelection,
   pacificSelection,
@@ -257,6 +259,23 @@ export default function App() {
       return true
     }
   })
+  const [autoPlay, setAutoPlay] = useState(() => {
+    try {
+      return localStorage.getItem('geneki-draft:autoplay:v1') !== 'off'
+    } catch {
+      return true
+    }
+  })
+  const pageVisible = usePageVisible()
+  const finishAnnouncements = useCallback(() => setAnnouncements(null), [])
+  const changeAutoPlay = useCallback((enabled: boolean) => {
+    setAutoPlay(enabled)
+    try {
+      localStorage.setItem('geneki-draft:autoplay:v1', enabled ? 'on' : 'off')
+    } catch {
+      /* usable without storage */
+    }
+  }, [])
   const [reducedMotion, setReducedMotion] = useState(
     () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   )
@@ -317,6 +336,39 @@ export default function App() {
     pendingFlowFocus.current = true
     setShowSplash(false)
   }
+  useEffect(() => {
+    if (
+      !autoPlay ||
+      !pageVisible ||
+      !game ||
+      game.stage !== 'draft' ||
+      game.current === game.userTeam ||
+      announcements ||
+      modal ||
+      showSplash
+    )
+      return
+    try {
+      const sequence = npcAnnouncements(game, players, true)
+      if (!sequence.length) return
+      if (presentationEnabled && !reducedMotion) setAnnouncements(sequence)
+      else setGame(sequence.at(-1)!.game)
+    } catch (error) {
+      setError(
+        error instanceof Error ? error.message : '指名を進められませんでした。',
+      )
+    }
+  }, [
+    autoPlay,
+    pageVisible,
+    game,
+    players,
+    announcements,
+    modal,
+    showSplash,
+    presentationEnabled,
+    reducedMotion,
+  ])
   useEffect(() => {
     const meta = document.querySelector<HTMLMetaElement>(
       'meta[name="theme-color"]',
@@ -702,6 +754,8 @@ export default function App() {
                                 style={
                                   {
                                     '--team-color': clubThemes[id].accent,
+                                    '--team-secondary':
+                                      clubThemes[id].secondary,
                                   } as CSSProperties
                                 }
                                 aria-label={t.name}
@@ -784,6 +838,14 @@ export default function App() {
                   </p>
                 </div>
                 <div className="presentation-controls">
+                  <button
+                    className="presentation-toggle autoplay-toggle"
+                    aria-label="指名発表の自動送り"
+                    aria-pressed={autoPlay}
+                    onClick={() => changeAutoPlay(!autoPlay)}
+                  >
+                    自動送り：{autoPlay ? 'オン' : 'オフ'}
+                  </button>
                   <button
                     className="presentation-toggle"
                     aria-label="指名発表の演出"
@@ -1073,7 +1135,9 @@ export default function App() {
                         {teamById[game.current!].name}
                       </h2>
                       <p>
-                        次はCPU球団の番です。指名を1球団ずつ確認するか、自分の番まで進めてください。
+                        {autoPlay
+                          ? 'CPUの指名を自動で発表します。あなたの指名番で止まります。'
+                          : '次はCPU球団の番です。指名を1球団ずつ確認するか、自分の番まで進めてください。'}
                       </p>
                       <div className="npc-actions">
                         <button
@@ -1607,8 +1671,10 @@ export default function App() {
         <DraftAnnouncement
           sequence={announcements}
           players={players}
+          autoPlay={autoPlay}
+          onAutoPlayChange={changeAutoPlay}
           onCommit={setGame}
-          onFinish={() => setAnnouncements(null)}
+          onFinish={finishAnnouncements}
         />
       )}
       {modal === 'share' && game?.stage === 'results' && (

@@ -12,9 +12,10 @@ import {
 } from '../src/engine'
 
 test.beforeEach(async ({ page }) => {
-  await page.addInitScript(() =>
-    sessionStorage.setItem('geneki-draft:welcome:v1', 'seen'),
-  )
+  await page.addInitScript(() => {
+    sessionStorage.setItem('geneki-draft:welcome:v1', 'seen')
+    localStorage.setItem('geneki-draft:autoplay:v1', 'off')
+  })
 })
 
 function opening() {

@@ -2,6 +2,8 @@ import type { TeamId } from './data'
 
 export interface ClubTheme {
   accent: string
+  secondary: string
+  onSecondary: string
   deep: string
   soft: string
   onAccent: string
@@ -9,6 +11,8 @@ export interface ClubTheme {
 }
 export const clubThemes: Record<TeamId, ClubTheme> = {
   d: {
+    secondary: '#ffffff',
+    onSecondary: '#202326',
     accent: '#005bac',
     deep: '#102d50',
     soft: '#edf5ff',
@@ -16,6 +20,8 @@ export const clubThemes: Record<TeamId, ClubTheme> = {
     link: '#005094',
   },
   t: {
+    secondary: '#202326',
+    onSecondary: '#ffffff',
     accent: '#f9ca00',
     deep: '#202326',
     soft: '#fffbea',
@@ -23,6 +29,8 @@ export const clubThemes: Record<TeamId, ClubTheme> = {
     link: '#756000',
   },
   c: {
+    secondary: '#15284b',
+    onSecondary: '#ffffff',
     accent: '#c82127',
     deep: '#491c23',
     soft: '#fff1f1',
@@ -30,6 +38,8 @@ export const clubThemes: Record<TeamId, ClubTheme> = {
     link: '#a41920',
   },
   s: {
+    secondary: '#102b50',
+    onSecondary: '#ffffff',
     accent: '#087b47',
     deep: '#133a30',
     soft: '#eef9f1',
@@ -37,6 +47,8 @@ export const clubThemes: Record<TeamId, ClubTheme> = {
     link: '#07653c',
   },
   db: {
+    secondary: '#ffffff',
+    onSecondary: '#202326',
     accent: '#006bb6',
     deep: '#0a304c',
     soft: '#edf7ff',
@@ -44,6 +56,8 @@ export const clubThemes: Record<TeamId, ClubTheme> = {
     link: '#005a98',
   },
   g: {
+    secondary: '#222222',
+    onSecondary: '#ffffff',
     accent: '#f58220',
     deep: '#30251e',
     soft: '#fff4e9',
@@ -51,6 +65,8 @@ export const clubThemes: Record<TeamId, ClubTheme> = {
     link: '#994600',
   },
   h: {
+    secondary: '#1e1e1e',
+    onSecondary: '#ffffff',
     accent: '#f4c300',
     deep: '#2d2d24',
     soft: '#fffbe7',
@@ -58,6 +74,8 @@ export const clubThemes: Record<TeamId, ClubTheme> = {
     link: '#716000',
   },
   l: {
+    secondary: '#d51c2f',
+    onSecondary: '#ffffff',
     accent: '#003c73',
     deep: '#102d45',
     soft: '#edf5fc',
@@ -65,6 +83,8 @@ export const clubThemes: Record<TeamId, ClubTheme> = {
     link: '#003c73',
   },
   f: {
+    secondary: '#b49a57',
+    onSecondary: '#202326',
     accent: '#0073b9',
     deep: '#10384d',
     soft: '#edf9ff',
@@ -72,6 +92,8 @@ export const clubThemes: Record<TeamId, ClubTheme> = {
     link: '#005f99',
   },
   b: {
+    secondary: '#b49b62',
+    onSecondary: '#202326',
     accent: '#182d59',
     deep: '#14233c',
     soft: '#f3f3ed',
@@ -79,6 +101,8 @@ export const clubThemes: Record<TeamId, ClubTheme> = {
     link: '#243966',
   },
   m: {
+    secondary: '#ffffff',
+    onSecondary: '#202326',
     accent: '#30363b',
     deep: '#1b2228',
     soft: '#f1f3f4',
@@ -86,6 +110,8 @@ export const clubThemes: Record<TeamId, ClubTheme> = {
     link: '#30363b',
   },
   e: {
+    secondary: '#c4a052',
+    onSecondary: '#202326',
     accent: '#90012c',
     deep: '#3c1c2a',
     soft: '#fff0f5',
@@ -116,6 +142,8 @@ export function clubStyle(id: TeamId): Record<string, string> {
   const theme = clubThemes[id]
   return {
     '--club-accent': theme.accent,
+    '--club-secondary': theme.secondary,
+    '--club-on-secondary': theme.onSecondary,
     '--club-deep': theme.deep,
     '--club-soft': theme.soft,
     '--club-on-accent': theme.onAccent,

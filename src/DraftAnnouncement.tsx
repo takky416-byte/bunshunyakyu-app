@@ -1,18 +1,30 @@
-import { useEffect, useRef, useState } from 'react'
-import { ArrowRight, Check, SkipForward } from 'lucide-react'
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+} from 'react'
+import { ArrowRight, Check, Pause, Play, SkipForward } from 'lucide-react'
 import { teamById, type Player } from './data'
 import { voteCount, type Game } from './engine'
 import type { Announcement } from './announcements'
+import { clubStyle } from './presentation'
+import { usePageVisible } from './usePageVisible'
 import './draft-announcement.css'
 
 export default function DraftAnnouncement({
   sequence,
   players,
+  autoPlay,
+  onAutoPlayChange,
   onCommit,
   onFinish,
 }: {
   sequence: Announcement[]
   players: Player[]
+  autoPlay: boolean
+  onAutoPlayChange: (enabled: boolean) => void
   onCommit: (game: Game) => void
   onFinish: () => void
 }) {
@@ -20,7 +32,9 @@ export default function DraftAnnouncement({
   const [index, setIndex] = useState(0)
   const [revealed, setRevealed] = useState(false)
   const committed = useRef(-1)
+  const transitioned = useRef(-1)
   const finished = useRef(false)
+  const pageVisible = usePageVisible()
   const item = sequence[index]
   const { game } = item
   const pick = game.picks.at(-1)
@@ -29,7 +43,7 @@ export default function DraftAnnouncement({
     teamById[
       item.kind === 'pick'
         ? pick!.by
-        : item.kind === 'nominations'
+        : item.kind === 'nominations' || item.kind === 'round2'
           ? game.userTeam
           : game.order[0]
     ]
@@ -45,10 +59,10 @@ export default function DraftAnnouncement({
       dialog.current?.querySelector('h2')?.focus({ preventScroll: true })
   }, [index])
   useEffect(() => {
-    if (revealed) return
+    if (revealed || !pageVisible) return
     const timer = window.setTimeout(() => setRevealed(true), 1800)
     return () => window.clearTimeout(timer)
-  }, [index, revealed])
+  }, [index, revealed, pageVisible])
   useEffect(() => {
     if (revealed && committed.current < index) {
       committed.current = index
@@ -56,19 +70,30 @@ export default function DraftAnnouncement({
     }
   }, [revealed, index, item, onCommit])
 
-  function finish(skip: boolean) {
-    if (finished.current) return
-    finished.current = true
-    if (skip) onCommit(sequence.at(-1)!.game)
-    onFinish()
-  }
-  function next() {
+  const finish = useCallback(
+    (skip: boolean) => {
+      if (finished.current) return
+      finished.current = true
+      if (skip) onCommit(sequence.at(-1)!.game)
+      onFinish()
+    },
+    [sequence, onCommit, onFinish],
+  )
+  const next = useCallback(() => {
+    if (finished.current || transitioned.current >= index) return
+    transitioned.current = index
     if (index === sequence.length - 1) finish(false)
     else {
       setRevealed(false)
       setIndex(index + 1)
     }
-  }
+  }, [index, sequence.length, finish])
+  const canAutoAdvance = item.kind === 'pick' || item.kind === 'order'
+  useEffect(() => {
+    if (!canAutoAdvance || !autoPlay || !revealed || !pageVisible) return
+    const timer = window.setTimeout(next, 3500)
+    return () => window.clearTimeout(timer)
+  }, [canAutoAdvance, autoPlay, revealed, pageVisible, next])
   const last = index === sequence.length - 1
   const nextLabel = !last
     ? '次の指名発表へ'
@@ -86,6 +111,10 @@ export default function DraftAnnouncement({
     <dialog
       ref={dialog}
       className="draft-announcement"
+      style={clubStyle(club.id) as CSSProperties}
+      data-team={club.id}
+      data-kind={item.kind}
+      data-autoplay={autoPlay && canAutoAdvance && pageVisible}
       aria-labelledby="announcement-title"
       onCancel={(event) => {
         event.preventDefault()
@@ -127,6 +156,8 @@ export default function DraftAnnouncement({
               '最初の指名権は、'
             ) : item.kind === 'round2' ? (
               'もうひとつの移籍が、'
+            ) : revealed ? (
+              `${club.short}の指名`
             ) : (
               'その名前が、未来を変える。'
             )}
@@ -239,6 +270,22 @@ export default function DraftAnnouncement({
           </div>
         </div>
         <div className="announcement-actions">
+          {canAutoAdvance && (
+            <div className="announcement-playback">
+              <button
+                className="announcement-autoplay"
+                aria-label="指名発表の自動送り"
+                aria-pressed={autoPlay}
+                onClick={() => onAutoPlayChange(!autoPlay)}
+              >
+                {autoPlay ? <Pause size={15} /> : <Play size={15} />}
+                自動送り：{autoPlay ? 'オン' : 'オフ'}
+              </button>
+              <small>
+                {autoPlay ? '自分の指名番で停止' : 'ボタンで次へ進む'}
+              </small>
+            </div>
+          )}
           <div className="announcement-footer">
             <span>
               {revealed ? (
