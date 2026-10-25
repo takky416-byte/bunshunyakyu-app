@@ -2031,6 +2031,7 @@ export default function App() {
       {announcements && !room.fatal && (
         <DraftAnnouncement
           key={isRoom ? receivedPresentation.current : 'local'}
+          chatOpen={roomChatOpen}
           roomChat={
             isRoom ? (
               <span className="announcement-room-actions">
@@ -2072,9 +2073,7 @@ export default function App() {
           soundOptions={soundState.options}
           soundReady={soundState.ready}
           voiceAvailable={soundState.voiceStatus === 'available'}
-          paused={
-            modal === 'sound' || roomChatOpen || Boolean(roomState?.paused)
-          }
+          paused={modal === 'sound' || Boolean(roomState?.paused)}
           onSoundSettings={() => setModal('sound')}
         />
       )}
@@ -2141,6 +2140,7 @@ export default function App() {
       {roomState && !room.fatal && (
         <RoomChat
           room={room}
+          players={players}
           open={roomChatOpen}
           close={() => setRoomChatOpen(false)}
         />

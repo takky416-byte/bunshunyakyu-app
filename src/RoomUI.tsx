@@ -15,7 +15,8 @@ import {
   Users,
   X,
 } from 'lucide-react'
-import { teamById } from './data'
+import { teamById, type Player } from './data'
+import { announcementPick } from './announcements'
 import {
   centralSelection,
   pacificSelection,
@@ -468,10 +469,12 @@ export function RoomWaiting({
 
 export function RoomChat({
   room,
+  players,
   open,
   close,
 }: {
   room: RoomConnection
+  players: Player[]
   open: boolean
   close: () => void
 }) {
@@ -486,17 +489,13 @@ export function RoomChat({
     const sync = () => {
       element?.close()
       if (!open || !element) return
-      if (
-        desktop.matches &&
-        !document.querySelector('dialog.draft-announcement[open]')
-      )
-        element.show()
+      if (desktop.matches) element.show()
       else element.showModal()
     }
     sync()
     desktop.addEventListener('change', sync)
     return () => desktop.removeEventListener('change', sync)
-  }, [open, room.snapshot?.presentation?.id])
+  }, [open])
   useEffect(() => {
     if (open) bottom.current?.scrollIntoView({ block: 'end' })
   }, [open, room.snapshot?.messages.length, room.snapshot?.messages.at(-1)?.id])
@@ -516,6 +515,17 @@ export function RoomChat({
       setSending(false)
     }
   }
+  const game = room.snapshot?.game,
+    presentation = room.snapshot?.presentation
+  const pick =
+    game && presentation
+      ? announcementPick({
+          game,
+          kind: presentation.kind,
+          pickIndex: presentation.pickIndex,
+        })
+      : undefined
+  const selected = players.find((p) => p.id === pick?.playerId)
   return (
     <dialog
       className="room-chat"
@@ -537,17 +547,38 @@ export function RoomChat({
       }}
     >
       <header>
-        <div>
-          <h2 id="room-chat-title">ルームチャット</h2>
-          <small>このルーム内だけで共有されます</small>
+        <div className="room-chat-heading">
+          <div>
+            <h2 id="room-chat-title">ルームチャット</h2>
+            <small>このルーム内だけで共有されます</small>
+          </div>
+          <button
+            className="icon-button"
+            onClick={close}
+            aria-label="チャットを閉じる"
+          >
+            <X size={22} />
+          </button>
         </div>
-        <button
-          className="icon-button"
-          onClick={close}
-          aria-label="チャットを閉じる"
-        >
-          <X size={22} />
-        </button>
+        {pick && selected && (
+          <div
+            className="room-chat-presentation"
+            role="status"
+            aria-label="現在の指名発表"
+            aria-live="polite"
+            aria-atomic="true"
+            data-team={pick.by}
+            style={clubStyle(pick.by) as CSSProperties}
+          >
+            <span>
+              第{pick.round}巡 · {teamById[pick.by].short}が指名
+            </span>
+            <strong>{selected.name}</strong>
+            <small>
+              {selected.position} · {teamById[pick.from].short}から移籍
+            </small>
+          </div>
+        )}
       </header>
       <ol
         className="room-chat-messages"

@@ -1,6 +1,7 @@
 import {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
   type CSSProperties,
@@ -9,7 +10,7 @@ import {
 import { ArrowRight, Check, Pause, Play, SkipForward } from 'lucide-react'
 import { teamById, type Player } from './data'
 import { voteCount, type Game } from './engine'
-import type { Announcement } from './announcements'
+import { announcementPick, type Announcement } from './announcements'
 import { clubStyle } from './presentation'
 import { usePageVisible } from './usePageVisible'
 import { DraftSound, type SoundOptions } from './draftSound'
@@ -32,12 +33,14 @@ export default function DraftAnnouncement({
   paused,
   onSoundSettings,
   roomChat,
+  chatOpen = false,
   roomMode,
   onPlaybackComplete,
 }: {
   onPlaybackComplete?: () => void
   roomMode?: 'solo' | 'shared'
   roomChat?: ReactNode
+  chatOpen?: boolean
   sequence: Announcement[]
   players: Player[]
   autoPlay: boolean
@@ -67,9 +70,7 @@ export default function DraftAnnouncement({
   const roundTwoPicks = game.picks.filter((p) => p.round === 2)
   const isRoundTwoPick = item.kind === 'round2' && item.pickIndex !== undefined
   const isPick = item.kind === 'pick' || isRoundTwoPick
-  const pick = isRoundTwoPick
-    ? roundTwoPicks[item.pickIndex!]
-    : game.picks.at(-1)
+  const pick = announcementPick(item)
   const selected = players.find((p) => p.id === pick?.playerId)
   const club =
     teamById[
@@ -81,15 +82,23 @@ export default function DraftAnnouncement({
     ]
   const ownRelease = isPick && pick?.from === game.userTeam
 
-  useEffect(() => {
-    dialog.current?.showModal()
-  }, [])
+  useLayoutEffect(() => {
+    const element = dialog.current
+    if (!element) return
+    if (element.open) element.close()
+    // Keep the chat above every new announcement without stealing its input
+    // focus. A second modal would make the chat inert and trap both screens.
+    if (chatOpen) element.open = true
+    else element.showModal()
+  }, [chatOpen])
   useEffect(() => {
     dialog.current?.scrollTo({ top: 0, behavior: 'auto' })
     hadNarration.current = false
-    if (index > 0)
-      dialog.current?.querySelector('h2')?.focus({ preventScroll: true })
   }, [index])
+  useEffect(() => {
+    if (index > 0 && !chatOpen)
+      dialog.current?.querySelector('h2')?.focus({ preventScroll: true })
+  }, [index, chatOpen])
   useEffect(() => {
     if (revealed || !active) return
     const timer = window.setTimeout(() => setRevealed(true), REVEAL_MS)
@@ -223,6 +232,7 @@ export default function DraftAnnouncement({
       style={clubStyle(club.id) as CSSProperties}
       data-team={club.id}
       data-kind={item.kind}
+      data-chat-open={chatOpen}
       data-autoplay={
         autoPlay && canAutoAdvance && active && !reading && !awaitingAudio
       }

@@ -8,6 +8,13 @@ export interface Announcement {
   pickIndex?: number
 }
 
+export function announcementPick(item: Announcement) {
+  if (item.kind === 'pick') return item.game.picks.at(-1)
+  if (item.kind === 'round2' && item.pickIndex !== undefined)
+    return item.game.picks.filter((p) => p.round === 2)[item.pickIndex]
+  return undefined
+}
+
 export function roundTwoAnnouncements(game: Game): Announcement[] {
   const picks = game.picks.filter((p) => p.round === 2)
   return picks.length
