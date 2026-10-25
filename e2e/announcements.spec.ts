@@ -1,3 +1,4 @@
+import { REVEAL_MS } from '../src/draftPacing'
 import { legacyStart } from './legacy-helper'
 import { test, expect } from '@playwright/test'
 import { referenceDataset } from '../src/data'
@@ -45,7 +46,8 @@ test('submitted nominations wait for the other clubs before revealing their list
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 667 })
-  await page.clock.install()
+  await page.clock.install({ time: new Date('2026-10-24T09:00:00Z') })
+  await page.clock.pauseAt(new Date('2026-10-24T09:01:00Z'))
   await legacyStart(page)
   await page.getByRole('checkbox').nth(0).check()
   await page.getByRole('checkbox').nth(1).check()
@@ -63,9 +65,9 @@ test('submitted nominations wait for the other clubs before revealing their list
         JSON.parse(localStorage.getItem('geneki-draft-room:v2')!).game.stage,
     )
   expect(await stage()).toBe('nominate')
-  await page.clock.runFor(1000)
+  await page.clock.runFor(REVEAL_MS - 100)
   expect(await stage()).toBe('nominate')
-  await page.clock.runFor(900)
+  await page.clock.runFor(200)
   await expect(dialog.locator('.announcement-name')).toHaveText(
     '12球団の候補が揃いました',
   )
@@ -135,9 +137,9 @@ test('opening waits before revealing the first club and preserves a single legal
         JSON.parse(localStorage.getItem('geneki-draft-room:v2')!).game.stage,
     ),
   ).toBe('vote')
-  await page.clock.runFor(1000)
+  await page.clock.runFor(REVEAL_MS - 100)
   await expect(dialog.locator('.announcement-name')).toHaveCount(0)
-  await page.clock.runFor(1000)
+  await page.clock.runFor(200)
   await expect(dialog.locator('.announcement-name')).toBeVisible()
   const saved = await page.evaluate(
     () => JSON.parse(localStorage.getItem('geneki-draft-room:v2')!).game,
@@ -183,7 +185,7 @@ test('NPC announcements reveal one name at a time, survive reload, and skip with
   const dialog = page.getByRole('dialog')
   await expect(dialog).toContainText('まもなく、指名を発表します')
   await expect(dialog.locator('.announcement-name')).toHaveCount(0)
-  await page.clock.runFor(1900)
+  await page.clock.runFor(REVEAL_MS)
   await expect(dialog.locator('.announcement-name')).toHaveText(name)
   expect(
     await page.evaluate(
@@ -333,7 +335,7 @@ test('second-round results stay pending until announcement and then lead to the 
         JSON.parse(localStorage.getItem('geneki-draft-room:v2')!).game.stage,
     ),
   ).toBe('round2confirm')
-  await page.clock.runFor(1900)
+  await page.clock.runFor(REVEAL_MS)
   await expect(dialog.locator('.announcement-result-label')).toHaveText(
     'SECOND ROUND',
   )
@@ -350,7 +352,7 @@ test('second-round results stay pending until announcement and then lead to the 
     if (i + 1 < assignments.length) {
       await dialog.getByRole('button', { name: '次の指名発表へ' }).click()
       await expect(dialog.locator('.announcement-name')).toHaveCount(0)
-      await page.clock.runFor(1900)
+      await page.clock.runFor(REVEAL_MS)
     }
   }
   await dialog.getByRole('button', { name: 'ドラフト結果を見る' }).click()

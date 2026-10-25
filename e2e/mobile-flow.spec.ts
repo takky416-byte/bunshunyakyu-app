@@ -1,3 +1,4 @@
+import { REVEAL_MS } from '../src/draftPacing'
 import { legacyStart } from './legacy-helper'
 import { test, expect } from './fixtures'
 import type { Page } from '@playwright/test'
@@ -225,7 +226,7 @@ test('announcement waits retain dialog focus and closing it moves to the next ac
   await page.getByRole('checkbox').nth(0).check()
   await page.getByRole('checkbox').nth(1).check()
   await page.getByRole('button', { name: '候補を提出する' }).click()
-  await page.clock.runFor(2000)
+  await page.clock.runFor(REVEAL_MS + 100)
   await page
     .getByRole('dialog')
     .getByRole('button', { name: '獲得希望を選ぶ', exact: true })
@@ -233,7 +234,7 @@ test('announcement waits retain dialog focus and closing it moves to the next ac
   await page.clock.runFor(50)
   await page.getByRole('radio').first().check()
   await page.getByRole('button', { name: '投票してドラフトへ' }).click()
-  await page.clock.runFor(2000)
+  await page.clock.runFor(REVEAL_MS + 100)
   const dialog = page.getByRole('dialog')
   await expect(dialog.locator('.announcement-name')).toBeVisible()
   expect(

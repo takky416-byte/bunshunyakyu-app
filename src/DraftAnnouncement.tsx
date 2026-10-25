@@ -15,6 +15,7 @@ import { usePageVisible } from './usePageVisible'
 import { DraftSound, type SoundOptions } from './draftSound'
 import { draftSpeech } from './draftSpeech'
 import { SoundControls } from './SoundControls'
+import { REVEAL_MS, SILENT_HOLD_MS, VOICE_TAIL_MS } from './draftPacing'
 import './draft-announcement.css'
 
 export default function DraftAnnouncement({
@@ -32,7 +33,9 @@ export default function DraftAnnouncement({
   onSoundSettings,
   roomChat,
   roomMode,
+  onPlaybackComplete,
 }: {
+  onPlaybackComplete?: () => void
   roomMode?: 'solo' | 'shared'
   roomChat?: ReactNode
   sequence: Announcement[]
@@ -52,6 +55,8 @@ export default function DraftAnnouncement({
   const [index, setIndex] = useState(0)
   const [revealed, setRevealed] = useState(false)
   const committed = useRef(-1)
+  const playbackReported = useRef(-1)
+  const hadNarration = useRef(false)
   const transitioned = useRef(-1)
   const finished = useRef(false)
   const pageVisible = usePageVisible()
@@ -81,17 +86,18 @@ export default function DraftAnnouncement({
   }, [])
   useEffect(() => {
     dialog.current?.scrollTo({ top: 0, behavior: 'auto' })
+    hadNarration.current = false
     if (index > 0)
       dialog.current?.querySelector('h2')?.focus({ preventScroll: true })
   }, [index])
   useEffect(() => {
     if (revealed || !active) return
-    const timer = window.setTimeout(() => setRevealed(true), 1800)
+    const timer = window.setTimeout(() => setRevealed(true), REVEAL_MS)
     return () => window.clearTimeout(timer)
   }, [index, revealed, active])
   useEffect(() => {
     if (!active) return
-    sound.cue(revealed ? 'reveal' : 'waiting')
+    sound.cue(revealed ? 'reveal' : 'waiting', true)
     return sound.stopEffects
   }, [index, revealed, active, sound])
   useEffect(() => {
@@ -101,6 +107,7 @@ export default function DraftAnnouncement({
     }
     let current = true
     const playback = sound.speak(draftSpeech(item, players))
+    if (playback.active) hadNarration.current = true
     setReading(playback.active)
     void playback.finished.then(() => {
       if (current) setReading(false)
@@ -164,9 +171,31 @@ export default function DraftAnnouncement({
       awaitingAudio
     )
       return
-    const timer = window.setTimeout(next, 3500)
+    const timer = window.setTimeout(
+      next,
+      hadNarration.current ? VOICE_TAIL_MS : SILENT_HOLD_MS,
+    )
     return () => window.clearTimeout(timer)
   }, [canAutoAdvance, autoPlay, revealed, active, reading, awaitingAudio, next])
+  useEffect(() => {
+    if (
+      !onPlaybackComplete ||
+      !revealed ||
+      !active ||
+      reading ||
+      awaitingAudio ||
+      playbackReported.current >= index
+    )
+      return
+    const timer = window.setTimeout(
+      () => {
+        playbackReported.current = index
+        onPlaybackComplete()
+      },
+      hadNarration.current ? VOICE_TAIL_MS : SILENT_HOLD_MS,
+    )
+    return () => window.clearTimeout(timer)
+  }, [onPlaybackComplete, index, revealed, active, reading, awaitingAudio])
   const last = index === sequence.length - 1
   const nextLabel =
     roomMode === 'shared'

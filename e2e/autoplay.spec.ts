@@ -1,3 +1,4 @@
+import { REVEAL_MS, SILENT_HOLD_MS } from '../src/draftPacing'
 import { test, expect, type Page } from '@playwright/test'
 import { referenceDataset } from '../src/data'
 import { beginDraft, newGame, submitNominations } from '../src/engine'
@@ -63,7 +64,7 @@ test('default autoplay announces each CPU with its own two colors, stops at the 
   ).toHaveAttribute('aria-pressed', 'true')
   for (let index = 0; index < sequence.length; index++) {
     await expect(dialog.locator('.announcement-name')).toHaveCount(0)
-    await page.clock.runFor(1900)
+    await page.clock.runFor(REVEAL_MS)
     await expect(dialog.locator('.announcement-name')).toHaveText(nameAt(index))
     const club = sequence[index].game.picks.at(-1)!.by
     await expect(dialog).toHaveAttribute('data-team', club)
@@ -105,7 +106,7 @@ test('default autoplay announces each CPU with its own two colors, stops at the 
         animations: 'disabled',
       })
     }
-    await page.clock.runFor(3600)
+    await page.clock.runFor(SILENT_HOLD_MS)
   }
   await expect(dialog).toHaveCount(0)
   await expect(
@@ -119,13 +120,13 @@ test('default autoplay announces each CPU with its own two colors, stops at the 
   await page.getByRole('button', { name: 'この選手を指名' }).click()
   await expect(dialog).toHaveAttribute('data-team', 't')
   await expect(dialog).toBeVisible()
-  await page.clock.runFor(1900)
+  await page.clock.runFor(REVEAL_MS)
   await expect(dialog.locator('.announcement-name')).toBeVisible()
   expect((await saved(page)).picks.length).toBe(before.picks.length + 1)
-  await page.clock.runFor(3600)
+  await page.clock.runFor(SILENT_HOLD_MS)
   await expect(dialog).toHaveAttribute('data-kind', 'pick')
   await expect(dialog.locator('.announcement-name')).toHaveCount(0)
-  await page.clock.runFor(1900)
+  await page.clock.runFor(REVEAL_MS)
   await expect(dialog.locator('.announcement-name')).toBeVisible()
   expect((await saved(page)).picks.length).toBe(before.picks.length + 2)
 })
@@ -135,7 +136,7 @@ test('pause keeps the current result, permits manual steps, and survives reload'
 }) => {
   await setup(page)
   const dialog = page.getByRole('dialog')
-  await page.clock.runFor(1900)
+  await page.clock.runFor(REVEAL_MS)
   await expect(dialog.locator('.announcement-name')).toHaveText(nameAt(0))
   await dialog.getByRole('button', { name: '指名発表の自動送り' }).click()
   await expect(
@@ -144,7 +145,7 @@ test('pause keeps the current result, permits manual steps, and survives reload'
   await page.clock.runFor(12000)
   expect((await saved(page)).picks).toEqual(sequence[0].game.picks)
   await dialog.getByRole('button', { name: '次の指名発表へ' }).click()
-  await page.clock.runFor(1900)
+  await page.clock.runFor(REVEAL_MS)
   await expect(
     page.getByRole('dialog').locator('.announcement-name'),
   ).toBeVisible()
@@ -157,7 +158,7 @@ test('pause keeps the current result, permits manual steps, and survives reload'
   expect((await saved(page)).picks).toEqual(sequence[1].game.picks)
   await page.getByRole('button', { name: '指名発表の自動送り' }).click()
   await expect(dialog).toBeVisible()
-  await page.clock.runFor(1900)
+  await page.clock.runFor(REVEAL_MS)
   await expect(
     page.getByRole('dialog').locator('.announcement-name'),
   ).toBeVisible()
@@ -168,7 +169,7 @@ test('a hidden tab pauses the announcement rather than consuming unread picks', 
   page,
 }) => {
   await setup(page)
-  await page.clock.runFor(1900)
+  await page.clock.runFor(REVEAL_MS)
   await expect(
     page.getByRole('dialog').locator('.announcement-name'),
   ).toHaveText(nameAt(0))
@@ -188,12 +189,12 @@ test('a hidden tab pauses the announcement rather than consuming unread picks', 
     })
     document.dispatchEvent(new Event('visibilitychange'))
   })
-  await page.clock.runFor(3600)
+  await page.clock.runFor(SILENT_HOLD_MS)
   await expect(
     page.getByRole('dialog').locator('.announcement-name'),
   ).toHaveCount(0)
   expect((await saved(page)).picks).toEqual(sequence[0].game.picks)
-  await page.clock.runFor(1900)
+  await page.clock.runFor(REVEAL_MS)
   await expect(
     page.getByRole('dialog').locator('.announcement-name'),
   ).toBeVisible()
@@ -205,14 +206,14 @@ test('manual next and skip cannot double-advance a pending automatic timer', asy
 }) => {
   await setup(page)
   const dialog = page.getByRole('dialog')
-  await page.clock.runFor(1900)
+  await page.clock.runFor(REVEAL_MS)
   await expect(dialog.locator('.announcement-name')).toHaveText(nameAt(0))
-  await page.clock.runFor(3400)
+  await page.clock.runFor(SILENT_HOLD_MS - 100)
   await dialog.getByRole('button', { name: '次の指名発表へ' }).click()
   await page.clock.runFor(200)
   await expect(dialog.locator('.announcement-name')).toHaveCount(0)
   expect((await saved(page)).picks).toEqual(sequence[0].game.picks)
-  await page.clock.runFor(1700)
+  await page.clock.runFor(REVEAL_MS - 100)
   await expect(dialog.locator('.announcement-name')).toBeVisible()
   expect((await saved(page)).picks).toEqual(sequence[1].game.picks)
   await dialog.getByRole('button', { name: /演出をスキップ/ }).click()

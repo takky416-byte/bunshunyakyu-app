@@ -422,7 +422,7 @@
 @media (max-width: 760px) {
   .room-status {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: auto minmax(0, 1fr);
     gap: 4px 8px;
   }
   .room-number {
@@ -445,6 +445,9 @@
     gap: 8px;
     flex-wrap: wrap;
     justify-content: end;
+    min-width: 0;
+    width: 100%;
+    margin-left: 0;
   }
   .room-connection {
     grid-column: 1;
@@ -473,4 +476,16 @@
   font-size: 14px;
   letter-spacing: 0;
   text-transform: none;
+}
+
+/* Keep the room controls and progress guide in separate sticky rows. */
+.app-shell[data-room='true'] .play-progress {
+  top: var(--room-bar-height, 84px);
+}
+.app-shell[data-room='true'][data-playing='true'] .flow-target {
+  scroll-margin-top: calc(var(--room-bar-height, 84px) + 60px);
+}
+.app-shell[data-room='true'] .roster-panel,
+.app-shell[data-room='true'] .round-two-confirm {
+  max-height: calc(100dvh - var(--room-bar-height, 84px) - 132px);
 }

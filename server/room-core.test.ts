@@ -506,3 +506,93 @@ it('host succession skips an already departed player even if their old socket is
   await f.send(host, { type: 'leave' })
   expect((await f.core.read(guest.token)).host).toBe(guest.memberId)
 })
+
+it('presentation pacing waits for every connected listener, then proceeds without a fixed leftover delay', async () => {
+  const f = fixture(),
+    host = await f.add(),
+    guest = await f.add('仲間')
+  await f.send(guest, { type: 'ready', ready: true })
+  await f.send(host, { type: 'start' })
+  await f.send(host, { type: 'nominate', players: offerings('d') })
+  const guestTeam = (await f.core.read(guest.token)).game!.userTeam
+  await f.send(guest, { type: 'nominate', players: offerings(guestTeam) })
+  const initial = (await f.core.read(host.token)).presentation!
+  await f.send(host, { type: 'playback', presentationId: initial.id })
+  await f.advance(4000)
+  expect((await f.core.read(host.token)).presentation!.id).toBe(initial.id)
+  await f.send(guest, { type: 'playback', presentationId: initial.id })
+  const next = await f.core.read(host.token)
+  expect(next.presentation).toBeNull()
+  expect(next.game!.stage).toBe('vote')
+  expect(next.deadline! - next.serverTime).toBe(180_000)
+})
+
+it('fast acknowledgements retain a short reveal, ignore late IDs and cannot bypass a host pause', async () => {
+  const f = fixture(),
+    host = await f.add()
+  await f.send(host, { type: 'start' })
+  await f.send(host, { type: 'nominate', players: offerings('d') })
+  const p = (await f.core.read(host.token)).presentation!
+  await f.send(host, { type: 'playback', presentationId: p.id })
+  let state = await f.core.read(host.token)
+  expect(state.presentation).not.toBeNull()
+  expect(state.presentation!.until - state.serverTime).toBe(1000)
+  await f.send(host, { type: 'pause', paused: true })
+  await f.advance(5000)
+  expect((await f.core.read(host.token)).presentation!.id).toBe(p.id)
+  await f.send(host, { type: 'pause', paused: false })
+  state = await f.core.read(host.token)
+  expect(state.presentation!.until - state.serverTime).toBe(1000)
+  await f.advance()
+  state = await f.core.read(host.token)
+  expect(state.presentation).toBeNull()
+  await f.send(host, { type: 'vote', player: state.game!.offers.t![0] })
+  const opening = (await f.core.read(host.token)).presentation!
+  await f.send(host, { type: 'playback', presentationId: p.id })
+  expect((await f.core.read(host.token)).presentation).toEqual(opening)
+})
+
+it('a disconnected listener does not leave connected players waiting for an absent acknowledgement', async () => {
+  const f = fixture(),
+    host = await f.add(),
+    guest = await f.add('仲間')
+  await f.send(guest, { type: 'ready', ready: true })
+  await f.send(host, { type: 'start' })
+  await f.send(host, { type: 'nominate', players: offerings('d') })
+  await f.send(guest, {
+    type: 'nominate',
+    players: offerings((await f.core.read(guest.token)).game!.userTeam),
+  })
+  const p = (await f.core.read(host.token)).presentation!
+  await f.send(host, { type: 'playback', presentationId: p.id })
+  f.online.delete(guest.memberId)
+  await f.core.presence(guest.memberId, false)
+  await f.advance()
+  expect((await f.core.read(host.token)).presentation).toBeNull()
+})
+
+it('a listener reconnecting during a shortened wait retains enough time for the ongoing announcement', async () => {
+  const f = fixture(),
+    host = await f.add(),
+    guest = await f.add('仲間')
+  await f.send(guest, { type: 'ready', ready: true })
+  await f.send(host, { type: 'start' })
+  await f.send(host, { type: 'nominate', players: offerings('d') })
+  await f.send(guest, {
+    type: 'nominate',
+    players: offerings((await f.core.read(guest.token)).game!.userTeam),
+  })
+  const p = (await f.core.read(host.token)).presentation!
+  await f.send(host, { type: 'playback', presentationId: p.id })
+  f.online.delete(guest.memberId)
+  await f.core.presence(guest.memberId, false)
+  expect((await f.core.read(host.token)).presentation!.until).toBeLessThan(
+    p.until,
+  )
+  f.online.add(guest.memberId)
+  await f.core.presence(guest.memberId, true)
+  await f.advance(4000)
+  expect((await f.core.read(host.token)).presentation!.id).toBe(p.id)
+  await f.send(guest, { type: 'playback', presentationId: p.id })
+  expect((await f.core.read(host.token)).presentation).toBeNull()
+})

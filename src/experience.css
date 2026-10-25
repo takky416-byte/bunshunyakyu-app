@@ -136,8 +136,16 @@
 
 .app-shell .concept-intro {
   min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
   padding: 23px 28px;
   gap: 24px;
+}
+.app-shell .concept-intro .hero-copy {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
 }
 .concept-intro .concept-label {
   font-size: 0.875rem;
@@ -146,14 +154,16 @@
 }
 .app-shell .concept-intro h1 {
   font-size: 1.875rem;
-  line-height: 1.4;
-  margin: 7px 0;
+  line-height: 1.65;
+  margin: 0;
   letter-spacing: 0.04em;
 }
 .app-shell .concept-intro p {
   font-size: 1rem;
   line-height: 1.7;
   max-width: 690px;
+  margin: 0;
+  text-wrap: pretty;
 }
 .concept-diamond {
   width: 108px;
@@ -450,11 +460,15 @@
     justify-content: center;
   }
   .app-shell .concept-intro {
+    grid-template-columns: minmax(0, 1fr);
     padding: 15px 18px;
+  }
+  .app-shell .concept-intro .concept-diamond {
+    display: none;
   }
   .app-shell .concept-intro h1 {
     font-size: 1.5rem;
-    margin: 5px 0;
+    margin: 0;
   }
   .concept-label {
     letter-spacing: 0 !important;
@@ -629,4 +643,35 @@
   color: var(--club-deep);
   background: #ffffff;
   resize: vertical;
+}
+
+/* Readable copy at every width, including Windows Japanese serif metrics. */
+.app-shell .concept-intro h1 {
+  color: #fffaf0;
+}
+.app-shell .concept-intro p {
+  color: #e8eee9;
+}
+.app-shell .home-details strong {
+  font-size: 1rem;
+  line-height: 1.65;
+}
+.app-shell .home-details p {
+  color: #53635b;
+}
+.app-shell .room-entry .button:disabled {
+  opacity: 1;
+  color: var(--club-link);
+  background: var(--club-soft);
+  border-color: var(--club-line);
+  box-shadow: none;
+}
+.app-shell .room-entry input::placeholder {
+  color: #5a6864;
+  opacity: 1;
+}
+@media (max-width: 359px) {
+  .sidebar .season-label {
+    display: none;
+  }
 }

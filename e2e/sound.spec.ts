@@ -1,3 +1,4 @@
+import { REVEAL_MS, VOICE_TAIL_MS } from '../src/draftPacing'
 import { startRoom } from './room-helpers'
 import { test, expect } from '@playwright/test'
 import { readFileSync } from 'node:fs'
@@ -276,7 +277,7 @@ test('natural male speech uses clear pauses without overlapping or advancing ear
   await page.goto('/')
   const dialog = page.locator('.draft-announcement')
   await dialog.getByRole('button', { name: 'サウンドのオン・オフ' }).click()
-  await page.clock.runFor(1900)
+  await page.clock.runFor(REVEAL_MS)
   const active = () =>
     page.evaluate(() =>
       Boolean(
@@ -325,13 +326,13 @@ test('natural male speech uses clear pauses without overlapping or advancing ear
     ),
   ).toBe(0)
   await expect(dialog).not.toContainText('読み上げ中')
-  await page.clock.runFor(3600)
+  await page.clock.runFor(VOICE_TAIL_MS)
   await expect(dialog.locator('.announcement-name')).toHaveCount(0)
-  await page.clock.runFor(1900)
+  await page.clock.runFor(REVEAL_MS)
   await expect.poll(active).toBe(true)
   await dialog.getByRole('button', { name: '次の指名発表へ' }).click()
   expect(await active()).toBe(false)
-  await page.clock.runFor(1900)
+  await page.clock.runFor(REVEAL_MS)
   await expect.poll(active).toBe(true)
   await page.evaluate(() => {
     Object.defineProperty(document, 'hidden', {

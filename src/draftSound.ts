@@ -384,7 +384,7 @@ export class DraftSound {
     schedule()
     this.musicTimer = window.setInterval(schedule, 120)
   }
-  cue(kind: 'waiting' | 'reveal') {
+  cue(kind: 'waiting' | 'reveal', compact = false) {
     if (
       !this.state.options.enabled ||
       !this.state.options.effects ||
@@ -395,7 +395,8 @@ export class DraftSound {
       return
     const now = this.context.currentTime + 0.01
     if (kind === 'waiting') {
-      for (const offset of [0, 0.58, 1.16]) this.taiko(now + offset, 0.62)
+      for (const offset of compact ? [0] : [0, 0.58, 1.16])
+        this.taiko(now + offset, 0.62)
     } else {
       this.taiko(now, 1.05)
       this.noise(now + 0.04, 1.2, 0.18, 3500)

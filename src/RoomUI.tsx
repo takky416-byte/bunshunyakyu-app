@@ -65,7 +65,11 @@ export function RoomEntry({
             <Users size={18} />
             ルームを作る
           </button>
-          <small>1人でも開始できます。球団は作成後に選択。</small>
+          <small>
+            {name.trim()
+              ? '1人でも開始できます。球団は作成後に選択。'
+              : 'プレーヤー名を入力すると、作成・参加できます。'}
+          </small>
         </div>
         <form
           onSubmit={(e) => {

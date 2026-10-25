@@ -257,6 +257,7 @@ export default function App() {
   const [roomPending, setRoomPending] = useState(false)
   const [lastReadMessage, setLastReadMessage] = useState('')
   const receivedPresentation = useRef('')
+  const reportedPlayback = useRef('')
   const receivedPhase = useRef('')
   const trackedRoom = useRef('')
   const isRoom = Boolean(room.session)
@@ -322,13 +323,28 @@ export default function App() {
   })
   const pageVisible = usePageVisible()
   const roomHumanCount = roomState?.members.filter((m) => !m.cpu).length ?? 0
+  const reportPlayback = useCallback(
+    (id: string) => {
+      if (reportedPlayback.current === id) return
+      reportedPlayback.current = id
+      void room.send({ type: 'playback', presentationId: id }).catch(() => {
+        if (reportedPlayback.current === id) reportedPlayback.current = ''
+      })
+    },
+    [room.send],
+  )
+  const completePlayback = useCallback(() => {
+    if (roomState?.presentation) reportPlayback(roomState.presentation.id)
+  }, [roomState?.presentation?.id, reportPlayback])
   const finishAnnouncements = useCallback(() => {
     setAnnouncements(null)
-    if (roomState?.presentation && roomHumanCount === 1)
+    if (!roomState?.presentation) return
+    if (roomHumanCount === 1)
       void room
         .send({ type: 'presented', presentationId: roomState.presentation.id })
         .catch(() => {})
-  }, [room.send, roomState?.presentation?.id, roomHumanCount])
+    else reportPlayback(roomState.presentation.id)
+  }, [room.send, roomState?.presentation?.id, roomHumanCount, reportPlayback])
   const changeAutoPlay = useCallback((enabled: boolean) => {
     setAutoPlay(enabled)
     try {
@@ -555,14 +571,16 @@ export default function App() {
           const playback = sound.speak(
             draftSpeech(item, officialDataset.players),
           )
-          if (roomHumanCount === 1 && autoPlay)
+          if (roomHumanCount > 1 || autoPlay)
             void playback.finished
               .then(() =>
                 !document.hidden
-                  ? room.send({
-                      type: 'presented',
-                      presentationId: presentation.id,
-                    })
+                  ? roomHumanCount > 1
+                    ? reportPlayback(presentation.id)
+                    : room.send({
+                        type: 'presented',
+                        presentationId: presentation.id,
+                      })
                   : undefined,
               )
               .catch(() => {})
@@ -604,6 +622,7 @@ export default function App() {
     roomMe?.team,
     roomHumanCount,
     room.send,
+    reportPlayback,
     autoPlay,
     presentationEnabled,
     reducedMotion,
@@ -972,8 +991,14 @@ export default function App() {
                   {!isOfficial && (
                     <p>新しいルームでは公式2026年データを使用します。</p>
                   )}
-                  <h1 ref={flowTarget} className="flow-target" tabIndex={-1}>
-                    現役ドラフトのGM体験
+                  <h1
+                    ref={flowTarget}
+                    className="flow-target"
+                    tabIndex={-1}
+                    aria-label="現役ドラフトのGM体験"
+                  >
+                    <span className="text-unit">現役ドラフトの</span>
+                    <span className="text-unit">GM体験</span>
                   </h1>
                   <p>
                     好きな球団の編成責任者に。仲間と、1人でも。空席はCPUが担当します。
@@ -2008,6 +2033,9 @@ export default function App() {
           onAutoPlayChange={changeAutoPlay}
           onCommit={isRoom ? ignoreRoomCommit : setGame}
           onFinish={finishAnnouncements}
+          onPlaybackComplete={
+            isRoom && roomHumanCount > 1 ? completePlayback : undefined
+          }
           sound={sound}
           soundOptions={soundState.options}
           soundReady={soundState.ready}

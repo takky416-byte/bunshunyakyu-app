@@ -13,6 +13,7 @@ import {
   validateNominations,
   type Game,
 } from '../src/engine'
+import { CPU_TURN_MS, MIN_PRESENTATION_MS } from '../src/draftPacing'
 import { realisticCandidates } from '../src/cpuCandidates'
 import type { Participation, RoundTwoBid } from '../src/roundTwo'
 import {
@@ -56,6 +57,13 @@ export interface StoredRoom {
   expiresAt: number
   pausedAt: number | null
   presentation: RoomPresentation | null
+  playback?: {
+    id: string
+    members: string[]
+    finished: string[]
+    earliest: number
+    fallbackUntil?: number
+  }
   roundTwoIndex: number
   messages: RoomMessage[]
   processed: string[]
@@ -122,6 +130,7 @@ export function parseCommand(raw: unknown): RoomCommand {
     return fail('操作内容が不正です。')
   const a = c.action
   switch (a.type) {
+    case 'playback':
     case 'presented':
       if (typeof a.presentationId !== 'string' || a.presentationId.length > 40)
         fail('発表内容を確認できません。')
@@ -291,6 +300,17 @@ export class RoomCore {
       until: this.now() + Math.max(1, Math.round(ms * this.presentationScale)),
       ...(pickIndex === undefined ? {} : { pickIndex }),
     }
+    r.playback = {
+      id: r.presentation.id,
+      members: r.members
+        .filter((m) => m.tokenHash && !m.cpu && this.hooks.online(m.id))
+        .map((m) => m.id),
+      finished: [],
+      fallbackUntil: r.presentation.until,
+      earliest:
+        this.now() +
+        Math.max(1, Math.round(MIN_PRESENTATION_MS * this.presentationScale)),
+    }
     r.deadline = null
   }
   private armTurn() {
@@ -302,7 +322,7 @@ export class RoomCore {
     r.deadline =
       this.now() +
       (r.game.stage === 'draft' && !this.humans().includes(r.game.current!)
-        ? Math.max(1, 1500 * this.presentationScale)
+        ? Math.max(1, CPU_TURN_MS * this.presentationScale)
         : TURN_MS)
   }
   private cpuOffers() {
@@ -451,6 +471,22 @@ export class RoomCore {
     }
     if (!r.game || r.pausedAt !== null) return
     if (r.presentation) {
+      const playback = r.playback
+      if (playback?.id === r.presentation.id) {
+        const watching = playback.members.filter(
+          (id) =>
+            r.members.some((m) => m.id === id && m.tokenHash && !m.cpu) &&
+            this.hooks.online(id),
+        )
+        if (
+          playback.members.length &&
+          watching.every((id) => playback.finished.includes(id))
+        )
+          r.presentation.until = Math.min(
+            r.presentation.until,
+            Math.max(now, playback.earliest),
+          )
+      }
       if (r.presentation.until > now) return
       if (r.presentation.kind === 'round2') {
         const count = r.game.picks.filter((p) => p.round === 2).length
@@ -460,6 +496,7 @@ export class RoomCore {
         }
       }
       r.presentation = null
+      delete r.playback
       this.armTurn()
       this.finishInputs()
       return
@@ -663,6 +700,10 @@ export class RoomCore {
       if (!m || !m.tokenHash) return
       r.revision++ // Presence changes must broadcast even within the same millisecond.
       m.lastSeen = this.now()
+      if (connected && r.presentation && r.playback?.id === r.presentation.id) {
+        if (!r.playback.members.includes(m.id)) r.playback.members.push(m.id)
+        r.presentation.until = r.playback.fallbackUntil ?? r.presentation.until
+      }
       if (connected && m.cpu) {
         m.cpu = false
         this.message(`${m.name}さんが操作に復帰しました。`)
@@ -746,7 +787,27 @@ export class RoomCore {
         r.game.current === leaving.team &&
         !r.presentation
       )
-        r.deadline = this.now() + 1500
+        r.deadline =
+          this.now() + Math.max(1, CPU_TURN_MS * this.presentationScale)
+    } else if (a.type === 'playback') {
+      // Each participant finishes only their own presentation. A quiet client
+      // cannot cut another participant's ongoing announcement short.
+      if (r.presentation?.id === a.presentationId && !m.cpu) {
+        r.playback ??= {
+          id: r.presentation.id,
+          members: r.members
+            .filter(
+              (member) =>
+                member.tokenHash && !member.cpu && this.hooks.online(member.id),
+            )
+            .map((member) => member.id),
+          finished: [],
+          fallbackUntil: r.presentation.until,
+          earliest: this.now(),
+        }
+        if (!r.playback.finished.includes(m.id)) r.playback.finished.push(m.id)
+        this.tick()
+      }
     } else if (a.type === 'presented') {
       // A lone GM can keep their usual pace. In a shared room presentation
       // deadlines remain server controlled; one player cannot skip for others.
@@ -768,8 +829,13 @@ export class RoomCore {
         const elapsed = this.now() - r.pausedAt
         if (r.deadline) r.deadline += elapsed
         if (r.presentation) r.presentation.until += elapsed
+        if (r.playback) {
+          r.playback.earliest += elapsed
+          if (r.playback.fallbackUntil) r.playback.fallbackUntil += elapsed
+        }
         r.pausedAt = null
         this.message('進行を再開しました。')
+        this.tick()
       }
     } else {
       if (command.phase !== roomPhase(r.game))

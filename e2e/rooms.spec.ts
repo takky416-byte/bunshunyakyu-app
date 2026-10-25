@@ -153,6 +153,11 @@ test('one player can start immediately, finish both rounds and restore the compl
   await expect(
     page.getByRole('heading', { name: /提出候補を選ぶ/ }),
   ).toBeFocused()
+  const roomBar = (await page.locator('.room-status').boundingBox())!
+  const progress = (await page.locator('.play-progress').boundingBox())!
+  const heading = (await page.locator('.flow-target').boundingBox())!
+  expect(progress.y).toBeGreaterThanOrEqual(roomBar.y + roomBar.height - 1)
+  expect(heading.y).toBeGreaterThanOrEqual(progress.y + progress.height - 1)
   const submit = page.getByRole('button', { name: '候補を提出する' })
   const box = (await submit.boundingBox())!
   expect(box.y).toBeGreaterThanOrEqual(0)

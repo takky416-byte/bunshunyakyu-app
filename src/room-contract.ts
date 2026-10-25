@@ -23,6 +23,7 @@ export type RoomAction =
   | { type: 'bid'; preferences: string[]; condition: BidCondition }
   | { type: 'pause'; paused: boolean }
   | { type: 'presented'; presentationId: string }
+  | { type: 'playback'; presentationId: string }
   | { type: 'leave' }
   | { type: 'remove'; memberId: string }
   | { type: 'chat'; text: string }
