@@ -138,8 +138,17 @@ export const selectionNames: Record<TeamId, string> = {
   m: 'ロッテ',
   e: '楽天',
 }
-export function clubStyle(id: TeamId): Record<string, string> {
-  const theme = clubThemes[id]
+export const neutralClubTheme: ClubTheme = {
+  accent: '#27654d',
+  secondary: '#c8b67e',
+  onSecondary: '#203d33',
+  deep: '#203d33',
+  soft: '#eef5f0',
+  onAccent: '#ffffff',
+  link: '#20543f',
+}
+export function clubStyle(id: TeamId | null): Record<string, string> {
+  const theme = id === null ? neutralClubTheme : clubThemes[id]
   return {
     '--club-accent': theme.accent,
     '--club-secondary': theme.secondary,

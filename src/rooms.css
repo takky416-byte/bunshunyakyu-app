@@ -189,6 +189,29 @@
   min-height: 90px;
   padding: 0 20px 20px;
 }
+.lobby-selection {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  padding: 10px 0;
+  color: var(--club-deep);
+}
+.lobby-selection > strong {
+  font-size: 1rem;
+  white-space: nowrap;
+}
+.lobby-selection > button {
+  white-space: nowrap;
+}
+.lobby-selection-help {
+  margin: 0 0 12px;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: #53635b;
+  text-wrap: pretty;
+}
 .lobby-teams {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -496,6 +519,9 @@
   position: sticky;
   top: 0;
   z-index: 6;
+}
+.app-shell[data-room='true'] .room-lobby {
+  max-height: calc(100dvh - var(--room-bar-height, 84px) - 32px);
 }
 .app-shell[data-room='true'] .flow-target {
   scroll-margin-top: calc(var(--room-bar-height, 84px) + 16px);

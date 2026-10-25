@@ -157,21 +157,46 @@ export function RoomLobby({
       <div className="panel-heading">
         <div>
           <span className="eyebrow dark">DRAFT LOBBY</span>
-          <h1 ref={headingRef} className="flow-target" tabIndex={-1}>
-            球団を選んで、準備しよう。
+          <h1
+            ref={headingRef}
+            className="flow-target"
+            tabIndex={-1}
+            aria-label="球団を選んで、準備しよう。"
+          >
+            <span className="text-unit">球団を選んで、</span>
+            <span className="text-unit">準備しよう。</span>
           </h1>
           <p>
-            {state.host === me.id
-              ? state.members.length === 1
-                ? '1人でも開始できます。仲間と遊ぶ場合は、ルーム番号を伝えて参加を待ってください。'
-                : '仲間にはルーム番号を伝えてください。全員が「準備完了」になると開始できます。'
-              : me.ready
-                ? '準備完了です。主催者が開始するまでお待ちください。'
-                : '球団を選び「準備完了」を押してください。主催者が開始すると、空席はCPUが担当します。'}
+            {!me.team
+              ? 'まず操作する球団を選んでください。空いている球団は開始後にCPUが担当します。'
+              : state.host === me.id
+                ? state.members.length === 1
+                  ? '1人でも開始できます。仲間と遊ぶ場合は、ルーム番号を伝えて参加を待ってください。'
+                  : '仲間にはルーム番号を伝えてください。全員が球団を選び、仲間が「準備完了」になると開始できます。'
+                : me.ready
+                  ? '準備完了です。主催者が開始するまでお待ちください。'
+                  : '球団を選び「準備完了」を押してください。主催者が開始すると、空席はCPUが担当します。'}
           </p>
         </div>
       </div>
       <div className="lobby-scroll">
+        <div className="lobby-selection" role="status" aria-label="担当球団">
+          <strong>
+            担当球団：{me.team ? teamById[me.team].short : '未選択'}
+          </strong>
+          {me.team && (
+            <button
+              className="text-button"
+              disabled={busy || !room.connected}
+              onClick={() => void run({ type: 'team', team: null })}
+            >
+              選択を解除
+            </button>
+          )}
+        </div>
+        <p className="lobby-selection-help">
+          選択中の球団をもう一度押しても解除できます。交換するときは、お互いに解除してから選んでください。
+        </p>
         <div className="team-leagues" role="group" aria-label="操作する球団">
           {[
             { name: 'セ・リーグ', ids: centralSelection },
@@ -196,7 +221,9 @@ export function RoomLobby({
                       aria-label={teamById[id].name}
                       aria-pressed={own}
                       disabled={!room.connected || busy || (!!owner && !own)}
-                      onClick={() => void run({ type: 'team', team: id })}
+                      onClick={() =>
+                        void run({ type: 'team', team: own ? null : id })
+                      }
                     >
                       <strong>{selectionNames[id]}</strong>
                       <small
@@ -208,7 +235,7 @@ export function RoomLobby({
                       >
                         {owner
                           ? `${owner.name}${owner.ready ? ' ✓' : ''}`
-                          : 'CPU（空席）'}
+                          : '空席'}
                       </small>
                       {owner && (
                         <span>
@@ -243,13 +270,14 @@ export function RoomLobby({
       </div>
       <div className="panel-footer lobby-footer">
         <span>
-          <strong>{state.members.length}人</strong> ＋ CPU{' '}
-          {12 - state.members.length}球団
+          <strong>{state.members.length}人</strong> 参加 · 球団選択{' '}
+          {state.members.filter((m) => m.team !== null).length}/
+          {state.members.length}人
         </span>
         <div className="lobby-buttons">
           <button
             className="button ghost"
-            disabled={busy || !room.connected}
+            disabled={busy || !room.connected || !me.team}
             aria-pressed={me.ready}
             onClick={() => void run({ type: 'ready', ready: !me.ready })}
           >
@@ -262,8 +290,9 @@ export function RoomLobby({
               disabled={
                 busy ||
                 !room.connected ||
+                !me.team ||
                 state.members.some(
-                  (m) => m.id !== me.id && (!m.ready || !m.online),
+                  (m) => m.id !== me.id && (!m.team || !m.ready || !m.online),
                 )
               }
               onClick={() => void run({ type: 'start' })}

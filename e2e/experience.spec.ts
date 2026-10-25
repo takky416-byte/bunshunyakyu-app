@@ -42,7 +42,7 @@ test('welcome explains the concept, fits a phone, and appears once without losin
   await expect(
     page.getByRole('heading', { name: '現役ドラフトのGM体験' }),
   ).toBeFocused()
-  await createRoom(page)
+  await createRoom(page, 't')
   await page
     .getByRole('button', { name: 'ドラフトを開始する', exact: true })
     .click()

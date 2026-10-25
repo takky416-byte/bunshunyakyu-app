@@ -96,7 +96,7 @@ import { playerAge, playerCareerYears } from './playerBio'
 import { DraftSound } from './draftSound'
 import { draftSpeech } from './draftSpeech'
 import { SoundControls, SoundSettings } from './SoundControls'
-import { clubThemes, clubStyle } from './presentation'
+import { clubThemes, clubStyle, neutralClubTheme } from './presentation'
 
 const ignoreRoomCommit = () => {}
 const STORAGE_KEY = 'geneki-draft-room:v2'
@@ -406,6 +406,8 @@ export default function App() {
   )
   const file = useRef<HTMLInputElement>(null)
   const team = teamById[game?.userTeam ?? chosenTeam]
+  const themeId =
+    roomState && !roomState.game ? (roomMe?.team ?? null) : team.id
   const players = dataset.players
   const isReference = dataset.kind === 'reference'
   const isOfficial = dataset.kind === 'official-roster'
@@ -516,8 +518,10 @@ export default function App() {
     const meta = document.querySelector<HTMLMetaElement>(
       'meta[name="theme-color"]',
     )
-    if (meta) meta.content = clubThemes[team.id].deep
-  }, [team.id])
+    if (meta)
+      meta.content =
+        themeId === null ? neutralClubTheme.deep : clubThemes[themeId].deep
+  }, [themeId])
 
   useEffect(() => {
     if (isRoom) return
@@ -598,7 +602,7 @@ export default function App() {
   useEffect(() => {
     if (!roomState) return
     setDataset(officialDataset)
-    if (roomMe) setChosenTeam(roomMe.team)
+    if (roomMe?.team) setChosenTeam(roomMe.team)
     setGame(roomState.game)
     const phaseKey = roomState.code + ':' + roomState.phase
     if (receivedPhase.current !== phaseKey) {
@@ -773,6 +777,7 @@ export default function App() {
       (['nominate', 'vote', 'round2', 'round2confirm'].includes(
         game?.stage ?? '',
       ) &&
+        roomMe.team !== null &&
         roomState.submitted.includes(roomMe.team))),
   )
   const roomBlocked =
@@ -793,8 +798,8 @@ export default function App() {
   return (
     <div
       className="app-shell"
-      style={clubStyle(team.id) as CSSProperties}
-      data-team={team.id}
+      style={clubStyle(themeId) as CSSProperties}
+      data-team={themeId ?? 'unselected'}
       data-playing={Boolean(game)}
       data-room={isRoom}
     >
@@ -880,14 +885,18 @@ export default function App() {
               </span>
               <small>
                 <span>
-                  {isRoom
-                    ? `${roomState?.members.filter((m) => !m.cpu).length ?? 1}人＋`
-                    : '1〜12人'}
+                  {isRoom && !game
+                    ? `${roomState?.members.length ?? 1}人参加`
+                    : isRoom
+                      ? `${roomState?.members.filter((m) => !m.cpu).length ?? 1}人＋`
+                      : '1〜12人'}
                 </span>
                 <span>
-                  {isRoom
-                    ? `CPU ${12 - (roomState?.members.filter((m) => !m.cpu).length ?? 1)}球団`
-                    : '空席はCPU'}
+                  {isRoom && !game
+                    ? '球団を選んで開始'
+                    : isRoom
+                      ? `CPU ${12 - (roomState?.members.filter((m) => !m.cpu).length ?? 1)}球団`
+                      : '空席はCPU'}
                 </span>
               </small>
             </span>
@@ -1073,8 +1082,8 @@ export default function App() {
                 code={roomCode}
                 setCode={setRoomCode}
                 busy={room.busy}
-                create={() => void room.enter(playerName, chosenTeam)}
-                join={() => void room.enter(playerName, chosenTeam, roomCode)}
+                create={() => void room.enter(playerName)}
+                join={() => void room.enter(playerName, roomCode)}
               />
               <div className="home-details">
                 <div>

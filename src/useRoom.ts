@@ -217,51 +217,47 @@ export function useRoom() {
       rejectPending()
     }
   }, [session])
-  const enter = useCallback(
-    async (name: string, team: string, code?: string) => {
-      setBusy(true)
-      setError('')
-      const abort = new AbortController()
-      const timeout = window.setTimeout(() => abort.abort(), 10_000)
+  const enter = useCallback(async (name: string, code?: string) => {
+    setBusy(true)
+    setError('')
+    const abort = new AbortController()
+    const timeout = window.setTimeout(() => abort.abort(), 10_000)
+    try {
+      const response = await fetch(
+        code ? `/api/rooms/${code}/join` : '/api/rooms',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name }),
+          signal: abort.signal,
+        },
+      )
+      const b = await response.json()
+      if (!response.ok) throw new Error(b.error ?? 'ルームに入れませんでした。')
       try {
-        const response = await fetch(
-          code ? `/api/rooms/${code}/join` : '/api/rooms',
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, team }),
-            signal: abort.signal,
-          },
-        )
-        const b = await response.json()
-        if (!response.ok)
-          throw new Error(b.error ?? 'ルームに入れませんでした。')
-        try {
-          localStorage.setItem(ROOM_SESSION_KEY, JSON.stringify(b))
-          localStorage.setItem(PLAYER_NAME_KEY, name.trim())
-          setStorageError(false)
-        } catch {
-          setStorageError(true)
-        }
-        latest.current = null
-        setSnapshot(null)
-        setSession(b)
-        setFatal(false)
-      } catch (e) {
-        setError(
-          e instanceof Error && e.name === 'AbortError'
-            ? '接続に時間がかかっています。通信状態を確認して、もう一度お試しください。'
-            : e instanceof Error
-              ? e.message
-              : '接続に失敗しました。',
-        )
-      } finally {
-        window.clearTimeout(timeout)
-        setBusy(false)
+        localStorage.setItem(ROOM_SESSION_KEY, JSON.stringify(b))
+        localStorage.setItem(PLAYER_NAME_KEY, name.trim())
+        setStorageError(false)
+      } catch {
+        setStorageError(true)
       }
-    },
-    [],
-  )
+      latest.current = null
+      setSnapshot(null)
+      setSession(b)
+      setFatal(false)
+    } catch (e) {
+      setError(
+        e instanceof Error && e.name === 'AbortError'
+          ? '接続に時間がかかっています。通信状態を確認して、もう一度お試しください。'
+          : e instanceof Error
+            ? e.message
+            : '接続に失敗しました。',
+      )
+    } finally {
+      window.clearTimeout(timeout)
+      setBusy(false)
+    }
+  }, [])
   const send = useCallback(async (action: RoomAction) => {
     const ws = socket.current,
       state = latest.current

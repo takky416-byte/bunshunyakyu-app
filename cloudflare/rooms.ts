@@ -143,7 +143,7 @@ export class DraftRoom {
       const path = new URL(request.url).pathname
       if (path.endsWith('/init') && request.method === 'POST') {
         const b = await roomBody(request)
-        return roomJson(await this.core.init(b.code, b.name, b.team), 201)
+        return roomJson(await this.core.init(b.code, b.name), 201)
       }
       if (path.endsWith('/join') && request.method === 'POST')
         return roomJson(
@@ -254,7 +254,7 @@ export async function routeRoomRequest(
           new Request(url.origin + '/init', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ code, name: b.name, team: b.team }),
+            body: JSON.stringify({ code, name: b.name }),
           }),
         )
         if (response.status !== 409) return response

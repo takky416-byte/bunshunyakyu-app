@@ -160,7 +160,7 @@ export function nodeRooms(server: Server, path: string, presentationScale = 1) {
             .toString()
             .padStart(6, '0')
           try {
-            json(res, await get(code).core.init(code, b.name, b.team), 201)
+            json(res, await get(code).core.init(code, b.name), 201)
             return true
           } catch (e) {
             if (!(e instanceof RoomError) || e.status !== 409) throw e

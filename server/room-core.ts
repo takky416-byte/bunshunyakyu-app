@@ -35,7 +35,7 @@ const RULESET = '2026-rooms-v1'
 interface Member {
   id: string
   name: string
-  team: TeamId
+  team: TeamId | null
   ready: boolean
   cpu: boolean
   tokenHash: string
@@ -139,7 +139,8 @@ export function parseCommand(raw: unknown): RoomCommand {
     case 'leave':
       break
     case 'team':
-      if (!teamIds.includes(a.team)) fail('球団を選んでください。')
+      if (a.team !== null && !teamIds.includes(a.team))
+        fail('球団を選んでください。')
       break
     case 'ready':
       if (typeof a.ready !== 'boolean') fail('準備状況が不正です。')
@@ -262,7 +263,7 @@ export class RoomCore {
       at: this.now(),
       kind,
       name: member?.name ?? '進行係',
-      ...(member ? { team: member.team } : {}),
+      ...(member?.team ? { team: member.team } : {}),
       text,
     })
     r.messages = r.messages.slice(-80)
@@ -275,9 +276,9 @@ export class RoomCore {
     )
   }
   private humans() {
-    return this.room()
-      .members.filter((m) => !m.cpu)
-      .map((m) => m.team)
+    return this.room().members.flatMap((m) =>
+      !m.cpu && m.team ? [m.team] : [],
+    )
   }
   private submitted(): TeamId[] {
     const r = this.room(),
@@ -588,18 +589,17 @@ export class RoomCore {
       times.push(host.lastSeen + 60_000)
     return Math.max(this.now() + 100, Math.min(...times))
   }
-  async init(code: string, name: unknown, team: unknown): Promise<RoomSession> {
+  async init(code: string, name: unknown): Promise<RoomSession> {
     return this.run(async () => {
       if (this.state) fail('ルーム番号が使用中です。', 409)
-      if (!/^\d{6}$/.test(code) || !teamIds.includes(team as TeamId))
-        fail('球団を選んでください。')
+      if (!/^\d{6}$/.test(code)) fail('6桁のルーム番号を確認してください。')
       const token = secret(),
         id = crypto.randomUUID(),
         now = this.now()
       const member: Member = {
         id,
         name: playerName(name),
-        team: team as TeamId,
+        team: null,
         tokenHash: await tokenHash(token),
         ready: false,
         cpu: false,
@@ -637,13 +637,12 @@ export class RoomCore {
       const n = playerName(name)
       if (r.members.some((m) => m.name === n))
         fail('同じ名前の参加者がいます。別の名前にしてください。', 409)
-      const team = teamIds.find((t) => !r.members.some((m) => m.team === t))!
       const token = secret(),
         id = crypto.randomUUID()
       r.members.push({
         id,
         name: n,
-        team,
+        team: null,
         ready: false,
         cpu: false,
         tokenHash: await tokenHash(token),
@@ -674,16 +673,17 @@ export class RoomCore {
         fail('退出しました。', 401)
     let game: Game | null = r.game ? structuredClone(r.game) : null
     if (game) {
-      game.userTeam = me.team
+      const team =
+        me.team ??
+        fail('担当球団を確認できません。ルームに入り直してください。', 409)
+      game.userTeam = team
       game.seed = 0 // CPU randomness never leaves the authoritative server.
       if (game.stage === 'nominate')
-        game.offers = r.offers[me.team] ? { [me.team]: r.offers[me.team] } : {}
+        game.offers = r.offers[team] ? { [team]: r.offers[team] } : {}
       if (game.stage === 'nominate' || game.stage === 'vote')
-        game.ballots = r.ballots[me.team]
-          ? { [me.team]: r.ballots[me.team] }
-          : {}
+        game.ballots = r.ballots[team] ? { [team]: r.ballots[team] } : {}
       if (game.roundTwo) {
-        const own = r.bids.find((b) => b.team === me.team)
+        const own = r.bids.find((b) => b.team === team)
         game.roundTwo.bids =
           game.stage === 'results' ? game.roundTwo.bids : own ? [own] : []
         game.roundTwo.userPreferences = own?.preferences ?? []
@@ -864,23 +864,29 @@ export class RoomCore {
       if (a.type === 'team' || a.type === 'ready' || a.type === 'start') {
         if (r.game) fail('球団選択は開始前までです。', 409)
         if (a.type === 'team') {
-          if (r.members.some((x) => x.id !== m.id && x.team === a.team))
+          if (
+            a.team !== null &&
+            r.members.some((x) => x.id !== m.id && x.team === a.team)
+          )
             fail('この球団は選択済みです。', 409)
           m.team = a.team
           m.ready = false
-        } else if (a.type === 'ready') m.ready = a.ready
-        else {
+        } else if (a.type === 'ready') {
+          if (a.ready && !m.team)
+            fail('準備完了にする前に球団を選んでください。', 409)
+          m.ready = a.ready
+        } else {
           if (r.host !== m.id) fail('主催者だけが開始できます。', 403)
+          const team = m.team ?? fail('操作する球団を選んでください。', 409)
           if (
             r.members.some(
-              (x) => x.id !== m.id && (!x.ready || !this.hooks.online(x.id)),
+              (x) =>
+                x.id !== m.id &&
+                (!x.team || !x.ready || !this.hooks.online(x.id)),
             )
           )
-            fail('全員の接続と準備完了を待ってください。')
-          r.game = newGame(
-            m.team,
-            crypto.getRandomValues(new Uint32Array(1))[0],
-          )
+            fail('全員の球団選択・接続と準備完了を待ってください。')
+          r.game = newGame(team, crypto.getRandomValues(new Uint32Array(1))[0])
           r.expiresAt = this.now() + 24 * 60 * 60_000
           this.fillCpuInputs()
           this.armTurn()
@@ -890,32 +896,34 @@ export class RoomCore {
         }
       } else {
         const g = r.game ?? fail('まずドラフトを開始してください。')
+        const team =
+          m.team ?? fail('担当球団を確認できません。再接続してください。', 409)
         if (r.pausedAt !== null) fail('主催者が進行を一時停止しています。', 409)
         if (r.presentation)
           fail('指名発表中です。発表が終わるまでお待ちください。', 409)
         if (m.cpu) fail('再接続して操作に復帰してください。', 409)
-        if (this.submitted().includes(m.team) && g.stage !== 'draft')
+        if (this.submitted().includes(team) && g.stage !== 'draft')
           fail('提出済みです。他の球団の提出を待っています。', 409)
         if (a.type === 'nominate' && g.stage === 'nominate') {
-          validateNominations(m.team, a.players, players)
-          r.offers[m.team] = [...a.players]
+          validateNominations(team, a.players, players)
+          r.offers[team] = [...a.players]
         } else if (a.type === 'vote' && g.stage === 'vote') {
-          beginDraft({ ...g, userTeam: m.team }, a.player, players)
-          r.ballots[m.team] = a.player
+          beginDraft({ ...g, userTeam: team }, a.player, players)
+          r.ballots[team] = a.player
         } else if (a.type === 'pick' && g.stage === 'draft') {
-          if (g.current !== m.team) fail('あなたの指名番ではありません。', 403)
+          if (g.current !== team) fail('あなたの指名番ではありません。', 403)
           this.pick(a.player)
         } else if (a.type === 'intent' && g.stage === 'round2') {
-          r.intents[m.team] = a.intent
+          r.intents[team] = a.intent
         } else if (a.type === 'bid' && g.stage === 'round2confirm') {
           confirmRoundTwo(
-            { ...g, userTeam: m.team },
+            { ...g, userTeam: team },
             a.preferences,
             a.condition,
             players,
           )
           r.bids.push({
-            team: m.team,
+            team,
             preferences: [...a.preferences],
             condition: a.condition,
           })

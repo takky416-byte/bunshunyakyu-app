@@ -60,12 +60,22 @@ function fixture() {
     restart() {
       core = new RoomCore(repository, hooks, () => now)
     },
-    async add(name = '主催', code = '000123') {
+    async add(name = '主催', code = '000123', choose = true) {
       const session = stored
         ? await core.join(name)
-        : await core.init(code, name, 'd')
+        : await core.init(code, name)
       online.add(session.memberId)
       await core.presence(session.memberId, true)
+      if (choose) {
+        const free = (
+          ['d', ...teamIds.filter((t) => t !== 'd')] as TeamId[]
+        ).find((t) => !stored!.members.some((m) => m.team === t))!
+        await core.command(session.token, {
+          id: crypto.randomUUID(),
+          phase: 'lobby',
+          action: { type: 'team', team: free },
+        })
+      }
       return session
     },
     async send(
@@ -81,6 +91,87 @@ function fixture() {
 }
 const players = officialDataset.players
 const offerings = (team: TeamId) => realisticCandidates(team, players, 42)
+
+it('enters without a club, allows chat, and requires a chosen club before ready or start', async () => {
+  const f = fixture(),
+    host = await f.add('主催', '000123', false),
+    guest = await f.add('仲間', '000123', false)
+  expect((await f.core.read(host.token)).members.map((m) => m.team)).toEqual([
+    null,
+    null,
+  ])
+  await f.send(guest, { type: 'chat', text: '球団を相談中です' })
+  expect((await f.core.read(host.token)).messages.at(-1)?.team).toBeUndefined()
+  await expect(f.send(guest, { type: 'ready', ready: true })).rejects.toThrow(
+    '球団を選んで',
+  )
+  await expect(f.send(host, { type: 'start' })).rejects.toThrow('球団を選んで')
+  f.restart()
+  expect(
+    (await f.core.read(guest.token)).members.find(
+      (m) => m.id === guest.memberId,
+    )?.team,
+  ).toBeNull()
+  await f.send(host, { type: 'team', team: 'd' })
+  await expect(f.send(host, { type: 'start' })).rejects.toThrow('球団選択')
+})
+
+it('twelve players can release and exchange clubs without losing seats or bypassing readiness', async () => {
+  const f = fixture(),
+    sessions: RoomSession[] = []
+  for (let i = 0; i < 12; i++)
+    sessions.push(await f.add('参加者' + i, '000123', false))
+  expect(
+    (await f.core.read(sessions[0].token)).members.every(
+      (m) => m.team === null,
+    ),
+  ).toBe(true)
+  await expect(f.core.join('13人目')).rejects.toThrow('満員')
+  await Promise.all(
+    sessions.map((s, i) => f.send(s, { type: 'team', team: teamIds[i] })),
+  )
+  await Promise.all(
+    sessions.map((s) => f.send(s, { type: 'ready', ready: true })),
+  )
+  await f.send(sessions[0], { type: 'team', team: null })
+  let state = await f.core.read(sessions[0].token)
+  expect(state.members[0]).toMatchObject({ team: null, ready: false })
+  expect(state.members).toHaveLength(12)
+  await expect(
+    f.send(sessions[0], { type: 'team', team: teamIds[1] }),
+  ).rejects.toThrow('選択済み')
+  await f.send(sessions[1], { type: 'team', team: null })
+  await f.send(sessions[0], { type: 'team', team: teamIds[1] })
+  await f.send(sessions[1], { type: 'team', team: teamIds[0] })
+  await expect(f.send(sessions[0], { type: 'start' })).rejects.toThrow(
+    '準備完了',
+  )
+  await f.send(sessions[1], { type: 'ready', ready: true })
+  f.restart()
+  state = await f.core.read(sessions[0].token)
+  expect(state.members[0].team).toBe(teamIds[1])
+  expect(state.members[1].team).toBe(teamIds[0])
+  expect(new Set(state.members.map((m) => m.team)).size).toBe(12)
+  await f.send(sessions[0], { type: 'start' })
+  expect((await f.core.read(sessions[0].token)).game?.userTeam).toBe(teamIds[1])
+  await expect(
+    f.send(sessions[0], { type: 'team', team: null }),
+  ).rejects.toThrow('開始前まで')
+})
+
+it('reserves a released club atomically when two unselected players choose it together', async () => {
+  const f = fixture(),
+    host = await f.add('主催', '000123', false),
+    guest = await f.add('仲間', '000123', false)
+  const results = await Promise.allSettled(
+    [host, guest].map((s) => f.send(s, { type: 'team', team: 'd' })),
+  )
+  expect(results.filter((r) => r.status === 'fulfilled')).toHaveLength(1)
+  expect(results.filter((r) => r.status === 'rejected')).toHaveLength(1)
+  expect(
+    (await f.core.read(host.token)).members.filter((m) => m.team === 'd'),
+  ).toHaveLength(1)
+})
 
 it('retains nominations already accepted before a departure report update while rejecting new submissions', async () => {
   const f = fixture(),
@@ -400,7 +491,7 @@ describe('authoritative complete games', () => {
     await f.send(host, { type: 'chat', text: '内緒の会話' })
     await f.advance(2 * 60 * 60_000 + 1)
     await expect(f.core.read(host.token)).rejects.toMatchObject({ status: 404 })
-    const next = await f.core.init('000123', '新しい主催', 'g')
+    const next = await f.core.init('000123', '新しい主催')
     expect((await f.core.read(next.token)).messages).toHaveLength(1)
   })
 })

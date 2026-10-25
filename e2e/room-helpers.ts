@@ -25,7 +25,7 @@ export async function createRoom(page: Page, team?: TeamId, name = 'テストGM'
   return (await roomSnapshot(page)).code
 }
 export async function startRoom(page: Page, team?: TeamId) {
-  await createRoom(page, team)
+  await createRoom(page, team ?? 't')
   await page
     .getByRole('button', { name: 'ドラフトを開始する', exact: true })
     .click()

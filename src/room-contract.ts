@@ -13,7 +13,7 @@ export const reactions = [
   'お疲れさま！',
 ] as const
 export type RoomAction =
-  | { type: 'team'; team: TeamId }
+  | { type: 'team'; team: TeamId | null }
   | { type: 'ready'; ready: boolean }
   | { type: 'start' }
   | { type: 'nominate'; players: string[] }
@@ -41,7 +41,7 @@ export interface RoomSession {
 export interface RoomMember {
   id: string
   name: string
-  team: TeamId
+  team: TeamId | null
   ready: boolean
   online: boolean
   cpu: boolean
