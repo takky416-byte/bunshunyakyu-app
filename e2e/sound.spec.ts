@@ -1,3 +1,4 @@
+import { startRoom } from './room-helpers'
 import { test, expect } from '@playwright/test'
 import { readFileSync } from 'node:fs'
 import type { Dataset } from '../src/data'
@@ -375,7 +376,7 @@ test('unsupported audio explains the limitation and keeps gameplay usable', asyn
     page.getByRole('checkbox', { name: /^指名の読み上げ/ }),
   ).toBeDisabled()
   await page.locator('.modal').getByRole('button', { name: '閉じる' }).click()
-  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+  await startRoom(page)
   await expect(
     page.getByRole('heading', { name: /提出候補を選ぶ/ }),
   ).toBeVisible()

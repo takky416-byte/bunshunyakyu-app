@@ -1,3 +1,4 @@
+import { legacyStart } from './legacy-helper'
 import { test, expect } from './fixtures'
 import { referenceDataset } from '../src/data'
 import { beginDraft, newGame, submitNominations } from '../src/engine'
@@ -27,7 +28,7 @@ test('candidate and voting actions stay in view without scrolling the page', asy
     await page.goto('/')
     await page.evaluate(() => localStorage.removeItem('geneki-draft-room:v2'))
     await page.reload()
-    await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+    await legacyStart(page)
     await expect(page.locator('.flow-target')).toBeFocused()
     await inViewport(page, page.getByRole('button', { name: '候補を提出する' }))
     await page.getByRole('checkbox').nth(0).check()

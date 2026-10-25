@@ -67,6 +67,7 @@ function clearTracking() {
   if (timer !== undefined) window.clearTimeout(timer)
   try {
     localStorage.removeItem(VISITOR_KEY)
+    localStorage.removeItem('geneki-draft:room-tracking:v1')
     sessionStorage.removeItem(QUEUE_KEY)
     for (const key of ['geneki-draft-room:v1', 'geneki-draft-room:v2']) {
       const raw = localStorage.getItem(key)

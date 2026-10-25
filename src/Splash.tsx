@@ -43,7 +43,7 @@ export default function Splash({
         <p>
           好きな球団のGMになり、
           <br />
-          11球団のCPUと現役ドラフトを体験。
+          仲間と、1人でも。空席はCPUが担当。
         </p>
         <div className="welcome-steps">
           <span>候補を出す</span>
@@ -53,7 +53,7 @@ export default function Splash({
           <span>選手を指名</span>
         </div>
         <button className="welcome-enter" onClick={onEnter}>
-          {resume ? '前回のドラフトを続ける' : '球団を選んではじめる'}
+          {resume ? '前回のドラフトを続ける' : 'ドラフトルームへ'}
           <ArrowRight size={18} />
         </button>
         <small>ブラウザですぐプレー・登録不要 / 非公式シミュレーション</small>

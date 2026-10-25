@@ -30,6 +30,8 @@ export default defineConfig({
     env: {
       ANALYTICS_ADMIN_KEY: testKey,
       ANALYTICS_DB_PATH: join(testDirectory, 'events.sqlite'),
+      ROOMS_DB_PATH: join(testDirectory, 'rooms.sqlite'),
+      ROOMS_TEST_FAST_PRESENTATIONS: 'true',
     },
   },
 })

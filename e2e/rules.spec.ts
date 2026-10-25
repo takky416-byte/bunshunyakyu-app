@@ -1,3 +1,4 @@
+import { startRoom } from './room-helpers'
 import { test, expect } from './fixtures'
 import { readFileSync } from 'node:fs'
 import type { Dataset, Player } from '../src/data'
@@ -29,11 +30,7 @@ test('high-salary exception needs two ordinary players and excluded candidates c
   expect(exception).toBeDefined()
   expect(ordinary).toHaveLength(2)
   await page.goto('/')
-  await page
-    .getByRole('group', { name: '操作する球団' })
-    .getByRole('button', { name: /読売ジャイアンツ/ })
-    .click()
-  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+  await startRoom(page, 'g')
   const choose = async (name: string) =>
     page
       .locator('.player-row')

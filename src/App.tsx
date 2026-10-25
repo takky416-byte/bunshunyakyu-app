@@ -49,7 +49,6 @@ import {
   choicesFor,
   fit,
   makePick,
-  newGame,
   offeredPlayers,
   restoreGame,
   startRoundTwo,
@@ -59,6 +58,15 @@ import {
   voteCount,
   type Game,
 } from './engine'
+import { useRoom, rememberedName } from './useRoom'
+import {
+  RoomEntry,
+  RoomLobby,
+  RoomStatus,
+  RoomWaiting,
+  RoomChat,
+} from './RoomUI'
+import { PLAYER_NAME_KEY } from './room-contract'
 import { eligibilityOf, nominationErrors } from './eligibility'
 import type { Participation, BidCondition } from './roundTwo'
 import { officialDataset } from './officialData'
@@ -88,14 +96,9 @@ import { playerAge, playerCareerYears } from './playerBio'
 import { DraftSound } from './draftSound'
 import { draftSpeech } from './draftSpeech'
 import { SoundControls, SoundSettings } from './SoundControls'
-import {
-  centralSelection,
-  pacificSelection,
-  selectionNames,
-  clubThemes,
-  clubStyle,
-} from './presentation'
+import { clubThemes, clubStyle } from './presentation'
 
+const ignoreRoomCommit = () => {}
 const STORAGE_KEY = 'geneki-draft-room:v2'
 type Modal =
   'rules' | 'data' | 'reset' | 'privacy' | 'player' | 'share' | 'sound' | null
@@ -239,7 +242,7 @@ function ModalShell({
   )
 }
 const steps = [
-  '球団を選ぶ',
+  'ルームに参加',
   '候補を提出',
   '希望を投票',
   'ドラフト',
@@ -247,6 +250,31 @@ const steps = [
 ]
 
 export default function App() {
+  const room = useRoom()
+  const [playerName, setPlayerName] = useState(rememberedName)
+  const [roomCode, setRoomCode] = useState('')
+  const [roomChatOpen, setRoomChatOpen] = useState(false)
+  const [roomPending, setRoomPending] = useState(false)
+  const [lastReadMessage, setLastReadMessage] = useState('')
+  const receivedPresentation = useRef('')
+  const receivedPhase = useRef('')
+  const trackedRoom = useRef('')
+  const isRoom = Boolean(room.session)
+  const roomState = room.snapshot
+  const roomMe = roomState?.members.find((m) => m.id === roomState.me)
+  const unreadMessages = roomState
+    ? (() => {
+        const messages = roomState.messages.filter((m) => m.kind !== 'system')
+        const seen = messages.findIndex((m) => m.id === lastReadMessage)
+        return roomChatOpen ? 0 : messages.length - (seen + 1)
+      })()
+    : 0
+  useEffect(() => {
+    if (roomChatOpen)
+      setLastReadMessage(
+        roomState?.messages.filter((m) => m.kind !== 'system').at(-1)?.id ?? '',
+      )
+  }, [roomChatOpen, roomState?.messages])
   const [sound] = useState(() => new DraftSound())
   const soundState = useSyncExternalStore(sound.subscribe, sound.getSnapshot)
   useEffect(sound.mount, [sound])
@@ -266,7 +294,6 @@ export default function App() {
   const [votedId, setVotedId] = useState('')
   const [selectedId, setSelectedId] = useState('')
   const [position, setPosition] = useState<Position | 'すべて'>('すべて')
-  const [league, setLeague] = useState('すべて')
   const [modal, setModal] = useState<Modal>(null)
   const [error, setError] = useState(initial.warning ?? '')
   const [storageError, setStorageError] = useState(false)
@@ -294,7 +321,14 @@ export default function App() {
     }
   })
   const pageVisible = usePageVisible()
-  const finishAnnouncements = useCallback(() => setAnnouncements(null), [])
+  const roomHumanCount = roomState?.members.filter((m) => !m.cpu).length ?? 0
+  const finishAnnouncements = useCallback(() => {
+    setAnnouncements(null)
+    if (roomState?.presentation && roomHumanCount === 1)
+      void room
+        .send({ type: 'presented', presentationId: roomState.presentation.id })
+        .catch(() => {})
+  }, [room.send, roomState?.presentation?.id, roomHumanCount])
   const changeAutoPlay = useCallback((enabled: boolean) => {
     setAutoPlay(enabled)
     try {
@@ -325,10 +359,12 @@ export default function App() {
   const userTurn = game?.stage === 'draft' && game.current === game.userTeam
   const player = (id: string) => players.find((p) => p.id === id)!
   const flowKey = game
-    ? `${game.seed}:${game.stage}:${game.current ?? ''}:${game.picks.length}`
-    : 'home'
+    ? `${game.seed}:${game.stage}:${game.current ?? ''}:${game.picks.length}:${roomState?.submitted.includes(team.id) ? 'waiting' : ''}:${roomState?.paused ? 'paused' : ''}`
+    : roomState
+      ? `${roomState.code}:lobby`
+      : 'home'
   const previousFlow = useRef(flowKey)
-  const pendingFlowFocus = useRef(false)
+  const pendingFlowFocus = useRef(Boolean(initial.game || room.session))
 
   useEffect(() => {
     const media = window.matchMedia('(max-width: 760px)')
@@ -349,7 +385,11 @@ export default function App() {
         .querySelector('.roster-list')
         ?.scrollTo({ top: 0, behavior: 'auto' })
       target.focus({ preventScroll: true })
-      target.scrollIntoView({ block: 'start', behavior: 'auto' })
+      const scrollTarget =
+        !game && roomState
+          ? (document.querySelector('.room-status') ?? target)
+          : target
+      scrollTarget.scrollIntoView({ block: 'start', behavior: 'auto' })
     })
     return () => cancelAnimationFrame(frame)
   }, [flowKey, modal, announcements, showSplash])
@@ -365,6 +405,7 @@ export default function App() {
   }
   useEffect(() => {
     if (
+      isRoom ||
       !autoPlay ||
       !pageVisible ||
       !game ||
@@ -389,6 +430,7 @@ export default function App() {
       )
     }
   }, [
+    isRoom,
     autoPlay,
     pageVisible,
     game,
@@ -408,6 +450,7 @@ export default function App() {
   }, [team.id])
 
   useEffect(() => {
+    if (isRoom) return
     try {
       localStorage.setItem(
         STORAGE_KEY,
@@ -417,7 +460,7 @@ export default function App() {
     } catch {
       setStorageError(true)
     }
-  }, [dataset, game, chosenTeam, trackedPlay])
+  }, [dataset, game, chosenTeam, trackedPlay, isRoom])
   useEffect(() => {
     trackPageView()
   }, [])
@@ -469,18 +512,112 @@ export default function App() {
       /* usable without storage */
     }
   }
-  function start() {
-    act(() => {
-      const seed = crypto.getRandomValues(new Uint32Array(1))[0]
-      setGame(newGame(chosenTeam, seed))
-      setTrackedPlay(trackPlayStarted(chosenTeam))
-      setNominees([])
-      setRoundPreferences([])
-      setShowExcluded(false)
-      setVotedId('')
-    })
+  async function roomAction(action: Parameters<typeof room.send>[0]) {
+    setRoomPending(true)
+    setError('')
+    try {
+      await room.send(action)
+      setSelectedId('')
+      setPosition('すべて')
+    } catch (e) {
+      setError((e as Error).message)
+    } finally {
+      setRoomPending(false)
+    }
   }
+  useEffect(() => {
+    if (!roomState) return
+    setDataset(officialDataset)
+    if (roomMe) setChosenTeam(roomMe.team)
+    setGame(roomState.game)
+    const phaseKey = roomState.code + ':' + roomState.phase
+    if (receivedPhase.current !== phaseKey) {
+      receivedPhase.current = phaseKey
+      setNominees([])
+      setVotedId('')
+      setSelectedId('')
+      setRoundPreferences([])
+    }
+    const presentation = roomState.presentation
+    if (presentation && presentation.id !== receivedPresentation.current) {
+      receivedPresentation.current = presentation.id
+      if (roomState.game) {
+        const item: Announcement = {
+          kind: presentation.kind,
+          game: roomState.game,
+          ...(presentation.pickIndex === undefined
+            ? {}
+            : { pickIndex: presentation.pickIndex }),
+        }
+        if (presentationEnabled && !reducedMotion) setAnnouncements([item])
+        else {
+          const playback = sound.speak(
+            draftSpeech(item, officialDataset.players),
+          )
+          if (roomHumanCount === 1 && autoPlay)
+            void playback.finished
+              .then(() =>
+                !document.hidden
+                  ? room.send({
+                      type: 'presented',
+                      presentationId: presentation.id,
+                    })
+                  : undefined,
+              )
+              .catch(() => {})
+        }
+      }
+    } else if (!presentation) setAnnouncements(null)
+    if (roomState.game) {
+      const key = roomState.code + ':' + roomState.me
+      if (trackedRoom.current !== key) {
+        trackedRoom.current = key
+        let tracked: TrackedPlay | null = null
+        try {
+          const saved = JSON.parse(
+            localStorage.getItem('geneki-draft:room-tracking:v1') ?? 'null',
+          )
+          if (
+            saved?.key === key &&
+            validTrackedPlay(saved.tracked) &&
+            privacyStatus() === 'enabled'
+          )
+            tracked = saved.tracked
+        } catch {
+          /* unavailable storage */
+        }
+        tracked ??= trackPlayStarted(roomState.game.userTeam)
+        setTrackedPlay(tracked)
+        try {
+          localStorage.setItem(
+            'geneki-draft:room-tracking:v1',
+            JSON.stringify({ key, tracked }),
+          )
+        } catch {
+          /* unavailable storage */
+        }
+      }
+    }
+  }, [
+    roomState,
+    roomMe?.team,
+    roomHumanCount,
+    room.send,
+    autoPlay,
+    presentationEnabled,
+    reducedMotion,
+    sound,
+  ])
   function reset() {
+    if (isRoom) {
+      void room
+        .leave()
+        .catch(() => {})
+        .finally(() => {
+          setGame(null)
+          setDataset(officialDataset)
+        })
+    }
     sound.stopSpeech()
     sound.stopEffects()
     if (dataset.kind === 'official-roster') setDataset(officialDataset)
@@ -502,6 +639,8 @@ export default function App() {
       if (input.size > 1_000_000)
         throw new Error('ファイルは1MB以内にしてください。')
       const imported = parseDataset(JSON.parse(await input.text()))
+      if (isRoom)
+        throw new Error('ルームでは全員が共通の2026年選手データを使用します。')
       if (game)
         throw new Error(
           '進行中のドラフトがあります。「新しいドラフト」で球団選択に戻ってから取り込んでください。',
@@ -538,6 +677,21 @@ export default function App() {
   const filteredRoster = roster.filter(
     (p) => position === 'すべて' || p.position === position,
   )
+  const roomWaiting = Boolean(
+    roomState &&
+    roomMe &&
+    (roomState.paused ||
+      (['nominate', 'vote', 'round2', 'round2confirm'].includes(
+        game?.stage ?? '',
+      ) &&
+        roomState.submitted.includes(roomMe.team))),
+  )
+  const roomBlocked =
+    isRoom &&
+    (!room.connected ||
+      roomPending ||
+      Boolean(roomState?.paused) ||
+      Boolean(roomState?.presentation))
   const progressStep =
     !game || game.stage === 'nominate'
       ? 0
@@ -553,6 +707,7 @@ export default function App() {
       style={clubStyle(team.id) as CSSProperties}
       data-team={team.id}
       data-playing={Boolean(game)}
+      data-room={isRoom}
     >
       <aside className="sidebar">
         <a
@@ -631,12 +786,20 @@ export default function App() {
             <Users size={16} />
             <span className="single-label-copy">
               <span className="single-label-title">
-                <span>シングル</span>
-                <span>プレー</span>
+                <span>{isRoom ? 'ルームで' : '仲間と、'}</span>
+                <span>{isRoom ? 'プレー' : '1人でも。'}</span>
               </span>
               <small>
-                <span>あなた＋</span>
-                <span>CPU 11球団</span>
+                <span>
+                  {isRoom
+                    ? `${roomState?.members.filter((m) => !m.cpu).length ?? 1}人＋`
+                    : '1〜12人'}
+                </span>
+                <span>
+                  {isRoom
+                    ? `CPU ${12 - (roomState?.members.filter((m) => !m.cpu).length ?? 1)}球団`
+                    : '空席はCPU'}
+                </span>
               </small>
             </span>
           </div>
@@ -658,7 +821,13 @@ export default function App() {
           <div className="topbar-right">
             <span className="save-state">
               <span className="status-dot" />
-              {storageError ? '保存できません' : '進行を自動保存'}
+              {isRoom
+                ? room.connected
+                  ? 'ルームに接続中'
+                  : '再接続中…'
+                : storageError
+                  ? '保存できません'
+                  : '進行を自動保存'}
             </span>
             <button
               className="help-button"
@@ -705,14 +874,17 @@ export default function App() {
               </button>
             )}
           </CompactDetails>
-          {error && (
+          {(error || room.error) && (
             <div className="error-message" role="alert">
               <Info size={17} />
-              {error}
+              {error || room.error}
               <button
                 className="icon-button"
                 aria-label="通知を閉じる"
-                onClick={() => setError('')}
+                onClick={() => {
+                  setError('')
+                  room.setError('')
+                }}
               >
                 <X size={16} />
               </button>
@@ -724,7 +896,59 @@ export default function App() {
             </div>
           )}
 
-          {!game ? (
+          {room.fatal && roomState && (
+            <button
+              className="button ghost"
+              onClick={() => {
+                room.clear()
+                setGame(null)
+              }}
+            >
+              ホームに戻る
+            </button>
+          )}
+          {roomState && (
+            <RoomStatus
+              room={room}
+              onChat={() => setRoomChatOpen(true)}
+              unread={unreadMessages}
+            />
+          )}
+          {room.session && !roomState ? (
+            <section className="panel room-loading">
+              <h2>
+                {room.fatal
+                  ? 'ルームを確認してください'
+                  : 'ルームに接続しています…'}
+              </h2>
+              <p>
+                {room.fatal
+                  ? '新しいルームを作成するか、有効な番号で参加できます。'
+                  : '再読み込み後も、担当球団と進行を引き継ぎます。'}
+              </p>
+              <button
+                className="button ghost"
+                onClick={() => {
+                  room.clear()
+                  setGame(null)
+                }}
+              >
+                ホームに戻る
+              </button>
+            </section>
+          ) : roomState && !game ? (
+            <>
+              <RoomLobby headingRef={flowTarget} room={room} />
+              <div className="room-exit">
+                <button
+                  className="button ghost"
+                  onClick={() => setModal('reset')}
+                >
+                  ルームを退出する
+                </button>
+              </div>
+            </>
+          ) : !game ? (
             <>
               <section className="hero concept-intro">
                 <div className="hero-copy">
@@ -735,105 +959,31 @@ export default function App() {
                         ? '参考データでプレー'
                         : '2026年の取り込みデータ'}
                   </span>
-                  <h1>現役ドラフトのGM体験</h1>
+                  <h1 ref={flowTarget} className="flow-target" tabIndex={-1}>
+                    現役ドラフトのGM体験
+                  </h1>
                   <p>
-                    好きな球団で候補を出し、11球団のCPUと新しい戦力を指名します。
+                    好きな球団の編成責任者に。仲間と、1人でも。空席はCPUが担当します。
                   </p>
                 </div>
                 <Diamond className="concept-diamond" />
               </section>
-              <section className="team-selection">
-                <div className="section-heading">
-                  <div>
-                    <div className="step-label">
-                      STEP 01 <span>球団選択</span>
-                    </div>
-                    <h2 ref={flowTarget} className="flow-target" tabIndex={-1}>
-                      どの球団の未来を、つくりますか。
-                    </h2>
-                    <p>あなたが指揮する球団をひとつ選んでください。</p>
-                  </div>
-                  <div className="league-tabs" aria-label="リーグで絞り込み">
-                    {['すべて', 'セ・リーグ', 'パ・リーグ'].map((l) => (
-                      <button
-                        key={l}
-                        className={league === l ? 'selected' : ''}
-                        onClick={() => setLeague(l)}
-                      >
-                        {l}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div
-                  className="team-leagues"
-                  role="group"
-                  aria-label="操作する球団"
-                >
-                  {[
-                    { name: 'セ・リーグ', ids: centralSelection },
-                    { name: 'パ・リーグ', ids: pacificSelection },
-                  ]
-                    .filter(
-                      (division) =>
-                        league === 'すべて' || league === division.name,
-                    )
-                    .map((division) => (
-                      <section
-                        className="league-group"
-                        key={division.name}
-                        aria-label={division.name}
-                      >
-                        <div className="league-title">
-                          <h3>{division.name}</h3>
-                        </div>
-                        <div className="teams-grid">
-                          {division.ids.map((id) => {
-                            const t = teamById[id]
-                            return (
-                              <button
-                                key={id}
-                                className={`team-card ${chosenTeam === id ? 'selected' : ''}`}
-                                style={
-                                  {
-                                    '--team-color': clubThemes[id].accent,
-                                    '--team-secondary':
-                                      clubThemes[id].secondary,
-                                  } as CSSProperties
-                                }
-                                aria-label={t.name}
-                                title={t.name}
-                                aria-pressed={chosenTeam === id}
-                                onClick={() => setChosenTeam(id)}
-                              >
-                                <strong>{selectionNames[id]}</strong>
-                                {chosenTeam === id && (
-                                  <Check
-                                    size={14}
-                                    className="team-choice-check"
-                                  />
-                                )}
-                              </button>
-                            )
-                          })}
-                        </div>
-                      </section>
-                    ))}
-                </div>
-              </section>
-              <section className="selection-bar">
-                <div className="selection-team">
-                  <TeamMark team={team} small />
-                  <div>
-                    <span>あなたの球団</span>
-                    <strong title={team.name}>{selectionNames[team.id]}</strong>
-                  </div>
-                </div>
-                <button className="button primary" onClick={start}>
-                  この球団ではじめる
-                  <ArrowRight size={17} />
-                </button>
-              </section>
+              <RoomEntry
+                name={playerName}
+                setName={(name) => {
+                  setPlayerName(name)
+                  try {
+                    localStorage.setItem(PLAYER_NAME_KEY, name)
+                  } catch {
+                    /* memory-only */
+                  }
+                }}
+                code={roomCode}
+                setCode={setRoomCode}
+                busy={room.busy}
+                create={() => void room.enter(playerName, chosenTeam)}
+                join={() => void room.enter(playerName, chosenTeam, roomCode)}
+              />
               <div className="home-details">
                 <div>
                   <span className="detail-icon">
@@ -913,7 +1063,7 @@ export default function App() {
                     onClick={() => setModal('reset')}
                   >
                     <RotateCcw size={15} />
-                    新しいドラフト
+                    {isRoom ? 'ルームを退出する' : '新しいドラフト'}
                   </button>
                 </div>
               </div>
@@ -935,233 +1085,248 @@ export default function App() {
               </nav>
               <div className="game-layout">
                 <div className="game-main">
-                  {(game.stage === 'nominate' ||
-                    game.stage === 'vote' ||
-                    userTurn) && (
-                    <section
-                      className="panel roster-panel"
-                      data-stage={game.stage}
-                    >
-                      <div className="panel-heading">
-                        <div>
-                          <h2
-                            ref={flowTarget}
-                            className="flow-target"
-                            tabIndex={-1}
+                  {roomWaiting && roomState && (
+                    <RoomWaiting headingRef={flowTarget} state={roomState} />
+                  )}
+                  {!roomWaiting &&
+                    (game.stage === 'nominate' ||
+                      game.stage === 'vote' ||
+                      userTurn) && (
+                      <section
+                        className="panel roster-panel"
+                        data-stage={game.stage}
+                      >
+                        <div className="panel-heading">
+                          <div>
+                            <h2
+                              ref={flowTarget}
+                              className="flow-target"
+                              tabIndex={-1}
+                            >
+                              {game.stage === 'nominate'
+                                ? '提出候補を選ぶ'
+                                : game.stage === 'vote'
+                                  ? '獲得希望を選ぶ'
+                                  : 'あなたの指名番です'}
+                              <span className="count">{roster.length}名</span>
+                            </h2>
+                            <p>
+                              {game.stage === 'nominate'
+                                ? '移籍候補を2名以上選んでください。'
+                                : game.stage === 'vote'
+                                  ? '獲得したい選手を1名選んでください。'
+                                  : roster.length === 1
+                                    ? '指名できる選手は1人です。選んで「この選手を指名」を押してください。'
+                                    : '獲得する選手を1人選び、「この選手を指名」を押してください。'}
+                            </p>
+                          </div>
+                          {userTurn && (
+                            <span className="live-pill">
+                              <span />
+                              YOUR PICK
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="roster-toolbar">
+                          <label htmlFor="position-filter">守備位置</label>
+                          <select
+                            id="position-filter"
+                            aria-label="守備位置で絞り込み"
+                            value={position}
+                            onChange={(e) =>
+                              setPosition(e.target.value as Position | 'すべて')
+                            }
+                          >
+                            <option value="すべて">すべての守備位置</option>
+                            {positions.map((p) => (
+                              <option key={p}>{p}</option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="roster-list">
+                          {filteredRoster.length === 0 ? (
+                            <div className="empty-state">
+                              <p>条件に合う選手がいません。</p>
+                              <button
+                                className="text-button"
+                                onClick={() => {
+                                  setPosition('すべて')
+                                }}
+                              >
+                                絞り込みを解除
+                              </button>
+                            </div>
+                          ) : (
+                            filteredRoster.map((p) => {
+                              const checked =
+                                game.stage === 'nominate'
+                                  ? nominees.includes(p.id)
+                                  : game.stage === 'vote'
+                                    ? votedId === p.id
+                                    : selectedId === p.id
+                              return (
+                                <label
+                                  className={`player-row ${checked ? 'checked' : ''}`}
+                                  key={p.id}
+                                >
+                                  <input
+                                    type={
+                                      game.stage === 'nominate'
+                                        ? 'checkbox'
+                                        : 'radio'
+                                    }
+                                    name="player"
+                                    disabled={!eligibilityOf(p).allowed}
+                                    checked={checked}
+                                    onChange={() => {
+                                      if (game.stage === 'nominate')
+                                        setNominees((old) =>
+                                          old.includes(p.id)
+                                            ? old.filter((id) => id !== p.id)
+                                            : [...old, p.id],
+                                        )
+                                      else if (game.stage === 'vote')
+                                        setVotedId(p.id)
+                                      else setSelectedId(p.id)
+                                    }}
+                                  />
+                                  <span className="position-badge">
+                                    {p.position === '内野手'
+                                      ? '内'
+                                      : p.position === '外野手'
+                                        ? '外'
+                                        : p.position[0]}
+                                  </span>
+                                  <span className="player-name">
+                                    <strong>{p.name}</strong>
+                                    <small className="player-affiliation">
+                                      <span className="player-team-full">
+                                        {teamById[p.team].name}
+                                      </span>
+                                      <span className="player-team-short">
+                                        {teamById[p.team].short}
+                                      </span>
+                                      {p.number ? ` · #${p.number}` : ''}
+                                    </small>
+                                    <PlayerFacts player={p} />
+                                    {!eligibilityOf(p).allowed && (
+                                      <small>
+                                        {eligibilityOf(p).reasons.join(' / ')}
+                                      </small>
+                                    )}
+                                  </span>
+                                  <button
+                                    type="button"
+                                    className="player-details-button"
+                                    aria-label={`${p.name}の詳細`}
+                                    onClick={(event) => {
+                                      event.preventDefault()
+                                      event.stopPropagation()
+                                      setDetailPlayerId(p.id)
+                                      setModal('player')
+                                    }}
+                                  >
+                                    詳細
+                                    <ChevronRight size={13} />
+                                  </button>
+                                  <span className="player-position">
+                                    {p.position}
+                                  </span>
+                                  <span className="player-check">
+                                    {checked ? <Check size={15} /> : <span />}
+                                  </span>
+                                </label>
+                              )
+                            })
+                          )}
+                        </div>
+                        {game.stage === 'nominate' &&
+                          nominees.length > 0 &&
+                          submissionErrors.length > 0 && (
+                            <p className="nomination-error" role="status">
+                              {submissionErrors.join(' ')}
+                            </p>
+                          )}
+                        <div className="panel-footer">
+                          <span>
+                            {game.stage === 'nominate' ? (
+                              <>
+                                <strong>{nominees.length}名</strong> 選択中 /
+                                2名以上
+                              </>
+                            ) : game.stage === 'vote' ? (
+                              votedId ? (
+                                `${player(votedId).name} に投票`
+                              ) : (
+                                '獲得希望を1名選んでください'
+                              )
+                            ) : selectedPlayer ? (
+                              `${selectedPlayer.name} を獲得`
+                            ) : (
+                              '獲得する選手を選んでください'
+                            )}
+                          </span>
+                          <button
+                            className="button primary"
+                            disabled={
+                              roomBlocked ||
+                              (game.stage === 'nominate'
+                                ? submissionErrors.length > 0
+                                : game.stage === 'vote'
+                                  ? !votedId
+                                  : !selectedId)
+                            }
+                            onClick={() =>
+                              act(() => {
+                                if (isRoom) {
+                                  void roomAction(
+                                    game.stage === 'nominate'
+                                      ? { type: 'nominate', players: nominees }
+                                      : game.stage === 'vote'
+                                        ? { type: 'vote', player: votedId }
+                                        : { type: 'pick', player: selectedId },
+                                  )
+                                  return
+                                }
+                                if (game.stage === 'nominate')
+                                  announce([
+                                    {
+                                      kind: 'nominations',
+                                      game: submitNominations(
+                                        game,
+                                        nominees,
+                                        players,
+                                      ),
+                                    },
+                                  ])
+                                else if (game.stage === 'vote')
+                                  announce([
+                                    {
+                                      kind: 'order',
+                                      game: beginDraft(game, votedId, players),
+                                    },
+                                  ])
+                                else
+                                  announce([
+                                    {
+                                      kind: 'pick',
+                                      game: makePick(game, selectedId, players),
+                                    },
+                                  ])
+                              })
+                            }
                           >
                             {game.stage === 'nominate'
-                              ? '提出候補を選ぶ'
+                              ? '候補を提出する'
                               : game.stage === 'vote'
-                                ? '獲得希望を選ぶ'
-                                : 'あなたの指名番です'}
-                            <span className="count">{roster.length}名</span>
-                          </h2>
-                          <p>
-                            {game.stage === 'nominate'
-                              ? '移籍候補を2名以上選んでください。'
-                              : game.stage === 'vote'
-                                ? '獲得したい選手を1名選んでください。'
-                                : roster.length === 1
-                                  ? '指名できる選手は1人です。選んで「この選手を指名」を押してください。'
-                                  : '獲得する選手を1人選び、「この選手を指名」を押してください。'}
-                          </p>
+                                ? '投票してドラフトへ'
+                                : 'この選手を指名'}
+                            <ArrowRight size={16} />
+                          </button>
                         </div>
-                        {userTurn && (
-                          <span className="live-pill">
-                            <span />
-                            YOUR PICK
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="roster-toolbar">
-                        <label htmlFor="position-filter">守備位置</label>
-                        <select
-                          id="position-filter"
-                          aria-label="守備位置で絞り込み"
-                          value={position}
-                          onChange={(e) =>
-                            setPosition(e.target.value as Position | 'すべて')
-                          }
-                        >
-                          <option value="すべて">すべての守備位置</option>
-                          {positions.map((p) => (
-                            <option key={p}>{p}</option>
-                          ))}
-                        </select>
-                      </div>
-                      <div className="roster-list">
-                        {filteredRoster.length === 0 ? (
-                          <div className="empty-state">
-                            <p>条件に合う選手がいません。</p>
-                            <button
-                              className="text-button"
-                              onClick={() => {
-                                setPosition('すべて')
-                              }}
-                            >
-                              絞り込みを解除
-                            </button>
-                          </div>
-                        ) : (
-                          filteredRoster.map((p) => {
-                            const checked =
-                              game.stage === 'nominate'
-                                ? nominees.includes(p.id)
-                                : game.stage === 'vote'
-                                  ? votedId === p.id
-                                  : selectedId === p.id
-                            return (
-                              <label
-                                className={`player-row ${checked ? 'checked' : ''}`}
-                                key={p.id}
-                              >
-                                <input
-                                  type={
-                                    game.stage === 'nominate'
-                                      ? 'checkbox'
-                                      : 'radio'
-                                  }
-                                  name="player"
-                                  disabled={!eligibilityOf(p).allowed}
-                                  checked={checked}
-                                  onChange={() => {
-                                    if (game.stage === 'nominate')
-                                      setNominees((old) =>
-                                        old.includes(p.id)
-                                          ? old.filter((id) => id !== p.id)
-                                          : [...old, p.id],
-                                      )
-                                    else if (game.stage === 'vote')
-                                      setVotedId(p.id)
-                                    else setSelectedId(p.id)
-                                  }}
-                                />
-                                <span className="position-badge">
-                                  {p.position === '内野手'
-                                    ? '内'
-                                    : p.position === '外野手'
-                                      ? '外'
-                                      : p.position[0]}
-                                </span>
-                                <span className="player-name">
-                                  <strong>{p.name}</strong>
-                                  <small className="player-affiliation">
-                                    <span className="player-team-full">
-                                      {teamById[p.team].name}
-                                    </span>
-                                    <span className="player-team-short">
-                                      {teamById[p.team].short}
-                                    </span>
-                                    {p.number ? ` · #${p.number}` : ''}
-                                  </small>
-                                  <PlayerFacts player={p} />
-                                  {!eligibilityOf(p).allowed && (
-                                    <small>
-                                      {eligibilityOf(p).reasons.join(' / ')}
-                                    </small>
-                                  )}
-                                </span>
-                                <button
-                                  type="button"
-                                  className="player-details-button"
-                                  aria-label={`${p.name}の詳細`}
-                                  onClick={(event) => {
-                                    event.preventDefault()
-                                    event.stopPropagation()
-                                    setDetailPlayerId(p.id)
-                                    setModal('player')
-                                  }}
-                                >
-                                  詳細
-                                  <ChevronRight size={13} />
-                                </button>
-                                <span className="player-position">
-                                  {p.position}
-                                </span>
-                                <span className="player-check">
-                                  {checked ? <Check size={15} /> : <span />}
-                                </span>
-                              </label>
-                            )
-                          })
-                        )}
-                      </div>
-                      {game.stage === 'nominate' &&
-                        nominees.length > 0 &&
-                        submissionErrors.length > 0 && (
-                          <p className="nomination-error" role="status">
-                            {submissionErrors.join(' ')}
-                          </p>
-                        )}
-                      <div className="panel-footer">
-                        <span>
-                          {game.stage === 'nominate' ? (
-                            <>
-                              <strong>{nominees.length}名</strong> 選択中 /
-                              2名以上
-                            </>
-                          ) : game.stage === 'vote' ? (
-                            votedId ? (
-                              `${player(votedId).name} に投票`
-                            ) : (
-                              '獲得希望を1名選んでください'
-                            )
-                          ) : selectedPlayer ? (
-                            `${selectedPlayer.name} を獲得`
-                          ) : (
-                            '獲得する選手を選んでください'
-                          )}
-                        </span>
-                        <button
-                          className="button primary"
-                          disabled={
-                            game.stage === 'nominate'
-                              ? submissionErrors.length > 0
-                              : game.stage === 'vote'
-                                ? !votedId
-                                : !selectedId
-                          }
-                          onClick={() =>
-                            act(() => {
-                              if (game.stage === 'nominate')
-                                announce([
-                                  {
-                                    kind: 'nominations',
-                                    game: submitNominations(
-                                      game,
-                                      nominees,
-                                      players,
-                                    ),
-                                  },
-                                ])
-                              else if (game.stage === 'vote')
-                                announce([
-                                  {
-                                    kind: 'order',
-                                    game: beginDraft(game, votedId, players),
-                                  },
-                                ])
-                              else
-                                announce([
-                                  {
-                                    kind: 'pick',
-                                    game: makePick(game, selectedId, players),
-                                  },
-                                ])
-                            })
-                          }
-                        >
-                          {game.stage === 'nominate'
-                            ? '候補を提出する'
-                            : game.stage === 'vote'
-                              ? '投票してドラフトへ'
-                              : 'この選手を指名'}
-                          <ArrowRight size={16} />
-                        </button>
-                      </div>
-                    </section>
-                  )}
+                      </section>
+                    )}
 
                   {game.stage === 'draft' && !userTurn && (
                     <section className="panel npc-stage">
@@ -1175,38 +1340,44 @@ export default function App() {
                         {teamById[game.current!].name}
                       </h2>
                       <p>
-                        {autoPlay
-                          ? 'CPUの指名を自動で発表します。あなたの指名番で止まります。'
-                          : '次はCPU球団の番です。指名を1球団ずつ確認するか、自分の番まで進めてください。'}
+                        {isRoom
+                          ? `${roomState?.members.find((m) => m.team === game.current && !m.cpu)?.name ?? 'CPU'}が指名を選んでいます。指名が確定すると自動で発表します。`
+                          : autoPlay
+                            ? 'CPUの指名を自動で発表します。あなたの指名番で止まります。'
+                            : '次はCPU球団の番です。指名を1球団ずつ確認するか、自分の番まで進めてください。'}
                       </p>
-                      <div className="npc-actions">
-                        <button
-                          className="button primary"
-                          onClick={() =>
-                            act(() =>
-                              announce(npcAnnouncements(game, players, false)),
-                            )
-                          }
-                        >
-                          <Play size={15} />
-                          CPUの指名を進める
-                        </button>
-                        <button
-                          className="button ghost"
-                          onClick={() =>
-                            act(() =>
-                              announce(npcAnnouncements(game, players, true)),
-                            )
-                          }
-                        >
-                          自分の番まで進める
-                          <ChevronRight size={16} />
-                        </button>
-                      </div>
+                      {!isRoom && (
+                        <div className="npc-actions">
+                          <button
+                            className="button primary"
+                            onClick={() =>
+                              act(() =>
+                                announce(
+                                  npcAnnouncements(game, players, false),
+                                ),
+                              )
+                            }
+                          >
+                            <Play size={15} />
+                            CPUの指名を進める
+                          </button>
+                          <button
+                            className="button ghost"
+                            onClick={() =>
+                              act(() =>
+                                announce(npcAnnouncements(game, players, true)),
+                              )
+                            }
+                          >
+                            自分の番まで進める
+                            <ChevronRight size={16} />
+                          </button>
+                        </div>
+                      )}
                     </section>
                   )}
 
-                  {game.stage === 'round2' && (
+                  {game.stage === 'round2' && !roomWaiting && (
                     <section className="panel round-two">
                       <span className="round-icon">
                         <Sparkles size={30} />
@@ -1224,20 +1395,30 @@ export default function App() {
                       <p>
                         もう1人の獲得を狙うか、ここで補強を終えるかを選びます。
                         <br />
-                        あなたが見送っても、参加するCPU同士の指名は進みます。
+                        {isRoom
+                          ? 'あなたが見送っても、参加する他球団の指名は進みます。'
+                          : 'あなたが見送っても、参加するCPU同士の指名は進みます。'}
                       </p>
                       <div className="inline-notice">
                         <Info size={17} />
                         <span>
-                          「獲得希望」は追加の補強、「放出のみ」は他球団への移籍を認める選択です。次の画面で最終確認できます。
+                          {isRoom
+                            ? '全員の参加意向が揃ったら、獲得希望の球団が入札します。確定後の参加意向は変更できません。'
+                            : '「獲得希望」は追加の補強、「放出のみ」は他球団への移籍を認める選択です。次の画面で最終確認できます。'}
                         </span>
                       </div>
                       <div className="npc-actions">
                         <button
+                          disabled={roomBlocked}
                           className="button primary"
                           onClick={() =>
                             act(() =>
-                              setGame(startRoundTwo(game, true, players)),
+                              isRoom
+                                ? void roomAction({
+                                    type: 'intent',
+                                    intent: 'buy',
+                                  })
+                                : setGame(startRoundTwo(game, true, players)),
                             )
                           }
                         >
@@ -1245,20 +1426,34 @@ export default function App() {
                           <ArrowRight size={16} />
                         </button>
                         <button
+                          disabled={roomBlocked}
                           className="button ghost"
                           onClick={() =>
                             act(() =>
-                              setGame(startRoundTwo(game, false, players)),
+                              isRoom
+                                ? void roomAction({
+                                    type: 'intent',
+                                    intent: 'out',
+                                  })
+                                : setGame(startRoundTwo(game, false, players)),
                             )
                           }
                         >
                           自球団は参加を見送る
                         </button>
                         <button
+                          disabled={roomBlocked}
                           className="button ghost"
                           onClick={() =>
                             act(() =>
-                              setGame(startRoundTwo(game, 'supply', players)),
+                              isRoom
+                                ? void roomAction({
+                                    type: 'intent',
+                                    intent: 'supply',
+                                  })
+                                : setGame(
+                                    startRoundTwo(game, 'supply', players),
+                                  ),
                             )
                           }
                         >
@@ -1268,199 +1463,218 @@ export default function App() {
                     </section>
                   )}
 
-                  {game.stage === 'round2confirm' && game.roundTwo && (
-                    <section className="panel round-two-confirm">
-                      <div className="panel-heading">
-                        <div>
-                          <h2
-                            ref={flowTarget}
-                            className="flow-target"
-                            tabIndex={-1}
-                          >
-                            参加状況と入札を確認
-                          </h2>
-                          <p>
-                            獲得希望なら候補を希望順に選び、内容を確定してください。
-                            <span className="text-unit">確定後は</span>
-                            <span className="text-unit">変更できません。</span>
-                          </p>
-                        </div>
-                      </div>
-                      <div className="round-two-body">
-                        <label>
-                          自球団の意向
-                          <select
-                            aria-label="第2巡の参加意向"
-                            value={game.roundTwo.intents[team.id]}
-                            onChange={(e) => {
-                              setRoundPreferences([])
-                              act(() =>
-                                setGame(
-                                  startRoundTwo(
-                                    game,
-                                    e.target.value as Participation,
-                                    players,
-                                  ),
-                                ),
-                              )
-                            }}
-                          >
-                            <option value="buy">獲得希望で参加</option>
-                            <option value="supply">放出のみで参加</option>
-                            <option value="out">不参加</option>
-                          </select>
-                        </label>
-                        <CompactDetails
-                          compact={compact}
-                          title="12球団の参加状況"
-                          className="participation-disclosure"
-                        >
-                          <div className="participation-grid">
-                            {teams.map((t) => (
-                              <div key={t.id}>
-                                <strong>{t.short}</strong>
-                                <span>
-                                  {game.roundTwo!.intents[t.id] === 'buy'
-                                    ? '獲得希望'
-                                    : game.roundTwo!.intents[t.id] === 'supply'
-                                      ? '放出のみ'
-                                      : '不参加'}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                        </CompactDetails>
-                        {game.roundTwo.intents[team.id] === 'buy' && (
-                          <>
-                            <label>
-                              入札条件
-                              <select
-                                aria-label="第2巡の入札条件"
-                                value={bidCondition}
-                                onChange={(e) =>
-                                  setBidCondition(
-                                    e.target.value as BidCondition,
-                                  )
-                                }
-                              >
-                                <option value="unconditional">
-                                  無条件（放出なしでも獲得する）
-                                </option>
-                                <option value="balanced">
-                                  獲得・放出が両方成立するときだけ
-                                </option>
-                              </select>
-                            </label>
-                            <h3>獲得希望順</h3>
+                  {game.stage === 'round2confirm' &&
+                    game.roundTwo &&
+                    !roomWaiting && (
+                      <section className="panel round-two-confirm">
+                        <div className="panel-heading">
+                          <div>
+                            <h2
+                              ref={flowTarget}
+                              className="flow-target"
+                              tabIndex={-1}
+                            >
+                              参加状況と入札を確認
+                            </h2>
                             <p>
-                              候補を選んだ順で入札します。上の希望から優先し、条件が合わなければ次の希望を検討します。
+                              獲得希望なら候補を希望順に選び、内容を確定してください。
+                              <span className="text-unit">確定後は</span>
+                              <span className="text-unit">
+                                変更できません。
+                              </span>
                             </p>
-                            <ol className="bid-preferences">
-                              {roundPreferences.map((id, i) => (
-                                <li key={id}>
-                                  <div className="bid-preference-row">
-                                    <span className="bid-preference-player">
-                                      <strong>{player(id).name}</strong>
-                                      <PlayerFacts player={player(id)} />
-                                    </span>
-                                    <span className="bid-preference-actions">
-                                      <button
-                                        aria-label={`${player(id).name}の希望順位を上げる`}
-                                        disabled={i === 0}
-                                        onClick={() =>
-                                          setRoundPreferences((old) => {
-                                            const next = [...old]
-                                            ;[next[i - 1], next[i]] = [
-                                              next[i],
-                                              next[i - 1],
-                                            ]
-                                            return next
-                                          })
-                                        }
-                                      >
-                                        ↑
-                                      </button>
-                                      <button
-                                        aria-label={`${player(id).name}を希望から外す`}
-                                        onClick={() =>
-                                          setRoundPreferences((old) =>
-                                            old.filter((v) => v !== id),
-                                          )
-                                        }
-                                      >
-                                        削除
-                                      </button>
-                                    </span>
-                                  </div>
-                                </li>
-                              ))}
-                            </ol>
-                            <div className="second-round-choices">
-                              {roundChoices.map((p) => (
-                                <label key={p.id}>
-                                  <input
-                                    type="checkbox"
-                                    checked={roundPreferences.includes(p.id)}
-                                    onChange={() =>
-                                      setRoundPreferences((old) =>
-                                        old.includes(p.id)
-                                          ? old.filter((id) => id !== p.id)
-                                          : [...old, p.id],
-                                      )
-                                    }
-                                  />
-                                  <span className="bid-player">
-                                    <span className="bid-player-heading">
-                                      <strong>{p.name}</strong>
-                                      <span className="bid-player-team">
-                                        {teamById[p.team].short} · {p.position}
-                                      </span>
-                                    </span>
-                                    <PlayerFacts player={p} />
+                          </div>
+                        </div>
+                        <div className="round-two-body">
+                          <label>
+                            自球団の意向
+                            <select
+                              aria-label="第2巡の参加意向"
+                              value={game.roundTwo.intents[team.id]}
+                              disabled={isRoom}
+                              onChange={(e) => {
+                                setRoundPreferences([])
+                                act(() =>
+                                  setGame(
+                                    startRoundTwo(
+                                      game,
+                                      e.target.value as Participation,
+                                      players,
+                                    ),
+                                  ),
+                                )
+                              }}
+                            >
+                              <option value="buy">獲得希望で参加</option>
+                              <option value="supply">放出のみで参加</option>
+                              <option value="out">不参加</option>
+                            </select>
+                          </label>
+                          <CompactDetails
+                            compact={compact}
+                            title="12球団の参加状況"
+                            className="participation-disclosure"
+                          >
+                            <div className="participation-grid">
+                              {teams.map((t) => (
+                                <div key={t.id}>
+                                  <strong>{t.short}</strong>
+                                  <span>
+                                    {game.roundTwo!.intents[t.id] === 'buy'
+                                      ? '獲得希望'
+                                      : game.roundTwo!.intents[t.id] ===
+                                          'supply'
+                                        ? '放出のみ'
+                                        : '不参加'}
                                   </span>
-                                </label>
+                                </div>
                               ))}
                             </div>
-                            {roundChoices.length === 0 && (
-                              <p>指名可能な他球団の候補がいません。</p>
-                            )}
-                          </>
-                        )}
-                        <p className="small-print">
-                          参加確定後、CPUの入札と合わせて成立条件を判定します。指名が成立しない場合や、獲得のみ・放出のみになる場合もあります。
-                        </p>
-                      </div>
-                      <div className="panel-footer">
-                        <button
-                          className="button primary"
-                          disabled={
-                            game.roundTwo.intents[team.id] === 'buy' &&
-                            roundChoices.length > 0 &&
-                            roundPreferences.length === 0
-                          }
-                          onClick={() =>
-                            act(() =>
-                              announce(
-                                roundTwoAnnouncements(
-                                  confirmRoundTwo(
-                                    game,
-                                    game.roundTwo!.intents[team.id] === 'buy'
-                                      ? roundPreferences
-                                      : [],
-                                    bidCondition,
-                                    players,
-                                  ),
-                                ),
-                              ),
-                            )
-                          }
-                        >
-                          参加・入札を確定して結果を見る
-                          <ArrowRight size={16} />
-                        </button>
-                      </div>
-                    </section>
-                  )}
+                          </CompactDetails>
+                          {game.roundTwo.intents[team.id] === 'buy' && (
+                            <>
+                              <label>
+                                入札条件
+                                <select
+                                  aria-label="第2巡の入札条件"
+                                  value={bidCondition}
+                                  onChange={(e) =>
+                                    setBidCondition(
+                                      e.target.value as BidCondition,
+                                    )
+                                  }
+                                >
+                                  <option value="unconditional">
+                                    無条件（放出なしでも獲得する）
+                                  </option>
+                                  <option value="balanced">
+                                    獲得・放出が両方成立するときだけ
+                                  </option>
+                                </select>
+                              </label>
+                              <h3>獲得希望順</h3>
+                              <p>
+                                候補を選んだ順で入札します。上の希望から優先し、条件が合わなければ次の希望を検討します。
+                              </p>
+                              <ol className="bid-preferences">
+                                {roundPreferences.map((id, i) => (
+                                  <li key={id}>
+                                    <div className="bid-preference-row">
+                                      <span className="bid-preference-player">
+                                        <strong>{player(id).name}</strong>
+                                        <PlayerFacts player={player(id)} />
+                                      </span>
+                                      <span className="bid-preference-actions">
+                                        <button
+                                          aria-label={`${player(id).name}の希望順位を上げる`}
+                                          disabled={i === 0}
+                                          onClick={() =>
+                                            setRoundPreferences((old) => {
+                                              const next = [...old]
+                                              ;[next[i - 1], next[i]] = [
+                                                next[i],
+                                                next[i - 1],
+                                              ]
+                                              return next
+                                            })
+                                          }
+                                        >
+                                          ↑
+                                        </button>
+                                        <button
+                                          aria-label={`${player(id).name}を希望から外す`}
+                                          onClick={() =>
+                                            setRoundPreferences((old) =>
+                                              old.filter((v) => v !== id),
+                                            )
+                                          }
+                                        >
+                                          削除
+                                        </button>
+                                      </span>
+                                    </div>
+                                  </li>
+                                ))}
+                              </ol>
+                              <div className="second-round-choices">
+                                {roundChoices.map((p) => (
+                                  <label key={p.id}>
+                                    <input
+                                      type="checkbox"
+                                      checked={roundPreferences.includes(p.id)}
+                                      onChange={() =>
+                                        setRoundPreferences((old) =>
+                                          old.includes(p.id)
+                                            ? old.filter((id) => id !== p.id)
+                                            : [...old, p.id],
+                                        )
+                                      }
+                                    />
+                                    <span className="bid-player">
+                                      <span className="bid-player-heading">
+                                        <strong>{p.name}</strong>
+                                        <span className="bid-player-team">
+                                          {teamById[p.team].short} ·{' '}
+                                          {p.position}
+                                        </span>
+                                      </span>
+                                      <PlayerFacts player={p} />
+                                    </span>
+                                  </label>
+                                ))}
+                              </div>
+                              {roundChoices.length === 0 && (
+                                <p>指名可能な他球団の候補がいません。</p>
+                              )}
+                            </>
+                          )}
+                          <p className="small-print">
+                            全員の入札が揃うと成立条件を判定します。指名が成立しない場合や、獲得のみ・放出のみになる場合もあります。
+                          </p>
+                        </div>
+                        <div className="panel-footer">
+                          <button
+                            className="button primary"
+                            disabled={
+                              roomBlocked ||
+                              (game.roundTwo.intents[team.id] === 'buy' &&
+                                roundChoices.length > 0 &&
+                                roundPreferences.length === 0)
+                            }
+                            onClick={() =>
+                              act(() =>
+                                isRoom
+                                  ? void roomAction({
+                                      type: 'bid',
+                                      preferences:
+                                        game.roundTwo!.intents[team.id] ===
+                                        'buy'
+                                          ? roundPreferences
+                                          : [],
+                                      condition: bidCondition,
+                                    })
+                                  : announce(
+                                      roundTwoAnnouncements(
+                                        confirmRoundTwo(
+                                          game,
+                                          game.roundTwo!.intents[team.id] ===
+                                            'buy'
+                                            ? roundPreferences
+                                            : [],
+                                          bidCondition,
+                                          players,
+                                        ),
+                                      ),
+                                    ),
+                              )
+                            }
+                          >
+                            参加・入札を確定して結果を見る
+                            <ArrowRight size={16} />
+                          </button>
+                        </div>
+                      </section>
+                    )}
                   {game.stage === 'results' && (
                     <>
                       <section className="result-hero">
@@ -1635,7 +1849,9 @@ export default function App() {
                       <span className="eyebrow dark">YOUR TEAM</span>
                       <TeamMark team={team} />
                       <h3>{team.name}</h3>
-                      <span className="gm-tag">編成責任者：あなた</span>
+                      <span className="gm-tag">
+                        編成責任者：{roomMe?.name ?? 'あなた'}
+                      </span>
                       {game.stage !== 'nominate' && (
                         <div className="submitted-list">
                           <span>提出した候補選手</span>
@@ -1722,20 +1938,50 @@ export default function App() {
         </main>
       </div>
 
-      {showSplash && <Splash resume={Boolean(game)} onEnter={enterApp} />}
+      {showSplash && (
+        <Splash resume={Boolean(game || room.session)} onEnter={enterApp} />
+      )}
       {announcements && (
         <DraftAnnouncement
+          key={isRoom ? receivedPresentation.current : 'local'}
+          roomChat={
+            isRoom ? (
+              <span className="announcement-room-actions">
+                {roomState?.host === roomState?.me && (
+                  <button
+                    className="button ghost"
+                    onClick={() => {
+                      void room
+                        .send({ type: 'pause', paused: !roomState?.paused })
+                        .catch((e) => room.setError(e.message))
+                    }}
+                  >
+                    {roomState?.paused ? '進行を再開' : '全員の進行を一時停止'}
+                  </button>
+                )}
+                <button
+                  className="button ghost"
+                  onClick={() => setRoomChatOpen(true)}
+                >
+                  <Users size={16} />
+                  チャット{unreadMessages > 0 ? ` (${unreadMessages})` : ''}
+                </button>
+              </span>
+            ) : undefined
+          }
           sequence={announcements}
           players={players}
           autoPlay={autoPlay}
           onAutoPlayChange={changeAutoPlay}
-          onCommit={setGame}
+          onCommit={isRoom ? ignoreRoomCommit : setGame}
           onFinish={finishAnnouncements}
           sound={sound}
           soundOptions={soundState.options}
           soundReady={soundState.ready}
           voiceAvailable={soundState.voiceStatus === 'available'}
-          paused={modal === 'sound'}
+          paused={
+            modal === 'sound' || roomChatOpen || Boolean(roomState?.paused)
+          }
           onSoundSettings={() => setModal('sound')}
         />
       )}
@@ -1799,6 +2045,13 @@ export default function App() {
           </p>
         </ModalShell>
       )}
+      {roomState && (
+        <RoomChat
+          room={room}
+          open={roomChatOpen}
+          close={() => setRoomChatOpen(false)}
+        />
+      )}
       {modal === 'privacy' && (
         <ModalShell title="利用状況の計測について" close={() => setModal(null)}>
           <PrivacySettings />
@@ -1806,18 +2059,22 @@ export default function App() {
       )}
       {modal === 'reset' && (
         <ModalShell
-          title="新しいドラフトを始めますか？"
+          title={
+            isRoom ? 'ルームを退出しますか？' : '新しいドラフトを始めますか？'
+          }
           close={() => setModal(null)}
         >
           <p>
-            現在の進行は消去され、球団選択に戻ります。使用する選手データは引き継ぎます。
+            {isRoom
+              ? '退出すると担当球団はCPUが引き継ぎます。他の参加者はそのままプレーを続けられます。'
+              : '現在の進行は消去され、球団選択に戻ります。使用する選手データは引き継ぎます。'}
           </p>
           <div className="modal-actions">
             <button className="button ghost" onClick={() => setModal(null)}>
               続ける
             </button>
             <button className="button primary" onClick={reset}>
-              球団選択に戻る
+              {isRoom ? '退出してホームに戻る' : '球団選択に戻る'}
               <ArrowRight size={16} />
             </button>
           </div>
@@ -1838,12 +2095,22 @@ export default function App() {
             2026年10月の規定改定により、7月31日までに通常のトレード等で獲得した選手も、他の資格条件を満たせば対象です。前年の現役ドラフトで獲得した選手は引き続き対象外です。
             また、開催年の年度連盟選手権試合終了の翌日以降に契約譲渡で獲得した選手と、同じ基準日以降に育成から支配下へ移行した選手は除外されます。加入時期・契約等の選手別最終確認は残ります。
           </p>
+          <h3>ルームでの遊び方</h3>
+          <p>
+            ニックネームを入力してルームを作るか、6桁の番号で参加します。球団を選び、準備が揃ったら主催者が開始します。空席はCPUが担当するので1人でも遊べます。開始後の新規参加はできません。同じブラウザから再接続すると元の球団に戻ります。
+          </p>
+          <p>
+            候補・投票・参加意向・入札は全員が確定するまで非公開です。操作の持ち時間は各3分。時間切れはCPUが代理で判断し、切断中なら復帰まで引き継ぎます。主催者は一時停止と再開ができ、切断が1分続いた場合は接続中の参加者へ主催を引き継ぎます。
+          </p>
+          <p>
+            チャットとリアクションはルーム内だけで共有します。複数人の指名発表は共通の進行で自動的に進みます。自動送り・音声の設定は各端末の表示に適用され、他の参加者の進行を止めません。
+          </p>
           <h3>ドラフトの流れ</h3>
           <ol className="guide-list">
             <li>
               <strong>候補提出</strong>
               <p>
-                自球団から2名以上を選びます。CPU11球団は一軍の戦力・若手・ルーキー・入団間もない上位指名選手を保護し、出場機会などに応じて候補を選びます。新しいプレーでは候補の組み合わせが変わります。
+                自球団から2名以上を選びます。空席を担当するCPUは一軍の戦力・若手・ルーキー・入団間もない上位指名選手を保護し、出場機会などに応じて候補を選びます。新しいプレーでは候補の組み合わせが変わります。
               </p>
             </li>
             <li>
@@ -1911,7 +2178,7 @@ export default function App() {
           </p>
           <h3>2026年データの取り込み</h3>
           <p>
-            12球団それぞれ2名以上の候補対象選手が必要です。データはブラウザ内に保存され、サーバーには送信されません。球団選択画面でのみ差し替えできます。
+            取り込みデータはブラウザ内だけに保存され、サーバーには送信されません。新しいルームでは全員が共通の2026年公式名簿を使用するため、取り込みデータは反映されません。
           </p>
           <pre className="data-example">{`{ "version": 1, "season": 2026,\n  "label": "データ名", "asOf": "2026-10-24",\n  "sourceUrl": "https://npb.jp/…",\n  "players": [\n    { "id": "unique-id", "team": "t",\n      "name": "選手名", "position": "投手",\n      "eligible": true }\n  ] }`}</pre>
           <p className="small-print">
@@ -1929,7 +2196,7 @@ export default function App() {
             />
             <button
               className="button primary"
-              disabled={!!game}
+              disabled={!!game || isRoom}
               onClick={() => file.current?.click()}
             >
               <Upload size={16} />
@@ -1954,7 +2221,9 @@ export default function App() {
           </div>
           {game && (
             <p className="small-print">
-              取り込むには「新しいドラフト」で球団選択に戻ってください。
+              {isRoom
+                ? 'ルームでは共通の選手データを使用します。'
+                : '進行中のプレーではデータを差し替えできません。'}
             </p>
           )}
           {importMessage && (

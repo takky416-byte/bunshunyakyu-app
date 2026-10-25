@@ -1,3 +1,4 @@
+import { startRoom, finishRoom } from './room-helpers'
 import { expect, test } from './fixtures'
 import { readFile } from 'node:fs/promises'
 import type { AnalyticsReport } from '../src/analytics-contract'
@@ -16,7 +17,7 @@ test('real gameplay is recorded once, persists on reload, and appears in the pro
     ).json()
   const before = await summary()
   await page.goto('/')
-  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+  await startRoom(page)
   await expect
     .poll(async () => (await summary()).totals.starts)
     .toBe(before.totals.starts + 1)
@@ -25,36 +26,7 @@ test('real gameplay is recorded once, persists on reload, and appears in the pro
   await page.getByRole('button', { name: '候補を提出する' }).click()
   await page.getByRole('radio').first().check()
   await page.getByRole('button', { name: '投票してドラフトへ' }).click()
-  for (let step = 0; step < 26; step++) {
-    if (
-      await page
-        .getByRole('heading', { name: '12球団のドラフト結果' })
-        .isVisible()
-    )
-      break
-    if (
-      await page
-        .getByRole('button', { name: '参加・入札を確定して結果を見る' })
-        .isVisible()
-    )
-      await page
-        .getByRole('button', { name: '参加・入札を確定して結果を見る' })
-        .click()
-    else if (
-      await page
-        .getByRole('button', { name: '自球団は参加を見送る' })
-        .isVisible()
-    )
-      await page.getByRole('button', { name: '自球団は参加を見送る' }).click()
-    else if (
-      await page.getByRole('button', { name: '自分の番まで進める' }).isVisible()
-    )
-      await page.getByRole('button', { name: '自分の番まで進める' }).click()
-    else {
-      await page.getByRole('radio').first().check()
-      await page.getByRole('button', { name: 'この選手を指名' }).click()
-    }
-  }
+  await finishRoom(page)
   await expect(
     page.getByRole('heading', { name: '12球団のドラフト結果' }),
   ).toBeVisible()
@@ -134,7 +106,7 @@ test('opt-out stops new events and gameplay still works', async ({
   page.on('request', (req) => {
     if (req.url().includes('/api/analytics/events')) posts.push(req.url())
   })
-  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+  await startRoom(page)
   expect(await page.getByRole('checkbox').count()).toBeGreaterThan(1)
   await page.reload()
   await expect(
@@ -172,7 +144,7 @@ test('browser privacy preference prevents tracking without disabling the game', 
   await expect(page.getByRole('checkbox')).toBeDisabled()
   await expect(page.getByRole('checkbox')).not.toBeChecked()
   await page.getByRole('button', { name: '閉じる', exact: true }).click()
-  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+  await startRoom(page)
   await expect(
     page.getByRole('heading', { name: /提出候補を選ぶ/ }),
   ).toBeVisible()
@@ -183,13 +155,14 @@ test('opting out during a play removes its stored analytics identity', async ({
   page,
 }) => {
   await page.goto('/')
-  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+  await startRoom(page)
   await expect
     .poll(async () =>
       page.evaluate(
         () =>
-          JSON.parse(localStorage.getItem('geneki-draft-room:v2')!).trackedPlay
-            ?.playId ?? null,
+          JSON.parse(
+            localStorage.getItem('geneki-draft:room-tracking:v1') ?? 'null',
+          )?.tracked?.playId ?? null,
       ),
     )
     .not.toBeNull()
@@ -203,7 +176,9 @@ test('opting out during a play removes its stored analytics identity', async ({
     .poll(async () =>
       page.evaluate(
         () =>
-          JSON.parse(localStorage.getItem('geneki-draft-room:v2')!).trackedPlay,
+          JSON.parse(
+            localStorage.getItem('geneki-draft:room-tracking:v1') ?? 'null',
+          )?.tracked ?? null,
       ),
     )
     .toBeNull()
@@ -224,7 +199,7 @@ test('collection outages do not block gameplay', async ({ page }) => {
   page.on('pageerror', (error) => errors.push(error.message))
   await page.route('**/api/analytics/events', (route) => route.abort())
   await page.goto('/')
-  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+  await startRoom(page)
   await page.getByRole('checkbox').nth(0).check()
   await page.getByRole('checkbox').nth(1).check()
   await page.getByRole('button', { name: '候補を提出する' }).click()

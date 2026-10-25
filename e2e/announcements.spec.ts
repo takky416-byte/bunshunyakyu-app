@@ -1,3 +1,4 @@
+import { legacyStart } from './legacy-helper'
 import { test, expect } from '@playwright/test'
 import { referenceDataset } from '../src/data'
 import {
@@ -29,8 +30,7 @@ function opening(seed = 9) {
 }
 
 async function vote(page: import('@playwright/test').Page) {
-  await page.goto('/')
-  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+  await legacyStart(page)
   await page.getByRole('checkbox').nth(0).check()
   await page.getByRole('checkbox').nth(1).check()
   await page.getByRole('button', { name: '候補を提出する' }).click()
@@ -46,8 +46,7 @@ test('submitted nominations wait for the other clubs before revealing their list
 }) => {
   await page.setViewportSize({ width: 390, height: 667 })
   await page.clock.install()
-  await page.goto('/')
-  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+  await legacyStart(page)
   await page.getByRole('checkbox').nth(0).check()
   await page.getByRole('checkbox').nth(1).check()
   await page.getByRole('button', { name: '候補を提出する' }).click()
@@ -232,8 +231,7 @@ test('NPC announcements reveal one name at a time, survive reload, and skip with
 test('presentation preference persists and reduced-motion users can progress immediately', async ({
   page,
 }) => {
-  await page.goto('/')
-  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+  await legacyStart(page)
   const toggle = page.getByRole('button', { name: '指名発表の演出' })
   await expect(toggle).toHaveAttribute('aria-pressed', 'true')
   await toggle.click()
@@ -375,11 +373,11 @@ test('larger type remains readable without page overflow at phone, tablet and de
     ).toBe(true)
     expect(
       await page
-        .getByRole('button', { name: 'この球団ではじめる' })
+        .getByRole('button', { name: 'ルームを作る', exact: true })
         .evaluate((el) => parseFloat(getComputedStyle(el).fontSize)),
     ).toBeGreaterThanOrEqual(16)
   }
-  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+  await legacyStart(page)
   await expect(page.locator('.transfer-rule-note')).toContainText(
     '他の条件を満たせば対象',
   )

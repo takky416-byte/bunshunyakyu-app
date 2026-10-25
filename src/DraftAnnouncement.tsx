@@ -4,6 +4,7 @@ import {
   useRef,
   useState,
   type CSSProperties,
+  type ReactNode,
 } from 'react'
 import { ArrowRight, Check, Pause, Play, SkipForward } from 'lucide-react'
 import { teamById, type Player } from './data'
@@ -29,7 +30,9 @@ export default function DraftAnnouncement({
   voiceAvailable,
   paused,
   onSoundSettings,
+  roomChat,
 }: {
+  roomChat?: ReactNode
   sequence: Announcement[]
   players: Player[]
   autoPlay: boolean
@@ -194,6 +197,7 @@ export default function DraftAnnouncement({
       <div className="announcement-inner" key={index}>
         <div className="announcement-topline">
           <span>GENNEKI DRAFT / 2026</span>
+          {roomChat}
           <span>
             {item.kind === 'nominations'
               ? 'CANDIDATE LISTS'

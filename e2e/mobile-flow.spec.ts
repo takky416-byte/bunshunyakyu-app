@@ -1,3 +1,4 @@
+import { legacyStart } from './legacy-helper'
 import { test, expect } from './fixtures'
 import type { Page } from '@playwright/test'
 
@@ -22,8 +23,7 @@ async function expectFlowFocus(page: Page) {
 }
 
 async function nominate(page: Page) {
-  await page.goto('/')
-  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+  await legacyStart(page)
   await expectFlowFocus(page)
   await page.getByRole('checkbox').nth(0).check()
   await page.getByRole('checkbox').nth(1).check()
@@ -34,10 +34,7 @@ test('domestic-treated players are selectable and reported departures stay exclu
 }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('/')
-  await page
-    .getByRole('button', { name: '東北楽天ゴールデンイーグルス', exact: true })
-    .click()
-  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+  await legacyStart(page, 'e')
   await expect(page.locator('.app-shell')).not.toContainText(
     /仮対象|仮判定|未確認|補強ポイント/,
   )
@@ -81,10 +78,7 @@ test('domestic-treated players are selectable and reported departures stay exclu
   await page
     .getByRole('button', { name: '球団選択に戻る', exact: true })
     .click()
-  await page
-    .getByRole('button', { name: '広島東洋カープ', exact: true })
-    .click()
-  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+  await legacyStart(page, 'c')
   await expect(rowFor('ケムナ 誠')).toHaveCount(0)
   await expect(rowFor('松本 竜也')).toHaveCount(0)
   await page.locator('.data-disclosure > summary').click()
@@ -105,12 +99,12 @@ test('mobile layout keeps large type, folds supporting panels, and opens details
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('/')
   await expect(
-    page.getByRole('group', { name: '操作する球団' }).getByRole('button'),
-  ).toHaveCount(12)
+    page.getByRole('button', { name: 'ルームを作る', exact: true }),
+  ).toBeVisible()
   expect(
     await page.evaluate(() => document.documentElement.scrollHeight),
   ).toBeLessThan(2400)
-  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+  await legacyStart(page)
   await expectFlowFocus(page)
   expect(
     await page.evaluate(() => document.documentElement.scrollHeight),
@@ -216,7 +210,7 @@ test('every mobile game transition focuses its next action and resets the roster
     .click()
   await expectFlowFocus(page)
   await expect(
-    page.getByRole('heading', { name: 'どの球団の未来を、つくりますか。' }),
+    page.getByRole('heading', { name: '現役ドラフトのGM体験' }),
   ).toBeFocused()
 })
 
@@ -225,8 +219,7 @@ test('announcement waits retain dialog focus and closing it moves to the next ac
 }) => {
   await page.setViewportSize({ width: 390, height: 667 })
   await page.clock.install()
-  await page.goto('/')
-  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+  await legacyStart(page)
   await page.clock.runFor(50)
   await page.getByRole('button', { name: '指名発表の演出' }).click()
   await page.getByRole('checkbox').nth(0).check()

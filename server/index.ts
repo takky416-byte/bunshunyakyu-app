@@ -4,6 +4,7 @@ import { resolve, extname, sep } from 'node:path'
 import { analyticsConfig } from './config.ts'
 import { analyticsHandler } from './api.ts'
 import { AnalyticsStore } from './store.ts'
+import { nodeRooms } from './rooms-node.ts'
 
 const root = resolve('dist')
 if (!existsSync(resolve(root, 'index.html')))
@@ -23,6 +24,7 @@ const mime: Record<string, string> = {
 }
 const server = createServer(async (req, res) => {
   try {
+    if (await rooms.handler(req, res)) return
     if (await api(req, res)) return
     if (req.method !== 'GET' && req.method !== 'HEAD') {
       res.writeHead(405, { Allow: 'GET, HEAD' })
@@ -63,6 +65,10 @@ const server = createServer(async (req, res) => {
     res.end('サーバーでエラーが発生しました。')
   }
 })
+const rooms = nodeRooms(
+  server,
+  process.env.ROOMS_DB_PATH || '.local-data/rooms.sqlite',
+)
 const port = Number(process.env.PORT || 3001)
 if (!Number.isInteger(port) || port < 1 || port > 65535)
   throw new Error('PORTが不正です。')
@@ -84,6 +90,7 @@ pruneTimer.unref()
 for (const signal of ['SIGINT', 'SIGTERM'] as const)
   process.once(signal, () => {
     clearInterval(pruneTimer)
+    rooms.close()
     server.close(() => {
       store.close()
       process.exit(0)

@@ -8,6 +8,7 @@ import {
   type Participation,
   type BidCondition,
   type RoundTwoState,
+  type RoundTwoBid,
 } from './roundTwo'
 
 export const ENGINE_VERSION = 2
@@ -85,21 +86,18 @@ export function newGame(userTeam: TeamId, seed: number): Game {
     picks: [],
   }
 }
-export function submitNominations(
-  game: Game,
+export function validateNominations(
+  team: TeamId,
   nominated: string[],
   players: Player[],
-): Game {
-  if (game.stage !== 'nominate')
-    throw new Error('候補提出はすでに完了しています。')
+): void {
   if (
     new Set(nominated).size !== nominated.length ||
     nominated.length < 2 ||
     nominated.some(
       (id) =>
         !players.some(
-          (p) =>
-            p.id === id && p.team === game.userTeam && eligibilityOf(p).allowed,
+          (p) => p.id === id && p.team === team && eligibilityOf(p).allowed,
         ),
     )
   )
@@ -108,8 +106,23 @@ export function submitNominations(
     nominated.map((id) => players.find((p) => p.id === id)!),
   )
   if (errors.length) throw new Error(errors.join(' '))
+}
+export function submitNominations(
+  game: Game,
+  nominated: string[],
+  players: Player[],
+  submitted: Game['offers'] = {},
+): Game {
+  if (game.stage !== 'nominate')
+    throw new Error('候補提出はすでに完了しています。')
+  validateNominations(game.userTeam, nominated, players)
   const offers: Game['offers'] = { [game.userTeam]: [...nominated] }
   for (const team of teamIds.filter((t) => t !== game.userTeam)) {
+    if (submitted[team]) {
+      validateNominations(team, submitted[team]!, players)
+      offers[team] = [...submitted[team]!]
+      continue
+    }
     if (game.cpuNominationModel === 'realistic-v2') {
       offers[team] = realisticCandidates(team, players, game.seed)
       continue
@@ -146,6 +159,7 @@ export function beginDraft(
   game: Game,
   votedId: string,
   players: Player[],
+  submitted: Game['ballots'] = {},
 ): Game {
   if (game.stage !== 'vote') throw new Error('希望投票はすでに終了しています。')
   const offered = offeredPlayers(game, players)
@@ -153,6 +167,12 @@ export function beginDraft(
     throw new Error('他球団の候補選手を選択してください。')
   const ballots: Game['ballots'] = { [game.userTeam]: votedId }
   for (const team of teamIds.filter((t) => t !== game.userTeam)) {
+    if (submitted[team]) {
+      if (!offered.some((p) => p.id === submitted[team] && p.team !== team))
+        throw new Error('他球団の候補選手を選択してください。')
+      ballots[team] = submitted[team]
+      continue
+    }
     const choices = offered
       .filter((p) => p.team !== team)
       .sort(
@@ -250,6 +270,7 @@ export function startRoundTwo(
   game: Game,
   participate: boolean | Participation,
   _players: Player[],
+  submitted: Partial<Record<TeamId, Participation>> = {},
 ): Game {
   if (game.stage !== 'round2' && game.stage !== 'round2confirm')
     throw new Error('第2巡の参加確認中ではありません。')
@@ -266,13 +287,20 @@ export function startRoundTwo(
       t,
       t === game.userTeam
         ? user
-        : hash(`${game.seed}:round2:${t}`) % 100 < 55
-          ? 'buy'
-          : hash(`${game.seed}:supply:${t}`) % 2
-            ? 'supply'
-            : 'out',
+        : (submitted[t] ??
+          (hash(`${game.seed}:round2:${t}`) % 100 < 55
+            ? 'buy'
+            : hash(`${game.seed}:supply:${t}`) % 2
+              ? 'supply'
+              : 'out')),
     ]),
   ) as Record<TeamId, Participation>
+  if (
+    Object.values(intents).some(
+      (value) => !['buy', 'supply', 'out'].includes(value),
+    )
+  )
+    throw new Error('参加意向が不正です。')
   const roundTwo: RoundTwoState = {
     intents,
     bids: [],
@@ -299,6 +327,7 @@ export function confirmRoundTwo(
   preferences: string[],
   condition: BidCondition,
   players: Player[],
+  submitted: RoundTwoBid[] = [],
 ): Game {
   if (game.stage !== 'round2confirm' || !game.roundTwo)
     throw new Error('第2巡の意向確認が必要です。')
@@ -340,6 +369,19 @@ export function confirmRoundTwo(
               )
               .map((p) => p.id),
     }))
+    .map((bid) => {
+      const input = submitted.find((item) => item.team === bid.team)
+      if (!input) return bid
+      const available = supply.filter((p) => p.team !== input.team)
+      if (
+        !['unconditional', 'balanced'].includes(input.condition) ||
+        new Set(input.preferences).size !== input.preferences.length ||
+        (available.length > 0 && input.preferences.length === 0) ||
+        input.preferences.some((id) => !available.some((p) => p.id === id))
+      )
+        throw new Error('第2巡の入札内容が不正です。')
+      return { ...input, preferences: [...input.preferences] }
+    })
   const assignments = resolveBids(bids, supply, reverseOrder)
   return {
     ...game,

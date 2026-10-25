@@ -1,11 +1,14 @@
 import { parseEvent, validateRange } from '../server/analytics-core'
 import { shiftDate, tokyoDate } from '../src/analytics-contract'
 import { D1Store, type Database } from './d1-store'
+import { routeRoomRequest, type RoomNamespace } from './rooms'
+export { DraftRoom } from './rooms'
 
 interface Env {
   DB: Database
   ASSETS: { fetch(request: Request): Promise<Response> }
   ANALYTICS_ADMIN_KEY?: string
+  ROOMS?: RoomNamespace
 }
 const buckets = new Map<string, { count: number; reset: number }>()
 function limited(key: string, max: number) {
@@ -54,6 +57,21 @@ export default {
       )
     const store = new D1Store(env.DB)
     const address = request.headers.get('CF-Connecting-IP') || 'local'
+    if (url.pathname.startsWith('/api/rooms')) {
+      if (limited('rooms:' + address, 180))
+        return json({ error: '少し待ってから再接続してください。' }, 429)
+      if (
+        request.method === 'POST' &&
+        !url.pathname.endsWith('/actions') &&
+        limited('room-entry:' + address, 30)
+      )
+        return json(
+          { error: 'ルームの作成・参加が多すぎます。少し待ってください。' },
+          429,
+        )
+      if (!env.ROOMS) return json({ error: 'ルーム機能を準備中です。' }, 503)
+      return routeRoomRequest(request, env.ROOMS)
+    }
     if (url.pathname === '/api/analytics/health' && request.method === 'GET') {
       try {
         await env.DB.prepare('SELECT 1 FROM events LIMIT 1').first()

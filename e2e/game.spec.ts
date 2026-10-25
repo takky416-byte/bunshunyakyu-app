@@ -1,3 +1,4 @@
+import { startRoom, advanceToRoundTwo, finishRoom } from './room-helpers'
 import { test, expect } from './fixtures'
 import { readFile } from 'node:fs/promises'
 
@@ -10,15 +11,7 @@ test('select a club, nominate, vote, draft, restore, and share results', async (
   await expect(
     page.getByRole('heading', { name: '現役ドラフトのGM体験' }),
   ).toBeVisible()
-  await expect(
-    page.getByRole('group', { name: '操作する球団' }).getByRole('button'),
-  ).toHaveCount(12)
-  await page.getByRole('button', { name: 'パ・リーグ', exact: true }).click()
-  await expect(
-    page.getByRole('group', { name: '操作する球団' }).getByRole('button'),
-  ).toHaveCount(6)
-  await page.getByRole('button', { name: /北海道日本ハムファイターズ/ }).click()
-  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+  await startRoom(page, 'f')
   await page.getByRole('checkbox').nth(0).check()
   await expect(
     page.getByRole('button', { name: '候補を提出する' }),
@@ -31,22 +24,7 @@ test('select a club, nominate, vote, draft, restore, and share results', async (
   ).toBeVisible()
   await page.getByRole('radio').first().check()
   await page.getByRole('button', { name: '投票してドラフトへ' }).click()
-  for (let i = 0; i < 13; i++) {
-    if (
-      await page
-        .getByRole('heading', { name: '第2巡の参加意向を選んでください' })
-        .isVisible()
-    )
-      break
-    if (
-      await page.getByRole('button', { name: '自分の番まで進める' }).isVisible()
-    )
-      await page.getByRole('button', { name: '自分の番まで進める' }).click()
-    else {
-      await page.getByRole('radio').first().check()
-      await page.getByRole('button', { name: 'この選手を指名' }).click()
-    }
-  }
+  await advanceToRoundTwo(page)
   await expect(
     page.getByRole('heading', { name: '第2巡の参加意向を選んでください' }),
   ).toBeVisible()
@@ -65,6 +43,7 @@ test('select a club, nominate, vote, draft, restore, and share results', async (
   await page
     .getByRole('button', { name: '参加・入札を確定して結果を見る' })
     .click()
+  await finishRoom(page)
   await expect(
     page.getByRole('heading', { name: '12球団のドラフト結果' }),
   ).toBeVisible()
@@ -102,7 +81,7 @@ test('mobile selection, position filter, rules dialog, and guarded restart', asy
   await expect(page.getByRole('dialog').getByRole('link')).toHaveCount(0)
   await page.keyboard.press('Escape')
   await expect(page.getByRole('dialog')).toHaveCount(0)
-  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+  await startRoom(page)
   await expect(page.getByRole('textbox', { name: '選手名で検索' })).toHaveCount(
     0,
   )
@@ -116,20 +95,20 @@ test('mobile selection, position filter, rules dialog, and guarded restart', asy
   await filter.selectOption('すべて')
   expect(await page.getByRole('checkbox').count()).toBeGreaterThanOrEqual(2)
   await page
-    .getByRole('button', { name: '新しいドラフト', exact: true })
+    .getByRole('button', { name: 'ルームを退出する', exact: true })
     .click()
   await page.getByRole('button', { name: '続ける', exact: true }).click()
   await expect(
     page.getByRole('heading', { name: /提出候補を選ぶ/ }),
   ).toBeVisible()
   await page
-    .getByRole('button', { name: '新しいドラフト', exact: true })
+    .getByRole('button', { name: 'ルームを退出する', exact: true })
     .click()
   await page
-    .getByRole('button', { name: '球団選択に戻る', exact: true })
+    .getByRole('button', { name: '退出してホームに戻る', exact: true })
     .click()
   await expect(
-    page.getByRole('heading', { name: 'どの球団の未来を、つくりますか。' }),
+    page.getByRole('heading', { name: '現役ドラフトのGM体験' }),
   ).toBeVisible()
   expect(
     await page.evaluate(
@@ -149,11 +128,11 @@ test('invalid save is reported and the application remains usable', async ({
   await expect(page.getByRole('alert')).toContainText(
     '前回の保存データを読み込めませんでした',
   )
-  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
+  await startRoom(page)
   expect(await page.getByRole('checkbox').count()).toBeGreaterThanOrEqual(2)
 })
 
-test('reports official provenance, validates imports, and keeps user data across reload', async ({
+test('validates legacy data imports and uses the common official roster in new rooms', async ({
   page,
 }) => {
   await page.goto('/')
@@ -202,6 +181,7 @@ test('reports official provenance, validates imports, and keeps user data across
   )
   await page.reload()
   await expect(page.locator('.data-notice')).toContainText(imported.label)
-  await page.getByRole('button', { name: 'この球団ではじめる' }).click()
-  await expect(page.getByRole('checkbox')).toHaveCount(2)
+  await startRoom(page)
+  await expect(page.locator('.data-notice')).not.toContainText(imported.label)
+  expect(await page.getByRole('checkbox').count()).toBeGreaterThan(2)
 })
