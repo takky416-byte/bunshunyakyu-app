@@ -19,7 +19,7 @@ import {
   type RoomSnapshot,
 } from '../src/room-contract'
 import { REVEAL_MS, SILENT_HOLD_MS } from '../src/draftPacing'
-import { teamById, type Dataset } from '../src/data'
+import { teamById, teamIds, type Dataset } from '../src/data'
 
 const dataset = JSON.parse(
   readFileSync(new URL('../src/npb2026.json', import.meta.url), 'utf8'),
@@ -59,6 +59,195 @@ const roundTwoPicks = roundTwo.picks.filter((p) => p.round === 2)
 const roundTwoNames = roundTwoPicks.map(
   (p) => players.find((player) => player.id === p.playerId)!.name,
 )
+
+for (const width of [390, 1280]) {
+  for (const shared of [false, true]) {
+    test(`automatic room announcements keep a steady dialog between CPU picks (${width}px, ${shared ? 'shared' : 'solo'})`, async ({
+      page,
+    }) => {
+      const human = teamIds.find(
+        (t) => t !== first.current && t !== second.current,
+      )!
+      const friend = teamIds.find(
+        (t) => t !== human && t !== first.current && t !== second.current,
+      )!
+      const session = { code: '012345', token: 'f'.repeat(64), memberId: 'me' }
+      await page.setViewportSize({ width, height: 720 })
+      await page.clock.install({ time: new Date('2026-10-25T10:00:00Z') })
+      await page.clock.pauseAt(new Date('2026-10-25T10:01:00Z'))
+      await page.addInitScript(
+        ({ key, session }) => {
+          localStorage.setItem(key, JSON.stringify(session))
+          localStorage.setItem('geneki-draft:presentation:v1', 'on')
+          localStorage.setItem('geneki-draft:autoplay:v1', 'on')
+        },
+        { key: ROOM_SESSION_KEY, session },
+      )
+      let snapshot: RoomSnapshot = {
+        code: session.code,
+        revision: 1,
+        phase: roomPhase(first),
+        me: 'me',
+        host: 'me',
+        members: [
+          {
+            id: 'me',
+            name: 'GM',
+            team: human,
+            online: true,
+            ready: true,
+            cpu: false,
+          },
+          ...(shared
+            ? [
+                {
+                  id: 'friend',
+                  name: '仲間',
+                  team: friend,
+                  online: true,
+                  ready: true,
+                  cpu: false,
+                },
+              ]
+            : []),
+        ],
+        game: { ...first, userTeam: human },
+        submitted: [],
+        deadline: null,
+        serverTime: Date.now(),
+        expiresAt: Date.now() + 3600000,
+        paused: false,
+        presentation: { id: 'first', kind: 'pick', until: Date.now() + 22000 },
+        messages: [],
+      }
+      let socket: WebSocketRoute | undefined
+      const commands: RoomCommand[] = []
+      await page.route('**/api/rooms/012345', (route) =>
+        route.fulfill({ json: snapshot }),
+      )
+      await page.routeWebSocket('**/api/rooms/012345/socket', (route) => {
+        socket = route
+        route.onMessage((raw) => {
+          const command = JSON.parse(String(raw))
+          if (command.id) {
+            commands.push(command)
+            route.send(JSON.stringify({ type: 'ack', id: command.id }))
+          }
+        })
+        route.send(JSON.stringify({ type: 'state', snapshot }))
+      })
+      const send = async (
+        game: Game,
+        presentation: RoomSnapshot['presentation'],
+      ) => {
+        snapshot = {
+          ...snapshot,
+          revision: snapshot.revision + 1,
+          game: { ...game, userTeam: human },
+          phase: roomPhase(game),
+          presentation,
+        }
+        socket!.send(JSON.stringify({ type: 'state', snapshot }))
+      }
+      await page.goto('/')
+      const dialog = page.locator('.draft-announcement')
+      await expect(dialog).toBeVisible()
+      const original = await dialog.elementHandle()
+      await dialog.evaluate((el) => {
+        Object.assign(window, { announcementCloseCount: 0 })
+        el.addEventListener('close', () => {
+          const state = window as unknown as { announcementCloseCount: number }
+          state.announcementCloseCount++
+        })
+      })
+      const background = await dialog.evaluate(
+        (el) => getComputedStyle(el).background,
+      )
+      const bounds = await dialog.boundingBox()
+      await page.clock.runFor(REVEAL_MS)
+      await expect(dialog.locator('.announcement-name')).toBeVisible()
+      await page.clock.runFor(SILENT_HOLD_MS)
+      await expect(dialog).toBeVisible()
+      const name = players.find(
+        (p) => p.id === first.picks.at(-1)!.playerId,
+      )!.name
+      await expect(dialog.locator('.announcement-name')).toHaveText(name)
+      const notification = shared ? 'playback' : 'presented'
+      await expect
+        .poll(() => commands.filter((c) => c.action.type === notification))
+        .toHaveLength(1)
+      await send(first, null)
+      await page.clock.runFor(150)
+      await expect(dialog).toBeVisible()
+      await expect(dialog.locator('.announcement-name')).toHaveText(name)
+      await send(second, {
+        id: 'second',
+        kind: 'pick',
+        until: Date.now() + 22000,
+      })
+      await expect(dialog.locator('.announcement-name')).toHaveCount(0)
+      await page.clock.runFor(REVEAL_MS)
+      await expect(dialog.locator('.announcement-name')).toHaveText(
+        players.find((p) => p.id === second.picks.at(-1)!.playerId)!.name,
+      )
+      expect(
+        await dialog.evaluate((el, original) => el === original, original),
+      ).toBe(true)
+      expect(
+        await dialog.evaluate((el) => getComputedStyle(el).background),
+      ).toBe(background)
+      expect(await dialog.boundingBox()).toEqual(bounds)
+      expect(
+        await page.evaluate(
+          () =>
+            (window as unknown as { announcementCloseCount: number })
+              .announcementCloseCount,
+        ),
+      ).toBe(0)
+      await page.clock.runFor(SILENT_HOLD_MS)
+      await expect
+        .poll(() => commands.filter((c) => c.action.type === notification))
+        .toHaveLength(2)
+      // A human turn returns to the normal controls without retaining the overlay.
+      await send({ ...second, current: human }, null)
+      await expect(dialog).toHaveCount(0)
+      // Atomic round-two results still reveal sequentially in the same dialog.
+      await send(roundTwo, {
+        id: 'round2-0',
+        kind: 'round2',
+        pickIndex: 0,
+        until: Date.now() + 22000,
+      })
+      await expect(dialog).toBeVisible()
+      const secondRoundDialog = await dialog.elementHandle()
+      await page.clock.runFor(REVEAL_MS)
+      await expect(dialog.locator('.announcement-name')).toBeVisible()
+      await page.clock.runFor(SILENT_HOLD_MS)
+      await expect(dialog.locator('.announcement-name')).toHaveText(
+        roundTwoNames[0],
+      )
+      await send(roundTwo, {
+        id: 'round2-1',
+        kind: 'round2',
+        pickIndex: 1,
+        until: Date.now() + 22000,
+      })
+      await expect(dialog.locator('.announcement-name')).toHaveCount(0)
+      await page.clock.runFor(REVEAL_MS)
+      await expect(dialog.locator('.announcement-name')).toHaveText(
+        roundTwoNames[1],
+      )
+      expect(
+        await dialog.evaluate(
+          (el, original) => el === original,
+          secondRoundDialog,
+        ),
+      ).toBe(true)
+      await dialog.getByRole('button', { name: 'この発表をスキップ' }).click()
+      await expect(dialog).toHaveCount(0)
+    })
+  }
+}
 
 for (const width of [320, 390, 768, 1280]) {
   test(`chat stays usable and displays successive picks without pausing announcements at ${width}px`, async ({
@@ -219,7 +408,7 @@ for (const width of [320, 390, 768, 1280]) {
       presentation: null,
     }
     socket!.send(JSON.stringify({ type: 'state', snapshot }))
-    await expect(page.locator('.draft-announcement')).toHaveCount(0)
+    await expect(page.locator('.draft-announcement')).toBeVisible()
     await page.clock.runFor(100)
     await expect(input).toBeFocused()
     await expect(input).toHaveValue('発表が進んでも入力できます')

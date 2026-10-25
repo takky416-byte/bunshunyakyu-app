@@ -48,7 +48,7 @@ export default function DraftAnnouncement({
   autoPlay: boolean
   onAutoPlayChange: (enabled: boolean) => void
   onCommit: (game: Game) => void
-  onFinish: () => void
+  onFinish: (continuous?: boolean) => void
   sound: DraftSound
   soundOptions: SoundOptions
   soundReady: boolean
@@ -57,8 +57,10 @@ export default function DraftAnnouncement({
   onSoundSettings: () => void
 }) {
   const dialog = useRef<HTMLDialogElement>(null)
+  const [currentSequence, setCurrentSequence] = useState(sequence)
   const [index, setIndex] = useState(0)
   const [revealed, setRevealed] = useState(false)
+  const [waitingForNext, setWaitingForNext] = useState(false)
   const committed = useRef(-1)
   const playbackReported = useRef(-1)
   const hadNarration = useRef(false)
@@ -66,8 +68,17 @@ export default function DraftAnnouncement({
   const finished = useRef(false)
   const pageVisible = usePageVisible()
   const [reading, setReading] = useState(false)
+  // A room supplies one sequence per server announcement. Reset playback,
+  // while preserving the dialog and its backdrop across consecutive picks.
+  if (currentSequence !== sequence) {
+    setCurrentSequence(sequence)
+    setIndex(0)
+    setRevealed(false)
+    setReading(false)
+    setWaitingForNext(false)
+  }
   const active = pageVisible && !paused
-  const item = sequence[index]
+  const item = sequence[currentSequence === sequence ? index : 0]
   const { game } = item
   const roundTwoPicks = game.picks.filter((p) => p.round === 2)
   const isRoundTwoPick = item.kind === 'round2' && item.pickIndex !== undefined
@@ -85,6 +96,12 @@ export default function DraftAnnouncement({
   const ownRelease = isPick && pick?.from === game.userTeam
 
   useLayoutEffect(() => {
+    committed.current = -1
+    playbackReported.current = -1
+    transitioned.current = -1
+    finished.current = false
+  }, [sequence])
+  useLayoutEffect(() => {
     const element = dialog.current
     if (!element) return
     if (element.open) element.close()
@@ -96,7 +113,7 @@ export default function DraftAnnouncement({
   useEffect(() => {
     dialog.current?.scrollTo({ top: 0, behavior: 'auto' })
     hadNarration.current = false
-  }, [index])
+  }, [sequence, index])
   useEffect(() => {
     if (index > 0 && !chatOpen && !modalOpen)
       dialog.current?.querySelector('h2')?.focus({ preventScroll: true })
@@ -105,12 +122,12 @@ export default function DraftAnnouncement({
     if (revealed || !active) return
     const timer = window.setTimeout(() => setRevealed(true), REVEAL_MS)
     return () => window.clearTimeout(timer)
-  }, [index, revealed, active])
+  }, [sequence, index, revealed, active])
   useEffect(() => {
     if (!active) return
     sound.cue(revealed ? 'reveal' : 'waiting', true)
     return sound.stopEffects
-  }, [index, revealed, active, sound])
+  }, [sequence, index, revealed, active, sound])
   useEffect(() => {
     if (!revealed || !active) {
       setReading(false)
@@ -148,23 +165,30 @@ export default function DraftAnnouncement({
   }, [revealed, index, item, onCommit])
 
   const finish = useCallback(
-    (skip: boolean) => {
-      if (finished.current) return
+    (skip: boolean, continuous = false) => {
+      if (finished.current) {
+        if (skip) onFinish(false)
+        return
+      }
       finished.current = true
+      setWaitingForNext(true)
       if (skip) onCommit(sequence.at(-1)!.game)
-      onFinish()
+      onFinish(continuous)
     },
     [sequence, onCommit, onFinish],
   )
-  const next = useCallback(() => {
-    if (finished.current || transitioned.current >= index) return
-    transitioned.current = index
-    if (index === sequence.length - 1) finish(false)
-    else {
-      setRevealed(false)
-      setIndex(index + 1)
-    }
-  }, [index, sequence.length, finish])
+  const next = useCallback(
+    (automatic = false) => {
+      if (finished.current || transitioned.current >= index) return
+      transitioned.current = index
+      if (index === sequence.length - 1) finish(false, automatic)
+      else {
+        setRevealed(false)
+        setIndex(index + 1)
+      }
+    },
+    [index, sequence.length, finish],
+  )
   const canAutoAdvance = isPick || item.kind === 'order'
   const awaitingAudio =
     soundOptions.enabled &&
@@ -183,7 +207,7 @@ export default function DraftAnnouncement({
     )
       return
     const timer = window.setTimeout(
-      next,
+      () => next(true),
       hadNarration.current ? VOICE_TAIL_MS : SILENT_HOLD_MS,
     )
     return () => window.clearTimeout(timer)
@@ -244,7 +268,7 @@ export default function DraftAnnouncement({
         finish(true)
       }}
     >
-      <div className="announcement-inner" key={index}>
+      <div className="announcement-inner">
         <div className="announcement-topline">
           <span>GENNEKI DRAFT / 2026</span>
           {roomChat}
@@ -280,7 +304,7 @@ export default function DraftAnnouncement({
               '最初の指名権は、'
             ) : item.kind === 'round2' && !isRoundTwoPick ? (
               'もうひとつの移籍が、'
-            ) : revealed ? (
+            ) : isPick ? (
               `${club.short}の指名`
             ) : (
               'その名前が、未来を変える。'
@@ -405,14 +429,14 @@ export default function DraftAnnouncement({
                   className="announcement-autoplay"
                   aria-label={
                     roomMode === 'shared'
-                      ? '発表を自動で閉じる'
+                      ? '発表の自動送り'
                       : '指名発表の自動送り'
                   }
                   aria-pressed={autoPlay}
                   onClick={() => onAutoPlayChange(!autoPlay)}
                 >
                   {autoPlay ? <Pause size={15} /> : <Play size={15} />}
-                  {roomMode === 'shared' ? '発表を自動で閉じる' : '自動送り'}：
+                  {roomMode === 'shared' ? '発表の自動送り' : '自動送り'}：
                   {autoPlay ? 'オン' : 'オフ'}
                 </button>
                 <small>
@@ -428,7 +452,9 @@ export default function DraftAnnouncement({
           </div>
           <div className="announcement-footer">
             <span>
-              {reading ? (
+              {waitingForNext ? (
+                '次の発表を待っています'
+              ) : reading ? (
                 '読み上げ中'
               ) : revealed ? (
                 <>
@@ -441,8 +467,8 @@ export default function DraftAnnouncement({
             </span>
             <button
               className="button primary"
-              onClick={next}
-              disabled={!revealed}
+              onClick={() => next()}
+              disabled={!revealed || waitingForNext}
             >
               {revealed ? nextLabel : '発表を待っています'}
               <ArrowRight size={16} />

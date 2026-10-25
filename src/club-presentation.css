@@ -23,11 +23,8 @@
   border-color: var(--club-secondary);
 }
 .app-shell .draft-announcement {
-  background: linear-gradient(
-    125deg,
-    var(--club-deep),
-    color-mix(in srgb, var(--club-accent) 16%, var(--club-deep))
-  );
+  /* Keep the large surface steady as clubs change during automatic playback. */
+  background: #142b22;
   box-shadow:
     inset 0 4px 0 var(--club-accent),
     inset 0 -4px 0 var(--club-secondary),
@@ -36,12 +33,24 @@
 .app-shell .draft-announcement[data-autoplay='true'] h2:focus {
   outline: none;
 }
+.app-shell .draft-announcement:is([data-kind='pick'], [data-kind='round2']) {
+  height: min(640px, calc(100dvh - 24px));
+}
+.app-shell
+  .draft-announcement:is([data-kind='pick'], [data-kind='round2'])
+  .announcement-inner {
+  height: 100%;
+}
+.app-shell .draft-announcement .announcement-stage {
+  background: radial-gradient(ellipse at 50% 44%, #55734c38, transparent 68%);
+}
 .app-shell .draft-announcement .announcement-kicker,
 .app-shell .draft-announcement .announcement-result-label,
 .app-shell .draft-announcement .announcement-transfer b {
   color: color-mix(in srgb, var(--club-secondary) 35%, #ffffff);
 }
-.app-shell .draft-announcement[data-kind='pick'] .announcement-name {
+.app-shell .draft-announcement[data-kind='pick'] .announcement-name,
+.app-shell .draft-announcement[data-kind='round2'] .announcement-name {
   background: var(--club-accent);
   color: var(--club-on-accent);
   padding: 6px 12px;

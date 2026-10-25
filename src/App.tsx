@@ -371,6 +371,17 @@ export default function App() {
   })
   const pageVisible = usePageVisible()
   const roomHumanCount = roomState?.members.filter((m) => !m.cpu).length ?? 0
+  const continueRoomAnnouncements = Boolean(
+    roomState?.game &&
+    ((roomState.game.stage === 'draft' &&
+      !roomState.members.some(
+        (m) => m.team === roomState.game!.current && !m.cpu,
+      )) ||
+      (roomState.presentation?.kind === 'round2' &&
+        roomState.presentation.pickIndex !== undefined &&
+        roomState.presentation.pickIndex <
+          roomState.game.picks.filter((p) => p.round === 2).length - 1)),
+  )
   const reportPlayback = useCallback(
     (id: string) => {
       if (reportedPlayback.current === id) return
@@ -384,15 +395,27 @@ export default function App() {
   const completePlayback = useCallback(() => {
     if (roomState?.presentation) reportPlayback(roomState.presentation.id)
   }, [roomState?.presentation?.id, reportPlayback])
-  const finishAnnouncements = useCallback(() => {
-    setAnnouncements(null)
-    if (!roomState?.presentation) return
-    if (roomHumanCount === 1)
-      void room
-        .send({ type: 'presented', presentationId: roomState.presentation.id })
-        .catch(() => {})
-    else reportPlayback(roomState.presentation.id)
-  }, [room.send, roomState?.presentation?.id, roomHumanCount, reportPlayback])
+  const finishAnnouncements = useCallback(
+    (continuous = false) => {
+      if (!continuous || !continueRoomAnnouncements) setAnnouncements(null)
+      if (!roomState?.presentation) return
+      if (roomHumanCount === 1)
+        void room
+          .send({
+            type: 'presented',
+            presentationId: roomState.presentation.id,
+          })
+          .catch(() => {})
+      else reportPlayback(roomState.presentation.id)
+    },
+    [
+      room.send,
+      roomState?.presentation?.id,
+      roomHumanCount,
+      reportPlayback,
+      continueRoomAnnouncements,
+    ],
+  )
   const changeAutoPlay = useCallback((enabled: boolean) => {
     setAutoPlay(enabled)
     try {
@@ -644,7 +667,8 @@ export default function App() {
               .catch(() => {})
         }
       }
-    } else if (!presentation) setAnnouncements(null)
+    } else if (!presentation && !continueRoomAnnouncements)
+      setAnnouncements(null)
     if (roomState.game) {
       const key = roomState.code + ':' + roomState.me
       if (trackedRoom.current !== key) {
@@ -679,6 +703,7 @@ export default function App() {
     roomState,
     roomMe?.team,
     roomHumanCount,
+    continueRoomAnnouncements,
     room.send,
     reportPlayback,
     autoPlay,
@@ -2068,7 +2093,6 @@ export default function App() {
       )}
       {announcements && !room.fatal && (
         <DraftAnnouncement
-          key={isRoom ? receivedPresentation.current : 'local'}
           chatOpen={roomChatOpen}
           modalOpen={Boolean(modal) || showSplash}
           roomChat={

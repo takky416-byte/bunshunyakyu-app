@@ -255,14 +255,12 @@
 }
 @keyframes announcement-reveal {
   from {
-    opacity: 0;
-    transform: translateY(12px);
-    filter: blur(5px);
+    opacity: 0.8;
+    transform: translateY(4px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
-    filter: blur(0);
   }
 }
 @media (max-width: 600px) {
