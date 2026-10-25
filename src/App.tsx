@@ -351,7 +351,7 @@ export default function App() {
       ? 1
       : game.stage === 'vote'
         ? 2
-        : game.stage === 'results'
+        : game.stage === 'results' && !roomState?.presentation
           ? 4
           : 3
   const selectedPlayer = players.find((p) => p.id === selectedId)
@@ -359,7 +359,7 @@ export default function App() {
   const userTurn = game?.stage === 'draft' && game.current === game.userTeam
   const player = (id: string) => players.find((p) => p.id === id)!
   const flowKey = game
-    ? `${game.seed}:${game.stage}:${game.current ?? ''}:${game.picks.length}:${roomState?.submitted.includes(team.id) ? 'waiting' : ''}:${roomState?.paused ? 'paused' : ''}`
+    ? `${game.seed}:${game.stage}:${game.current ?? ''}:${game.picks.length}:${roomState?.submitted.includes(team.id) ? 'waiting' : ''}:${roomState?.paused ? 'paused' : ''}:${roomState?.presentation ? 'presenting' : ''}`
     : roomState
       ? `${roomState.code}:lobby`
       : 'home'
@@ -537,6 +537,7 @@ export default function App() {
       setVotedId('')
       setSelectedId('')
       setRoundPreferences([])
+      setPosition('すべて')
     }
     const presentation = roomState.presentation
     if (presentation && presentation.id !== receivedPresentation.current) {
@@ -608,16 +609,29 @@ export default function App() {
     reducedMotion,
     sound,
   ])
-  function reset() {
+  useEffect(() => {
+    if (!room.fatal) return
+    setAnnouncements(null)
+    setRoomChatOpen(false)
+    setModal(null)
+    sound.stopSpeech()
+    sound.stopEffects()
+  }, [room.fatal, sound])
+  async function reset() {
     if (isRoom) {
-      void room
-        .leave()
-        .catch(() => {})
-        .finally(() => {
-          setGame(null)
-          setDataset(officialDataset)
-        })
+      try {
+        await room.leave()
+      } catch (e) {
+        setError((e as Error).message)
+        setModal(null)
+        return
+      }
     }
+    clearDraft()
+  }
+  function clearDraft() {
+    setRoomChatOpen(false)
+    setLastReadMessage('')
     sound.stopSpeech()
     sound.stopEffects()
     if (dataset.kind === 'official-roster') setDataset(officialDataset)
@@ -626,6 +640,7 @@ export default function App() {
     setGame(null)
     setTrackedPlay(null)
     setNominees([])
+    setRoundPreferences([])
     setVotedId('')
     setSelectedId('')
     setPosition('すべて')
@@ -681,6 +696,7 @@ export default function App() {
     roomState &&
     roomMe &&
     (roomState.paused ||
+      Boolean(roomState.presentation && !announcements) ||
       (['nominate', 'vote', 'round2', 'round2confirm'].includes(
         game?.stage ?? '',
       ) &&
@@ -697,7 +713,7 @@ export default function App() {
       ? 0
       : game.stage === 'vote'
         ? 1
-        : game.stage === 'results'
+        : game.stage === 'results' && !roomState?.presentation
           ? 3
           : 2
 
@@ -890,31 +906,22 @@ export default function App() {
               </button>
             </div>
           )}
-          {storageError && (
+          {(isRoom ? room.storageError : storageError) && (
             <div className="error-message" role="alert">
-              ブラウザへの保存に失敗しました。この画面を閉じると進行を引き継げない可能性があります。
+              {isRoom
+                ? 'このブラウザに参加情報を保存できません。再読み込みや画面を閉じると、元の球団に戻れない場合があります。'
+                : 'ブラウザへの保存に失敗しました。この画面を閉じると進行を引き継げない可能性があります。'}
             </div>
           )}
 
-          {room.fatal && roomState && (
-            <button
-              className="button ghost"
-              onClick={() => {
-                room.clear()
-                setGame(null)
-              }}
-            >
-              ホームに戻る
-            </button>
-          )}
-          {roomState && (
+          {roomState && !room.fatal && (
             <RoomStatus
               room={room}
               onChat={() => setRoomChatOpen(true)}
               unread={unreadMessages}
             />
           )}
-          {room.session && !roomState ? (
+          {room.session && (!roomState || room.fatal) ? (
             <section className="panel room-loading">
               <h2>
                 {room.fatal
@@ -928,12 +935,19 @@ export default function App() {
               </p>
               <button
                 className="button ghost"
+                disabled={room.busy}
                 onClick={() => {
-                  room.clear()
-                  setGame(null)
+                  if (room.fatal) {
+                    room.clear()
+                    clearDraft()
+                  } else void reset()
                 }}
               >
-                ホームに戻る
+                {room.fatal
+                  ? 'ホームに戻る'
+                  : room.busy
+                    ? '退出しています…'
+                    : '接続を中止して退出する'}
               </button>
             </section>
           ) : roomState && !game ? (
@@ -953,12 +967,11 @@ export default function App() {
               <section className="hero concept-intro">
                 <div className="hero-copy">
                   <span className="concept-label">
-                    {isOfficial
-                      ? '2026 現役ドラフトシミュレーション'
-                      : isReference
-                        ? '参考データでプレー'
-                        : '2026年の取り込みデータ'}
+                    2026 現役ドラフトシミュレーション
                   </span>
+                  {!isOfficial && (
+                    <p>新しいルームでは公式2026年データを使用します。</p>
+                  )}
                   <h1 ref={flowTarget} className="flow-target" tabIndex={-1}>
                     現役ドラフトのGM体験
                   </h1>
@@ -1016,18 +1029,24 @@ export default function App() {
                   <div className="eyebrow dark">
                     YOUR FRONT OFFICE / {team.city}
                   </div>
-                  <h1>{team.short}のドラフト</h1>
+                  <h1>
+                    {roomState?.presentation?.kind === 'round2'
+                      ? '第2巡の指名発表'
+                      : `${team.short}のドラフト`}
+                  </h1>
                   <p>
-                    {game.stage === 'nominate'
-                      ? '自球団の支配下登録選手から、提出する候補を2名以上選んでください。'
-                      : game.stage === 'vote'
-                        ? '他球団の候補から、最も獲得したい選手に事前投票します。'
-                        : game.stage === 'results'
-                          ? 'あなたと11球団の判断で生まれた、今回の移籍を振り返ります。'
-                          : game.stage === 'round2' ||
-                              game.stage === 'round2confirm'
-                            ? '第1巡が終了しました。第2巡の参加意向を選び、入札条件と希望順位を確認します。'
-                            : `第${game.round}巡${game.round === 2 ? '（入札方式）' : '（暫定モデル）'}。指名された選手の所属球団へ、次の指名権が移ります。`}
+                    {roomState?.presentation?.kind === 'round2'
+                      ? '成立した指名を順番に発表しています。すべての発表が終わると最終結果へ進みます。'
+                      : game.stage === 'nominate'
+                        ? '自球団の支配下登録選手から、提出する候補を2名以上選んでください。'
+                        : game.stage === 'vote'
+                          ? '他球団の候補から、最も獲得したい選手に事前投票します。'
+                          : game.stage === 'results'
+                            ? 'あなたと11球団の判断で生まれた、今回の移籍を振り返ります。'
+                            : game.stage === 'round2' ||
+                                game.stage === 'round2confirm'
+                              ? '第1巡が終了しました。第2巡の参加意向を選び、入札条件と希望順位を確認します。'
+                              : `第${game.round}巡${game.round === 2 ? '（入札方式）' : '（暫定モデル）'}。指名された選手の所属球団へ、次の指名権が移ります。`}
                   </p>
                 </div>
                 <div className="presentation-controls">
@@ -1037,11 +1056,18 @@ export default function App() {
                   />
                   <button
                     className="presentation-toggle autoplay-toggle"
-                    aria-label="指名発表の自動送り"
+                    aria-label={
+                      isRoom && roomHumanCount > 1
+                        ? '発表を自動で閉じる'
+                        : '指名発表の自動送り'
+                    }
                     aria-pressed={autoPlay}
                     onClick={() => changeAutoPlay(!autoPlay)}
                   >
-                    自動送り：{autoPlay ? 'オン' : 'オフ'}
+                    {isRoom && roomHumanCount > 1
+                      ? '発表を自動で閉じる'
+                      : '自動送り'}
+                    ：{autoPlay ? 'オン' : 'オフ'}
                   </button>
                   <button
                     className="presentation-toggle"
@@ -1320,7 +1346,9 @@ export default function App() {
                             {game.stage === 'nominate'
                               ? '候補を提出する'
                               : game.stage === 'vote'
-                                ? '投票してドラフトへ'
+                                ? isRoom
+                                  ? '事前投票を確定する'
+                                  : '投票してドラフトへ'
                                 : 'この選手を指名'}
                             <ArrowRight size={16} />
                           </button>
@@ -1328,7 +1356,7 @@ export default function App() {
                       </section>
                     )}
 
-                  {game.stage === 'draft' && !userTurn && (
+                  {game.stage === 'draft' && !userTurn && !roomWaiting && (
                     <section className="panel npc-stage">
                       <div className="eyebrow dark">NOW ON THE CLOCK</div>
                       <TeamMark team={teamById[game.current!]} />
@@ -1669,13 +1697,15 @@ export default function App() {
                               )
                             }
                           >
-                            参加・入札を確定して結果を見る
+                            {isRoom
+                              ? '入札を確定する'
+                              : '参加・入札を確定して結果を見る'}
                             <ArrowRight size={16} />
                           </button>
                         </div>
                       </section>
                     )}
-                  {game.stage === 'results' && (
+                  {game.stage === 'results' && !roomWaiting && (
                     <>
                       <section className="result-hero">
                         <div className="result-kicker">
@@ -1941,7 +1971,7 @@ export default function App() {
       {showSplash && (
         <Splash resume={Boolean(game || room.session)} onEnter={enterApp} />
       )}
-      {announcements && (
+      {announcements && !room.fatal && (
         <DraftAnnouncement
           key={isRoom ? receivedPresentation.current : 'local'}
           roomChat={
@@ -1968,6 +1998,9 @@ export default function App() {
                 </button>
               </span>
             ) : undefined
+          }
+          roomMode={
+            isRoom ? (roomHumanCount > 1 ? 'shared' : 'solo') : undefined
           }
           sequence={announcements}
           players={players}
@@ -2045,7 +2078,7 @@ export default function App() {
           </p>
         </ModalShell>
       )}
-      {roomState && (
+      {roomState && !room.fatal && (
         <RoomChat
           room={room}
           open={roomChatOpen}
@@ -2066,15 +2099,27 @@ export default function App() {
         >
           <p>
             {isRoom
-              ? '退出すると担当球団はCPUが引き継ぎます。他の参加者はそのままプレーを続けられます。'
+              ? !game
+                ? '待合室から退出し、選んでいた球団は空席に戻ります。'
+                : game.stage === 'results'
+                  ? 'このルームから退出してホームへ戻ります。結果を残したい場合は、退出前にテキストや画像で保存してください。'
+                  : '退出すると担当球団はCPUが引き継ぎます。他の参加者はそのままプレーを続けられます。'
               : '現在の進行は消去され、球団選択に戻ります。使用する選手データは引き継ぎます。'}
           </p>
           <div className="modal-actions">
             <button className="button ghost" onClick={() => setModal(null)}>
               続ける
             </button>
-            <button className="button primary" onClick={reset}>
-              {isRoom ? '退出してホームに戻る' : '球団選択に戻る'}
+            <button
+              className="button primary"
+              disabled={isRoom && room.busy}
+              onClick={() => void reset()}
+            >
+              {isRoom
+                ? room.busy
+                  ? '退出しています…'
+                  : '退出してホームに戻る'
+                : '球団選択に戻る'}
               <ArrowRight size={16} />
             </button>
           </div>

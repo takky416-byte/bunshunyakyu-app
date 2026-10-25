@@ -93,9 +93,7 @@ export async function finishRoom(
         if (balanced)
           await page.getByLabel('第2巡の入札条件').selectOption('balanced')
       }
-      await page
-        .getByRole('button', { name: '参加・入札を確定して結果を見る' })
-        .click()
+      await page.getByRole('button', { name: '入札を確定する' }).click()
     } else await page.waitForTimeout(80)
   }
   throw new Error('Did not reach room results')

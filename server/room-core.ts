@@ -39,6 +39,7 @@ interface Member {
   cpu: boolean
   tokenHash: string
   lastSeen: number
+  chatTimes?: number[]
 }
 export interface StoredRoom {
   ruleset: string
@@ -183,7 +184,6 @@ export function parseCommand(raw: unknown): RoomCommand {
 export class RoomCore {
   private state: StoredRoom | null | undefined
   private queue: Promise<unknown> = Promise.resolve()
-  private chatTimes = new Map<string, number[]>()
   constructor(
     private repository: RoomRepository,
     private hooks: RoomHooks,
@@ -202,6 +202,7 @@ export class RoomCore {
       if (this.state && this.state.ruleset !== RULESET)
         fail('ルールが更新されました。新しいルームを作ってください。', 409)
       const before = this.state ? structuredClone(this.state) : null
+      let persisted = false
       try {
         const result = await operation()
         if (
@@ -218,12 +219,14 @@ export class RoomCore {
           )
             this.state.messages.shift()
           await this.repository.save(this.state)
+          persisted = true
           this.hooks.broadcast()
         }
         if (this.state) await this.hooks.schedule(this.nextAlarm())
         return result
       } catch (error) {
-        this.state = before
+        // A failed alarm update must not roll back an already committed move.
+        if (!persisted) this.state = before
         throw error
       }
     })
@@ -436,8 +439,11 @@ export class RoomCore {
     const r = this.room(),
       now = this.now()
     const host = r.members.find((m) => m.id === r.host)
-    if (host && !this.hooks.online(host.id) && now - host.lastSeen >= 60_000) {
-      const next = r.members.find((m) => this.hooks.online(m.id))
+    if (
+      !host?.tokenHash ||
+      (!this.hooks.online(host.id) && now - host.lastSeen >= 60_000)
+    ) {
+      const next = r.members.find((m) => m.tokenHash && this.hooks.online(m.id))
       if (next) {
         r.host = next.id
         this.message(`${next.name}さんに主催者を引き継ぎました。`)
@@ -592,12 +598,13 @@ export class RoomCore {
   authenticate(token: string) {
     return this.run(async () => (await this.member(token)).id)
   }
-  read(token: string) {
-    return this.run(async () => {
+  async read(token: string) {
+    const memberId = await this.run(async () => {
       const m = await this.member(token)
       this.tick()
-      return this.snapshot(m.id)
+      return m.id
     })
+    return this.view(memberId)
   }
   view(memberId: string) {
     return this.run(() => this.snapshot(memberId))
@@ -689,12 +696,10 @@ export class RoomCore {
     if (r.processed.includes(key)) return
     const { action: a } = command
     if (['chat', 'reaction'].includes(a.type)) {
-      const times = (this.chatTimes.get(m.id) ?? []).filter(
-        (t) => t > this.now() - 10_000,
-      )
+      const times = (m.chatTimes ?? []).filter((t) => t > this.now() - 10_000)
       if (times.length >= 5) fail('少し間を空けて送信してください。', 429)
       times.push(this.now())
-      this.chatTimes.set(m.id, times)
+      m.chatTimes = times
       const text = (
         a as Extract<RoomAction, { type: 'chat' | 'reaction' }>
       ).text.trim()
@@ -712,19 +717,29 @@ export class RoomCore {
       if (r.game) {
         leaving.cpu = true
         leaving.tokenHash = ''
-        this.message(`${leaving.name}さんが退出しました。CPUが引き継ぎます。`)
+        this.message(
+          r.game.stage === 'results'
+            ? `${leaving.name}さんが退出しました。`
+            : `${leaving.name}さんが退出しました。CPUが引き継ぎます。`,
+        )
         this.fillCpuInputs()
         if (!r.presentation) this.finishInputs()
       } else {
         r.members = r.members.filter((x) => x.id !== leaving.id)
         this.message(`${leaving.name}さんが退出しました。`)
       }
-      if (r.host === leaving.id)
+      if (r.host === leaving.id) {
         r.host =
-          r.members.find((x) => x.id !== leaving.id && this.hooks.online(x.id))
-            ?.id ??
-          r.members.find((x) => x.id !== leaving.id)?.id ??
+          r.members.find(
+            (x) =>
+              x.id !== leaving.id && x.tokenHash && this.hooks.online(x.id),
+          )?.id ??
+          r.members.find((x) => x.id !== leaving.id && x.tokenHash)?.id ??
           ''
+        const nextHost = r.members.find((member) => member.id === r.host)
+        if (nextHost)
+          this.message(`${nextHost.name}さんに主催者を引き継ぎました。`)
+      }
       if (!r.members.some((x) => x.tokenHash)) r.expiresAt = this.now() + 60_000
       if (
         r.game?.stage === 'draft' &&
@@ -744,7 +759,7 @@ export class RoomCore {
       }
     } else if (a.type === 'pause') {
       if (r.host !== m.id) fail('主催者だけが操作できます。', 403)
-      if (!r.game || r.game.stage === 'results')
+      if (!r.game || (r.game.stage === 'results' && !r.presentation))
         fail('進行中のみ一時停止できます。')
       if (a.paused && r.pausedAt === null) {
         r.pausedAt = this.now()

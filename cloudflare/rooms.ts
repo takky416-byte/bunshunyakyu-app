@@ -65,7 +65,10 @@ export async function roomBody(request: Request) {
       bytes.set(chunk, offset)
       offset += chunk.length
     }
-    return JSON.parse(new TextDecoder().decode(bytes))
+    const value = JSON.parse(new TextDecoder().decode(bytes))
+    if (!value || typeof value !== 'object' || Array.isArray(value))
+      throw new Error()
+    return value
   } catch {
     throw new RoomError('送信内容を読み込めません。')
   }
@@ -117,8 +120,21 @@ export class DraftRoom {
             ),
           }),
         )
-      } catch {
-        socket.close(4001, '退出しました。')
+      } catch (error) {
+        const code =
+          error instanceof RoomError && error.status === 401
+            ? 4001
+            : error instanceof RoomError && error.status === 404
+              ? 4004
+              : 1011
+        socket.close(
+          code,
+          code === 4001
+            ? '退出しました。'
+            : code === 4004
+              ? 'ルームの有効期限が終了しました。'
+              : '接続を再確認してください。',
+        )
       }
     }
   }
@@ -181,6 +197,8 @@ export class DraftRoom {
       if (typeof message !== 'string' || message.length > 8192)
         throw new RoomError('送信内容が大きすぎます。', 413)
       const data = JSON.parse(message)
+      if (!data || typeof data !== 'object' || Array.isArray(data))
+        throw new RoomError('送信内容が不正です。')
       id = typeof data.id === 'string' ? data.id : undefined
       if (data.type === 'ping') {
         socket.send(JSON.stringify({ type: 'pong' }))

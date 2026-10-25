@@ -89,7 +89,7 @@ test('two browser sessions join by number, reserve clubs, chat, reconnect and su
   }
   await page.getByRole('button', { name: '候補を提出する' }).click()
   await expect(
-    page.getByRole('heading', { name: '提出を受け付けました' }),
+    page.getByRole('heading', { name: '提出候補を受け付けました' }),
   ).toBeVisible()
   const secret = await roomSnapshot(guest)
   expect(secret.game!.offers).toEqual({})
@@ -99,10 +99,10 @@ test('two browser sessions join by number, reserve clubs, chat, reconnect and su
     page.getByRole('heading', { name: /獲得希望を選ぶ/ }),
   ).toBeVisible()
   await page.getByRole('radio').first().check()
-  await page.getByRole('button', { name: '投票してドラフトへ' }).click()
+  await page.getByRole('button', { name: '事前投票を確定する' }).click()
   expect((await roomSnapshot(guest)).game!.ballots).toEqual({})
   await guest.getByRole('radio').first().check()
-  await guest.getByRole('button', { name: '投票してドラフトへ' }).click()
+  await guest.getByRole('button', { name: '事前投票を確定する' }).click()
   await expect
     .poll(async () => (await roomSnapshot(page)).game!.stage)
     .toBe('draft')
@@ -167,7 +167,7 @@ test('one player can start immediately, finish both rounds and restore the compl
   await page.getByRole('checkbox').nth(1).check()
   await page.getByRole('button', { name: '候補を提出する' }).click()
   await page.getByRole('radio').first().check()
-  await page.getByRole('button', { name: '投票してドラフトへ' }).click()
+  await page.getByRole('button', { name: '事前投票を確定する' }).click()
   await finishRoom(page, true, true)
   const result = (await roomSnapshot(page)).game!
   await page.reload()

@@ -25,7 +25,7 @@ test('real gameplay is recorded once, persists on reload, and appears in the pro
   await page.getByRole('checkbox').nth(1).check()
   await page.getByRole('button', { name: '候補を提出する' }).click()
   await page.getByRole('radio').first().check()
-  await page.getByRole('button', { name: '投票してドラフトへ' }).click()
+  await page.getByRole('button', { name: '事前投票を確定する' }).click()
   await finishRoom(page)
   await expect(
     page.getByRole('heading', { name: '12球団のドラフト結果' }),

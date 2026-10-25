@@ -129,7 +129,13 @@ export function RoomLobby({
             球団を選んで、準備しよう。
           </h1>
           <p>
-            仲間にはルーム番号を伝えてください。1人でもそのまま始められます。
+            {state.host === me.id
+              ? state.members.length === 1
+                ? '1人でも開始できます。仲間と遊ぶ場合は、ルーム番号を伝えて参加を待ってください。'
+                : '仲間にはルーム番号を伝えてください。全員が「準備完了」になると開始できます。'
+              : me.ready
+                ? '準備完了です。主催者が開始するまでお待ちください。'
+                : '球団を選び「準備完了」を押してください。主催者が開始すると、空席はCPUが担当します。'}
           </p>
         </div>
       </div>
@@ -161,7 +167,17 @@ export function RoomLobby({
                       onClick={() => void run({ type: 'team', team: id })}
                     >
                       <strong>{selectionNames[id]}</strong>
-                      <small>{owner ? owner.name : 'CPU（空席）'}</small>
+                      <small
+                        title={
+                          owner
+                            ? `${owner.name}：${owner.ready ? '準備完了' : owner.online ? '選択中' : '再接続待ち'}`
+                            : undefined
+                        }
+                      >
+                        {owner
+                          ? `${owner.name}${owner.ready ? ' ✓' : ''}`
+                          : 'CPU（空席）'}
+                      </small>
                       {owner && (
                         <span>
                           {owner.ready
@@ -295,7 +311,7 @@ export function RoomStatus({
           ? `${state.members.filter((m) => m.online && !m.cpu).length}人接続中`
           : '再接続中…'}
       </span>
-      {state.game && state.game.stage !== 'results' && (
+      {state.game && (state.game.stage !== 'results' || state.presentation) && (
         <span className="room-clock">
           {state.paused
             ? '一時停止中'
@@ -309,7 +325,7 @@ export function RoomStatus({
       <div className="room-status-actions">
         {state.host === state.me &&
           state.game &&
-          state.game.stage !== 'results' && (
+          (state.game.stage !== 'results' || state.presentation) && (
             <button
               onClick={() => run(!state.paused)}
               disabled={!room.connected}
@@ -348,28 +364,77 @@ export function RoomWaiting({
   state: RoomSnapshot
   headingRef?: Ref<HTMLHeadingElement>
 }) {
+  const stage = state.game?.stage
+  const copy =
+    stage === 'nominate'
+      ? {
+          title: '提出候補を受け付けました',
+          noun: '候補提出済み',
+          text: '他の球団の候補提出を待っています。全員が確定すると、候補一覧を公開します。',
+        }
+      : stage === 'vote'
+        ? {
+            title: '投票を受け付けました',
+            noun: '投票済み',
+            text: '他の球団の投票を待っています。全員の投票が揃うと、指名順を発表します。',
+          }
+        : stage === 'round2'
+          ? {
+              title: '参加意向を受け付けました',
+              noun: '意向確定済み',
+              text: '全員の参加意向が揃うと、獲得希望の球団が入札します。獲得を見送る球団は、そのまま発表をお待ちください。',
+            }
+          : stage === 'round2confirm'
+            ? {
+                title:
+                  state.game?.roundTwo?.intents[state.game.userTeam] === 'buy'
+                    ? '入札を受け付けました'
+                    : '第2巡の入札を待っています',
+                noun: '確認済み',
+                text: '獲得希望の球団の入札を待っています。全員が確定すると、成立した指名を順番に発表します。',
+              }
+            : null
   return (
     <section className="panel room-waiting" aria-live="polite">
       <span className="eyebrow dark">WAITING FOR TEAMS</span>
       <h2 ref={headingRef} className="flow-target" tabIndex={-1}>
-        {state.paused ? '進行を一時停止しています' : '提出を受け付けました'}
+        {state.paused
+          ? '進行を一時停止しています'
+          : state.presentation
+            ? 'ルーム全員への発表中です'
+            : copy?.title}
       </h2>
       <p>
         {state.paused
           ? '主催者が再開するまでお待ちください。チャットは利用できます。'
-          : '他の球団の提出を待っています。確定前の内容は他の参加者には表示されません。'}
+          : state.presentation
+            ? '発表が終わると、次の操作へ自動で切り替わります。チャットは引き続き使えます。'
+            : copy?.text}
       </p>
-      <strong>{state.submitted.length}／12球団 提出済み</strong>
-      <div className="room-submitted">
-        {[...centralSelection, ...pacificSelection].map((t) => (
-          <span key={t} className={state.submitted.includes(t) ? 'done' : ''}>
-            {teamById[t].short} {state.submitted.includes(t) ? '✓' : '…'}
-          </span>
-        ))}
-      </div>
+      {copy && !state.presentation && (
+        <>
+          <strong>
+            {state.submitted.length}／12球団 {copy.noun}
+          </strong>
+          {stage === 'round2confirm' && (
+            <p>確認済みには、獲得を見送るため入札が不要な球団も含みます。</p>
+          )}
+          <div className="room-submitted">
+            {[...centralSelection, ...pacificSelection].map((t) => (
+              <span
+                key={t}
+                className={state.submitted.includes(t) ? 'done' : ''}
+              >
+                {teamById[t].short} {state.submitted.includes(t) ? '✓' : '…'}
+              </span>
+            ))}
+          </div>
+        </>
+      )}
     </section>
   )
 }
+
 export function RoomChat({
   room,
   open,

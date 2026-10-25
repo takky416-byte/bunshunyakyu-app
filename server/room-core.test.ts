@@ -49,6 +49,8 @@ function fixture() {
       return core
     },
     online,
+    repository,
+    hooks,
     stored: () => structuredClone(stored!),
     async advance(ms?: number) {
       now = ms === undefined ? Math.max(now + 1, alarmAt) : now + ms
@@ -244,6 +246,7 @@ async function play(
   f: ReturnType<typeof fixture>,
   sessions: RoomSession[],
   allHumans: boolean,
+  stopAtPresentation = false,
 ) {
   const host = sessions[0]
   for (const s of sessions.slice(1))
@@ -253,7 +256,8 @@ async function play(
   for (let steps = 0; steps < 150; steps++) {
     const raw = f.stored(),
       g = raw.game!
-    if (g.stage === 'results' && !raw.presentation) return { game: g, seed }
+    if (g.stage === 'results' && (!raw.presentation || stopAtPresentation))
+      return { game: g, seed }
     if (raw.presentation) {
       await f.advance()
       continue
@@ -416,4 +420,89 @@ it('an explicitly departed session loses both HTTP and existing WebSocket access
       action: { type: 'chat', text: '退出後' },
     }),
   ).rejects.toMatchObject({ status: 401 })
+})
+
+it('hosts can pause the final-round announcement and retain its remaining presentation time', async () => {
+  const f = fixture(),
+    host = await f.add()
+  await play(f, [host], false, true)
+  const before = await f.core.read(host.token)
+  expect(before.game!.stage).toBe('results')
+  expect(before.presentation!.kind).toBe('round2')
+  await f.send(host, { type: 'pause', paused: true })
+  await f.advance(60_000)
+  const paused = await f.core.read(host.token)
+  expect(paused.paused).toBe(true)
+  expect(paused.presentation!.id).toBe(before.presentation!.id)
+  await f.send(host, { type: 'pause', paused: false })
+  const resumed = await f.core.read(host.token)
+  expect(resumed.presentation!.until).toBe(before.presentation!.until + 60_000)
+  expect(resumed.game!.picks).toEqual(before.game!.picks)
+})
+
+it('chat throttling survives hibernation and failed saves do not consume an allowance', async () => {
+  const f = fixture(),
+    host = await f.add()
+  for (let i = 0; i < 5; i++)
+    await f.send(host, { type: 'chat', text: '発言' + i })
+  f.restart()
+  await expect(
+    f.send(host, { type: 'chat', text: '休止後の連投' }),
+  ).rejects.toMatchObject({ status: 429 })
+  await f.advance(10_001)
+  const save = f.repository.save
+  f.repository.save = async () => {
+    throw new Error('temporary write failure')
+  }
+  await expect(f.send(host, { type: 'chat', text: '未保存' })).rejects.toThrow(
+    'temporary write failure',
+  )
+  f.repository.save = save
+  for (let i = 0; i < 5; i++)
+    await f.send(host, { type: 'chat', text: '保存' + i })
+  const view = await f.core.read(host.token)
+  expect(view.messages.some((m) => m.text === '未保存')).toBe(false)
+  expect(JSON.stringify(view)).not.toContain('chatTimes')
+})
+
+it('a failed alarm update cannot roll a persisted move back or apply it twice', async () => {
+  const f = fixture(),
+    host = await f.add()
+  const schedule = f.hooks.schedule
+  f.hooks.schedule = async () => {
+    throw new Error('temporary alarm failure')
+  }
+  const id = crypto.randomUUID()
+  await expect(f.send(host, { type: 'start' }, id)).rejects.toThrow(
+    'temporary alarm failure',
+  )
+  expect(f.stored().game!.stage).toBe('nominate')
+  f.hooks.schedule = schedule
+  const resumed = await f.core.read(host.token)
+  expect(resumed.game!.stage).toBe('nominate')
+  expect(resumed.revision).toBe(f.stored().revision)
+  await f.core.command(host.token, {
+    id,
+    phase: 'lobby',
+    action: { type: 'start' },
+  })
+  expect(
+    (await f.core.read(host.token)).messages.filter((m) =>
+      m.text.startsWith('ドラフトを開始'),
+    ),
+  ).toHaveLength(1)
+})
+
+it('host succession skips an already departed player even if their old socket is closing', async () => {
+  const f = fixture(),
+    host = await f.add(),
+    departed = await f.add('退出する仲間'),
+    guest = await f.add('残る仲間')
+  await f.send(departed, { type: 'ready', ready: true })
+  await f.send(guest, { type: 'ready', ready: true })
+  await f.send(host, { type: 'start' })
+  await f.send(departed, { type: 'leave' })
+  // Keep its closing socket visible to the presence hook, as during a broadcast.
+  await f.send(host, { type: 'leave' })
+  expect((await f.core.read(guest.token)).host).toBe(guest.memberId)
 })

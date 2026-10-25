@@ -31,7 +31,9 @@ export default function DraftAnnouncement({
   paused,
   onSoundSettings,
   roomChat,
+  roomMode,
 }: {
+  roomMode?: 'solo' | 'shared'
   roomChat?: ReactNode
   sequence: Announcement[]
   players: Player[]
@@ -166,17 +168,24 @@ export default function DraftAnnouncement({
     return () => window.clearTimeout(timer)
   }, [canAutoAdvance, autoPlay, revealed, active, reading, awaitingAudio, next])
   const last = index === sequence.length - 1
-  const nextLabel = !last
-    ? '次の指名発表へ'
-    : item.kind === 'nominations'
-      ? '獲得希望を選ぶ'
-      : game.stage === 'results'
-        ? 'ドラフト結果を見る'
-        : game.stage === 'round2'
-          ? '第2巡へ進む'
-          : game.current === game.userTeam
-            ? '自分の指名へ'
-            : 'ドラフトへ戻る'
+  const nextLabel =
+    roomMode === 'shared'
+      ? '発表を閉じる'
+      : roomMode === 'solo' &&
+          isRoundTwoPick &&
+          item.pickIndex! < roundTwoPicks.length - 1
+        ? '次の指名発表へ'
+        : !last
+          ? '次の指名発表へ'
+          : item.kind === 'nominations'
+            ? '獲得希望を選ぶ'
+            : game.stage === 'results'
+              ? 'ドラフト結果を見る'
+              : game.stage === 'round2'
+                ? '第2巡へ進む'
+                : game.current === game.userTeam
+                  ? '自分の指名へ'
+                  : 'ドラフトへ戻る'
 
   return (
     <dialog
@@ -353,15 +362,24 @@ export default function DraftAnnouncement({
               <div className="announcement-playback">
                 <button
                   className="announcement-autoplay"
-                  aria-label="指名発表の自動送り"
+                  aria-label={
+                    roomMode === 'shared'
+                      ? '発表を自動で閉じる'
+                      : '指名発表の自動送り'
+                  }
                   aria-pressed={autoPlay}
                   onClick={() => onAutoPlayChange(!autoPlay)}
                 >
                   {autoPlay ? <Pause size={15} /> : <Play size={15} />}
-                  自動送り：{autoPlay ? 'オン' : 'オフ'}
+                  {roomMode === 'shared' ? '発表を自動で閉じる' : '自動送り'}：
+                  {autoPlay ? 'オン' : 'オフ'}
                 </button>
                 <small>
-                  {autoPlay ? '自分の指名番で停止' : 'ボタンで次へ進む'}
+                  {roomMode === 'shared'
+                    ? '次の操作へは、ルーム全員の進行に合わせて切り替わります'
+                    : autoPlay
+                      ? '自分の指名番で停止'
+                      : 'ボタンで次へ進む'}
                 </small>
               </div>
             )}
@@ -391,7 +409,7 @@ export default function DraftAnnouncement({
           </div>
           <button className="announcement-skip" onClick={() => finish(true)}>
             <SkipForward size={14} />
-            演出をスキップ
+            {roomMode ? 'この発表をスキップ' : '演出をスキップ'}
             {sequence.length > 1
               ? sequence.at(-1)!.game.stage === 'results'
                 ? 'して結果を見る'

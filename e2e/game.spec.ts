@@ -23,7 +23,7 @@ test('select a club, nominate, vote, draft, restore, and share results', async (
     page.getByRole('heading', { name: /獲得希望を選ぶ/ }),
   ).toBeVisible()
   await page.getByRole('radio').first().check()
-  await page.getByRole('button', { name: '投票してドラフトへ' }).click()
+  await page.getByRole('button', { name: '事前投票を確定する' }).click()
   await advanceToRoundTwo(page)
   await expect(
     page.getByRole('heading', { name: '第2巡の参加意向を選んでください' }),
@@ -40,9 +40,7 @@ test('select a club, nominate, vote, draft, restore, and share results', async (
     await page.locator('.second-round-choices input').first().check()
     await page.getByLabel('第2巡の入札条件').selectOption('balanced')
   }
-  await page
-    .getByRole('button', { name: '参加・入札を確定して結果を見る' })
-    .click()
+  await page.getByRole('button', { name: '入札を確定する' }).click()
   await finishRoom(page)
   await expect(
     page.getByRole('heading', { name: '12球団のドラフト結果' }),
@@ -177,7 +175,7 @@ test('validates legacy data imports and uses the common official roster in new r
     '利用者による取り込み',
   )
   await expect(page.locator('.concept-label')).toContainText(
-    '2026年の取り込みデータ',
+    '2026 現役ドラフトシミュレーション',
   )
   await page.reload()
   await expect(page.locator('.data-notice')).toContainText(imported.label)

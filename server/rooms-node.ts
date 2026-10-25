@@ -62,7 +62,16 @@ export function nodeRooms(server: Server, path: string, presentationScale = 1) {
                 if (socket.readyState === WebSocket.OPEN)
                   socket.send(JSON.stringify({ type: 'state', snapshot }))
               })
-              .catch(() => socket.close(4001, '退出しました。'))
+              .catch((error) =>
+                socket.close(
+                  error instanceof RoomError && error.status === 401
+                    ? 4001
+                    : error instanceof RoomError && error.status === 404
+                      ? 4004
+                      : 1011,
+                  '接続を再確認してください。',
+                ),
+              )
         },
         schedule: async (at) => {
           clearTimeout(r.timer)
@@ -113,7 +122,10 @@ export function nodeRooms(server: Server, path: string, presentationScale = 1) {
       buffers.push(Buffer.from(chunk))
     }
     try {
-      return JSON.parse(Buffer.concat(buffers).toString())
+      const value = JSON.parse(Buffer.concat(buffers).toString())
+      if (!value || typeof value !== 'object' || Array.isArray(value))
+        throw new Error()
+      return value
     } catch {
       throw new RoomError('送信内容を読み込めません。')
     }
@@ -211,10 +223,21 @@ export function nodeRooms(server: Server, path: string, presentationScale = 1) {
             .then((snapshot) =>
               ws.send(JSON.stringify({ type: 'state', snapshot })),
             )
-          ws.on('message', (raw) => {
+            .catch((error) =>
+              ws.close(
+                error instanceof RoomError && error.status === 401
+                  ? 4001
+                  : 1011,
+                '接続を再確認してください。',
+              ),
+            )
+          ws.on('message', (raw, isBinary) => {
             let data: unknown
             try {
+              if (isBinary) throw new Error()
               data = JSON.parse(raw.toString())
+              if (!data || typeof data !== 'object' || Array.isArray(data))
+                throw new Error()
             } catch {
               ws.send(
                 JSON.stringify({

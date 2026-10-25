@@ -35,6 +35,7 @@ export function useRoom() {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [fatal, setFatal] = useState(false)
+  const [storageError, setStorageError] = useState(false)
   const socket = useRef<WebSocket | null>(null)
   const latest = useRef<RoomSnapshot | null>(null)
   const pending = useRef(
@@ -56,6 +57,7 @@ export function useRoom() {
     setSnapshot(null)
     setConnected(false)
     setFatal(false)
+    setStorageError(false)
     setError('')
   }, [])
   useEffect(() => {
@@ -64,8 +66,11 @@ export function useRoom() {
       checking = false,
       retry: number,
       heartbeat: number,
+      handshake: number,
+      checkAbort: AbortController | null = null,
       attempt = 0
     const apply = (state: RoomSnapshot) => {
+      if (stopped) return
       if (state.me !== session.memberId || state.code !== session.code) return
       if (latest.current && state.revision < latest.current.revision) return
       offset.current = state.serverTime - Date.now()
@@ -90,7 +95,15 @@ export function useRoom() {
       )
       socket.current = ws
       let lastHeard = Date.now()
+      handshake = window.setTimeout(() => {
+        if (ws.readyState === WebSocket.CONNECTING) ws.close()
+      }, 15_000)
       ws.onopen = () => {
+        if (stopped || socket.current !== ws) {
+          ws.close()
+          return
+        }
+        window.clearTimeout(handshake)
         attempt = 0
         setConnected(true)
         setError('')
@@ -102,6 +115,7 @@ export function useRoom() {
         }, 25_000)
       }
       ws.onmessage = (event) => {
+        if (stopped || socket.current !== ws) return
         lastHeard = Date.now()
         let data
         try {
@@ -124,10 +138,11 @@ export function useRoom() {
         /* close handles retry and status */
       }
       ws.onclose = (event) => {
-        if (socket.current === ws) socket.current = null
+        if (stopped || socket.current !== ws) return
+        socket.current = null
+        window.clearTimeout(handshake)
         window.clearInterval(heartbeat)
         rejectPending()
-        if (stopped) return
         setConnected(false)
         if (event.code === 4001 || event.code === 4004) {
           setFatal(true)
@@ -149,14 +164,19 @@ export function useRoom() {
     const checkAndConnect = async () => {
       if (checking || stopped || socket.current) return
       checking = true
+      const abort = new AbortController()
+      checkAbort = abort
+      const timeout = window.setTimeout(() => abort.abort(), 10_000)
       try {
         const response = await fetch(`/api/rooms/${session.code}`, {
           headers: { Authorization: 'Bearer ' + session.token },
           cache: 'no-store',
+          signal: abort.signal,
         })
         if (stopped) return
-        if ([401, 404, 410].includes(response.status)) {
+        if ([401, 404, 409, 410].includes(response.status)) {
           const b = await response.json()
+          if (stopped) return
           setFatal(true)
           setError(b.error)
           return
@@ -172,6 +192,8 @@ export function useRoom() {
           }, 3000)
         }
       } finally {
+        window.clearTimeout(timeout)
+        if (checkAbort === abort) checkAbort = null
         checking = false
       }
     }
@@ -187,6 +209,8 @@ export function useRoom() {
       stopped = true
       window.clearTimeout(retry)
       window.clearInterval(heartbeat)
+      window.clearTimeout(handshake)
+      checkAbort?.abort()
       document.removeEventListener('visibilitychange', visible)
       socket.current?.close()
       socket.current = null
@@ -212,8 +236,9 @@ export function useRoom() {
         try {
           localStorage.setItem(ROOM_SESSION_KEY, JSON.stringify(b))
           localStorage.setItem(PLAYER_NAME_KEY, name.trim())
+          setStorageError(false)
         } catch {
-          /* current connection remains usable */
+          setStorageError(true)
         }
         latest.current = null
         setSnapshot(null)
@@ -251,13 +276,41 @@ export function useRoom() {
     })
   }, [])
   const leave = useCallback(async () => {
-    try {
-      if (socket.current?.readyState === WebSocket.OPEN)
-        await send({ type: 'leave' })
-    } finally {
+    if (!session) {
       clear()
+      return
     }
-  }, [send, clear])
+    setBusy(true)
+    const abort = new AbortController()
+    const timeout = window.setTimeout(() => abort.abort(), 10_000)
+    try {
+      // HTTP confirms revocation even when the room socket is reconnecting or
+      // closes before it can acknowledge the leave command.
+      const response = await fetch(`/api/rooms/${session.code}/actions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + session.token,
+        },
+        body: JSON.stringify({
+          id: crypto.randomUUID(),
+          phase: 'exit',
+          action: { type: 'leave' },
+        }),
+        signal: abort.signal,
+      })
+      if (!response.ok && ![401, 404, 410].includes(response.status))
+        throw new Error()
+      clear()
+    } catch {
+      throw new Error(
+        '退出を確認できませんでした。参加情報は保持しています。接続が戻ってからもう一度お試しください。',
+      )
+    } finally {
+      window.clearTimeout(timeout)
+      setBusy(false)
+    }
+  }, [session, clear])
   return {
     session,
     snapshot,
@@ -265,6 +318,7 @@ export function useRoom() {
     busy,
     error,
     fatal,
+    storageError,
     enter,
     send,
     leave,
