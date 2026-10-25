@@ -409,7 +409,28 @@ export class RoomCore {
     this.fillCpuInputs()
     if (this.submitted().length < 12) return
     if (g.stage === 'nominate') {
-      r.game = submitNominations(g, r.offers[g.userTeam]!, players, r.offers)
+      // Each persisted offer was validated when submitted. A later report
+      // refresh must not invalidate it while the remaining clubs are choosing.
+      const accepted = new Set(Object.values(r.offers).flat())
+      const submittedPlayers = players.map((p) =>
+        accepted.has(p.id) && p.draftFacts
+          ? {
+              ...p,
+              draftFacts: {
+                ...p.draftFacts,
+                exclusions: p.draftFacts.exclusions.filter(
+                  (e) => e.reason !== '戦力外・退団・引退の報道あり',
+                ),
+              },
+            }
+          : p,
+      )
+      r.game = submitNominations(
+        g,
+        r.offers[g.userTeam]!,
+        submittedPlayers,
+        r.offers,
+      )
       r.offers = {}
       r.ballots = {}
       this.fillCpuInputs()

@@ -1274,7 +1274,10 @@ export default function App() {
                                         : 'radio'
                                     }
                                     name="player"
-                                    disabled={!eligibilityOf(p).allowed}
+                                    disabled={
+                                      game.stage === 'nominate' &&
+                                      !eligibilityOf(p).allowed
+                                    }
                                     checked={checked}
                                     onChange={() => {
                                       if (game.stage === 'nominate')
@@ -1309,7 +1312,9 @@ export default function App() {
                                     <PlayerSelectionFacts player={p} />
                                     {!eligibilityOf(p).allowed && (
                                       <small>
-                                        {eligibilityOf(p).reasons.join(' / ')}
+                                        {game.stage === 'nominate'
+                                          ? eligibilityOf(p).reasons.join(' / ')
+                                          : '提出済み候補（提出時点の条件で進行）'}
                                       </small>
                                     )}
                                   </span>

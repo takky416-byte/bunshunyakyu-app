@@ -13,6 +13,39 @@ import {
 } from './engine'
 
 describe('official 2026 snapshot', () => {
+  it('excludes the October 25 departures and the two corrected newspaper name variants', () => {
+    for (const [team, names] of [
+      ['d', ['川越 誠司', '宇佐見 真吾']],
+      [
+        'g',
+        [
+          '湯浅 大',
+          '北浦 竜次',
+          '鈴木 大和',
+          '知念 大成',
+          '三塚 琉生',
+          '浅野 翔吾',
+          '宇都宮 葵星',
+        ],
+      ],
+      ['m', ['愛斗']],
+      ['e', ['日當 直喜']],
+      ['db', ['濱 将乃介']],
+    ] as const) {
+      for (const name of names) {
+        const player = officialDataset.players.find(
+          (p) => p.team === team && p.name === name,
+        )!
+        expect(player, name).toBeDefined()
+        expect(eligibilityOf(player).allowed, name).toBe(false)
+        expect(player.draftFacts!.exclusions).toContainEqual({
+          reason: '戦力外・退団・引退の報道あり',
+          source:
+            'https://www.nikkansports.com/baseball/news/202609280000276.html',
+        })
+      }
+    }
+  })
   it('corrects domestic treatment by player ID and still excludes released and development players', () => {
     for (const name of ['ワォーターズ', '陽 柏翔', '林 冠臣']) {
       const player = officialDataset.players.find((p) => p.name === name)!

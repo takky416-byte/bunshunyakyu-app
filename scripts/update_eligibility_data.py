@@ -25,7 +25,7 @@ def salary_man_yen(text):
 
 
 def status_name(name):
-    return normal_name(unicodedata.normalize('NFKC', name)).translate(str.maketrans({'髙': '高', '﨑': '崎', '邉': '辺', '邊': '辺'}))
+    return normal_name(unicodedata.normalize('NFKC', name)).translate(str.maketrans({'髙': '高', '﨑': '崎', '邉': '辺', '邊': '辺', '濱': '浜', '當': '当'}))
 
 
 def parse_departures(html):
@@ -33,25 +33,45 @@ def parse_departures(html):
     class Paragraphs(HTMLParser):
         def __init__(self):
             super().__init__(); self.tag = None; self.text = ''; self.team = None; self.items = []; self.seen = set()
+            self.span_depth = 0; self.bio_depth = None; self.report_start = None
         def handle_starttag(self, tag, attrs):
-            if tag in ('h2', 'p'): self.tag = tag; self.text = ''
+            if tag in ('h2', 'p'):
+                self.tag = tag; self.text = ''; self.span_depth = 0; self.bio_depth = None; self.report_start = None
+            if tag == 'span' and self.tag == 'p':
+                self.span_depth += 1
+                if {'black', 'bold'} <= set((dict(attrs).get('class') or '').split()):
+                    self.bio_depth = self.span_depth
         def handle_data(self, data):
             if self.tag: self.text += data
         def handle_endtag(self, tag):
+            if tag == 'span' and self.tag == 'p':
+                if self.bio_depth == self.span_depth:
+                    if self.report_start is None: self.report_start = len(self.text)
+                    self.bio_depth = None
+                self.span_depth = max(0, self.span_depth - 1)
             if tag != self.tag: return
             if tag == 'h2':
                 self.team = teams.get(self.text.strip())
                 if self.team: self.seen.add(self.team)
-            elif self.team: self.items.append((self.team, self.text.strip()))
+            elif self.team: self.items.append((self.team, self.text, self.report_start))
             self.tag = None
     parser = Paragraphs(); parser.feed(html)
     departing = set(); fa_history = set()
-    for team, text in parser.items:
-        match = re.match(r'^※?(.+?)(?:投手|捕手|内野手|外野手|選手)[（(]([^）)]*)[）)](.*)$', text)
+    for team, text, report_start in parser.items:
+        match = re.match(r'^\s*※?\s*(.+?)(?:投手|捕手|内野手|外野手|選手)[（(]', text)
         if not match: continue
+        if report_start is not None and report_start >= match.end():
+            # The source marks player biographies separately from the outcome.
+            # Preserve this boundary even when a closing parenthesis is missing.
+            history = text[match.end():report_start]
+            outcome = text[report_start:]
+        else:
+            tail = re.match(r'([^）)]*)[）)](.*)$', text[match.end():], re.S)
+            if not tail: continue
+            history, outcome = tail.groups()
         key = (team, status_name(match[1]))
-        if re.search(r'戦力外|現役引退|自由契約|退団', match[3]): departing.add(key)
-        if re.search(r'FAで|FA移籍', match[2]): fa_history.add(key)
+        if re.search(r'戦力外|現役引退|自由契約|退団|契約解除', outcome): departing.add(key)
+        if re.search(r'FAで|FA移籍', history): fa_history.add(key)
     if len(parser.seen) != 12 or len(departing) < 20:
         raise ValueError('Departure article layout changed; refusing update')
     return departing, fa_history
@@ -67,6 +87,39 @@ def fetch_source(cache, name, url, day, refresh=False):
         temporary.replace(path)
     raw = path.read_bytes()
     return name, {'url': url, 'retrievedAt': day, 'sha256': hashlib.sha256(raw).hexdigest()}, raw.decode('utf8')
+
+
+def update_departures(refresh=False):
+    """Refresh sourced departure exclusions without re-fetching salary/FA facts."""
+    day = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9))).date().isoformat()
+    cache = ROOT / '.cache' / 'eligibility' / day
+    cache.mkdir(parents=True, exist_ok=True)
+    _, meta, html = fetch_source(cache, 'departures.html', 'https://www.nikkansports.com/baseball/news/202609280000276.html', day, refresh)
+    departing, fa_history = parse_departures(html)
+    roster = json.loads((ROOT / 'src/npb2026.json').read_text())
+    path = ROOT / 'src/eligibility2026.json'
+    output = json.loads(path.read_text())
+    if {p['id'] for p in roster['players']} != set(output['players']):
+        raise ValueError('Roster and eligibility IDs differ; refusing departure-only update')
+    added = []
+    for p in roster['players']:
+        key = (p['team'], status_name(p['name']))
+        reasons = []
+        if key in departing: reasons.append('戦力外・退団・引退の報道あり')
+        if key in fa_history: reasons.append('FA行使による移籍歴の報道あり')
+        facts = output['players'][p['id']]
+        for reason in reasons:
+            if not any(e['reason'] == reason for e in facts['exclusions']):
+                facts['exclusions'].append({'reason': reason, 'source': meta['url']})
+                facts['checkedAt'] = day
+                added.append((p['team'], p['name'], reason))
+    # A temporarily missing article row must not silently reinstate a player.
+    output['sources'] = [m for m in output['sources'] if m['url'] != meta['url']] + [meta]
+    output['asOf'] = day
+    path.with_suffix('.tmp').write_text(json.dumps(output, ensure_ascii=False, indent=2) + '\n')
+    path.with_suffix('.tmp').replace(path)
+    print(f'Departure-only refresh: {len(added)} new exclusions; salary, FA IDs and other exclusions retained')
+    for team, name, reason in added: print(f'{team}: {name} ({reason})')
 
 
 def build(refresh=False):
@@ -157,4 +210,6 @@ def build(refresh=False):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--refresh', action='store_true', help='Refresh cached source pages, including same-day report updates')
-    build(parser.parse_args().refresh)
+    parser.add_argument('--departures-only', action='store_true', help='Update departure reports while retaining salary and other eligibility facts')
+    args = parser.parse_args()
+    (update_departures if args.departures_only else build)(args.refresh)

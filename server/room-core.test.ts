@@ -3,6 +3,7 @@ import { RoomCore, type StoredRoom } from './room-core'
 import { teamIds, type TeamId } from '../src/data'
 import { officialDataset } from '../src/officialData'
 import { realisticCandidates } from '../src/cpuCandidates'
+import { eligibilityOf } from '../src/eligibility'
 import {
   beginDraft,
   choicesFor,
@@ -80,6 +81,35 @@ function fixture() {
 }
 const players = officialDataset.players
 const offerings = (team: TeamId) => realisticCandidates(team, players, 42)
+
+it('retains nominations already accepted before a departure report update while rejecting new submissions', async () => {
+  const f = fixture(),
+    host = await f.add(),
+    guest = await f.add('仲間')
+  await f.send(guest, { type: 'team', team: 'g' })
+  await f.send(guest, { type: 'ready', ready: true })
+  await f.send(host, { type: 'start' })
+  const departed = players.find(
+    (p) => p.team === 'd' && p.name === '川越 誠司',
+  )!
+  expect(eligibilityOf(departed).allowed).toBe(false)
+  const accepted = [departed.id, offerings('d')[0]]
+  // The persisted list was validated before deployment of the new reports.
+  const beforeUpdate = f.stored()
+  beforeUpdate.offers.d = accepted
+  await f.repository.save(beforeUpdate)
+  f.restart()
+  await f.send(guest, { type: 'nominate', players: offerings('g') })
+  const updated = await f.core.read(host.token)
+  expect(updated.game?.stage).toBe('vote')
+  expect(updated.game?.offers.d).toEqual(accepted)
+  const fresh = fixture(),
+    newcomer = await fresh.add()
+  await fresh.send(newcomer, { type: 'start' })
+  await expect(
+    fresh.send(newcomer, { type: 'nominate', players: accepted }),
+  ).rejects.toThrow('候補対象選手')
+})
 
 it('six-digit rooms keep leading zeros, authenticate sessions, reserve clubs and require ready peers', async () => {
   const f = fixture(),
