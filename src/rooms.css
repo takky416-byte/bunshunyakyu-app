@@ -1,6 +1,19 @@
 .room-entry {
   margin-bottom: 20px;
   padding: 20px;
+  container-type: inline-size;
+}
+.room-entry > h2 {
+  margin: 0 0 12px;
+  font-size: 1.25rem;
+  color: var(--club-deep);
+}
+.room-name-help {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.875rem;
+  color: #53635b;
+  text-wrap: pretty;
 }
 .room-entry label {
   display: grid;
@@ -24,29 +37,80 @@
 }
 .room-entry-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 12px;
   margin-top: 16px;
-  align-items: end;
+  align-items: stretch;
 }
-.room-entry-actions > div {
+.room-entry-choice {
   display: grid;
-  gap: 8px;
-}
-.room-entry-actions small {
-  font-size: 14px;
-}
-.room-entry-actions form {
-  display: flex;
-  gap: 10px;
-  align-items: end;
-}
-.room-entry-actions form label {
-  flex: 1;
+  align-content: start;
   min-width: 0;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid var(--club-line);
+  border-radius: 9px;
+  background: var(--club-page, #fffefa);
+}
+.room-entry-choice h3 {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--club-deep);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.room-entry-choice h3 svg {
+  flex-shrink: 0;
+  color: var(--club-link);
+}
+.room-entry-choice p,
+.room-entry-choice small {
+  margin: 0;
+  color: #53635b;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+.room-entry-choice label {
+  font-size: 0.875rem;
+}
+.room-entry-or {
+  align-self: center;
+  color: #53635b;
+  font-size: 0.875rem;
+  white-space: nowrap;
 }
 .room-entry-actions .button {
+  width: 100%;
+  min-width: 0;
+  justify-content: center;
+  padding: 12px;
   white-space: nowrap;
+}
+@container (max-width: 620px) {
+  .room-entry-actions {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+  .room-entry-choice {
+    padding: 12px;
+  }
+  .room-entry-or {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .room-entry-or::before,
+  .room-entry-or::after {
+    content: '';
+    height: 1px;
+    flex: 1;
+    background: var(--club-line);
+  }
 }
 .room-status {
   display: flex;

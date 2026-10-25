@@ -48,6 +48,36 @@
 .app-shell .salary-info > span {
   color: inherit;
 }
+.player-selection-facts {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 1px 12px;
+  min-width: 0;
+}
+.app-shell .player-stats {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 8px;
+  min-width: 0;
+  max-width: 100%;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #53635b;
+  white-space: normal;
+}
+.app-shell .player-stats > b,
+.app-shell .player-stats > span {
+  display: inline;
+  margin: 0;
+  font-size: inherit;
+  color: inherit;
+  white-space: nowrap;
+}
+.app-shell .player-stats > b {
+  font-weight: 500;
+}
 .app-shell .second-round-choices > label {
   display: grid;
   grid-template-columns: 18px minmax(0, 1fr);

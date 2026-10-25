@@ -38,7 +38,7 @@ while (game.stage === 'draft') {
 game = startRoundTwo(game, 'buy', players)
 const candidates = roundTwoChoices(game, players).filter((p) => p.team !== 'd')
 
-test('round-two choices and ordered bids show salary and age without overlapping mobile actions', async ({
+test('round-two choices and ordered bids show salary, age and first-team stats without overlapping mobile actions', async ({
   page,
 }) => {
   expect(candidates.length).toBeGreaterThanOrEqual(2)
@@ -58,6 +58,17 @@ test('round-two choices and ordered bids show salary and age without overlapping
       `${p.draftFacts!.salaryManYen!.toLocaleString()}万円`,
     )
     await expect(choice.locator('.player-age')).toHaveText(/^\d+歳$/)
+    const stats = choice.locator('.player-stats')
+    if (!p.stats || p.stats.games === 0) {
+      await expect(stats).toHaveText('一軍出場なし')
+    } else {
+      await expect(stats).toContainText(
+        `${p.stats.games}${p.position === '投手' ? '登板' : '試合'}`,
+      )
+      await expect(stats).toContainText(
+        p.position === '投手' ? '防御率' : '打率',
+      )
+    }
     return (await choice.locator('.salary-info').textContent())!
   }
   const expected = new Map<string, string>()
@@ -85,6 +96,12 @@ test('round-two choices and ordered bids show salary and age without overlapping
       await expect(bid.locator('.salary-info')).toHaveText(
         expected.get(p.name)!,
       )
+      await expect(bid.locator('.player-stats')).toHaveText(
+        (await choices
+          .filter({ has: page.getByText(p.name, { exact: true }) })
+          .locator('.player-stats')
+          .textContent())!,
+      )
       const fits = await bid.evaluate((el) => {
         const metadata = el
           .querySelector('.salary-info')!
@@ -92,7 +109,8 @@ test('round-two choices and ordered bids show salary and age without overlapping
         const actions = el
           .querySelector('.bid-preference-actions')!
           .getBoundingClientRect()
-        return metadata.right <= actions.left
+        const stats = el.querySelector('.player-stats')!.getBoundingClientRect()
+        return metadata.right <= actions.left && stats.right <= actions.left
       })
       expect(fits, `bid metadata at ${width}`).toBe(true)
     }

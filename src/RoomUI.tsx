@@ -9,6 +9,7 @@ import {
   Check,
   Copy,
   LogOut,
+  LogIn,
   MessageCircle,
   Send,
   Users,
@@ -44,6 +45,7 @@ export function RoomEntry({
 }) {
   return (
     <section className="room-entry panel" aria-label="ルームの作成・参加">
+      <h2>はじめ方を選ぶ</h2>
       <label>
         プレーヤー名
         <input
@@ -55,8 +57,25 @@ export function RoomEntry({
           onChange={(e) => setName(e.target.value)}
         />
       </label>
+      {!name.trim() && (
+        <small className="room-name-help">
+          まずはプレーヤー名を入力してください。
+        </small>
+      )}
       <div className="room-entry-actions">
-        <div>
+        <section
+          className="room-entry-choice"
+          aria-labelledby="room-create-title"
+        >
+          <h3 id="room-create-title" aria-label="新しくルームを作る">
+            <Users size={20} aria-hidden="true" />
+            <span>
+              <span className="text-unit">新しく</span>
+              <span className="text-unit">ルームを作る</span>
+            </span>
+          </h3>
+          <p>1人で遊ぶ方・仲間を招待する方はこちら。</p>
+          <small>作成後に球団を選べます。1人でも開始できます。</small>
           <button
             className="button primary"
             disabled={busy || !name.trim()}
@@ -65,18 +84,26 @@ export function RoomEntry({
             <Users size={18} />
             ルームを作る
           </button>
-          <small>
-            {name.trim()
-              ? '1人でも開始できます。球団は作成後に選択。'
-              : 'プレーヤー名を入力すると、作成・参加できます。'}
-          </small>
-        </div>
+        </section>
+        <span className="room-entry-or" aria-hidden="true">
+          または
+        </span>
         <form
+          className="room-entry-choice"
+          aria-labelledby="room-join-title"
           onSubmit={(e) => {
             e.preventDefault()
             join()
           }}
         >
+          <h3 id="room-join-title" aria-label="招待されたルームに入る">
+            <LogIn size={20} aria-hidden="true" />
+            <span>
+              <span className="text-unit">招待された</span>
+              <span className="text-unit">ルームに入る</span>
+            </span>
+          </h3>
+          <p>仲間からルーム番号を教えてもらった方はこちら。</p>
           <label>
             ルーム番号
             <input

@@ -4,6 +4,17 @@ test('home text remains separate and legible across phones, PC widths and larger
   page,
 }) => {
   await page.goto('/')
+  await expect(
+    page.getByRole('heading', { name: 'はじめ方を選ぶ' }),
+  ).toBeVisible()
+  const create = page.getByRole('region', { name: '新しくルームを作る' })
+  const join = page.getByRole('form', { name: '招待されたルームに入る' })
+  await expect(create).toContainText('1人で遊ぶ方・仲間を招待する方はこちら。')
+  await expect(join).toContainText(
+    '仲間からルーム番号を教えてもらった方はこちら。',
+  )
+  await expect(create.getByLabel('ルーム番号', { exact: true })).toHaveCount(0)
+  await expect(join.getByLabel('ルーム番号', { exact: true })).toBeVisible()
   for (const width of [320, 360, 390, 430, 768, 980, 1280, 1920]) {
     await page.setViewportSize({ width, height: 844 })
     for (const fontSize of [16, 20]) {

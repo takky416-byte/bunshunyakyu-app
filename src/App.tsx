@@ -189,15 +189,45 @@ function PlayerFacts({ player }: { player: Player }) {
     </small>
   )
 }
-function StatSummary({ player }: { player: Player }) {
+function StatSummary({
+  player,
+  compact = false,
+}: {
+  player: Player
+  compact?: boolean
+}) {
   const s = player.stats
-  if (!s) return <span className="player-stats">2026 一軍成績掲載なし</span>
+  const label = compact ? '一軍' : '2026年 一軍成績'
+  const noAppearances = !s || s.games === 0
+  const stats = noAppearances
+    ? ['一軍出場なし']
+    : player.position === '投手'
+      ? [
+          `${s.games}登板`,
+          `防御率 ${s.era == null ? '—' : s.era.toFixed(2)}`,
+          `${s.wins ?? '—'}勝${s.losses ?? '—'}敗`,
+          ...(s.saves ? [`${s.saves}セーブ`] : []),
+        ]
+      : [
+          `${s.games}試合`,
+          `打率 ${s.average == null ? '—' : s.average.toFixed(3)}`,
+          `${s.homeRuns ?? '—'}本`,
+          `${s.rbi ?? '—'}打点`,
+        ]
   return (
-    <span className="player-stats">
-      <b>2026</b>
-      {player.position === '投手'
-        ? `${s.games}登板 / 防御率 ${s.era == null ? '—' : s.era.toFixed(2)}`
-        : `${s.games}試合 / 打率 ${s.average == null ? '—' : s.average.toFixed(3)} / ${s.homeRuns ?? '—'}本`}
+    <span className="player-stats" title="2026年一軍成績">
+      {(!compact || !noAppearances) && <b>{label}</b>}
+      {stats.map((stat) => (
+        <span key={stat}>{stat}</span>
+      ))}
+    </span>
+  )
+}
+function PlayerSelectionFacts({ player }: { player: Player }) {
+  return (
+    <span className="player-selection-facts">
+      <PlayerFacts player={player} />
+      <StatSummary player={player} compact />
     </span>
   )
 }
@@ -1260,7 +1290,7 @@ export default function App() {
                                       </span>
                                       {p.number ? ` · #${p.number}` : ''}
                                     </small>
-                                    <PlayerFacts player={p} />
+                                    <PlayerSelectionFacts player={p} />
                                     {!eligibilityOf(p).allowed && (
                                       <small>
                                         {eligibilityOf(p).reasons.join(' / ')}
@@ -1615,7 +1645,9 @@ export default function App() {
                                     <div className="bid-preference-row">
                                       <span className="bid-preference-player">
                                         <strong>{player(id).name}</strong>
-                                        <PlayerFacts player={player(id)} />
+                                        <PlayerSelectionFacts
+                                          player={player(id)}
+                                        />
                                       </span>
                                       <span className="bid-preference-actions">
                                         <button
@@ -1671,7 +1703,7 @@ export default function App() {
                                           {p.position}
                                         </span>
                                       </span>
-                                      <PlayerFacts player={p} />
+                                      <PlayerSelectionFacts player={p} />
                                     </span>
                                   </label>
                                 ))}
