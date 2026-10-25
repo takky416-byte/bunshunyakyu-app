@@ -38,7 +38,7 @@ while (game.stage === 'draft') {
 game = startRoundTwo(game, 'buy', players)
 const candidates = roundTwoChoices(game, players).filter((p) => p.team !== 'd')
 
-test('round-two choices and ordered bids show salary, age and first-team stats without overlapping mobile actions', async ({
+test('round-two choices and ordered bids show salary, age, career and first-team stats without overlapping mobile actions', async ({
   page,
 }) => {
   expect(candidates.length).toBeGreaterThanOrEqual(2)
@@ -58,6 +58,7 @@ test('round-two choices and ordered bids show salary, age and first-team stats w
       `${p.draftFacts!.salaryManYen!.toLocaleString()}万円`,
     )
     await expect(choice.locator('.player-age')).toHaveText(/^\d+歳$/)
+    await expect(choice.locator('.player-career')).toHaveText(/^プロ\d+年目$/)
     const stats = choice.locator('.player-stats')
     if (!p.stats || p.stats.games === 0) {
       await expect(stats).toHaveText('一軍出場なし')

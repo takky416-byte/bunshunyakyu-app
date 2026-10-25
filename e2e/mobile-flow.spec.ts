@@ -49,6 +49,7 @@ test('domestic-treated players are selectable and reported departures stay exclu
   const waters = rowFor('ワォーターズ')
   await expect(waters.getByRole('checkbox')).toBeEnabled()
   await expect(waters.locator('.salary-info')).toContainText('21歳')
+  await expect(waters.locator('.player-career')).toHaveText('プロ3年目')
   await waters.getByRole('button', { name: /の詳細$/ }).click()
   await expect(page.getByRole('dialog').locator('.player-bio')).toContainText(
     '21歳',
@@ -63,8 +64,10 @@ test('domestic-treated players are selectable and reported departures stay exclu
   await expect(rowFor('陽 柏翔').getByRole('checkbox')).toBeEnabled()
   for (const width of [320, 390]) {
     await page.setViewportSize({ width, height: 844 })
-    // First-team statistics may occupy two lines without expanding the list.
-    expect((await waters.boundingBox())!.height).toBeLessThan(112)
+    // On the narrowest phones, age and career can occupy a second metadata line.
+    expect((await waters.boundingBox())!.height).toBeLessThan(
+      width === 320 ? 132 : 112,
+    )
     expect(
       (await page.locator('.roster-list').boundingBox())!.height,
     ).toBeLessThanOrEqual(363)

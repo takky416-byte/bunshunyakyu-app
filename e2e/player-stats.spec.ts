@@ -11,10 +11,12 @@ test('selection lists show first-team stats and no appearances, retain details a
       .locator('.player-row')
       .filter({ has: page.getByText(name, { exact: true }) })
   const pitcher = rowFor('橋本 侑樹')
+  await expect(pitcher.locator('.player-career')).toHaveText('プロ7年目')
   await expect(pitcher.locator('.player-stats')).toHaveText(
     '一軍45登板防御率 4.584勝4敗',
   )
   const batter = rowFor('石橋 康太')
+  await expect(batter.locator('.player-career')).toHaveText('プロ8年目')
   await expect(batter.locator('.player-stats')).toHaveText(
     '一軍4試合打率 .0000本0打点',
   )
@@ -35,7 +37,9 @@ test('selection lists show first-team stats and no appearances, retain details a
             .querySelector('.player-name')!
             .getBoundingClientRect()
           return [
-            ...row.querySelectorAll('.player-stats > span, .player-stats > b'),
+            ...row.querySelectorAll(
+              '.player-stats > span, .player-stats > b, .player-age, .player-career',
+            ),
           ].every((unit) => {
             const rect = unit.getBoundingClientRect()
             const range = document.createRange()
@@ -79,6 +83,9 @@ test('selection lists show first-team stats and no appearances, retain details a
   await expect(page.locator('.player-stats')).toHaveCount(
     await page.locator('.player-row').count(),
   )
+  await expect(page.locator('.player-career')).toHaveCount(
+    await page.locator('.player-row').count(),
+  )
   await page.getByRole('radio').first().check()
   await page.getByRole('button', { name: '投票してドラフトへ' }).click()
   if (
@@ -89,6 +96,9 @@ test('selection lists show first-team stats and no appearances, retain details a
     page.getByRole('heading', { name: /あなたの指名番です/ }),
   ).toBeVisible()
   await expect(page.locator('.player-stats')).toHaveCount(
+    await page.locator('.player-row').count(),
+  )
+  await expect(page.locator('.player-career')).toHaveCount(
     await page.locator('.player-row').count(),
   )
   const submit = page.getByRole('button', {

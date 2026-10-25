@@ -177,6 +177,7 @@ function TeamMark({ team, small = false }: { team: Team; small?: boolean }) {
 }
 function PlayerFacts({ player }: { player: Player }) {
   const age = playerAge(player.birthDate)
+  const careerYears = playerCareerYears(player)
   return (
     <small className="salary-info">
       <span>
@@ -184,7 +185,14 @@ function PlayerFacts({ player }: { player: Player }) {
           ? '年俸データなし'
           : `${player.draftFacts.salaryManYen.toLocaleString()}万円`}
       </span>
-      <span className="player-age">{age == null ? '年齢 —' : `${age}歳`}</span>
+      <span className="player-age-career">
+        <span className="player-age">
+          {age == null ? '年齢 —' : `${age}歳`}
+        </span>
+        <span className="player-career">
+          {careerYears == null ? 'プロ年数 —' : `プロ${careerYears}年目`}
+        </span>
+      </span>
       {eligibilityOf(player).band === 'exception' && <span>高年俸枠</span>}
     </small>
   )

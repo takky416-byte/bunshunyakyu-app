@@ -2,14 +2,30 @@
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
-  gap: 0 8px;
+  gap: 0 4px;
 }
 .app-shell .salary-info > span {
   white-space: nowrap;
 }
 .app-shell .player-age::before {
   content: '·';
-  margin-right: 8px;
+  margin-right: 4px;
+}
+.app-shell .salary-info .player-age-career {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0;
+  min-width: 0;
+  max-width: 100%;
+}
+.app-shell .player-age-career > span {
+  color: inherit;
+  white-space: nowrap;
+}
+.app-shell .player-career::before {
+  content: '·';
+  margin-inline: 3px;
 }
 .player-bio {
   display: grid;
