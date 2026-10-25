@@ -34,6 +34,7 @@ export default function DraftAnnouncement({
   onSoundSettings,
   roomChat,
   chatOpen = false,
+  modalOpen = false,
   roomMode,
   onPlaybackComplete,
 }: {
@@ -41,6 +42,7 @@ export default function DraftAnnouncement({
   roomMode?: 'solo' | 'shared'
   roomChat?: ReactNode
   chatOpen?: boolean
+  modalOpen?: boolean
   sequence: Announcement[]
   players: Player[]
   autoPlay: boolean
@@ -86,19 +88,19 @@ export default function DraftAnnouncement({
     const element = dialog.current
     if (!element) return
     if (element.open) element.close()
-    // Keep the chat above every new announcement without stealing its input
-    // focus. A second modal would make the chat inert and trap both screens.
-    if (chatOpen) element.open = true
+    // Keep an open chat, settings or welcome dialog above new announcements.
+    // A second modal would make the active controls inert and steal focus.
+    if (chatOpen || modalOpen) element.open = true
     else element.showModal()
-  }, [chatOpen])
+  }, [chatOpen, modalOpen])
   useEffect(() => {
     dialog.current?.scrollTo({ top: 0, behavior: 'auto' })
     hadNarration.current = false
   }, [index])
   useEffect(() => {
-    if (index > 0 && !chatOpen)
+    if (index > 0 && !chatOpen && !modalOpen)
       dialog.current?.querySelector('h2')?.focus({ preventScroll: true })
-  }, [index, chatOpen])
+  }, [index, chatOpen, modalOpen])
   useEffect(() => {
     if (revealed || !active) return
     const timer = window.setTimeout(() => setRevealed(true), REVEAL_MS)

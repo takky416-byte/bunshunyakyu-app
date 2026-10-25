@@ -221,6 +221,8 @@ export function useRoom() {
     async (name: string, team: string, code?: string) => {
       setBusy(true)
       setError('')
+      const abort = new AbortController()
+      const timeout = window.setTimeout(() => abort.abort(), 10_000)
       try {
         const response = await fetch(
           code ? `/api/rooms/${code}/join` : '/api/rooms',
@@ -228,6 +230,7 @@ export function useRoom() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name, team }),
+            signal: abort.signal,
           },
         )
         const b = await response.json()
@@ -245,8 +248,15 @@ export function useRoom() {
         setSession(b)
         setFatal(false)
       } catch (e) {
-        setError(e instanceof Error ? e.message : '接続に失敗しました。')
+        setError(
+          e instanceof Error && e.name === 'AbortError'
+            ? '接続に時間がかかっています。通信状態を確認して、もう一度お試しください。'
+            : e instanceof Error
+              ? e.message
+              : '接続に失敗しました。',
+        )
       } finally {
+        window.clearTimeout(timeout)
         setBusy(false)
       }
     },

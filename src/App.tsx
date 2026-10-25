@@ -255,7 +255,17 @@ function ModalShell({
     <dialog
       ref={dialog}
       className="modal"
-      onCancel={close}
+      onKeyDown={(event) => {
+        if (event.key === 'Escape' && !event.nativeEvent.isComposing) {
+          event.preventDefault()
+          event.stopPropagation()
+          close()
+        }
+      }}
+      onCancel={(event) => {
+        event.preventDefault()
+        close()
+      }}
       onClose={close}
       onClick={(e) => {
         if (e.target === e.currentTarget) close()
@@ -421,7 +431,13 @@ export default function App() {
   useEffect(() => {
     if (previousFlow.current !== flowKey) pendingFlowFocus.current = true
     previousFlow.current = flowKey
-    if (showSplash || modal || announcements || !pendingFlowFocus.current)
+    if (
+      showSplash ||
+      modal ||
+      roomChatOpen ||
+      announcements ||
+      !pendingFlowFocus.current
+    )
       return
     const frame = requestAnimationFrame(() => {
       pendingFlowFocus.current = false
@@ -438,7 +454,7 @@ export default function App() {
       scrollTarget.scrollIntoView({ block: 'start', behavior: 'auto' })
     })
     return () => cancelAnimationFrame(frame)
-  }, [flowKey, modal, announcements, showSplash])
+  }, [flowKey, modal, roomChatOpen, announcements, showSplash])
 
   function enterApp() {
     try {
@@ -2032,6 +2048,7 @@ export default function App() {
         <DraftAnnouncement
           key={isRoom ? receivedPresentation.current : 'local'}
           chatOpen={roomChatOpen}
+          modalOpen={Boolean(modal) || showSplash}
           roomChat={
             isRoom ? (
               <span className="announcement-room-actions">

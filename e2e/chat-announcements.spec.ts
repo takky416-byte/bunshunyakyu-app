@@ -7,6 +7,8 @@ import {
   beginDraft,
   choicesFor,
   makePick,
+  startRoundTwo,
+  confirmRoundTwo,
   type Game,
 } from '../src/engine'
 import { eligibilityOf } from '../src/eligibility'
@@ -40,6 +42,23 @@ const offered = submitNominations(
 const opening = beginDraft(offered, offered.offers.g![0], players)
 const first = makePick(opening, choicesFor(opening, players)[0].id, players)
 const second = makePick(first, choicesFor(first, players)[0].id, players)
+let firstRound = second
+while (firstRound.stage === 'draft')
+  firstRound = makePick(
+    firstRound,
+    choicesFor(firstRound, players)[0].id,
+    players,
+  )
+const roundTwo = confirmRoundTwo(
+  startRoundTwo(firstRound, 'out', players),
+  [],
+  'unconditional',
+  players,
+)
+const roundTwoPicks = roundTwo.picks.filter((p) => p.round === 2)
+const roundTwoNames = roundTwoPicks.map(
+  (p) => players.find((player) => player.id === p.playerId)!.name,
+)
 
 for (const width of [320, 390, 768, 1280]) {
   test(`chat stays usable and displays successive picks without pausing announcements at ${width}px`, async ({
@@ -194,6 +213,18 @@ for (const width of [320, 390, 768, 1280]) {
       expect(main.x + main.width).toBeLessThanOrEqual(side.x)
     }
     await page.screenshot({ path: `.cache/chat-picks-${width}.png` })
+    snapshot = {
+      ...snapshot,
+      revision: snapshot.revision + 1,
+      presentation: null,
+    }
+    socket!.send(JSON.stringify({ type: 'state', snapshot }))
+    await expect(page.locator('.draft-announcement')).toHaveCount(0)
+    await page.clock.runFor(100)
+    await expect(input).toBeFocused()
+    await expect(input).toHaveValue('発表が進んでも入力できます')
+    await present(second, 'third')
+    await page.clock.runFor(REVEAL_MS + 50)
     await page.keyboard.press('Escape')
     await expect(chat).not.toBeVisible()
     await expect(
@@ -211,24 +242,39 @@ for (const width of [320, 390, 768, 1280]) {
     await expect(input).toHaveValue('発表が進んでも入力できます')
     // Both round-two assignments are already final; show the announced index,
     // never the last assignment in the complete result.
-    const roundTwo = {
-      ...second,
-      stage: 'results' as const,
-      current: null,
-      picks: [
-        ...second.picks,
-        { ...picked, round: 2 as const },
-        { ...next, round: 2 as const },
-      ],
-    }
+    expect(roundTwoNames.length).toBeGreaterThanOrEqual(2)
     await present(roundTwo, 'round-two-first', 'round2', 0)
     await page.clock.runFor(REVEAL_MS + 50)
     await expect(live).toContainText('第2巡')
-    await expect(live).toContainText(name)
+    await expect(live).toContainText(roundTwoNames[0])
     await present(roundTwo, 'round-two-second', 'round2', 1)
     await page.clock.runFor(REVEAL_MS + 50)
-    await expect(live).toContainText(nextName)
+    await expect(live).toContainText(roundTwoNames[1])
     await expect(chat.getByRole('textbox')).toBeEditable()
+    await page.keyboard.press('Escape')
+    await page
+      .locator('.draft-announcement')
+      .getByRole('button', { name: 'サウンド設定', exact: true })
+      .click()
+    const settings = page.locator('dialog.modal')
+    const volume = settings.getByRole('slider')
+    await volume.focus()
+    await present(roundTwo, 'settings-next', 'round2', 0)
+    await expect(volume).toBeFocused()
+    const before = await volume.inputValue()
+    await volume.press('ArrowRight')
+    await expect(volume).not.toHaveValue(before)
+    expect(
+      await page
+        .locator('.draft-announcement')
+        .evaluate((el) => el.matches(':modal')),
+    ).toBe(false)
+    await page.keyboard.press('Escape')
+    await expect(settings).toHaveCount(0)
+    await page.clock.runFor(REVEAL_MS + 50)
+    await expect(
+      page.locator('.draft-announcement .announcement-name'),
+    ).toHaveText(roundTwoNames[0])
     expect(errors).toEqual([])
   })
 }
