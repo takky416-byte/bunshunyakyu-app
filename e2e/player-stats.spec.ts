@@ -16,7 +16,10 @@ test('selection lists show first-team stats and no appearances, retain details a
   )
   const batter = rowFor('石橋 康太')
   await expect(batter.locator('.player-stats')).toHaveText(
-    '一軍4試合打率 0.0000本0打点',
+    '一軍4試合打率 .0000本0打点',
+  )
+  await expect(rowFor('川越 誠司').locator('.player-stats')).toContainText(
+    '打率 .333',
   )
   await expect(
     page.locator('.player-row').filter({ hasText: '一軍出場なし' }).first(),
@@ -57,6 +60,14 @@ test('selection lists show first-team stats and no appearances, retain details a
   await expect(page.getByRole('dialog').locator('.player-stats')).toContainText(
     '防御率 4.58',
   )
+  await page.keyboard.press('Escape')
+  await batter.getByRole('button', { name: '石橋 康太の詳細' }).click()
+  await expect(page.getByRole('dialog').locator('.player-stats')).toContainText(
+    '打率 .000',
+  )
+  await expect(
+    page.getByRole('dialog').locator('.player-stats'),
+  ).not.toContainText('打率 0.000')
   await page.keyboard.press('Escape')
   await expect(pitcher.getByRole('checkbox')).not.toBeChecked()
   await pitcher.getByRole('checkbox').check()

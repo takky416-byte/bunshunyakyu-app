@@ -210,7 +210,7 @@ function StatSummary({
         ]
       : [
           `${s.games}試合`,
-          `打率 ${s.average == null ? '—' : s.average.toFixed(3)}`,
+          `打率 ${s.average == null ? '—' : s.average.toFixed(3).replace(/^0\./, '.')}`,
           `${s.homeRuns ?? '—'}本`,
           `${s.rbi ?? '—'}打点`,
         ]
