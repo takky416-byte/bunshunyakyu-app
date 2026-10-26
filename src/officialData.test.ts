@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { eligibilityOf } from './eligibility'
 import { officialDataset } from './officialData'
 import { teamIds } from './data'
+import reports from '../scripts/departure_reports2026.json'
 import {
   beginDraft,
   choicesFor,
@@ -13,6 +14,33 @@ import {
 } from './engine'
 
 describe('official 2026 snapshot', () => {
+  it('excludes every individually verified departure, including newspaper name variants', () => {
+    for (const report of reports.reports)
+      for (const record of report.players) {
+        const player = officialDataset.players.find((p) => p.id === record.id)!
+        expect(player).toMatchObject({ team: report.team, name: record.name })
+        expect(eligibilityOf(player).allowed, player.name).toBe(false)
+        expect(player.draftFacts!.exclusions).toContainEqual({
+          reason: '戦力外・退団・引退の報道あり',
+          source: report.url,
+        })
+        const teammate = officialDataset.players.find(
+          (p) =>
+            p.team === player.team &&
+            eligibilityOf(p).allowed &&
+            eligibilityOf(p).band === 'ordinary',
+        )!
+        expect(
+          () =>
+            submitNominations(
+              newGame(player.team, 26),
+              [player.id, teammate.id],
+              officialDataset.players,
+            ),
+          player.name,
+        ).toThrow()
+      }
+  })
   it('excludes the October 25 departures and the two corrected newspaper name variants', () => {
     for (const [team, names] of [
       ['d', ['川越 誠司', '宇佐見 真吾']],
@@ -53,7 +81,7 @@ describe('official 2026 snapshot', () => {
       expect(player.draftFacts?.treatmentSource).toMatch(
         /^https:\/\/draft.npb.jp\//,
       )
-      expect(eligibilityOf(player).allowed).toBe(true)
+      expect(eligibilityOf(player).allowed).toBe(name !== '林 冠臣')
     }
     for (const name of [
       'ケムナ 誠',

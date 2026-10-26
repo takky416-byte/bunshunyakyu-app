@@ -2,9 +2,10 @@ import unittest
 import io
 import tempfile
 import json
+import copy
 from pathlib import Path
 from unittest.mock import patch
-from update_eligibility_data import salary_man_yen, parse_departures, fetch_source, status_name, update_departures
+from update_eligibility_data import salary_man_yen, parse_departures, fetch_source, status_name, update_departures, individual_departures
 
 
 class SalaryParserTest(unittest.TestCase):
@@ -68,7 +69,8 @@ class SalaryParserTest(unittest.TestCase):
         facts = {'salaryYear': 2026, 'salaryManYen': 1400, 'salarySource': 'https://example.com/salary', 'checkedAt': '2026-10-24', 'exclusions': [], 'holds': [], 'unresolved': []}
         original = {'version': 1, 'asOf': '2026-10-24', 'sources': [{'url': 'https://example.com/salary'}], 'players': {'one': facts, 'two': {**facts, 'exclusions': [{'reason': '戦力外・退団・引退の報道あり', 'source': 'https://example.com/old'}]}}}
         with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp); (root / 'src').mkdir()
+            root = Path(tmp); (root / 'src').mkdir(); (root / 'scripts').mkdir()
+            (root / 'scripts/departure_reports2026.json').write_text(json.dumps({'version': 1, 'reports': []}))
             (root / 'src/npb2026.json').write_text(json.dumps({'players': [{'id': 'one', 'team': 'd', 'name': '川越 誠司'}, {'id': 'two', 'team': 'd', 'name': '過去の確認済み選手'}]}))
             path = root / 'src/eligibility2026.json'; path.write_text(json.dumps(original))
             with patch('update_eligibility_data.ROOT', root), patch('update_eligibility_data.fetch_source', return_value=('departures.html', meta, html)):
@@ -82,6 +84,41 @@ class SalaryParserTest(unittest.TestCase):
             with patch('update_eligibility_data.ROOT', root), patch('update_eligibility_data.fetch_source', return_value=('departures.html', meta, '<p>invalid</p>')):
                 with self.assertRaises(ValueError): update_departures(True)
             self.assertEqual(path.read_bytes(), before)
+
+    def test_individual_reports_match_reviewed_ids_and_explicit_name_variants(self):
+        roster = {'players': [{'id': 's-one', 'team': 's', 'name': '小澤 怜史'}, {'id': 'h-two', 'team': 'h', 'name': '安德 駿'}]}
+        reports = [
+            {'key': 'swallows', 'team': 's', 'reportedAt': '2026-10-26', 'url': 'https://example.com/s', 'requiredText': ['2026/10/26', '来季の契約を結ばない'], 'players': [{'id': 's-one', 'name': '小澤 怜史', 'reportedName': '小沢怜史'}]},
+            {'key': 'hawks', 'team': 'h', 'reportedAt': '2026-10-26', 'url': 'https://example.com/h', 'requiredText': ['2026/10/26', '来季の契約を結ばない'], 'players': [{'id': 'h-two', 'name': '安德 駿', 'reportedName': '安徳駿'}]},
+        ]
+        body = '<p>2026/10/26 小沢怜史投手、安徳駿投手と来季の契約を結ばない</p><p>別の選手は契約を更新</p>'
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); (root / 'scripts').mkdir()
+            path = root / 'scripts/departure_reports2026.json'
+            path.write_text(json.dumps({'version': 1, 'reports': reports}))
+            def source(cache, name, url, day, refresh):
+                self.assertTrue(refresh)
+                return name, {'url': url, 'retrievedAt': day, 'sha256': 'f' * 64}, body
+            with patch('update_eligibility_data.ROOT', root), patch('update_eligibility_data.fetch_source', side_effect=source):
+                matches, sources = individual_departures(root, '2026-10-26', roster, True)
+            self.assertEqual(matches, {('s', status_name('小澤 怜史')): 'https://example.com/s', ('h', status_name('安德 駿')): 'https://example.com/h'})
+            self.assertEqual(len(sources), 2)
+            # Do not accept a source containing names only in scripts, a missing
+            # current statement, a wrong identity, or a report from the future.
+            for scenario in ['script', 'date', 'statement', 'name', 'id', 'team', 'duplicate', 'future']:
+                with self.subTest(scenario=scenario):
+                    item = copy.deepcopy(reports[0]); html = body
+                    if scenario == 'script': html = '<p>2026/10/26 来季の契約を結ばない</p><script>小沢怜史</script>'
+                    if scenario == 'date': html = body.replace('2026/10/26', '2025/10/26')
+                    if scenario == 'statement': html = body.replace('来季の契約を結ばない', '契約を更新')
+                    if scenario == 'name': item['players'][0]['name'] = '別の選手'
+                    if scenario == 'id': item['players'][0]['id'] = 'missing'
+                    if scenario == 'team': item['team'] = 'g'
+                    if scenario == 'duplicate': item['players'].append(copy.deepcopy(item['players'][0]))
+                    if scenario == 'future': item['reportedAt'] = '2026-10-27'
+                    path.write_text(json.dumps({'version': 1, 'reports': [item]}))
+                    with patch('update_eligibility_data.ROOT', root), patch('update_eligibility_data.fetch_source', return_value=('report.html', {'url': item['url']}, html)):
+                        with self.assertRaises(ValueError): individual_departures(root, '2026-10-26', roster, True)
 
 
 if __name__ == '__main__':

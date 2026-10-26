@@ -1,0 +1,228 @@
+{
+  "version": 1,
+  "note": "個別本文で確認した戦力外・退団・引退・自由契約の追加情報。一覧記事の追記待ちや表記違いを公式IDに結び付ける。reportedAtは参照記事の掲載日または確認日で、契約解除の発効日ではない。",
+  "reports": [
+    {
+      "key": "hawks-2026-10-26",
+      "team": "h",
+      "reportedAt": "2026-10-26",
+      "url": "https://pacificleague.com/news/2026/10/10056434",
+      "requiredText": ["2026年10月26日", "来季の支配下契約は結ばない"],
+      "players": [
+        {
+          "id": "npb-71175153",
+          "name": "秋広 優人",
+          "reportedName": "秋広優人"
+        },
+        {
+          "id": "npb-51355159",
+          "name": "岩井 俊介",
+          "reportedName": "岩井俊介"
+        },
+        {
+          "id": "npb-01205138",
+          "name": "中村 稔弥",
+          "reportedName": "中村稔弥"
+        },
+        {
+          "id": "npb-01105150",
+          "name": "安德 駿",
+          "reportedName": "安徳駿"
+        },
+        {
+          "id": "npb-91995152",
+          "name": "相良 雅斗",
+          "reportedName": "相良雅斗"
+        },
+        {
+          "id": "npb-71775155",
+          "name": "木村 大成",
+          "reportedName": "木村大成"
+        }
+      ]
+    },
+    {
+      "key": "lions-2026-10-26",
+      "team": "l",
+      "reportedAt": "2026-10-26",
+      "url": "https://pacificleague.com/news/2026/10/10056436",
+      "requiredText": [
+        "2026年10月26日",
+        "来季の契約を結ばない旨を通達したと発表した"
+      ],
+      "players": [
+        {
+          "id": "npb-11315159",
+          "name": "糸川 亮太",
+          "reportedName": "糸川亮太"
+        },
+        {
+          "id": "npb-51155157",
+          "name": "青山 美夏人",
+          "reportedName": "青山美夏人"
+        },
+        {
+          "id": "npb-01005153",
+          "name": "佐々木 健",
+          "reportedName": "佐々木健"
+        },
+        {
+          "id": "npb-71675138",
+          "name": "牧野 翔矢",
+          "reportedName": "牧野翔矢"
+        },
+        {
+          "id": "npb-61065157",
+          "name": "茶野 篤政",
+          "reportedName": "茶野篤政"
+        },
+        {
+          "id": "npb-51855157",
+          "name": "古川 雄大",
+          "reportedName": "古川雄大"
+        },
+        {
+          "id": "npb-43345150",
+          "name": "林 冠臣",
+          "reportedName": "林冠臣"
+        }
+      ]
+    },
+    {
+      "key": "buffaloes-2026-10-26",
+      "team": "b",
+      "reportedAt": "2026-10-26",
+      "url": "https://pacificleague.com/news/2026/10/10056427",
+      "requiredText": [
+        "2026年10月26日",
+        "来季の支配下選手契約を結ばないことを通告したと発表した"
+      ],
+      "players": [
+        {
+          "id": "npb-81985157",
+          "name": "曽谷 龍平",
+          "reportedName": "曽谷龍平"
+        },
+        {
+          "id": "npb-41645152",
+          "name": "藤川 敦也",
+          "reportedName": "藤川敦也"
+        },
+        {
+          "id": "npb-71175136",
+          "name": "東 晃平",
+          "reportedName": "東晃平"
+        },
+        {
+          "id": "npb-41745153",
+          "name": "川瀬 堅斗",
+          "reportedName": "川瀬堅斗"
+        },
+        {
+          "id": "npb-03505155",
+          "name": "横山 楓",
+          "reportedName": "横山楓"
+        }
+      ]
+    },
+    {
+      "key": "swallows-2026-10-26",
+      "team": "s",
+      "reportedAt": "2026-10-26",
+      "url": "https://www.sanspo.com/article/20261026-VERUS26MDFMOTFLQSK7UJRXQQI/?outputType=amp",
+      "requiredText": ["2026/10/26", "来季の契約を結ばないことを通告した"],
+      "players": [
+        {
+          "id": "npb-01705132",
+          "name": "小澤 怜史",
+          "reportedName": "小沢怜史"
+        },
+        {
+          "id": "npb-61865132",
+          "name": "茂木 栄五郎",
+          "reportedName": "茂木栄五郎"
+        },
+        {
+          "id": "npb-01505157",
+          "name": "北村 恵吾",
+          "reportedName": "北村恵吾"
+        }
+      ]
+    },
+    {
+      "key": "fighters-2026-10-26",
+      "team": "f",
+      "reportedAt": "2026-10-26",
+      "url": "https://full-count.jp/2026/10/26/post2036830/",
+      "requiredText": [
+        "2026.10.26",
+        "来季の契約を結ばないことを通達したと発表した"
+      ],
+      "players": [
+        {
+          "id": "npb-41945138",
+          "name": "清宮 虎多朗",
+          "reportedName": "清宮虎多朗"
+        },
+        {
+          "id": "npb-71975155",
+          "name": "阪口 樂",
+          "reportedName": "阪口樂"
+        },
+        {
+          "id": "npb-91595159",
+          "name": "加藤 大和",
+          "reportedName": "加藤大和"
+        },
+        {
+          "id": "npb-03105153",
+          "name": "松本 遼大",
+          "reportedName": "松本遼大"
+        }
+      ]
+    },
+    {
+      "key": "carp-2026-10-26",
+      "team": "c",
+      "reportedAt": "2026-10-26",
+      "url": "https://full-count.jp/2026/10/26/post2036860/",
+      "requiredText": ["2026.10.26", "3選手を自由契約にすると発表した"],
+      "players": [
+        {
+          "id": "npb-71075159",
+          "name": "杉原 望来",
+          "reportedName": "杉原望来"
+        },
+        {
+          "id": "npb-43045159",
+          "name": "ラミレス",
+          "reportedName": "モイセス・ラミレス"
+        },
+        {
+          "id": "npb-63065159",
+          "name": "ロベルト",
+          "reportedName": "ネルソン・ロベルト"
+        }
+      ]
+    },
+    {
+      "key": "marines-confirmed-2026-10-26",
+      "team": "m",
+      "reportedAt": "2026-10-26",
+      "url": "https://full-count.jp/2026-2027_npb_transaction/2/",
+      "requiredText": ["2026-2027年", "戦力外"],
+      "players": [
+        {
+          "id": "npb-61865136",
+          "name": "森 遼大朗",
+          "reportedName": "森遼大朗"
+        },
+        {
+          "id": "npb-91695159",
+          "name": "早坂 響",
+          "reportedName": "早坂響"
+        }
+      ]
+    }
+  ]
+}

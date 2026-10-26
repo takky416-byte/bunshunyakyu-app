@@ -80,13 +80,62 @@ def parse_departures(html):
 def fetch_source(cache, name, url, day, refresh=False):
     path = cache / name
     if refresh or not path.exists():
-        with urllib.request.urlopen(url, timeout=30) as response:
+        request = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(request, timeout=30) as response:
             raw = response.read()
         temporary = path.with_suffix('.tmp')
         temporary.write_bytes(raw)
         temporary.replace(path)
     raw = path.read_bytes()
     return name, {'url': url, 'retrievedAt': day, 'sha256': hashlib.sha256(raw).hexdigest()}, raw.decode('utf8')
+
+
+def individual_departures(cache, day, roster, refresh=False):
+    """Validate reviewed reports by official ID, even before roundup updates."""
+    manifest = json.loads((ROOT / 'scripts/departure_reports2026.json').read_text())
+    if manifest.get('version') != 1:
+        raise ValueError('Unsupported departure report manifest')
+    by_id = {p['id']: p for p in roster['players']}
+    found = {}
+    sources = []
+    seen_keys = set()
+
+    class ArticleText(HTMLParser):
+        def __init__(self):
+            super().__init__(); self.skip = 0; self.parts = []
+        def handle_starttag(self, tag, attrs):
+            if tag in ('script', 'style'): self.skip += 1
+        def handle_endtag(self, tag):
+            if tag in ('script', 'style'): self.skip = max(0, self.skip - 1)
+        def handle_data(self, data):
+            if not self.skip: self.parts.append(data)
+
+    for report in manifest['reports']:
+        key = report['key']
+        if not re.fullmatch(r'[a-z0-9-]+', key) or key in seen_keys:
+            raise ValueError('Invalid or duplicate departure report key')
+        seen_keys.add(key)
+        if (report['team'] not in MAPPING.values() or
+                not report['url'].startswith('https://') or
+                datetime.date.fromisoformat(report['reportedAt']) > datetime.date.fromisoformat(day) or
+                not report['requiredText'] or not report['players']):
+            raise ValueError(f'{key}: incomplete departure report')
+        _, meta, html = fetch_source(cache, f'departure-{key}.html', report['url'], day, refresh)
+        parser = ArticleText(); parser.feed(html)
+        text = status_name(' '.join(parser.parts))
+        if not all(status_name(t) in text for t in report['requiredText']):
+            raise ValueError(f'{key}: report date or departure statement missing; refusing update')
+        ids = set()
+        for player in report['players']:
+            p = by_id.get(player['id'])
+            if (not p or p['team'] != report['team'] or p['name'] != player['name'] or
+                    p['id'] in ids or not player['reportedName'] or
+                    status_name(player['reportedName']) not in text):
+                raise ValueError(f'{key}: player identity or reported name mismatch; refusing update')
+            ids.add(p['id'])
+            found[(p['team'], status_name(p['name']))] = meta['url']
+        sources.append(meta)
+    return found, sources
 
 
 def update_departures(refresh=False):
@@ -101,20 +150,23 @@ def update_departures(refresh=False):
     output = json.loads(path.read_text())
     if {p['id'] for p in roster['players']} != set(output['players']):
         raise ValueError('Roster and eligibility IDs differ; refusing departure-only update')
+    individual, report_sources = individual_departures(cache, day, roster, refresh)
     added = []
     for p in roster['players']:
         key = (p['team'], status_name(p['name']))
         reasons = []
-        if key in departing: reasons.append('戦力外・退団・引退の報道あり')
+        if key in departing or key in individual: reasons.append('戦力外・退団・引退の報道あり')
         if key in fa_history: reasons.append('FA行使による移籍歴の報道あり')
         facts = output['players'][p['id']]
         for reason in reasons:
             if not any(e['reason'] == reason for e in facts['exclusions']):
-                facts['exclusions'].append({'reason': reason, 'source': meta['url']})
+                source = individual.get(key, meta['url']) if reason == '戦力外・退団・引退の報道あり' else meta['url']
+                facts['exclusions'].append({'reason': reason, 'source': source})
                 facts['checkedAt'] = day
                 added.append((p['team'], p['name'], reason))
     # A temporarily missing article row must not silently reinstate a player.
-    output['sources'] = [m for m in output['sources'] if m['url'] != meta['url']] + [meta]
+    refreshed = {m['url']: m for m in [meta, *report_sources]}
+    output['sources'] = [m for m in output['sources'] if m['url'] not in refreshed] + list(refreshed.values())
     output['asOf'] = day
     path.with_suffix('.tmp').write_text(json.dumps(output, ensure_ascii=False, indent=2) + '\n')
     path.with_suffix('.tmp').replace(path)
@@ -171,6 +223,7 @@ def build(refresh=False):
         if len(salaries.get(team, [])) < 40:
             raise ValueError(f'{team}: insufficient salary rows; refusing update')
     roster = json.loads((ROOT / 'src/npb2026.json').read_text())
+    individual, report_sources = individual_departures(cache, day, roster, refresh)
     facts = {}
     for p in roster['players']:
         candidates = [r for r in salaries[p['team']] if r['dob'] == p['birthDate'] and (normal_name(r['name']) == normal_name(p['name']) or (r['number'] == p['number'] and r['position'] == p['position']))]
@@ -183,8 +236,9 @@ def build(refresh=False):
             exclusions.append({'reason': '2026年FA資格保有者', 'source': fa_meta['url']})
         if p['id'][4:] in dr_ids:
             exclusions.append({'reason': '2025年現役ドラフトで獲得', 'source': dr_meta['url']})
-        if (p['team'], status_name(p['name'])) in departing:
-            exclusions.append({'reason': '戦力外・退団・引退の報道あり', 'source': dep_meta['url']})
+        departure_key = (p['team'], status_name(p['name']))
+        if departure_key in departing or departure_key in individual:
+            exclusions.append({'reason': '戦力外・退団・引退の報道あり', 'source': individual.get(departure_key, dep_meta['url'])})
         if (p['team'], status_name(p['name'])) in fa_history:
             exclusions.append({'reason': 'FA行使による移籍歴の報道あり', 'source': dep_meta['url']})
         if not salary:
@@ -199,7 +253,7 @@ def build(refresh=False):
             facts[p['id']]['treatmentSource'] = domestic[p['id']]
     if sum(p['salaryManYen'] is not None for p in facts.values()) < 900:
         raise ValueError('Salary matching coverage unexpectedly low; refusing update')
-    output = {'version': 1, 'salaryPolicy': '2026年推定年俸を使用する仮判定', 'asOf': day, 'sources': [meta for meta, _ in pages.values()], 'players': facts}
+    output = {'version': 1, 'salaryPolicy': '2026年推定年俸を使用する仮判定', 'asOf': day, 'sources': [meta for meta, _ in pages.values()] + report_sources, 'players': facts}
     path = ROOT / 'src/eligibility2026.json'
     path.with_suffix('.tmp').write_text(json.dumps(output, ensure_ascii=False, indent=2) + '\n')
     path.with_suffix('.tmp').replace(path)

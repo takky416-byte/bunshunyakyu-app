@@ -1,7 +1,8 @@
 import { test, expect } from './fixtures'
 import { startRoom } from './room-helpers'
 import { readFileSync } from 'node:fs'
-import type { Dataset } from '../src/data'
+import type { Dataset, TeamId } from '../src/data'
+import reports from '../scripts/departure_reports2026.json' with { type: 'json' }
 import { eligibilityOf } from '../src/eligibility'
 import { newGame, submitNominations } from '../src/engine'
 import {
@@ -21,6 +22,34 @@ const players = dataset.players.map((p) => ({
   ...p,
   draftFacts: facts.players[p.id],
 }))
+
+for (const report of reports.reports) {
+  test(`new room for ${report.team} hides the individually verified departures and explains their exclusion`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 390, height: 844 })
+    await page.goto('/')
+    await startRoom(page, report.team as TeamId)
+    const rowFor = (name: string) =>
+      page
+        .locator('.player-row')
+        .filter({ has: page.getByText(name, { exact: true }) })
+    for (const p of report.players) await expect(rowFor(p.name)).toHaveCount(0)
+    await page.locator('.data-disclosure > summary').click()
+    await page
+      .getByRole('button', { name: '対象外も表示', exact: true })
+      .click()
+    for (const p of report.players)
+      await expect(rowFor(p.name).getByRole('checkbox')).toBeDisabled()
+    const first = report.players[0]
+    await rowFor(first.name)
+      .getByRole('button', { name: `${first.name}の詳細` })
+      .click()
+    await expect(page.getByRole('dialog')).toContainText(
+      '戦力外・退団・引退の報道あり',
+    )
+  })
+}
 
 test('newly reported Dragons departures cannot be nominated in a new room', async ({
   page,
