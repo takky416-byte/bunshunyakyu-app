@@ -905,7 +905,17 @@ export class RoomCore {
         if (this.submitted().includes(team) && g.stage !== 'draft')
           fail('提出済みです。他の球団の提出を待っています。', 409)
         if (a.type === 'nominate' && g.stage === 'nominate') {
-          validateNominations(team, a.players, players)
+          try {
+            validateNominations(team, a.players, players)
+          } catch (error) {
+            // A stale client can still submit a player excluded by a new report.
+            // Return the validation guidance over HTTP and WebSocket as well.
+            throw new RoomError(
+              error instanceof Error
+                ? error.message
+                : '提出候補を選び直してください。',
+            )
+          }
           r.offers[team] = [...a.players]
         } else if (a.type === 'vote' && g.stage === 'vote') {
           beginDraft({ ...g, userTeam: team }, a.player, players)

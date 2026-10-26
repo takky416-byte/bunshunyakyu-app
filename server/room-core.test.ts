@@ -199,7 +199,13 @@ it('retains nominations already accepted before a departure report update while 
   await fresh.send(newcomer, { type: 'start' })
   await expect(
     fresh.send(newcomer, { type: 'nominate', players: accepted }),
-  ).rejects.toThrow('候補対象選手')
+  ).rejects.toMatchObject({
+    status: 400,
+    message: expect.stringContaining('候補対象選手'),
+  })
+  expect((await fresh.core.read(newcomer.token)).game?.stage).toBe('nominate')
+  await fresh.send(newcomer, { type: 'nominate', players: offerings('d') })
+  expect((await fresh.core.read(newcomer.token)).game?.stage).toBe('vote')
 })
 
 it('six-digit rooms keep leading zeros, authenticate sessions, reserve clubs and require ready peers', async () => {

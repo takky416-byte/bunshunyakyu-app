@@ -1,5 +1,5 @@
 import { test, expect } from './fixtures'
-import { startRoom } from './room-helpers'
+import { startRoom, roomSnapshot } from './room-helpers'
 import { readFileSync } from 'node:fs'
 import type { Dataset, TeamId } from '../src/data'
 import reports from '../scripts/departure_reports2026.json' with { type: 'json' }
@@ -48,6 +48,34 @@ for (const report of reports.reports) {
     await expect(page.getByRole('dialog')).toContainText(
       '戦力外・退団・引退の報道あり',
     )
+    if (report.team === 's') {
+      // An older open client must get actionable validation, not an outage.
+      const session = await page.evaluate(
+        (key) => JSON.parse(localStorage.getItem(key)!),
+        ROOM_SESSION_KEY,
+      )
+      const before = await roomSnapshot(page)
+      const legal = players.find(
+        (p) =>
+          p.team === 's' &&
+          eligibilityOf(p).allowed &&
+          eligibilityOf(p).band === 'ordinary',
+      )!
+      const response = await page.request.post(
+        `/api/rooms/${session.code}/actions`,
+        {
+          headers: { Authorization: 'Bearer ' + session.token },
+          data: {
+            id: crypto.randomUUID(),
+            phase: before.phase,
+            action: { type: 'nominate', players: [first.id, legal.id] },
+          },
+        },
+      )
+      expect(response.status()).toBe(400)
+      expect((await response.json()).error).toContain('候補対象選手')
+      expect((await roomSnapshot(page)).phase).toBe(before.phase)
+    }
   })
 }
 
