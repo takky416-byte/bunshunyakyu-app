@@ -6,8 +6,11 @@
       "key": "hawks-2026-10-26",
       "team": "h",
       "reportedAt": "2026-10-26",
-      "url": "https://pacificleague.com/news/2026/10/10056434",
-      "requiredText": ["2026年10月26日", "来季の支配下契約は結ばない"],
+      "url": "https://pacificleague.com/news/2026/10/10056443",
+      "requiredText": [
+        "2026年10月26日",
+        "来季の育成選手契約を結ばないと発表した"
+      ],
       "players": [
         {
           "id": "npb-71175153",
@@ -27,7 +30,7 @@
         {
           "id": "npb-01105150",
           "name": "安德 駿",
-          "reportedName": "安徳駿"
+          "reportedName": "安德駿"
         },
         {
           "id": "npb-91995152",
@@ -38,6 +41,46 @@
           "id": "npb-71775155",
           "name": "木村 大成",
           "reportedName": "木村大成"
+        },
+        {
+          "id": "npb-13315159",
+          "name": "宮里 優吾",
+          "reportedName": "宮里優吾"
+        },
+        {
+          "id": "npb-31735150",
+          "name": "川口 冬弥",
+          "reportedName": "川口冬弥"
+        },
+        {
+          "id": "npb-11415153",
+          "name": "田上 奏大",
+          "reportedName": "田上奏大"
+        },
+        {
+          "id": "npb-41345157",
+          "name": "岡植 純平",
+          "reportedName": "岡植純平"
+        },
+        {
+          "id": "npb-11915157",
+          "name": "佐々木 明都",
+          "reportedName": "佐々木明都"
+        },
+        {
+          "id": "npb-33135153",
+          "name": "牧原 巧汰",
+          "reportedName": "牧原巧汰"
+        },
+        {
+          "id": "npb-71975157",
+          "name": "重松 凱人",
+          "reportedName": "重松凱人"
+        },
+        {
+          "id": "npb-31935157",
+          "name": "佐藤 航太",
+          "reportedName": "佐藤航太"
         }
       ]
     },
