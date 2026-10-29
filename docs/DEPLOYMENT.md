@@ -71,6 +71,10 @@ D1はWorkerの再配置と独立した保存先。DB自体を削除するとデ�
 
 通常はテストとビルド後、`npm run cloudflare:migrate`、`npm run cloudflare:deploy` を手動で実行する。管理キーは更新のたびに再生成しない。
 
+2026-10-29の戦力外情報更新は公開反映済み。アプリのソースは`312b06f`、本番Workerバージョンは`3ca9bd9f-8859-4a51-9a7f-fe013872abaf`。本番APIで個別確認した57名の候補提出を拒否し、12球団の候補に報道反映済み175名が含まれないことを確認した。公開トップとフロントエンド11ファイル、旧版互換を含む読み上げ音声9ファイルもビルド成果物と一致し、集計APIと管理認証も確認済み。
+
+この公開では、本番Worker名での`assets-upload-session`がHTTP 500／10013になったため、同じアカウントの別名でアセットのアップロードセッションを作成した。全配信ファイルのマニフェストを登録し、要求されたファイルを小分けのmultipartで転送した後、完了JWTを使って元のWorker名へ通常のビルドをバージョン登録し、100%へ切り替えた。公開URL・D1・Durable Objectの名前空間・管理用Secret・`/api/*`のルーティングを保持している。静的ファイルをWorkerコードに埋め込む回避策は本番では使っていない。実行スクリプト・検証結果・非公開の取得応答は作業環境のGit管理外`.cache/departures-2026-10-29/`に記録し、認証情報やアップロードJWTをGitへ追加しない。
+
 任意でGitHub Actionsの `Deploy free Cloudflare app` を手動実行できる。`wrangler.jsonc` に実際のD1 IDを反映し、GitHubの `production` 環境のSecretsに `CLOUDFLARE_API_TOKEN` と `CLOUDFLARE_ACCOUNT_ID` を設定する。初回管理キー登録は別途必要。自動デプロイは行わない。非公開リポジトリではActionsにも無料実行時間の上限があるため、利用する場合はGitHubの課金設定を確認する。ローカルからの公開にActionsは必要ない。
 
 ## ローカルでCloudflare構成を確認
