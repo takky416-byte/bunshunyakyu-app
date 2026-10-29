@@ -1,7 +1,7 @@
 {
   "version": 1,
   "salaryPolicy": "2026年推定年俸を使用する仮判定",
-  "asOf": "2026-10-27",
+  "asOf": "2026-10-29",
   "sources": [
     {
       "url": "https://www.gurazeni.com/team/1",
@@ -114,31 +114,6 @@
       "sha256": "472524760e0501fe13fb4aed73e80d3c17495e891f55d52607fddd130dd553e4"
     },
     {
-      "url": "https://www.nikkansports.com/baseball/news/202609280000276.html",
-      "retrievedAt": "2026-10-27",
-      "sha256": "35c3b776bfeac42ded8af8e48e6937a6ca27c97fa916573c94b962743e3e06d6"
-    },
-    {
-      "url": "https://pacificleague.com/news/2026/10/10056443",
-      "retrievedAt": "2026-10-27",
-      "sha256": "70bad31b6f5a644bfb30cab14b3b51b774cc2796ba86d7374f97662c5e9281a7"
-    },
-    {
-      "url": "https://pacificleague.com/news/2026/10/10056436",
-      "retrievedAt": "2026-10-27",
-      "sha256": "91f5ba8fdee8b4be9313cfc1a7a8353f369e8e720c17283260f029fe1c3acd5a"
-    },
-    {
-      "url": "https://pacificleague.com/news/2026/10/10056427",
-      "retrievedAt": "2026-10-27",
-      "sha256": "c8e14056ef80b7069ae26a759ffe3991b9ce5ee4fc44d5f8073a988e256e2978"
-    },
-    {
-      "url": "https://www.sanspo.com/article/20261026-VERUS26MDFMOTFLQSK7UJRXQQI/?outputType=amp",
-      "retrievedAt": "2026-10-27",
-      "sha256": "c0346d422c28af607d05d9177c70290892145e0943ff806f161f54a4c8ab5ed8"
-    },
-    {
       "url": "https://full-count.jp/2026/10/26/post2036830/",
       "retrievedAt": "2026-10-27",
       "sha256": "b455e38bf7dcf3c497e211ecf942c6912b85f1fbd88cdd3c84a4e9a2c478c511"
@@ -149,9 +124,64 @@
       "sha256": "ce8cfce49027ff917d59c337aa17156289678412cf47bb6a5fb560776b1e1b5e"
     },
     {
+      "url": "https://www.nikkansports.com/baseball/news/202609280000276.html",
+      "retrievedAt": "2026-10-29",
+      "sha256": "e8a25f0f7690c79e346e4903291b8171d6b500ab6b6eed13e2b0578a36c4438d"
+    },
+    {
+      "url": "https://pacificleague.com/news/2026/10/10056443",
+      "retrievedAt": "2026-10-29",
+      "sha256": "b9d2deeb416afdb85437206b66469a018feaf010cbee4d657c988293e09ac721"
+    },
+    {
+      "url": "https://pacificleague.com/news/2026/10/10056436",
+      "retrievedAt": "2026-10-29",
+      "sha256": "3bb7186f4982a2ef09395a2e0c0244e6831545b9ec9701283a6044abac26c9b1"
+    },
+    {
+      "url": "https://pacificleague.com/news/2026/10/10056427",
+      "retrievedAt": "2026-10-29",
+      "sha256": "8a1777de142cf0b42c5b2efeddf5095dfc5bd2838af99b9bac26717a42a9e79b"
+    },
+    {
+      "url": "https://www.sanspo.com/article/20261026-VERUS26MDFMOTFLQSK7UJRXQQI/?outputType=amp",
+      "retrievedAt": "2026-10-29",
+      "sha256": "7f98a7cb1f8ca6549d4a56ddda03ea2dd16087c7985d2629d48efd14d560097e"
+    },
+    {
+      "url": "https://pacificleague.com/news/2026/10/10056441",
+      "retrievedAt": "2026-10-29",
+      "sha256": "d3451f46c3c6603155be432d1f021942fd1663e92eb4d7b781092e4276c46c47"
+    },
+    {
+      "url": "https://topics.smt.docomo.ne.jp/amp/article/fullcount/sports/fullcount-2036860",
+      "retrievedAt": "2026-10-29",
+      "sha256": "bf02d218ec9d86c5ba7b9a175fc40f64f78f2acd298b678261f4424e2534024e"
+    },
+    {
       "url": "https://full-count.jp/2026-2027_npb_transaction/2/",
-      "retrievedAt": "2026-10-27",
-      "sha256": "53278711dbf553a26d312224e71118406cd587c8265ff55243766dad2a004969"
+      "retrievedAt": "2026-10-29",
+      "sha256": "b9a052e952b92ac553c7cd84e83ad772f066eb95de95f92335b928605cfacf87"
+    },
+    {
+      "url": "https://www.chunichi.co.jp/article/1331890",
+      "retrievedAt": "2026-10-29",
+      "sha256": "a9c1195b3bf32e158a346e466f064a222a1c3a0d0ebea4ace93f416a92293458"
+    },
+    {
+      "url": "https://www.baseballchannel.jp/npb/299226/",
+      "retrievedAt": "2026-10-29",
+      "sha256": "7122de7631bf6d3ebd36d65a4ee6d0115998173909ae6f30401a20a4f8e4b6d5"
+    },
+    {
+      "url": "https://www.nikkansports.com/baseball/news/202610290000616.html",
+      "retrievedAt": "2026-10-29",
+      "sha256": "56e64b5c2cd1f7994789623ea22b674f6ca42ef47f5fe866158929257ce4ed93"
+    },
+    {
+      "url": "https://www.sponichi.co.jp/baseball/news/2026/10/29/kiji/20261029s00001173207000c.html",
+      "retrievedAt": "2026-10-29",
+      "sha256": "342e71b0aebb779bfd61150e1e1660105f45c31b6492074a046e0a24ca625375"
     }
   ],
   "players": {
@@ -4728,7 +4758,7 @@
       "salaryYear": 2026,
       "salaryManYen": 350.0,
       "salarySource": "https://www.gurazeni.com/team/4",
-      "checkedAt": "2026-10-26",
+      "checkedAt": "2026-10-29",
       "exclusions": [
         {
           "reason": "育成登録",
@@ -4736,7 +4766,7 @@
         },
         {
           "reason": "戦力外・退団・引退の報道あり",
-          "source": "https://full-count.jp/2026/10/26/post2036860/"
+          "source": "https://topics.smt.docomo.ne.jp/amp/article/fullcount/sports/fullcount-2036860"
         }
       ],
       "holds": [],
@@ -4814,7 +4844,7 @@
       "salaryYear": 2026,
       "salaryManYen": 230.0,
       "salarySource": "https://www.gurazeni.com/team/4",
-      "checkedAt": "2026-10-26",
+      "checkedAt": "2026-10-29",
       "exclusions": [
         {
           "reason": "育成登録",
@@ -4822,7 +4852,7 @@
         },
         {
           "reason": "戦力外・退団・引退の報道あり",
-          "source": "https://full-count.jp/2026/10/26/post2036860/"
+          "source": "https://topics.smt.docomo.ne.jp/amp/article/fullcount/sports/fullcount-2036860"
         }
       ],
       "holds": [
@@ -4836,7 +4866,7 @@
       "salaryYear": 2026,
       "salaryManYen": 230.0,
       "salarySource": "https://www.gurazeni.com/team/4",
-      "checkedAt": "2026-10-26",
+      "checkedAt": "2026-10-29",
       "exclusions": [
         {
           "reason": "育成登録",
@@ -4844,7 +4874,7 @@
         },
         {
           "reason": "戦力外・退団・引退の報道あり",
-          "source": "https://full-count.jp/2026/10/26/post2036860/"
+          "source": "https://topics.smt.docomo.ne.jp/amp/article/fullcount/sports/fullcount-2036860"
         }
       ],
       "holds": [
@@ -5201,8 +5231,13 @@
       "salaryYear": 2026,
       "salaryManYen": 580.0,
       "salarySource": "https://www.gurazeni.com/team/3",
-      "checkedAt": "2026-10-24",
-      "exclusions": [],
+      "checkedAt": "2026-10-29",
+      "exclusions": [
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.baseballchannel.jp/npb/299226/"
+        }
+      ],
       "holds": [],
       "unresolved": [
         "複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち"
@@ -5717,11 +5752,15 @@
       "salaryYear": 2026,
       "salaryManYen": 400.0,
       "salarySource": "https://www.gurazeni.com/team/3",
-      "checkedAt": "2026-10-24",
+      "checkedAt": "2026-10-29",
       "exclusions": [
         {
           "reason": "育成登録",
           "source": "https://npb.jp/bis/teams/rst_s.html"
+        },
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.baseballchannel.jp/npb/299226/"
         }
       ],
       "holds": [],
@@ -5749,11 +5788,15 @@
       "salaryYear": 2026,
       "salaryManYen": 320.0,
       "salarySource": "https://www.gurazeni.com/team/3",
-      "checkedAt": "2026-10-24",
+      "checkedAt": "2026-10-29",
       "exclusions": [
         {
           "reason": "育成登録",
           "source": "https://npb.jp/bis/teams/rst_s.html"
+        },
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.baseballchannel.jp/npb/299226/"
         }
       ],
       "holds": [],
@@ -5765,11 +5808,15 @@
       "salaryYear": 2026,
       "salaryManYen": 510.0,
       "salarySource": "https://www.gurazeni.com/team/3",
-      "checkedAt": "2026-10-24",
+      "checkedAt": "2026-10-29",
       "exclusions": [
         {
           "reason": "育成登録",
           "source": "https://npb.jp/bis/teams/rst_s.html"
+        },
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.baseballchannel.jp/npb/299226/"
         }
       ],
       "holds": [],
@@ -5783,11 +5830,15 @@
       "salaryYear": 2026,
       "salaryManYen": 400.0,
       "salarySource": "https://www.gurazeni.com/team/3",
-      "checkedAt": "2026-10-24",
+      "checkedAt": "2026-10-29",
       "exclusions": [
         {
           "reason": "育成登録",
           "source": "https://npb.jp/bis/teams/rst_s.html"
+        },
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.baseballchannel.jp/npb/299226/"
         }
       ],
       "holds": [],
@@ -5815,11 +5866,15 @@
       "salaryYear": 2026,
       "salaryManYen": 400.0,
       "salarySource": "https://www.gurazeni.com/team/3",
-      "checkedAt": "2026-10-24",
+      "checkedAt": "2026-10-29",
       "exclusions": [
         {
           "reason": "育成登録",
           "source": "https://npb.jp/bis/teams/rst_s.html"
+        },
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.baseballchannel.jp/npb/299226/"
         }
       ],
       "holds": [],
@@ -5831,11 +5886,15 @@
       "salaryYear": 2026,
       "salaryManYen": null,
       "salarySource": null,
-      "checkedAt": "2026-10-24",
+      "checkedAt": "2026-10-29",
       "exclusions": [
         {
           "reason": "育成登録",
           "source": "https://npb.jp/bis/teams/rst_s.html"
+        },
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.baseballchannel.jp/npb/299226/"
         }
       ],
       "holds": [
@@ -5869,11 +5928,15 @@
       "salaryYear": 2026,
       "salaryManYen": 320.0,
       "salarySource": "https://www.gurazeni.com/team/3",
-      "checkedAt": "2026-10-24",
+      "checkedAt": "2026-10-29",
       "exclusions": [
         {
           "reason": "育成登録",
           "source": "https://npb.jp/bis/teams/rst_s.html"
+        },
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.baseballchannel.jp/npb/299226/"
         }
       ],
       "holds": [],
@@ -6023,8 +6086,13 @@
       "salaryYear": 2026,
       "salaryManYen": 900.0,
       "salarySource": "https://www.gurazeni.com/team/2",
-      "checkedAt": "2026-10-24",
-      "exclusions": [],
+      "checkedAt": "2026-10-29",
+      "exclusions": [
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.chunichi.co.jp/article/1331890"
+        }
+      ],
       "holds": [],
       "unresolved": [
         "複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち"
@@ -6083,8 +6151,13 @@
       "salaryYear": 2026,
       "salaryManYen": 630.0,
       "salarySource": "https://www.gurazeni.com/team/2",
-      "checkedAt": "2026-10-24",
-      "exclusions": [],
+      "checkedAt": "2026-10-29",
+      "exclusions": [
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.chunichi.co.jp/article/1331890"
+        }
+      ],
       "holds": [],
       "unresolved": [
         "複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち"
@@ -6224,8 +6297,13 @@
       "salaryYear": 2026,
       "salaryManYen": 540.0,
       "salarySource": "https://www.gurazeni.com/team/2",
-      "checkedAt": "2026-10-24",
-      "exclusions": [],
+      "checkedAt": "2026-10-29",
+      "exclusions": [
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.chunichi.co.jp/article/1331890"
+        }
+      ],
       "holds": [],
       "unresolved": [
         "複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち"
@@ -6235,8 +6313,13 @@
       "salaryYear": 2026,
       "salaryManYen": null,
       "salarySource": null,
-      "checkedAt": "2026-10-24",
-      "exclusions": [],
+      "checkedAt": "2026-10-29",
+      "exclusions": [
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.chunichi.co.jp/article/1331890"
+        }
+      ],
       "holds": [
         "2026年推定年俸の照合待ち"
       ],
@@ -7803,8 +7886,13 @@
       "salaryYear": 2026,
       "salaryManYen": 2400.0,
       "salarySource": "https://www.gurazeni.com/team/9",
-      "checkedAt": "2026-10-24",
-      "exclusions": [],
+      "checkedAt": "2026-10-29",
+      "exclusions": [
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.nikkansports.com/baseball/news/202610290000616.html"
+        }
+      ],
       "holds": [],
       "unresolved": [
         "複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち"
@@ -9083,11 +9171,11 @@
       "salaryYear": 2026,
       "salaryManYen": 700.0,
       "salarySource": "https://www.gurazeni.com/team/7",
-      "checkedAt": "2026-10-26",
+      "checkedAt": "2026-10-29",
       "exclusions": [
         {
           "reason": "戦力外・退団・引退の報道あり",
-          "source": "https://full-count.jp/2026/10/26/post2036830/"
+          "source": "https://pacificleague.com/news/2026/10/10056441"
         }
       ],
       "holds": [],
@@ -9308,11 +9396,11 @@
       "salaryYear": 2026,
       "salaryManYen": 550.0,
       "salarySource": "https://www.gurazeni.com/team/7",
-      "checkedAt": "2026-10-26",
+      "checkedAt": "2026-10-29",
       "exclusions": [
         {
           "reason": "戦力外・退団・引退の報道あり",
-          "source": "https://full-count.jp/2026/10/26/post2036830/"
+          "source": "https://pacificleague.com/news/2026/10/10056441"
         }
       ],
       "holds": [],
@@ -9514,7 +9602,7 @@
       "salaryYear": 2026,
       "salaryManYen": 260.0,
       "salarySource": "https://www.gurazeni.com/team/7",
-      "checkedAt": "2026-10-26",
+      "checkedAt": "2026-10-29",
       "exclusions": [
         {
           "reason": "育成登録",
@@ -9522,7 +9610,7 @@
         },
         {
           "reason": "戦力外・退団・引退の報道あり",
-          "source": "https://full-count.jp/2026/10/26/post2036830/"
+          "source": "https://pacificleague.com/news/2026/10/10056441"
         }
       ],
       "holds": [],
@@ -9534,7 +9622,7 @@
       "salaryYear": 2026,
       "salaryManYen": 400.0,
       "salarySource": "https://www.gurazeni.com/team/7",
-      "checkedAt": "2026-10-26",
+      "checkedAt": "2026-10-29",
       "exclusions": [
         {
           "reason": "育成登録",
@@ -9542,7 +9630,7 @@
         },
         {
           "reason": "戦力外・退団・引退の報道あり",
-          "source": "https://full-count.jp/2026/10/26/post2036830/"
+          "source": "https://pacificleague.com/news/2026/10/10056441"
         }
       ],
       "holds": [],
@@ -11095,8 +11183,13 @@
       "salaryYear": 2026,
       "salaryManYen": 3600.0,
       "salarySource": "https://www.gurazeni.com/team/10",
-      "checkedAt": "2026-10-24",
-      "exclusions": [],
+      "checkedAt": "2026-10-29",
+      "exclusions": [
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.sponichi.co.jp/baseball/news/2026/10/29/kiji/20261029s00001173207000c.html"
+        }
+      ],
       "holds": [],
       "unresolved": [
         "複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち"
@@ -11281,8 +11374,13 @@
       "salaryYear": 2026,
       "salaryManYen": 430.0,
       "salarySource": "https://www.gurazeni.com/team/10",
-      "checkedAt": "2026-10-24",
-      "exclusions": [],
+      "checkedAt": "2026-10-29",
+      "exclusions": [
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.sponichi.co.jp/baseball/news/2026/10/29/kiji/20261029s00001173207000c.html"
+        }
+      ],
       "holds": [],
       "unresolved": [
         "複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち"
@@ -11448,8 +11546,13 @@
       "salaryYear": 2026,
       "salaryManYen": 1600.0,
       "salarySource": "https://www.gurazeni.com/team/10",
-      "checkedAt": "2026-10-24",
-      "exclusions": [],
+      "checkedAt": "2026-10-29",
+      "exclusions": [
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.sponichi.co.jp/baseball/news/2026/10/29/kiji/20261029s00001173207000c.html"
+        }
+      ],
       "holds": [],
       "unresolved": [
         "複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち"
@@ -11459,8 +11562,13 @@
       "salaryYear": 2026,
       "salaryManYen": 550.0,
       "salarySource": "https://www.gurazeni.com/team/10",
-      "checkedAt": "2026-10-24",
-      "exclusions": [],
+      "checkedAt": "2026-10-29",
+      "exclusions": [
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.sponichi.co.jp/baseball/news/2026/10/29/kiji/20261029s00001173207000c.html"
+        }
+      ],
       "holds": [],
       "unresolved": [
         "複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち"
@@ -11621,8 +11729,13 @@
       "salaryYear": 2026,
       "salaryManYen": 580.0,
       "salarySource": "https://www.gurazeni.com/team/10",
-      "checkedAt": "2026-10-24",
-      "exclusions": [],
+      "checkedAt": "2026-10-29",
+      "exclusions": [
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.sponichi.co.jp/baseball/news/2026/10/29/kiji/20261029s00001173207000c.html"
+        }
+      ],
       "holds": [],
       "unresolved": [
         "複数年契約・過去FA行使・開催時保留名簿は選手別照合待ち"
@@ -11667,8 +11780,13 @@
       "salaryYear": 2026,
       "salaryManYen": null,
       "salarySource": null,
-      "checkedAt": "2026-10-24",
-      "exclusions": [],
+      "checkedAt": "2026-10-29",
+      "exclusions": [
+        {
+          "reason": "戦力外・退団・引退の報道あり",
+          "source": "https://www.sponichi.co.jp/baseball/news/2026/10/29/kiji/20261029s00001173207000c.html"
+        }
+      ],
       "holds": [
         "2026年推定年俸の照合待ち"
       ],

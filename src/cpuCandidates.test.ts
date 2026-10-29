@@ -202,8 +202,19 @@ describe('realistic CPU nomination model', () => {
           expect(protectedForRealisticCpu(player)).toBe(false)
         }
       }
-      // The strictest clubs have four plausible players: six possible pairs.
-      expect(pairs.size, team).toBeGreaterThanOrEqual(6)
+      // Releases can shrink a club's plausible pool below four players.
+      // Require variety up to the number of distinct legal pairs available.
+      const plausibleCount = players.filter(
+        (p) =>
+          p.team === team &&
+          eligibilityOf(p).allowed &&
+          eligibilityOf(p).band === 'ordinary' &&
+          !protectedForRealisticCpu(p),
+      ).length
+      expect(plausibleCount, team).toBeGreaterThanOrEqual(2)
+      expect(pairs.size, team).toBeGreaterThanOrEqual(
+        Math.min(6, (plausibleCount * (plausibleCount - 1)) / 2),
+      )
       expect(realisticCandidates(team, players, 901)).toEqual(
         realisticCandidates(team, [...players].reverse(), 901),
       )

@@ -45,7 +45,7 @@ describe('announcement speech', () => {
     const selectable = officialDataset.players.filter(
       (p) => eligibilityOf(p).allowed,
     )
-    expect(selectable).toHaveLength(470)
+    expect(selectable).toHaveLength(460)
     for (const p of selectable)
       expect(playerReading(p)).toMatch(/^[ぁ-ゖァ-ヺー 　]+$/)
     const original = selectable[0]

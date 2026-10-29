@@ -196,11 +196,8 @@
       "key": "fighters-2026-10-26",
       "team": "f",
       "reportedAt": "2026-10-26",
-      "url": "https://full-count.jp/2026/10/26/post2036830/",
-      "requiredText": [
-        "2026.10.26",
-        "来季の契約を結ばないことを通達したと発表した"
-      ],
+      "url": "https://pacificleague.com/news/2026/10/10056441",
+      "requiredText": ["2026年10月26日", "来季契約を結ばないことを発表した"],
       "players": [
         {
           "id": "npb-41945138",
@@ -210,7 +207,7 @@
         {
           "id": "npb-71975155",
           "name": "阪口 樂",
-          "reportedName": "阪口樂"
+          "reportedName": "阪口楽"
         },
         {
           "id": "npb-91595159",
@@ -228,8 +225,8 @@
       "key": "carp-2026-10-26",
       "team": "c",
       "reportedAt": "2026-10-26",
-      "url": "https://full-count.jp/2026/10/26/post2036860/",
-      "requiredText": ["2026.10.26", "3選手を自由契約にすると発表した"],
+      "url": "https://topics.smt.docomo.ne.jp/amp/article/fullcount/sports/fullcount-2036860",
+      "requiredText": ["2026年10月26日", "3選手を自由契約にすると発表した"],
       "players": [
         {
           "id": "npb-71075159",
@@ -264,6 +261,140 @@
           "id": "npb-91695159",
           "name": "早坂 響",
           "reportedName": "早坂響"
+        }
+      ]
+    },
+    {
+      "key": "dragons-2026-10-29",
+      "team": "d",
+      "reportedAt": "2026-10-29",
+      "url": "https://www.chunichi.co.jp/article/1331890",
+      "requiredText": ["2026年10月29日", "来季の契約を結ばないことを発表した"],
+      "players": [
+        {
+          "id": "npb-37035159",
+          "name": "牧野 憲伸",
+          "reportedName": "牧野憲伸"
+        },
+        {
+          "id": "npb-73175153",
+          "name": "松木平 優太",
+          "reportedName": "松木平優太"
+        },
+        {
+          "id": "npb-31835159",
+          "name": "福田 幸之介",
+          "reportedName": "福田幸之介"
+        },
+        {
+          "id": "npb-91195150",
+          "name": "有馬 惠叶",
+          "reportedName": "有馬恵叶"
+        }
+      ]
+    },
+    {
+      "key": "swallows-2026-10-29",
+      "team": "s",
+      "reportedAt": "2026-10-29",
+      "url": "https://www.baseballchannel.jp/npb/299226/",
+      "requiredText": ["2026.10.29", "自由契約とする旨を通告したと発表した"],
+      "players": [
+        {
+          "id": "npb-81785157",
+          "name": "坂本 拓己",
+          "reportedName": "坂本拓己"
+        },
+        {
+          "id": "npb-91295155",
+          "name": "竹山 日向",
+          "reportedName": "竹山日向"
+        },
+        {
+          "id": "npb-71475157",
+          "name": "西濱 勇星",
+          "reportedName": "西濱勇星"
+        },
+        {
+          "id": "npb-53255159",
+          "name": "翔聖",
+          "reportedName": "翔聖"
+        },
+        {
+          "id": "npb-61965155",
+          "name": "佐藤 琢磨",
+          "reportedName": "佐藤琢磨"
+        },
+        {
+          "id": "npb-01405153",
+          "name": "中川 拓真",
+          "reportedName": "中川拓真"
+        },
+        {
+          "id": "npb-71575151",
+          "name": "遠藤 成",
+          "reportedName": "遠藤成"
+        },
+        {
+          "id": "npb-81085159",
+          "name": "髙野 颯太",
+          "reportedName": "髙野颯太"
+        }
+      ]
+    },
+    {
+      "key": "hawks-2026-10-29",
+      "team": "h",
+      "reportedAt": "2026-10-29",
+      "url": "https://www.nikkansports.com/baseball/news/202610290000616.html",
+      "requiredText": ["2026年10月29日", "来季の契約を結ばないことを通告した"],
+      "players": [
+        {
+          "id": "npb-81585153",
+          "name": "緒方 理貢",
+          "reportedName": "緒方理貢"
+        }
+      ]
+    },
+    {
+      "key": "eagles-2026-10-29",
+      "team": "e",
+      "reportedAt": "2026-10-29",
+      "url": "https://www.sponichi.co.jp/baseball/news/2026/10/29/kiji/20261029s00001173207000c.html",
+      "requiredText": [
+        "2026年10月29日",
+        "来季の契約を結ばない旨を通知したと発表した"
+      ],
+      "players": [
+        {
+          "id": "npb-23525157",
+          "name": "渡辺 翔太",
+          "reportedName": "渡辺翔太"
+        },
+        {
+          "id": "npb-31735157",
+          "name": "古賀 康誠",
+          "reportedName": "古賀康誠"
+        },
+        {
+          "id": "npb-61165134",
+          "name": "石原 彪",
+          "reportedName": "石原彪"
+        },
+        {
+          "id": "npb-81385152",
+          "name": "大栄 利哉",
+          "reportedName": "大栄利哉"
+        },
+        {
+          "id": "npb-41345153",
+          "name": "入江 大樹",
+          "reportedName": "入江大樹"
+        },
+        {
+          "id": "npb-11715152",
+          "name": "金子 京介",
+          "reportedName": "金子京介"
         }
       ]
     }

@@ -24,7 +24,7 @@ const players = dataset.players.map((p) => ({
 }))
 
 for (const report of reports.reports) {
-  test(`new room for ${report.team} hides the individually verified departures and explains their exclusion`, async ({
+  test(`new room for ${report.key} hides the individually verified departures and explains their exclusion`, async ({
     page,
   }) => {
     await page.setViewportSize({ width: 390, height: 844 })
