@@ -7,6 +7,36 @@ function headers() {
   return { Authorization: `Bearer ${process.env.TEST_ANALYTICS_ADMIN_KEY!}` }
 }
 
+test('dashboard only reads statistics on entry, period changes, or explicit refresh', async ({
+  page,
+}) => {
+  await page.clock.install()
+  const reads: string[] = []
+  page.on('request', (request) => {
+    if (request.url().includes('/api/analytics/admin/summary'))
+      reads.push(request.url())
+  })
+  await page.goto('/admin')
+  await page
+    .getByLabel('管理キー', { exact: true })
+    .fill(process.env.TEST_ANALYTICS_ADMIN_KEY!)
+  await page.getByRole('button', { name: 'ダッシュボードを開く' }).click()
+  await expect(
+    page.getByRole('heading', { name: '日別の利用状況' }),
+  ).toBeVisible()
+  expect(reads).toHaveLength(1)
+  await page.clock.fastForward(65_000)
+  expect(reads).toHaveLength(1)
+  await page.getByRole('button', { name: '最新に更新', exact: true }).click()
+  await expect(
+    page.getByRole('button', { name: '最新に更新', exact: true }),
+  ).toBeEnabled()
+  expect(reads).toHaveLength(2)
+  await page.getByRole('button', { name: '7日', exact: true }).click()
+  await expect(page.locator('.admin-daily tbody tr')).toHaveCount(7)
+  expect(reads).toHaveLength(3)
+})
+
 test('real gameplay is recorded once, persists on reload, and appears in the protected dashboard', async ({
   page,
   request,

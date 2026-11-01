@@ -14,6 +14,8 @@ Workersの静的アセット配信は無料で、API実行にはFreeプランの
 
 集計サービスがエラーになってもゲームは継続できる。ルームの進行にはWorkersとDurable Objectsが必要なため、それらの障害時は再接続を待つ。未送信イベントはブラウザ内で再送を試すが、欠測はあり得る。独自ドメイン、有料プラン、追加ストレージはこの構成に含めない。
 
+無料枠はこのアプリ専用ではなく、同じアカウントの他のWorker・Durable Object等との共有枠にも注意する。2026-11-01の使用量確認では、10月31日UTCのDurable Objects読み取り約515万行は別Worker `ap-quiz-arena` の名前空間で発生し、現役ドラフトの名前空間は同日0行だった。このアプリの省読み取り対策だけでは、他のアプリによるアカウント共通の上限超過を防げない。管理画面の自動再集計停止・ルームの取得結果保持・重複アラーム保存の抑制・ping/pong自動応答を実施し、不要な読み取りと実行を抑える。
+
 - [Workers公式料金](https://developers.cloudflare.com/workers/platform/pricing/)
 - [Durable Objects公式料金・無料枠](https://developers.cloudflare.com/durable-objects/platform/pricing/)
 - [D1公式料金・無料枠](https://developers.cloudflare.com/d1/platform/pricing/)

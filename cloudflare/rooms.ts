@@ -12,6 +12,7 @@ interface DurableContext {
     setAlarm(at: number): Promise<void>
   }
   acceptWebSocket(socket: WebSocket): void
+  setWebSocketAutoResponse?(pair: { request: string; response: string }): void
   getWebSockets(): RoomSocket[]
   waitUntil(promise: Promise<unknown>): void
 }
@@ -23,6 +24,9 @@ export interface RoomNamespace {
   get(id: unknown): RoomStub
 }
 declare const WebSocketPair: { new (): { 0: RoomSocket; 1: RoomSocket } }
+declare const WebSocketRequestResponsePair: {
+  new (request: string, response: string): { request: string; response: string }
+}
 export const roomJson = (body: unknown, status = 200) =>
   Response.json(body, {
     status,
@@ -85,6 +89,16 @@ export const socketToken = (header: string | null) =>
 export class DraftRoom {
   private core: RoomCore
   constructor(private ctx: DurableContext) {
+    if (
+      ctx.setWebSocketAutoResponse &&
+      typeof WebSocketRequestResponsePair !== 'undefined'
+    )
+      ctx.setWebSocketAutoResponse(
+        new WebSocketRequestResponsePair(
+          JSON.stringify({ type: 'ping' }),
+          JSON.stringify({ type: 'pong' }),
+        ),
+      )
     this.core = new RoomCore(
       {
         load: async () => (await ctx.storage.get<StoredRoom>('room')) ?? null,

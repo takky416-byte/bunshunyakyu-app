@@ -193,6 +193,7 @@ export function parseCommand(raw: unknown): RoomCommand {
 }
 export class RoomCore {
   private state: StoredRoom | null | undefined
+  private scheduledAt: number | undefined
   private queue: Promise<unknown> = Promise.resolve()
   constructor(
     private repository: RoomRepository,
@@ -202,11 +203,12 @@ export class RoomCore {
   ) {}
   private run<T>(operation: () => Promise<T> | T): Promise<T> {
     const next = this.queue.then(async () => {
-      this.state ??= await this.repository.load()
+      // A missing room is a valid cached result, too. Retry only failed loads.
+      if (this.state === undefined) this.state = await this.repository.load()
       const now = this.clock()
       if (this.state && this.state.expiresAt <= now) {
-        this.state = null
         await this.repository.delete()
+        this.state = null
         this.hooks.expired()
       }
       if (this.state && this.state.ruleset !== RULESET)
@@ -232,7 +234,13 @@ export class RoomCore {
           persisted = true
           this.hooks.broadcast()
         }
-        if (this.state) await this.hooks.schedule(this.nextAlarm())
+        if (this.state) {
+          const at = this.nextAlarm()
+          if (at !== this.scheduledAt) {
+            await this.hooks.schedule(at)
+            this.scheduledAt = at
+          }
+        }
         return result
       } catch (error) {
         // A failed alarm update must not roll back an already committed move.
@@ -734,6 +742,8 @@ export class RoomCore {
   }
   alarm() {
     return this.run(() => {
+      // The platform consumed the alarm, even when it fired early.
+      this.scheduledAt = undefined
       if (this.state) this.tick()
     })
   }

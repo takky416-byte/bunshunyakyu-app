@@ -180,11 +180,7 @@ export default function AnalyticsAdmin() {
     if (!key) return
     setReport(null)
     void refresh()
-    const timer = window.setInterval(() => {
-      void refresh()
-    }, 30_000)
     return () => {
-      window.clearInterval(timer)
       controller.current?.abort()
     }
   }, [key, refresh])
@@ -581,7 +577,7 @@ export default function AnalyticsAdmin() {
                   </p>
                   <span>
                     最終集計：{datetime(report.generatedAt)} JST /
-                    30秒ごとに更新
+                    必要なときに「最新に更新」を押してください。
                   </span>
                 </div>
               </>

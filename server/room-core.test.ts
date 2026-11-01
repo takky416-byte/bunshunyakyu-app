@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { RoomCore, type StoredRoom } from './room-core'
 import { teamIds, type TeamId } from '../src/data'
 import { officialDataset } from '../src/officialData'
@@ -91,6 +91,61 @@ function fixture() {
 }
 const players = officialDataset.players
 const offerings = (team: TeamId) => realisticCandidates(team, players, 42)
+
+it('loads a missing room once per instance and can still initialize it or restore a saved room', async () => {
+  const f = fixture()
+  const load = vi.spyOn(f.repository, 'load')
+  for (let i = 0; i < 3; i++)
+    await expect(f.core.read('a'.repeat(64))).rejects.toMatchObject({
+      status: 404,
+    })
+  expect(load).toHaveBeenCalledTimes(1)
+  const host = await f.add()
+  await f.core.read(host.token)
+  expect(load).toHaveBeenCalledTimes(1)
+  f.restart()
+  await f.core.read(host.token)
+  await f.core.read(host.token)
+  expect(load).toHaveBeenCalledTimes(2)
+})
+
+it('retries failed storage loads and expiry deletion without caching a failed result', async () => {
+  const f = fixture()
+  const load = vi
+    .spyOn(f.repository, 'load')
+    .mockRejectedValueOnce(new Error('read unavailable'))
+  await expect(f.core.read('a'.repeat(64))).rejects.toThrow('read unavailable')
+  const host = await f.add()
+  expect(load).toHaveBeenCalledTimes(2)
+  const deleted = vi
+    .spyOn(f.repository, 'delete')
+    .mockRejectedValueOnce(new Error('delete unavailable'))
+  const expired = vi.spyOn(f.hooks, 'expired')
+  await expect(f.advance(2 * 60 * 60_000 + 1)).rejects.toThrow(
+    'delete unavailable',
+  )
+  await expect(f.core.read(host.token)).rejects.toMatchObject({ status: 404 })
+  expect(deleted).toHaveBeenCalledTimes(2)
+  expect(expired).toHaveBeenCalledTimes(1)
+  expect(load).toHaveBeenCalledTimes(2)
+})
+
+it('avoids repeated alarm writes for reads and rearms after a fired alarm or changed deadline', async () => {
+  const f = fixture()
+  const schedule = vi.spyOn(f.hooks, 'schedule')
+  const host = await f.add()
+  const initial = schedule.mock.calls.length
+  await f.core.authenticate(host.token)
+  await f.core.view(host.memberId)
+  await f.core.read(host.token)
+  expect(schedule).toHaveBeenCalledTimes(initial)
+  await f.core.alarm()
+  expect(schedule).toHaveBeenCalledTimes(initial + 1)
+  await f.send(host, { type: 'start' })
+  expect(schedule).toHaveBeenCalledTimes(initial + 2)
+  await f.core.read(host.token)
+  expect(schedule).toHaveBeenCalledTimes(initial + 2)
+})
 
 it('enters without a club, allows chat, and requires a chosen club before ready or start', async () => {
   const f = fixture(),
