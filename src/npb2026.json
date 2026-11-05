@@ -4,188 +4,193 @@
   "label": "NPB公式・2026年度選手名簿／一軍成績",
   "kind": "official-roster",
   "sourceUrl": "https://npb.jp/bis/teams/",
-  "asOf": "2026-10-24",
+  "asOf": "2026-11-05",
   "eligibilityNotice": "登録区分のみ反映。外国人・FA・年俸・複数年契約等の現役ドラフト対象条件は未照合。eligibleはシミュレーションで選択可能かを示し、参加資格の確認済みを意味しません。",
   "sources": [
     {
       "url": "https://npb.jp/bis/teams/rst_t.html",
-      "sha256": "d7a7fc14c26052dc56512e055d7bc56c94be94c3c17130f3ea949fadefcf6629",
-      "retrievedAt": "2026-10-24"
+      "sha256": "1e5d15923119a6068f3bf00d496e5d809c0d7efc8fb410ce85346bfdf2c460fd",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/teams/rst_g.html",
-      "sha256": "59fe8c7657d7bc06a23028dc85b669994d2dd3eefb6d312fba06cab3b23e4ff6",
-      "retrievedAt": "2026-10-24"
+      "sha256": "27ad4c6b7e5e274708e8503c9cfa58d1456eb221a3e140be8d1da3b2e846a83c",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/teams/rst_db.html",
-      "sha256": "f8d73fcc76880bdbde8f10aa2d5a4f40d4c5251fc76eb9a773d2aa0f8f12a7d3",
-      "retrievedAt": "2026-10-24"
+      "sha256": "0c194d60c0093089207859e6045c8beead09ab8d3213968207cc3f8fda63d5b8",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/teams/rst_c.html",
-      "sha256": "8757b94d33da55e0f754738a4fb0b51c828a137e56ec1bf63634217edfba3fd3",
-      "retrievedAt": "2026-10-24"
+      "sha256": "829713ed7c0705289701da33d14c516e444df019b9ba72aa541c1a2391ea30da",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/teams/rst_s.html",
-      "sha256": "3a6fde0ffada2bc5b2808031585eff8b933814212c0607b0051326d340f5f791",
-      "retrievedAt": "2026-10-24"
+      "sha256": "ecb0c90c6b8cd9332bf15255658ae4fc5179bd0dfaae1adef088865e871e4a29",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/teams/rst_d.html",
-      "sha256": "703c767272a12fe25e2ceaaa2264bf733756a92297b06b45c70435c2195087e7",
-      "retrievedAt": "2026-10-24"
+      "sha256": "219e882165f2a7bdd2206bbb678ddfb5dccfe46199006030ba1a1ba8324bfa73",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/teams/rst_h.html",
-      "sha256": "6b25aa53fa3442dd17311ea0fc1ef0e6b6feeeabf508c3fa4cad4020c9a8b5cc",
-      "retrievedAt": "2026-10-24"
+      "sha256": "39af784ba307d1d738b39525eeaa276b2953bfe9743e83c4ea4e2bac31405a8b",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/teams/rst_f.html",
-      "sha256": "1cc40a3b51aa3809499e50e3e08633e467de7029950ad35785b9596123ad289a",
-      "retrievedAt": "2026-10-24"
+      "sha256": "04a3c571eabf1966273d567bbf5c630ce862a32929a9e23cd44be8f1512d88da",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/teams/rst_m.html",
-      "sha256": "58bbebf90eeb6963ccc31c4b3d009a1c768eade2963ea1af2bf696469f8256fc",
-      "retrievedAt": "2026-10-24"
+      "sha256": "b7d3471308ee3dd9ad6df8e64135aad0416189ea9da09005feba2b8363782034",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/teams/rst_e.html",
-      "sha256": "3f14587173cd205633dd409f35c1ce15c5a94acdd242374fe2c2446871b2e0b2",
-      "retrievedAt": "2026-10-24"
+      "sha256": "ede4617fda7bc813cdb3a127462aeae1d5cadf36c446a3b09e33e8906ac80c94",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/teams/rst_b.html",
-      "sha256": "4fa4095fe21b65a262df02a7f931e31fdc31d3ec041252704a651a24c0eb9bf2",
-      "retrievedAt": "2026-10-24"
+      "sha256": "9c122b73d783ddeb1694c6f295bd7690ac5ce0ace339e0f7bebf52deb350319a",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/teams/rst_l.html",
-      "sha256": "0bc1559afbb799c228da7a7a17e058353dfdef45d683b83cff4b531f37a9e181",
-      "retrievedAt": "2026-10-24"
+      "sha256": "5b12e95575412bf9467f538bb3aa6dacf70522bfc34ed5e0bf87859390e04244",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idb1_t.html",
-      "sha256": "2e6dc22e77d559b910f798f3ca37167e18c43f8220a0d32cb925b0a646bf4c52",
-      "retrievedAt": "2026-10-24"
+      "sha256": "bb20ba3108d6e54721d1f5ef8157e8d4cd68631d53ac6b85cfcd3b11cbace07c",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idp1_t.html",
-      "sha256": "a8b10b1e41d734bb2b4a8caa630cae01bcd1360ade41feac931f8dc5d01508d0",
-      "retrievedAt": "2026-10-24"
+      "sha256": "c6200960f11bf03783753884d3f3b8b4c2fa4581a19a887d1e2b5a1d15cf3072",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idb1_g.html",
-      "sha256": "f8b4a9e6a554f3c1d00f2ab27ef1d57906b29b15a993a78168a502318153eae0",
-      "retrievedAt": "2026-10-24"
+      "sha256": "f1e0693dc7066d356989c19466f24f5a5647c61ddae2c0a8cbab93b34d14e5cc",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idp1_g.html",
-      "sha256": "2d5003184d609b0bc6529719354a0f85c44d22356b5f4d01da5f8470a1c158c3",
-      "retrievedAt": "2026-10-24"
+      "sha256": "4e861a60ea86af9155a238159bab417777decac1301d62718995327e34e0a764",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idb1_db.html",
-      "sha256": "71919bfc660ea2665dcd5737241196acfdd8452b45997fbb21e9c1bf2d07f0ea",
-      "retrievedAt": "2026-10-24"
+      "sha256": "265565a57b387f2275a337ed7ab1279a11bc20f40af1c157bbf3df08b85eefeb",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idp1_db.html",
-      "sha256": "c93fe24eacbe814ae4b590748a7b7c25e7e5a85700900c52bd5b720b3c806c5d",
-      "retrievedAt": "2026-10-24"
+      "sha256": "0c3c3dc67d0f5a60a1332f78fba6bd32571ed1cd1b1e8a7a18a9709b63266988",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idb1_c.html",
-      "sha256": "88475a3c5362023fa38a056937717d725846a03fd666974a513a9edc2849d6a5",
-      "retrievedAt": "2026-10-24"
+      "sha256": "dcd01359b2fa2900eda37c8c39cfa45d19375d65afde2f8b52d8d6603e2d501b",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idp1_c.html",
-      "sha256": "4d43e3a38b503fadd4788773260dfb5ac0db0f3f2dbd4b00432e40bdf3f4f233",
-      "retrievedAt": "2026-10-24"
+      "sha256": "e3a9d75253d8ce06d02dd415adfb446487192ff907214f00b335342dfc75ee8e",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idb1_s.html",
-      "sha256": "2e9c7f966adafd96bf2d82e3e3861dd9cd47a166a66b5839e60e3382062e2940",
-      "retrievedAt": "2026-10-24"
+      "sha256": "9901be7b5e08dab79a27de6ee1d6c15366be217d2351c5bd3e3ac66bae68a733",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idp1_s.html",
-      "sha256": "953055acb22823c64e0c681b05edad964c7aea99172056da520f454263b92771",
-      "retrievedAt": "2026-10-24"
+      "sha256": "05b479825a4d205878a11770e1773652ed08a59dbd332ce8d19528f4fb3a0e56",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idb1_d.html",
-      "sha256": "19cdb7ddb20b5c19e45815cd0426de07d1f56d24812efa946705276211ec8748",
-      "retrievedAt": "2026-10-24"
+      "sha256": "a6deba1c0b1d1c04a8b0dcff9d4154fc3d5a8dc1b9d7a74e478e4a0e2f4947ac",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idp1_d.html",
-      "sha256": "0e82c0ec52059b614da42384196e112f508a6ee0550923c4f0dad97e434a3f1b",
-      "retrievedAt": "2026-10-24"
+      "sha256": "94b37754239f25eba8c507ddfee173e6ff83a78c25feeef6fa1979023ffd0fac",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idb1_h.html",
-      "sha256": "5cd4d0ef5627b11d6b5dce49d271e3eabb25924f15a158f4bb7b531b3c80cac9",
-      "retrievedAt": "2026-10-24"
+      "sha256": "b27011fe27dd614cfe542974d4a066363edec1ba8aba9038546de7cc7b8ee060",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idp1_h.html",
-      "sha256": "f2809df7e9d8eeda9b230c144cb139aefc4de6f3e1138179ca00f5e9a982e714",
-      "retrievedAt": "2026-10-24"
+      "sha256": "e693a86538979878d7f1e7fdb573fa38a4226790c62da0a6989f4829c4c0edda",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idb1_f.html",
-      "sha256": "75a0105d1e026f0afdd5ba229f92ed701da45959b8a5cb0a8ebd5b8cd8579a6b",
-      "retrievedAt": "2026-10-24"
+      "sha256": "8f9348cc7a3bb8d9ff6c4a21a220526c305812dafdf11544b3495d7c6a247949",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idp1_f.html",
-      "sha256": "75edb8aa11122fa56cf570cfdaf400ac33303a9554b27f466486380e729dfbc5",
-      "retrievedAt": "2026-10-24"
+      "sha256": "5bd9b7ba3d28c1d2029d6f4e1ce31871b5c86ed0f8f1c25bedd8b289c38283ce",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idb1_m.html",
-      "sha256": "7acd0b4d6cec73762124d128935d9665334a02f0200dd707f9b01b8b57bc4b51",
-      "retrievedAt": "2026-10-24"
+      "sha256": "30275e9023acbbc48e85b01709fcb85437f14ba47382670a71c3dc0c149e3a72",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idp1_m.html",
-      "sha256": "4cd28e3ef581543ee5765602153662e6728eb0c2ddb548aba82142ecf453d1a8",
-      "retrievedAt": "2026-10-24"
+      "sha256": "222e50375ebe3984bab505c37d0bcdcb230983a203bd57a604f82308eec42397",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idb1_e.html",
-      "sha256": "b30e161ea66733040db10bc86e2a5bc24541776efc154c1a869cafa2687f98be",
-      "retrievedAt": "2026-10-24"
+      "sha256": "68f23078439dcf2e4b800da291fbb080ae33b892333114d26c71eb96d5ac2f9d",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idp1_e.html",
-      "sha256": "412eb07bc389f2a38fe929bfb85ffa5ddf4e887d50e19e1ec7e6148a438a16f5",
-      "retrievedAt": "2026-10-24"
+      "sha256": "e26d56436db32a5093a279417a6977a0c651a0923fabf09e2d269607eb512874",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idb1_b.html",
-      "sha256": "ed704b0859f6ebfcc27e6e120aa6e23f5cf805691e144c24257c6a64782c7acc",
-      "retrievedAt": "2026-10-24"
+      "sha256": "268a30edb8fd7b99433c4405e979b30c4616b16eafef755cb83f0a071dbb237d",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idp1_b.html",
-      "sha256": "014c45d4a9fdac9c9bc471abc3d215d87948c00f2360346e21b2ed08770027f9",
-      "retrievedAt": "2026-10-24"
+      "sha256": "999c728d3f85c09c539be4bdd7dec63b414ba1822b39e6198502c8ee245f0cc0",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idb1_l.html",
-      "sha256": "b3601b98dccdf0c7f9f3af5344b290224299f260dd0fd6d37f934c0158bf5ef4",
-      "retrievedAt": "2026-10-24"
+      "sha256": "44e64532e8dcab6cc090dc0d45b29722a41a5b0400168b56e20c2428637b5b96",
+      "retrievedAt": "2026-11-05"
     },
     {
       "url": "https://npb.jp/bis/2026/stats/idp1_l.html",
-      "sha256": "bbddf69741467c32e2d11b820137b8ac1c2f7956baa709033c3290aa51f920b2",
-      "retrievedAt": "2026-10-24"
+      "sha256": "8f90a94483ec029c4b19b346e806a585371f68cbbe11b6da6c9dcfc3ed69edcd",
+      "retrievedAt": "2026-11-05"
+    },
+    {
+      "url": "https://npb.jp/announcement/2026/pn_traded.html",
+      "sha256": "7bfc1005b4dcebebd376c52d37fe446f1c95bbdd0b104dad70190225ff7d0193",
+      "retrievedAt": "2026-11-05"
     }
   ],
   "players": [
@@ -2787,17 +2792,17 @@
     },
     {
       "id": "npb-91595133",
-      "team": "g",
+      "team": "e",
       "name": "甲斐 拓也",
       "position": "捕手",
       "eligible": true,
       "eligibility": "unverified",
-      "number": "10",
+      "number": "37",
       "birthDate": "1992-11-05",
       "throws": "右",
       "bats": "右",
       "registration": "支配下",
-      "note": "",
+      "note": "11/4 NPBトレード公示：読売から移籍",
       "sourceUrl": "https://npb.jp/bis/teams/rst_g.html",
       "stats": {
         "games": 13,
@@ -23465,6 +23470,17 @@
       "sourceUrl": "https://npb.jp/bis/teams/rst_l.html",
       "stats": null,
       "statsSourceUrl": "https://npb.jp/bis/2026/stats/idb1_l.html"
+    }
+  ],
+  "membershipUpdates": [
+    {
+      "id": "npb-91595133",
+      "name": "甲斐 拓也",
+      "date": "2026-11-04",
+      "from": "g",
+      "to": "e",
+      "fromNumber": "10",
+      "number": "37"
     }
   ]
 }

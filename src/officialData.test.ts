@@ -14,6 +14,25 @@ import {
 } from './engine'
 
 describe('official 2026 snapshot', () => {
+  it('applies the official offseason trade without replacing 2026 statistics or salary with next-season data', () => {
+    const kai = officialDataset.players.find((p) => p.id === 'npb-91595133')!
+    expect(kai).toMatchObject({
+      name: '甲斐 拓也',
+      team: 'e',
+      number: '37',
+      statsSourceUrl: 'https://npb.jp/bis/2026/stats/idb1_g.html',
+      stats: { games: 13 },
+      draftFacts: { salaryYear: 2026, salaryManYen: 30000 },
+    })
+    expect(eligibilityOf(kai).allowed).toBe(false)
+    expect(officialDataset.sources).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          url: 'https://npb.jp/announcement/2026/pn_traded.html',
+        }),
+      ]),
+    )
+  })
   it('excludes every individually verified departure, including newspaper name variants', () => {
     for (const report of reports.reports)
       for (const record of report.players) {
@@ -104,11 +123,11 @@ describe('official 2026 snapshot', () => {
     for (const player of reported)
       expect(eligibilityOf(player).allowed).toBe(false)
   })
-  it('records all 36 sources, unique IDs, registration and factual statistics', () => {
+  it('records all 37 sources, unique IDs, registration and factual statistics', () => {
     const data = officialDataset
     expect(data.season).toBe(2026)
     expect(data.kind).toBe('official-roster')
-    expect(data.sources).toHaveLength(36)
+    expect(data.sources).toHaveLength(37)
     expect(new Set(data.players.map((p) => p.id)).size).toBe(
       data.players.length,
     )
@@ -119,7 +138,18 @@ describe('official 2026 snapshot', () => {
     for (const team of teamIds) {
       const roster = data.players.filter((p) => p.team === team)
       expect(roster.length).toBeGreaterThan(40)
-      expect(roster.filter((p) => p.eligible).length).toBeLessThanOrEqual(70)
+      // Season rosters retain departed players after offseason trades. Check
+      // the original roster and currently selectable players separately.
+      expect(
+        data.players.filter(
+          (p) =>
+            p.eligible &&
+            p.sourceUrl === `https://npb.jp/bis/teams/rst_${team}.html`,
+        ).length,
+      ).toBeLessThanOrEqual(70)
+      expect(
+        roster.filter((p) => eligibilityOf(p).allowed).length,
+      ).toBeLessThanOrEqual(70)
       expect(roster.filter((p) => p.stats).length).toBeGreaterThan(20)
     }
     for (const p of data.players) {

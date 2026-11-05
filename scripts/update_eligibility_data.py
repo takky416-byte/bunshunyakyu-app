@@ -226,7 +226,14 @@ def build(refresh=False):
     individual, report_sources = individual_departures(cache, day, roster, refresh)
     facts = {}
     for p in roster['players']:
-        candidates = [r for r in salaries[p['team']] if r['dob'] == p['birthDate'] and (normal_name(r['name']) == normal_name(p['name']) or (r['number'] == p['number'] and r['position'] == p['position']))]
+        # Keep the 2026 salary source when an officially verified offseason
+        # trade changes the club before the next season's salary is agreed.
+        salary_teams = [p['team']] + [t['from'] for t in roster.get('membershipUpdates', [])
+                                     if t['id'] == p['id'] and t['to'] == p['team']]
+        candidates = []
+        for salary_team in salary_teams:
+            candidates = [r for r in salaries[salary_team] if r['dob'] == p['birthDate'] and (normal_name(r['name']) == normal_name(p['name']) or (r['number'] == p['number'] and r['position'] == p['position']))]
+            if candidates: break
         salary = candidates[0] if len(candidates) == 1 else None
         exclusions = []
         holds = []
@@ -239,7 +246,7 @@ def build(refresh=False):
         departure_key = (p['team'], status_name(p['name']))
         if departure_key in departing or departure_key in individual:
             exclusions.append({'reason': '戦力外・退団・引退の報道あり', 'source': individual.get(departure_key, dep_meta['url'])})
-        if (p['team'], status_name(p['name'])) in fa_history:
+        if any((team, status_name(p['name'])) in fa_history for team in salary_teams):
             exclusions.append({'reason': 'FA行使による移籍歴の報道あり', 'source': dep_meta['url']})
         if not salary:
             holds.append('2026年推定年俸の照合待ち')

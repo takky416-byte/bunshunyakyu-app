@@ -1,8 +1,37 @@
 import unittest
-from update_npb_data import parse_roster, parse_stats
+import copy
+from update_npb_data import parse_roster, parse_stats, apply_reviewed_transfers
 
 
 class OfficialDataParserTest(unittest.TestCase):
+    def test_reviewed_transfer_checks_official_id_clubs_number_and_date_and_retains_stats(self):
+        player = {'id': 'npb-91595133', 'name': '甲斐 拓也', 'team': 'g', 'number': '10',
+                  'position': '捕手', 'stats': {'games': 13}, 'statsSourceUrl': 'giants-2026'}
+        transfer = {'id': player['id'], 'name': player['name'], 'from': 'g', 'to': 'e',
+                    'fromNumber': '10', 'number': '37', 'date': '2026-11-04'}
+        html = '''<title>トレード | 2026年度公示 | NPB.jp 日本野球機構</title><table><tr>
+        <td>2026/11/4</td><td><a href="/bis/players/91595133.html">甲斐 拓也</a></td>
+        <td>捕 手</td><td>10</td><td>読売</td><td>→</td><td>37</td><td>東北楽天</td></tr></table>'''
+        players = [copy.deepcopy(player)]
+        apply_reviewed_transfers(players, [transfer], html, '2026-11-05')
+        self.assertEqual((players[0]['team'], players[0]['number']), ('e', '37'))
+        self.assertEqual(players[0]['stats'], player['stats'])
+        self.assertEqual(players[0]['statsSourceUrl'], 'giants-2026')
+        apply_reviewed_transfers(players, [transfer], html, '2026-11-05')
+        for bad_html, bad_transfer in [
+            (html.replace('2026年度', '2027年度'), transfer),
+            (html.replace('91595133.html', '11111111.html'), transfer),
+            (html.replace('東北楽天', '埼玉西武'), transfer),
+            (html, {**transfer, 'date': '2026-11-06'}),
+            (html, {**transfer, 'number': '99'}),
+            (html, {**transfer, 'name': '別の選手'}),
+        ]:
+            with self.subTest(transfer=bad_transfer):
+                original = [copy.deepcopy(player)]
+                with self.assertRaises(ValueError):
+                    apply_reviewed_transfers(original, [bad_transfer], bad_html, '2026-11-05')
+                self.assertEqual(original[0], player)
+
     def test_roster_keeps_registration_and_ignores_staff(self):
         header = '<h2>2026年度 選手一覧</h2><table><tr class="rosterMainHead"><th>No.</th><th>投手</th></tr>'
         def player(i, development=False):

@@ -18,6 +18,7 @@ import urllib.request
 ROOT = Path(__file__).resolve().parents[1]
 TEAMS = ['t', 'g', 'db', 'c', 's', 'd', 'h', 'f', 'm', 'e', 'b', 'l']
 POSITIONS = ['投手', '捕手', '内野手', '外野手']
+TEAM_NAMES = dict(zip(TEAMS, ['阪神', '読売', '横浜DeNA', '広島東洋', '東京ヤクルト', '中日', '福岡ソフトバンク', '北海道日本ハム', '千葉ロッテ', '東北楽天', 'オリックス', '埼玉西武']))
 
 
 class TableRows(HTMLParser):
@@ -118,6 +119,36 @@ def parse_stats(html, pitching=False):
     return result
 
 
+def apply_reviewed_transfers(players, transfers, html, day):
+    """Apply only reviewed official-ID rows, without changing season statistics."""
+    if not re.search(r'<title>[^<]*トレード[^<]*2026年度', html):
+        raise ValueError('Trade notice is not labeled 2026')
+    by_id = {p['id']: p for p in players}
+    table = rows(html)
+    seen = set()
+    for transfer in transfers:
+        player = by_id.get(transfer['id'])
+        date = dt.date.fromisoformat(transfer['date'])
+        if (transfer['id'] in seen or date.year != 2026 or date > dt.date.fromisoformat(day)
+                or transfer['from'] not in TEAM_NAMES or transfer['to'] not in TEAM_NAMES
+                or not player or player['name'] != transfer['name']
+                or player['team'] not in (transfer['from'], transfer['to'])):
+            raise ValueError('Reviewed transfer does not match the roster')
+        expected = [f'{date.year}/{date.month}/{date.day}', transfer['name'], player['position'],
+                    transfer['fromNumber'], TEAM_NAMES[transfer['from']], '→',
+                    transfer['number'], TEAM_NAMES[transfer['to']]]
+        matched = any([normal_name(c) for c in row['cells']] == [normal_name(c) for c in expected]
+                      and any(link.endswith(f'/{transfer["id"][4:]}.html') for link in row['links'])
+                      for row in table)
+        if not matched:
+            raise ValueError(f'{transfer["name"]}: official transfer row missing or changed')
+        seen.add(transfer['id'])
+        if player['team'] != transfer['to'] or player['number'] != transfer['number']:
+            player['team'] = transfer['to']
+            player['number'] = transfer['number']
+            player['note'] = f'{date.month}/{date.day} NPBトレード公示：{TEAM_NAMES[transfer["from"]]}から移籍'
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--refresh', action='store_true', help='refresh the raw HTML cache from official sources')
@@ -128,6 +159,10 @@ def main():
     cache.mkdir(parents=True, exist_ok=True)
     urls = [f'https://npb.jp/bis/teams/rst_{t}.html' for t in TEAMS]
     urls += [f'https://npb.jp/bis/2026/stats/{kind}_{t}.html' for t in TEAMS for kind in ['idb1', 'idp1']]
+    transfers = json.loads((ROOT / 'scripts/roster_transfers2026.json').read_text())
+    if transfers.get('version') != 1:
+        raise ValueError('Unsupported transfer manifest')
+    urls.append(transfers['source'])
     def fetch(url):
         path = cache / (url.rsplit('/', 1)[-1])
         if path.exists() and not args.refresh:
@@ -159,6 +194,7 @@ def main():
     ids = [p['id'] for p in players]
     if len(set(ids)) != len(ids):
         raise ValueError('Duplicate player IDs between rosters; resolve membership from official notices before updating')
+    apply_reviewed_transfers(players, transfers['transfers'], pages[transfers['source']][0], today)
     for url, (_, checksum) in pages.items():
         sources.append({'url': url, 'sha256': checksum, 'retrievedAt': today})
     dataset = {
@@ -166,6 +202,7 @@ def main():
         'kind': 'official-roster', 'sourceUrl': 'https://npb.jp/bis/teams/', 'asOf': today,
         'eligibilityNotice': '登録区分のみ反映。外国人・FA・年俸・複数年契約等の現役ドラフト対象条件は未照合。eligibleはシミュレーションで選択可能かを示し、参加資格の確認済みを意味しません。',
         'sources': sources, 'players': players,
+        'membershipUpdates': transfers['transfers'],
     }
     # Only replace the snapshot after every required source and record validates.
     output = args.output.resolve()

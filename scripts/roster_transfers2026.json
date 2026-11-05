@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "source": "https://npb.jp/announcement/2026/pn_traded.html",
+  "transfers": [
+    {
+      "id": "npb-91595133",
+      "name": "甲斐 拓也",
+      "date": "2026-11-04",
+      "from": "g",
+      "to": "e",
+      "fromNumber": "10",
+      "number": "37"
+    }
+  ]
+}

@@ -249,8 +249,11 @@
       "key": "marines-confirmed-2026-10-26",
       "team": "m",
       "reportedAt": "2026-10-26",
-      "url": "https://full-count.jp/2026-2027_npb_transaction/2/",
-      "requiredText": ["2026-2027年", "戦力外"],
+      "url": "https://www.sponichi.co.jp/baseball/news/2026/10/24/kiji/20261024s00001173217000c.html",
+      "requiredText": [
+        "2026年10月24日",
+        "来季の支配下契約は行わない旨を通知した"
+      ],
       "players": [
         {
           "id": "npb-61865136",
@@ -395,6 +398,77 @@
           "id": "npb-11715152",
           "name": "金子 京介",
           "reportedName": "金子京介"
+        }
+      ]
+    },
+    {
+      "key": "buffaloes-retirement-2026-10-30",
+      "team": "b",
+      "reportedAt": "2026-10-30",
+      "url": "https://www.nikkansports.com/baseball/news/202610300000371.html",
+      "requiredText": ["2026年10月30日", "現役引退"],
+      "players": [
+        {
+          "id": "npb-61665136",
+          "name": "本田 仁海",
+          "reportedName": "本田仁海"
+        }
+      ]
+    },
+    {
+      "key": "lions-2026-10-30",
+      "team": "l",
+      "reportedAt": "2026-10-30",
+      "url": "https://www.nikkansports.com/baseball/news/202610300000417.html",
+      "requiredText": ["2026年10月30日", "来季の契約を結ばない旨を通達した"],
+      "players": [
+        {
+          "id": "npb-71075139",
+          "name": "中村 祐太",
+          "reportedName": "中村祐太"
+        }
+      ]
+    },
+    {
+      "key": "dragons-released-2026-11-02",
+      "team": "d",
+      "reportedAt": "2026-11-02",
+      "url": "https://npb.jp/announcement/2026/pn_released.html",
+      "requiredText": ["2026年度", "2026/11/2", "自由契約選手"],
+      "players": [
+        {
+          "id": "npb-73575159",
+          "name": "アブレウ",
+          "reportedName": "Ａ．アブレウ"
+        },
+        {
+          "id": "npb-93295157",
+          "name": "メヒア",
+          "reportedName": "Ｈ．メヒア"
+        },
+        {
+          "id": "npb-93795157",
+          "name": "カリステ",
+          "reportedName": "Ｏ．カリステ"
+        }
+      ]
+    },
+    {
+      "key": "eagles-released-2026-11-03",
+      "team": "e",
+      "reportedAt": "2026-11-03",
+      "url": "https://npb.jp/announcement/2026/pn_released.html",
+      "requiredText": ["2026年度", "2026/11/3", "自由契約選手"],
+      "players": [
+        {
+          "id": "npb-73575132",
+          "name": "宋 家豪",
+          "reportedName": "宋 家豪"
+        },
+        {
+          "id": "npb-53555152",
+          "name": "コントレラス",
+          "reportedName": "Ｒ．コントレラス"
         }
       ]
     }
