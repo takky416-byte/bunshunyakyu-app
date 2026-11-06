@@ -2,10 +2,7 @@
   "version": 1,
   "season": 2026,
   "asOf": "2026-11-06",
-  "historySeasons": [
-    2024,
-    2025
-  ],
+  "historySeasons": [2024, 2025],
   "players": {
     "npb-71375150": {
       "name": "伊原 陵人",
