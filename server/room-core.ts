@@ -14,7 +14,7 @@ import {
   type Game,
 } from '../src/engine'
 import { CPU_TURN_MS, MIN_PRESENTATION_MS } from '../src/draftPacing'
-import { realisticCandidates } from '../src/cpuCandidates'
+import { contextualCandidates, realisticCandidates } from '../src/cpuCandidates'
 import type { Participation, RoundTwoBid } from '../src/roundTwo'
 import {
   reactions,
@@ -338,7 +338,9 @@ export class RoomCore {
     const g = this.room().game!
     return submitNominations(
       g,
-      realisticCandidates(g.userTeam, players, g.seed),
+      (g.cpuNominationModel === 'realistic-v3'
+        ? contextualCandidates
+        : realisticCandidates)(g.userTeam, players, g.seed),
       players,
     ).offers
   }

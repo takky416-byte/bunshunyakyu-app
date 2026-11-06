@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest'
 import { RoomCore, type StoredRoom } from './room-core'
 import { teamIds, type TeamId } from '../src/data'
 import { officialDataset } from '../src/officialData'
-import { realisticCandidates } from '../src/cpuCandidates'
+import { contextualCandidates, realisticCandidates } from '../src/cpuCandidates'
 import { eligibilityOf } from '../src/eligibility'
 import {
   beginDraft,
@@ -91,6 +91,36 @@ function fixture() {
 }
 const players = officialDataset.players
 const offerings = (team: TeamId) => realisticCandidates(team, players, 42)
+
+it('uses the saved CPU model for host timeout nominations after a room restart', async () => {
+  for (const model of ['realistic-v2', 'realistic-v3'] as const) {
+    const f = fixture(),
+      host = await f.add()
+    await f.send(host, { type: 'team', team: 'db' })
+    await f.send(host, { type: 'start' })
+    expect(f.stored().game!.cpuNominationModel).toBe('realistic-v3')
+    const stored = f.stored()
+    stored.game!.seed = 42
+    stored.game!.cpuNominationModel = model
+    const select =
+      model === 'realistic-v3' ? contextualCandidates : realisticCandidates
+    const expected = submitNominations(
+      stored.game!,
+      select('db', players, 42),
+      players,
+    )
+    stored.offers = Object.fromEntries(
+      Object.entries(expected.offers).filter(([team]) => team !== 'db'),
+    )
+    await f.repository.save(stored)
+    f.restart()
+    await f.advance(181_000)
+    const result = await f.core.read(host.token)
+    expect(result.game!.stage).toBe('vote')
+    expect(result.game!.cpuNominationModel).toBe(model)
+    expect(result.game!.offers).toEqual(expected.offers)
+  }
+})
 
 it('loads a missing room once per instance and can still initialize it or restore a saved room', async () => {
   const f = fixture()

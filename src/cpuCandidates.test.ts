@@ -7,10 +7,14 @@ import {
   variedCandidates,
   protectedForRealisticCpu,
   realisticCandidates,
+  contextualCandidates,
+  contextualCandidateWeight,
+  protectedForContextualCpu,
 } from './cpuCandidates'
 import { newGame, restoreGame, submitNominations } from './engine'
 import legacy from '../e2e/fixtures/legacy-game-v2.json'
 import draftHistory from './cpuDraft2026.json'
+import usageHistory from './cpuUsage2026.json'
 
 describe('varied CPU candidate selection', () => {
   it('varies each club’s pair while protecting core players and keeping eligibility restrictions', () => {
@@ -68,10 +72,30 @@ describe('varied CPU candidate selection', () => {
       ['t-1', 't-2'],
       referenceDataset.players,
     )
-    expect(game.cpuNominationModel).toBe('realistic-v2')
+    expect(game.cpuNominationModel).toBe('realistic-v3')
     expect(
       restoreGame(JSON.parse(JSON.stringify(game)), referenceDataset.players),
     ).toEqual(game)
+    const previous = submitNominations(
+      { ...newGame('t', 909), cpuNominationModel: 'realistic-v2' },
+      ['t-1', 't-2'],
+      referenceDataset.players,
+    )
+    expect(previous.offers).toEqual({
+      t: ['t-1', 't-2'],
+      g: ['g-4', 'g-5'],
+      db: ['db-4', 'db-3'],
+      c: ['c-2', 'c-1'],
+      s: ['s-1', 's-5'],
+      d: ['d-1', 'd-3'],
+      h: ['h-1', 'h-6'],
+      f: ['f-1', 'f-5'],
+      m: ['m-4', 'm-1'],
+      e: ['e-3', 'e-2'],
+      b: ['b-2', 'b-3'],
+      l: ['l-3', 'l-6'],
+    })
+    expect(restoreGame(previous, referenceDataset.players)).toEqual(previous)
     const old = submitNominations(
       { ...newGame('t', 909), cpuNominationModel: 'varied-v1' },
       ['t-1', 't-2'],
@@ -86,6 +110,109 @@ describe('varied CPU candidate selection', () => {
         referenceDataset.players,
       ),
     ).toThrow()
+  })
+})
+
+describe('CPU judgement with recent first-team roles', () => {
+  const players = officialDataset.players
+  it('covers all selectable official players with identity-checked historical usage', () => {
+    for (const p of players.filter((p) => eligibilityOf(p).allowed)) {
+      const entry = (
+        usageHistory.players as Record<
+          string,
+          { name: string; birthDate: string }
+        >
+      )[p.id]
+      expect(entry, p.name).toMatchObject({
+        name: p.name,
+        birthDate: p.birthDate,
+      })
+    }
+    expect(
+      usageHistory.players['npb-51555155'].seasons['2024'].plateAppearances,
+    ).toBe(351)
+    expect(usageHistory.players['npb-51555157'].seasons['2024'].outs).toBe(408)
+    expect(
+      usageHistory.players['npb-73375157'].seasons['2025'].plateAppearances,
+    ).toBe(182)
+  })
+  it('retains recent regulars through down seasons without changing human nomination eligibility', () => {
+    for (const name of [
+      '梶原 昂希',
+      '金村 尚真',
+      '上川畑 大悟',
+      '廣岡 大志',
+      '古田島 成龍',
+      '黒原 拓未',
+      'アドゥワ 誠',
+    ]) {
+      const p = players.find((p) => p.name === name)!
+      expect(eligibilityOf(p).allowed, name).toBe(true)
+      expect(protectedForRealisticCpu(p), name).toBe(false)
+      expect(protectedForContextualCpu(p), name).toBe(true)
+      const own = players.find(
+        (other) =>
+          other.team === p.team &&
+          other.id !== p.id &&
+          eligibilityOf(other).allowed &&
+          eligibilityOf(other).band === 'ordinary',
+      )!
+      expect(
+        submitNominations(newGame(p.team, 9), [p.id, own.id], players).offers[
+          p.team
+        ],
+      ).toContain(p.id)
+    }
+  })
+  it('reduces the weight of recent reserves and treats missing/mismatched official history conservatively', () => {
+    const p = players.find((p) => p.name === '石上 泰輝')!
+    const unknown = { ...p, id: 'custom-player' }
+    expect(contextualCandidateWeight(p, p.team)).toBeLessThan(
+      contextualCandidateWeight(unknown, p.team),
+    )
+    expect(protectedForContextualCpu({ ...p, name: '別人' })).toBe(true)
+    expect(protectedForContextualCpu({ ...p, birthDate: '1999-01-01' })).toBe(
+      true,
+    )
+    expect(protectedForContextualCpu({ ...p, id: 'npb-missing' })).toBe(true)
+    expect(protectedForContextualCpu(unknown)).toBe(false)
+  })
+  it('also protects a two-way player’s current batting role despite pitcher registration', () => {
+    const p = players.find((p) => p.name === '矢澤 宏太')!
+    expect(p.position).toBe('投手')
+    expect(p.stats?.games).toBe(1)
+    expect(protectedForRealisticCpu(p)).toBe(false)
+    expect(protectedForContextualCpu(p)).toBe(true)
+  })
+  it('keeps every club legal, replayable and varied within the remaining plausible pool', () => {
+    for (const team of teamIds) {
+      const plausible = players.filter(
+        (p) =>
+          p.team === team &&
+          eligibilityOf(p).allowed &&
+          eligibilityOf(p).band === 'ordinary' &&
+          !protectedForContextualCpu(p),
+      )
+      expect(plausible.length, team).toBeGreaterThanOrEqual(2)
+      const pairs = new Set<string>()
+      for (let seed = 0; seed < 1000; seed++) {
+        const ids = contextualCandidates(team, players, seed)
+        expect(new Set(ids).size).toBe(2)
+        expect(ids.every((id) => plausible.some((p) => p.id === id))).toBe(true)
+        pairs.add([...ids].sort().join(','))
+      }
+      expect(pairs.size, team).toBe(
+        (plausible.length * (plausible.length - 1)) / 2,
+      )
+      expect(contextualCandidates(team, players, 901)).toEqual(
+        contextualCandidates(team, [...players].reverse(), 901),
+      )
+    }
+    const kajiwara = players.find((p) => p.name === '梶原 昂希')!
+    const another = players.find((p) => p.name === '九鬼 隆平')!
+    expect(() => contextualCandidates('db', [kajiwara, another], 1)).toThrow(
+      '不足',
+    )
   })
 })
 

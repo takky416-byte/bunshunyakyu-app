@@ -1,6 +1,7 @@
 import { teamById, type Player, type TeamId } from './data'
 import { eligibilityOf } from './eligibility'
 import draftHistory from './cpuDraft2026.json' with { type: 'json' }
+import usageHistory from './cpuUsage2026.json' with { type: 'json' }
 
 // Simulator safeguards, not NPB eligibility rules or a prediction of club lists.
 export function isCorePlayer(player: Player): boolean {
@@ -157,6 +158,120 @@ export function realisticCandidates(
           -Math.log(randomValue(seed, team, `realistic-v2:${p.id}`)) / weight,
       }
     })
+    .sort((a, b) => a.key - b.key || a.id.localeCompare(b.id))
+    .slice(0, 2)
+    .map((p) => p.id)
+}
+
+type Usage = {
+  battingGames: number
+  plateAppearances: number
+  homeRuns: number
+  pitchingGames: number
+  outs: number
+  wins: number
+  saves: number
+  holds: number
+}
+function recentUsage(player: Player) {
+  const record = (
+    usageHistory.players as Record<
+      string,
+      { name: string; birthDate: string; seasons: Record<string, Usage> }
+    >
+  )[player.id]
+  return record?.name === player.name && record.birthDate === player.birthDate
+    ? record.seasons
+    : undefined
+}
+
+/** v3 adds recent roles to v2's current-season and prospect safeguards.
+ * v1/v2 above must stay frozen: saved games reproduce their original lists.
+ */
+export function protectedForContextualCpu(player: Player): boolean {
+  if (protectedForRealisticCpu(player)) return true
+  const usage = recentUsage(player)
+  // A new official player without verified history is not a safe CPU release.
+  // Reference/custom datasets can still play without an official NPB profile.
+  if (!usage) return player.id.startsWith('npb-')
+  // A player registered as a pitcher can also be an active first-team hitter.
+  // The roster's single stats field contains only that registered position.
+  const currentBatting = usage['2026']
+  if (
+    currentBatting &&
+    (currentBatting.battingGames >= 60 ||
+      currentBatting.plateAppearances >= 100 ||
+      currentBatting.homeRuns >= 5)
+  )
+    return true
+  return ['2024', '2025'].some((year) => {
+    const s = usage[year]
+    return (
+      s.plateAppearances >= 250 ||
+      s.homeRuns >= 15 ||
+      s.pitchingGames >= 40 ||
+      s.outs >= 240 ||
+      s.wins >= 7 ||
+      s.saves >= 8 ||
+      s.holds >= 10
+    )
+  })
+}
+
+export function contextualCandidateWeight(
+  player: Player,
+  team: TeamId,
+): number {
+  const usage = recentUsage(player)
+  const role = (s: Usage | undefined) =>
+    s
+      ? Math.max(
+          s.plateAppearances / 250,
+          // Defenders/runners and reserve catchers have roles beyond at-bats.
+          s.battingGames / 100,
+          s.pitchingGames / 40,
+          s.outs / 240,
+          s.wins / 7,
+          s.saves / 8,
+          s.holds / 10,
+        )
+      : 0
+  const recentRole = Math.max(
+    role(usage?.['2025']),
+    role(usage?.['2024']) * 0.65,
+  )
+  const s = player.stats
+  const opportunity =
+    player.position === '投手' ? (s?.games ?? 0) : (s?.plateAppearances ?? 0)
+  return (
+    (candidateWeight(player, team) * (opportunity === 0 ? 0.7 : 1)) /
+    (1 + recentRole * 4)
+  )
+}
+
+export function contextualCandidates(
+  team: TeamId,
+  players: Player[],
+  seed: number,
+): string[] {
+  const pool = players.filter(
+    (p) =>
+      p.team === team &&
+      eligibilityOf(p).allowed &&
+      eligibilityOf(p).band !== 'exception' &&
+      !protectedForContextualCpu(p),
+  )
+  if (pool.length < 2)
+    throw new Error(
+      `${teamById[team].short}のCPU候補が不足しています。直近の一軍戦力・若手を保護した候補が2名以上必要です。`,
+    )
+  return pool
+    .map((p) => ({
+      id: p.id,
+      key:
+        -Math.log(randomValue(seed, team, `realistic-v3:${p.id}`)) /
+        contextualCandidateWeight(p, team),
+    }))
     .sort((a, b) => a.key - b.key || a.id.localeCompare(b.id))
     .slice(0, 2)
     .map((p) => p.id)

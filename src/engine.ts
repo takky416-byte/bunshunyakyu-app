@@ -2,7 +2,11 @@ import { teamById, teamIds, type Player, type TeamId } from './data'
 
 import { eligibilityOf, nominationErrors } from './eligibility'
 import { waiverOrder2026 } from './rules2026'
-import { realisticCandidates, variedCandidates } from './cpuCandidates'
+import {
+  contextualCandidates,
+  realisticCandidates,
+  variedCandidates,
+} from './cpuCandidates'
 import {
   resolveBids,
   type Participation,
@@ -22,7 +26,7 @@ export interface Pick {
 }
 export interface Game {
   version: 2
-  cpuNominationModel?: 'varied-v1' | 'realistic-v2'
+  cpuNominationModel?: 'varied-v1' | 'realistic-v2' | 'realistic-v3'
   roundTwo?: RoundTwoState
   seed: number
   userTeam: TeamId
@@ -73,7 +77,7 @@ export function newGame(userTeam: TeamId, seed: number): Game {
     throw new Error('ゲーム設定が不正です。')
   return {
     version: ENGINE_VERSION,
-    cpuNominationModel: 'realistic-v2',
+    cpuNominationModel: 'realistic-v3',
     seed,
     userTeam,
     stage: 'nominate',
@@ -121,6 +125,10 @@ export function submitNominations(
     if (submitted[team]) {
       validateNominations(team, submitted[team]!, players)
       offers[team] = [...submitted[team]!]
+      continue
+    }
+    if (game.cpuNominationModel === 'realistic-v3') {
+      offers[team] = contextualCandidates(team, players, game.seed)
       continue
     }
     if (game.cpuNominationModel === 'realistic-v2') {
@@ -407,7 +415,8 @@ export function restoreGame(raw: unknown, players: Player[]): Game {
     g.version !== 2 ||
     (g.cpuNominationModel !== undefined &&
       g.cpuNominationModel !== 'varied-v1' &&
-      g.cpuNominationModel !== 'realistic-v2') ||
+      g.cpuNominationModel !== 'realistic-v2' &&
+      g.cpuNominationModel !== 'realistic-v3') ||
     !teamIds.includes(g.userTeam) ||
     !Array.isArray(g.picks) ||
     g.picks.length > 24 ||
